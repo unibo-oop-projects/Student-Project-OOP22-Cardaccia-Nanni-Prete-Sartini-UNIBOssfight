@@ -1,0 +1,55 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{UNIBOssfight}
+\author{Giovanni Prete, Livia Cardaccia, Denise Nanni, Matteo Sartini}
+\date{January 2023}
+
+\begin{document}
+
+\large
+\tableofcontents
+\maketitle
+
+\section{Analisi}
+
+\subsection{Requisiti} 
+Il team si pone come obiettivo quello di realizzare una versione personalizzata del noto gioco arcade Metal Slug, ambientato nella nostra università. 
+Lo scopo del gioco è quello di conseguire la laurea superando gli esami, rappresentati da una serie di livelli platform, ossia in cui la meccanica di gioco implica principalmente l'attraversamento di livelli costituiti da piattaforme, spesso disposte su più piani.
+In ogni livello sono presenti diversi minions che ostacolano la corsa del giocatore, e un boss finale, rappresentato dal docente del corso, la cui sconfitta determinerà il superamento dell'esame. 
+\subsubsection{Requisiti funzionali}
+\begin{itemize}
+    \item Menù principale che permette all'utente di scegliere il livello di gioco, consultare i comandi, iniziare una nuova partita e uscire dal gioco.
+    \item Gestione dell'input simultaneo per il movimento e la gestione dell'arma.
+    \item Movimento di base dei nemici.
+    \item Implementazione di un'arma a fuoco automatico che verrà puntata in base alla posizione del mouse.
+    \item Calcolo del voto finale basato su tempo di completamento del livello, danni subiti e nemici sconfitti.
+\end{itemize}
+\subsubsection{Requisiti non funzionali}
+\begin{itemize}
+    \item Il gioco dovrà risultare fluido, con un frame rate minimo di 30 FPS.
+    \item Il gioco avrà una bassa latenza di input
+\end{itemize}
+\subsection{Analisi e modello del dominio}
+Il giocatore dovrà superare una serie di livelli in cui incontrerà due tipologie di ostacoli: nemici in movimento, che possono provocargli danno, e ostacoli di tipo ambientale.
+Il giocatore potrà affrontare i nemici con l'arma in dotazione, stando attento a non esaurire la vita a sua disposizione, o scegliere di evitarli quando possibile.
+Gli ostacoli ambientali invece consisteranno in buchi da saltare, muri da scavalcare e spine da evitare.
+Alla fine del livello il personaggio si troverà ad affrontare un boss finale che disporrà di una quantità superiore di punti vita e arrecherà più danno rispetto ai nemici comuni.
+
+\section{Design}
+\subsection{Architettura}
+\subsection{Design dettagliato}
+\subsubsection{Livia Cardaccia}
+\subsubsection{Denise Nanni}
+\subsubsection{Giovanni Prete}
+\subsubsection{Matteo Sartini}
+\section{Sviluppo}
+\subsection{Testing automatizzato}
+\subsection{Metodologie di lavoro}
+\subsection{Note di sviluppo}
+\section{Commenti finali}
+\subsection{Autovalutazione e lavori futuri}
+\subsection{Difficoltà incontrate e commenti per i docenti}
+
+
+\end{document}
