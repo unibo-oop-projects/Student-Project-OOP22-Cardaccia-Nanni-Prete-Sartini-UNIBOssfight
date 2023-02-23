@@ -8,7 +8,7 @@ public class WeaponImpl implements Weapon {
     private int damage;
 
     public WeaponImpl(int damage){
-
+        //TO DO
     }
 
     @Override
@@ -22,7 +22,7 @@ public class WeaponImpl implements Weapon {
     }
 
     @Override
-    public void fire(Transform angle) {
+    public void fire(Transform target) {
         //TO DO
         //Maybe return bullet to draw
         //Find the trajectory to the target and create the bullet object
