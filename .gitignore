@@ -1,0 +1,12 @@
+*.class
+*.log
+*.bin
+*.tmp
+*.lock
+*.o
+*.probe
+
+bin/
+build/
+.gradle/
+
