@@ -1,4 +1,6 @@
-package core;
+package core.entity;
+
+import core.component.Component;
 
 public interface Entity {
 

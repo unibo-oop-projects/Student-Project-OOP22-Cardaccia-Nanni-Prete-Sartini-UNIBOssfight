@@ -1,4 +1,6 @@
-package core;
+package core.level;
+
+import core.entity.Entity;
 
 import java.util.List;
 

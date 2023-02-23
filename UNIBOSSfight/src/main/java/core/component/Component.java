@@ -1,4 +1,4 @@
-package core;
+package core.component;
 
 public interface Component {
 
