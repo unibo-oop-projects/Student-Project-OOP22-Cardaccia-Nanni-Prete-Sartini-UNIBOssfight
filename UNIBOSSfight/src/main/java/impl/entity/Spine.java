@@ -2,6 +2,7 @@ package impl.entity;
 
 import core.component.Component;
 import core.entity.Obstacle;
+import util.Vector2d;
 
 public class Spine implements Obstacle {
 
@@ -18,7 +19,7 @@ public class Spine implements Obstacle {
     }
 
     @Override
-    public Component getPosition() {
+    public Vector2d getPosition() {
         return null;
     }
 

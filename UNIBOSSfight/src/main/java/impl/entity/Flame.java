@@ -1,7 +1,7 @@
 package impl.entity;
 
-import core.component.Component;
 import core.entity.Obstacle;
+import util.Vector2d;
 
 public class Flame implements Obstacle {
 
@@ -18,7 +18,7 @@ public class Flame implements Obstacle {
     }
 
     @Override
-    public Component getPosition() {
+    public Vector2d getPosition() {
         return null;
     }
 
