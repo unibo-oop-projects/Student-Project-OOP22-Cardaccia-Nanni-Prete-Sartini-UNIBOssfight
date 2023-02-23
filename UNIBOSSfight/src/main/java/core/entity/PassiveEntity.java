@@ -1,6 +1,6 @@
 package core.entity;
 
-public interface PassiveEntity {
+public interface PassiveEntity extends Entity {
     boolean isHarmuful();
 
     float getDamage();
