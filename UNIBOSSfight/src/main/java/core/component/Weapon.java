@@ -4,5 +4,5 @@ public interface Weapon extends Component {
 
     int getDamage();
 
-    void fire( double angle );
+    void fire( Transform target );
 }
