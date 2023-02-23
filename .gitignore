@@ -5,6 +5,7 @@
 *.lock
 *.o
 *.probe
+*.xml
 
 bin/
 build/
