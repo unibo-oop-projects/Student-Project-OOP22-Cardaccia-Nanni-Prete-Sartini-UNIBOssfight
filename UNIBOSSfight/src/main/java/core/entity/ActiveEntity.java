@@ -2,7 +2,7 @@ package core.entity;
 
 public interface ActiveEntity extends Entity {
 
-    void setHealth();
+    void setHealth( int health );
 
     int getHealth();
 

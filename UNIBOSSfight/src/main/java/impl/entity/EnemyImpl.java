@@ -11,7 +11,7 @@ public class EnemyImpl implements Enemy {
     }
 
     @Override
-    public void setHealth() {
+    public void setHealth(int health) {
 
     }
 
