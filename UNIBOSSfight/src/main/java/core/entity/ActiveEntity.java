@@ -1,10 +1,10 @@
 package core.entity;
 
-public interface ActiveEntity extends Entity{
+public interface ActiveEntity extends Entity {
 
-    void setDamage();
+    void setHealth();
 
-    float getDamage();
+    int getHealth();
 
     void attack();
 
