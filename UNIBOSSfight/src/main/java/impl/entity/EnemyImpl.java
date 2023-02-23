@@ -2,6 +2,7 @@ package impl.entity;
 
 import core.component.Component;
 import core.entity.Enemy;
+import util.Vector2d;
 
 public class EnemyImpl implements Enemy {
 
@@ -36,7 +37,7 @@ public class EnemyImpl implements Enemy {
     }
 
     @Override
-    public Component getPosition() {
+    public Vector2d getPosition() {
         return null;
     }
 }

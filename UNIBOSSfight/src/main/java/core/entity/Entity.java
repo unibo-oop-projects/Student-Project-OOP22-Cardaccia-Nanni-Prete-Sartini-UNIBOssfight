@@ -1,11 +1,12 @@
 package core.entity;
 
 import core.component.Component;
+import util.Vector2d;
 
 public interface Entity {
 
     void update();
 
-    Component getPosition();
+    Vector2d getPosition();
 
 }

@@ -16,6 +16,7 @@ repositories {
     mavenCentral()
 }
 
+//To run: ./gradlew -PmainClass=Main run
 application {
     mainClass.set(project.properties["mainClass"].toString())
 }
