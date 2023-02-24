@@ -1,8 +1,8 @@
 package core.component;
 
+import core.entity.Bullet;
+
 public interface Weapon extends Component {
 
-    int getDamage();
-
-    void fire(Transform target);
+    Bullet fire(Transform target);
 }

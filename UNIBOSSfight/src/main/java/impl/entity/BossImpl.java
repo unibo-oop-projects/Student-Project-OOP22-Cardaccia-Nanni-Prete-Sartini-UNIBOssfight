@@ -53,7 +53,7 @@ public class BossImpl implements Boss {
     @Override
     public int getDamage() {
         //TODO
-        return this.weapon.getDamage();
+        return this.getDamage();
     }
 
     @Override
