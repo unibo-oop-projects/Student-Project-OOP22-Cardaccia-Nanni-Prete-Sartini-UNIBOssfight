@@ -1,6 +1,6 @@
 package core.entity;
 
-import core.component.Component;
+import core.component.Hitbox;
 import javafx.scene.canvas.GraphicsContext;
 import util.Vector2d;
 
@@ -13,5 +13,7 @@ public interface Entity {
     void update();
 
     Vector2d getPosition();
+
+    Hitbox getHitbox();
 
 }
