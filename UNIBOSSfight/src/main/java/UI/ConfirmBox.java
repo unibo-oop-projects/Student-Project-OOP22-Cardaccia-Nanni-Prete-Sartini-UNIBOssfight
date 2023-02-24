@@ -13,7 +13,8 @@ public class ConfirmBox {
 
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
-        window.setMinWidth(300);
+        window.setMinWidth(400);
+        window.setMinHeight(300);
 
         Label label = new Label();
         label.setText(message);
@@ -23,7 +24,7 @@ public class ConfirmBox {
 
         yesButton.setOnAction(e -> {
             answer = true;
-            window.close();
+            System.exit(0);
         });
 
         noButton.setOnAction(e -> {
@@ -31,9 +32,9 @@ public class ConfirmBox {
             window.close();
         });
 
-        VBox layout = new VBox();
+        VBox layout = new VBox(10);
         layout.getChildren().addAll(label, yesButton, noButton);
-        layout.setAlignment(Pos.BOTTOM_CENTER);
+        layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout);
         window.setScene(scene);
