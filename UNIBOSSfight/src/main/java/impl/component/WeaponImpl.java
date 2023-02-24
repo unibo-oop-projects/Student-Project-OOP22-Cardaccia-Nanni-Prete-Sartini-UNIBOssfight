@@ -18,7 +18,7 @@ public class WeaponImpl implements Weapon {
 
     @Override
     public int getDamage() {
-        return 0;
+        return this.damage;
     }
 
     @Override

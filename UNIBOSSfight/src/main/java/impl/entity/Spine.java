@@ -2,6 +2,8 @@ package impl.entity;
 
 import core.component.Component;
 import core.entity.Obstacle;
+import javafx.scene.canvas.GraphicsContext;
+import util.Vector2d;
 
 public class Spine implements Obstacle {
 
@@ -12,13 +14,24 @@ public class Spine implements Obstacle {
         this.isHarmful = true;
         this.damage = 2;
     }
+
+    @Override
+    public boolean isDisplayed() {
+        return false;
+    }
+
+    @Override
+    public void render(GraphicsContext gc) {
+
+    }
+
     @Override
     public void update() {
 
     }
 
     @Override
-    public Component getPosition() {
+    public Vector2d getPosition() {
         return null;
     }
 

@@ -2,6 +2,7 @@ package impl.entity;
 
 import core.component.Component;
 import core.entity.Enemy;
+import javafx.scene.canvas.GraphicsContext;
 import util.Vector2d;
 
 public class EnemyImpl implements Enemy {
@@ -29,6 +30,16 @@ public class EnemyImpl implements Enemy {
     @Override
     public boolean isDead() {
         return false;
+    }
+
+    @Override
+    public boolean isDisplayed() {
+        return false;
+    }
+
+    @Override
+    public void render(GraphicsContext gc) {
+
     }
 
     @Override
