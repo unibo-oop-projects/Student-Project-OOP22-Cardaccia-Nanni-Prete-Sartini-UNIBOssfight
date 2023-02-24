@@ -1,6 +1,6 @@
 package impl.entity;
 
-import core.component.Component;
+import core.component.Hitbox;
 import core.entity.Obstacle;
 import javafx.scene.canvas.GraphicsContext;
 import util.Vector2d;
@@ -9,6 +9,8 @@ public class Flame implements Obstacle {
 
     private final boolean isHarmful;
     private final int damage;
+    private Vector2d flamePosition;
+    private Hitbox flameHitbox;
 
     public Flame() {
         this.isHarmful = true;
@@ -32,7 +34,12 @@ public class Flame implements Obstacle {
 
     @Override
     public Vector2d getPosition() {
-        return null;
+        return this.flamePosition;
+    }
+
+    @Override
+    public Hitbox getHitbox() {
+        return this.flameHitbox;
     }
 
     @Override
