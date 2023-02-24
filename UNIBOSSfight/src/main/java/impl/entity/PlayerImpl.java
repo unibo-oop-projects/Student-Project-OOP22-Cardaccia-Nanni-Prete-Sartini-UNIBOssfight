@@ -1,5 +1,6 @@
 package impl.entity;
 
+import core.component.Hitbox;
 import core.component.Renderer;
 import core.component.Transform;
 import core.entity.ActiveEntity;
@@ -86,5 +87,10 @@ public class PlayerImpl implements ActiveEntity {
     @Override
     public Vector2d getPosition() {
         return this.position.getPosition();
+    }
+
+    @Override
+    public Hitbox getHitbox() {
+        return null;//TODO
     }
 }

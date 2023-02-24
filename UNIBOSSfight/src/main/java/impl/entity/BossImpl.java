@@ -1,6 +1,7 @@
 package impl.entity;
 
 import core.component.Component;
+import core.component.Hitbox;
 import core.component.Transform;
 import core.component.Weapon;
 import core.entity.Boss;
@@ -35,12 +36,12 @@ public class BossImpl implements Boss {
 
     @Override
     public void attack() {
-        //TO DO
+        //TODO
     }
 
     @Override
     public boolean isDead() {
-        //TO REWORK
+        //TODO
         return  this.health <= 0; //HP below 0
     }
 
@@ -51,27 +52,32 @@ public class BossImpl implements Boss {
 
     @Override
     public int getDamage() {
-        //TO REWORK
+        //TODO
         return this.weapon.getDamage();
     }
 
     @Override
     public boolean isDisplayed() {
-        return false;
+        return false;//TODO
     }
 
     @Override
     public void render(GraphicsContext gc) {
-
+        //TODO
     }
 
     @Override
     public void update() {
-        //TO DO
+        //TODO
     }
 
     @Override
     public Vector2d getPosition() {
         return this.position.getPosition();
+    }
+
+    @Override
+    public Hitbox getHitbox() {
+        return null;//TODO
     }
 }

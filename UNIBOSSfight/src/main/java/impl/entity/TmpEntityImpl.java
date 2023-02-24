@@ -1,5 +1,7 @@
 package impl.entity;
 
+import com.sun.javafx.scene.text.TextLayout;
+import core.component.Hitbox;
 import core.component.Renderer;
 import core.component.Transform;
 import core.entity.ActiveEntity;
@@ -14,6 +16,7 @@ public class TmpEntityImpl implements ActiveEntity {
 
     private Transform position;
     private Renderer renderer;
+    private Hitbox hitbox;
 
     //TODO: aggiungere classe util HitBox
     private final Integer height, width;
@@ -31,6 +34,8 @@ public class TmpEntityImpl implements ActiveEntity {
                 super.update();
             }
         };
+
+        //TODO init hitbox
     }
 
     @Override
@@ -79,5 +84,10 @@ public class TmpEntityImpl implements ActiveEntity {
     @Override
     public Vector2d getPosition() {
         return this.position.getPosition();
+    }
+
+    @Override
+    public Hitbox getHitbox() {
+        return null;//TODO
     }
 }
