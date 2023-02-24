@@ -1,25 +1,42 @@
 package core.component;
 
-import com.sun.javafx.scene.text.TextLayout;
 import util.Vector2d;
 
 public abstract class Hitbox implements Component {
 
-    private int lateralOffset;
-    private int Height;
-    private Vector2d currentPosition;
-    private Vector2d lastPosition;
+    private double lateralOffset;
+    private double height;
+    private Vector2d position;
+    private double leftSide, rightSide, topSide, bottomSide;
 
     public Hitbox(int latOffset, int height, Vector2d startingPosition){
         this.lateralOffset = latOffset;
-        this.Height = height;
-        this.currentPosition = startingPosition;
-        this.lastPosition = startingPosition;
+        this.height = height;
+        this.position = startingPosition;
+
+        findBorders(this.position);
     }
 
-    boolean Collide(Hitbox target){
+    boolean collide(Hitbox target){
+
+        //X axis collisions
+        if(this.rightSide >= target.leftSide && this.leftSide <= target.rightSide && this.bottomSide <= target.topSide && this.topSide >= target.bottomSide){
+            return  true;
+        }
+
         return false;
     }
 
+    public void update(Vector2d newPos){
+        this.position = newPos;
 
+        findBorders(this.position);
+    }
+
+    private void findBorders(Vector2d pos){
+        this.leftSide = pos.getX() - this.lateralOffset;
+        this.rightSide = pos.getX() + this.lateralOffset;
+        this.topSide = pos.getY() + this.height;
+        this.bottomSide = pos.getY();
+    }
 }

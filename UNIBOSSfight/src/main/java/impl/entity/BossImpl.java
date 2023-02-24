@@ -4,6 +4,7 @@ import core.component.Component;
 import core.component.Transform;
 import core.component.Weapon;
 import core.entity.Boss;
+import javafx.scene.canvas.GraphicsContext;
 import util.Vector2d;
 
 import javax.sound.midi.Track;
@@ -56,6 +57,17 @@ public class BossImpl implements Boss {
     public int getDamage() {
         //TO REWORK
         return this.weapon.getDamage();
+    }
+
+    @Override
+    public boolean isDisplayed() {
+        //TO DO
+        return false;
+    }
+
+    @Override
+    public void render(GraphicsContext gc) {
+        //TO DO
     }
 
     @Override
