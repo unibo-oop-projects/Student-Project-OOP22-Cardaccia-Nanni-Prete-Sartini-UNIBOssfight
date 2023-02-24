@@ -23,7 +23,7 @@ public class AlertBox {
 
         VBox layout = new VBox();
         layout.getChildren().addAll(label, closeButton);
-        layout.setAlignment(Pos.CENTER);
+        layout.setAlignment(Pos.TOP_CENTER);
 
         Scene scene = new Scene(layout);
         window.setScene(scene);

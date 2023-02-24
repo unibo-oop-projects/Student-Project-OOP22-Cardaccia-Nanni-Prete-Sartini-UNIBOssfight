@@ -1,11 +1,8 @@
 package UI;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -13,8 +10,9 @@ import javafx.stage.Stage;
 public class Menu extends Application {
 
     Stage window;
-    Button button;
-    Scene scene1, scene2;
+    Button buttonAlert;
+    Button buttonConfirm;
+    Scene scene, scene1, scene2;
 
 
     @Override
@@ -49,14 +47,21 @@ public class Menu extends Application {
         /*Code for the alert box*/
 
         this.window = primaryStage;
-        window.setTitle("Trying alert boxes");
+        window.setTitle("Examples");
 
-        button = new Button("Click me");
-        button.setOnAction(e -> AlertBox.display("Title of the window", "Some kind of alert"));
+        buttonAlert = new Button("Alert box");
+        buttonAlert.setOnAction(e -> AlertBox.display("Alert box", "Some kind of alert"));
 
-        StackPane layout = new StackPane();
-        layout.getChildren().add(button);
-        Scene scene = new Scene(layout, 300,250);
+        buttonConfirm = new Button("Confirm box");
+        buttonConfirm.setOnAction(e -> {
+            var res = ConfirmBox.display("Confirm box",
+                    "Are you sure you want to quit the game?");
+            System.out.println(res);
+        });
+
+        VBox layout1 = new VBox(20);
+        layout1.getChildren().addAll(buttonConfirm, buttonAlert);
+        scene = new Scene(layout1, 200, 200);
         window.setScene(scene);
         window.show();
 
