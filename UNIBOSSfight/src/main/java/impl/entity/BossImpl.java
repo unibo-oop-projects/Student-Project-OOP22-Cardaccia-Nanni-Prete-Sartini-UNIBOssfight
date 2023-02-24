@@ -4,6 +4,7 @@ import core.component.Component;
 import core.component.Transform;
 import core.component.Weapon;
 import core.entity.Boss;
+import javafx.scene.canvas.GraphicsContext;
 import util.Vector2d;
 
 import javax.sound.midi.Track;
@@ -40,11 +41,7 @@ public class BossImpl implements Boss {
     @Override
     public boolean isDead() {
         //TO REWORK
-        if(this.health <= 0){
-            return  true; //HP below 0
-        }
-
-        return false;//HP above 0
+        return  this.health <= 0; //HP below 0
     }
 
     @Override
@@ -56,6 +53,16 @@ public class BossImpl implements Boss {
     public int getDamage() {
         //TO REWORK
         return this.weapon.getDamage();
+    }
+
+    @Override
+    public boolean isDisplayed() {
+        return false;
+    }
+
+    @Override
+    public void render(GraphicsContext gc) {
+
     }
 
     @Override
