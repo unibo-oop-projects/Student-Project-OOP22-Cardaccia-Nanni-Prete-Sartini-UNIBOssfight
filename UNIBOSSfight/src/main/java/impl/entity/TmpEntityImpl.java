@@ -1,14 +1,12 @@
 package impl.entity;
 
-import com.sun.javafx.scene.text.TextLayout;
 import core.component.Hitbox;
 import core.component.Renderer;
 import core.component.Transform;
 import core.entity.ActiveEntity;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import util.Vector2d;
-
 
 
 public class TmpEntityImpl implements ActiveEntity {
@@ -82,7 +80,7 @@ public class TmpEntityImpl implements ActiveEntity {
     }
 
     @Override
-    public Vector2d getPosition() {
+    public Point2D getPosition() {
         return this.position.getPosition();
     }
 

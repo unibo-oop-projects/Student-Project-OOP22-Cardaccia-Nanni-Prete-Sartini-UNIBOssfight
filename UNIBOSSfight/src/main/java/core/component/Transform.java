@@ -1,13 +1,13 @@
 package core.component;
 
-import util.Vector2d;
+import javafx.geometry.Point2D;
 
 public abstract class Transform implements Component {
 
-    private Vector2d position;
+    private Point2D position;
     private float rotation;
 
-    public Transform(Vector2d position, float rotation) {
+    public Transform(Point2D position, float rotation) {
         this.position = position;
         this.rotation = rotation;
     }
@@ -15,10 +15,9 @@ public abstract class Transform implements Component {
     public abstract void update();
 
     public void move (int x, int y) {
-        this.position.translate(x, y);
-    }
+        this.position = this.position.add(x, y);    }
 
-    public Vector2d getPosition() {
-        return this.position.copyOf();
+    public Point2D getPosition() {
+        return new Point2D(this.position.getX(), this.position.getY());
     }
 }

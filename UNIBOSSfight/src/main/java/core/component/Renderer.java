@@ -1,8 +1,8 @@
 package core.component;
 
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import util.Vector2d;
 
 public abstract class Renderer implements Component{
 
@@ -22,7 +22,7 @@ public abstract class Renderer implements Component{
 
   }
 
-  public void render(GraphicsContext gc, Vector2d position) {
+  public void render(GraphicsContext gc, Point2D position) {
     gc.setFill(this.color);
     gc.fillRect(position.getX() - width / 2 , position.getY()-height, width, height);
     gc.setFill(Color.RED);

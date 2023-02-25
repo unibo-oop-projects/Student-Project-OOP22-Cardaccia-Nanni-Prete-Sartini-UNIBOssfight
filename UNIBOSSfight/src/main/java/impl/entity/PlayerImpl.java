@@ -4,10 +4,9 @@ import core.component.Hitbox;
 import core.component.Renderer;
 import core.component.Transform;
 import core.entity.ActiveEntity;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import util.Vector2d;
-
 
 
 public class PlayerImpl implements ActiveEntity {
@@ -85,7 +84,7 @@ public class PlayerImpl implements ActiveEntity {
     }
 
     @Override
-    public Vector2d getPosition() {
+    public Point2D getPosition() {
         return this.position.getPosition();
     }
 

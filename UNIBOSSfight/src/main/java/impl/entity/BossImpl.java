@@ -1,15 +1,11 @@
 package impl.entity;
 
-import core.component.Component;
 import core.component.Hitbox;
 import core.component.Transform;
 import core.component.Weapon;
 import core.entity.Boss;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
-import util.Vector2d;
-
-import javax.sound.midi.Track;
-import javax.xml.crypto.dsig.TransformService;
 
 public class BossImpl implements Boss {
 
@@ -72,7 +68,7 @@ public class BossImpl implements Boss {
     }
 
     @Override
-    public Vector2d getPosition() {
+    public Point2D getPosition() {
         return this.position.getPosition();
     }
 

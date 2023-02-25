@@ -2,14 +2,14 @@ package impl.entity;
 
 import core.component.Hitbox;
 import core.entity.Obstacle;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
-import util.Vector2d;
 
 public class Spine implements Obstacle {
 
     private final boolean isHarmful;
     private final int damage;
-    private Vector2d spinePosition;
+    private Point2D spinePosition;
     private Hitbox spineHitbox;
 
     public Spine() {
@@ -33,7 +33,7 @@ public class Spine implements Obstacle {
     }
 
     @Override
-    public Vector2d getPosition() {
+    public javafx.geometry.Point2D getPosition() {
         return this.spinePosition;
     }
 

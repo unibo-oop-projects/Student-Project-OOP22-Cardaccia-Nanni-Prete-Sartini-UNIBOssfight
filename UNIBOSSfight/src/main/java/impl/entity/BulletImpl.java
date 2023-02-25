@@ -3,17 +3,17 @@ package impl.entity;
 import core.component.Hitbox;
 import core.entity.Bullet;
 import javafx.scene.canvas.GraphicsContext;
-import util.Vector2d;
+import javafx.geometry.Point2D;
 
 public class BulletImpl implements Bullet {
 
     int damage;
-    Vector2d position;
-    Vector2d target;
-    Vector2d trajectory;
+    Point2D position;
+    Point2D target;
+    Point2D trajectory;
     Hitbox hitbox;
 
-    public BulletImpl(Vector2d startingPos, Vector2d target, int damage, Hitbox hitbox){
+    public BulletImpl(Point2D startingPos, Point2D target, int damage, Hitbox hitbox){
         this.position = startingPos;
         this.target = target;
         this.damage = damage;
@@ -42,7 +42,7 @@ public class BulletImpl implements Bullet {
     }
 
     @Override
-    public Vector2d getPosition() {
+    public javafx.geometry.Point2D getPosition() {
         return this.position;
     }
 

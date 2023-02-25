@@ -1,10 +1,9 @@
 package impl.entity;
 
-import core.component.Component;
 import core.component.Hitbox;
 import core.entity.Enemy;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
-import util.Vector2d;
 
 public class EnemyImpl implements Enemy {
 
@@ -49,7 +48,7 @@ public class EnemyImpl implements Enemy {
     }
 
     @Override
-    public Vector2d getPosition() {
+    public Point2D getPosition() {
         return null;
     }
 

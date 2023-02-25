@@ -2,11 +2,11 @@ package impl.entity;
 
 import core.component.Hitbox;
 import core.entity.Brick;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
-import util.Vector2d;
 
 public class Platform implements Brick {
-    private Vector2d position;
+    private Point2D position;
     private Hitbox platformHitbox;
     private final boolean isHarmful;
 
@@ -30,7 +30,7 @@ public class Platform implements Brick {
     }
 
     @Override
-    public Vector2d getPosition() {
+    public Point2D getPosition() {
         return this.position;
     }
 

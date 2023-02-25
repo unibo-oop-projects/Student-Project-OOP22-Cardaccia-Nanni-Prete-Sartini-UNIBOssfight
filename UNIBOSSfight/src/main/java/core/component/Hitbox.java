@@ -1,15 +1,15 @@
 package core.component;
 
-import util.Vector2d;
+import javafx.geometry.Point2D;
 
 public abstract class Hitbox implements Component {
 
     private double lateralOffset;
     private double height;
-    private Vector2d position;
+    private Point2D position;
     private double leftSide, rightSide, topSide, bottomSide;
 
-    public Hitbox(double latOffset, double height, Vector2d startingPosition){
+    public Hitbox(double latOffset, double height, Point2D startingPosition){
         this.lateralOffset = latOffset;
         this.height = height;
         this.position = startingPosition;
@@ -22,13 +22,13 @@ public abstract class Hitbox implements Component {
         return this.rightSide >= target.leftSide && this.leftSide <= target.rightSide && this.bottomSide <= target.topSide && this.topSide >= target.bottomSide;
     }
 
-    public void update(Vector2d newPos){
+    public void update(Point2D newPos){
         this.position = newPos;
 
         findBorders(this.position);
     }
 
-    private void findBorders(Vector2d pos){
+    private void findBorders(Point2D pos){
         this.leftSide = pos.getX() - this.lateralOffset;
         this.rightSide = pos.getX() + this.lateralOffset;
         this.topSide = pos.getY() + this.height;

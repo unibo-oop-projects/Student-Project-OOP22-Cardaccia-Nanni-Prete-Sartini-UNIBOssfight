@@ -3,12 +3,12 @@ package impl.entity;
 import core.component.Hitbox;
 import core.entity.PassiveEntity;
 import javafx.scene.canvas.GraphicsContext;
-import util.Vector2d;
+import javafx.geometry.Point2D;
 
 public class Coin implements PassiveEntity {
     private final boolean isHarmful;
     private final int value;
-    private Vector2d coinPosition;
+    private Point2D coinPosition;
     private Hitbox coinHitbox;
 
     public Coin() {
@@ -32,7 +32,7 @@ public class Coin implements PassiveEntity {
     }
 
     @Override
-    public Vector2d getPosition() {
+    public javafx.geometry.Point2D getPosition() {
         return this.coinPosition;
     }
 

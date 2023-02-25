@@ -8,20 +8,20 @@ import impl.entity.TmpEntityImpl;
 import impl.level.LevelImpl;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import util.Vector2d;
 
 import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class Game extends Application {
 
-    private Level currentLevel = new LevelImpl(new PlayerImpl(100, new Transform(new Vector2d(300, 300), 0) {
+    private Level currentLevel = new LevelImpl(new PlayerImpl(100, new Transform(new Point2D(300, 300), 0) {
         @Override
         public void update() {
 
@@ -52,7 +52,7 @@ public class Game extends Application {
 
         Scene currentScene = new Scene(new StackPane(canvas));
 
-        this.currentLevel.addEntity(new TmpEntityImpl(100, new Transform(new Vector2d(500, 500), 0) {
+        this.currentLevel.addEntity(new TmpEntityImpl(100, new Transform(new Point2D(500, 500), 0) {
             @Override
             public void update() {
 

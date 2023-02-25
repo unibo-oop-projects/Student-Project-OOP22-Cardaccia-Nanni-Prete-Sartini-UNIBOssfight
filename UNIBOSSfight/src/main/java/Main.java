@@ -8,7 +8,7 @@ public class Main {
         Application.launch(Game.class, args);
 
         //Uncomment the following lines to see the temporary menu
-        //Menu menu = new Menu();
+        Menu menu = new Menu();
         //Application.launch(Menu.class, args);
 
     }
