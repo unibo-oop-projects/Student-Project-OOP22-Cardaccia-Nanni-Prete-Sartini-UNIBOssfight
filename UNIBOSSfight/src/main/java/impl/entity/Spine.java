@@ -10,10 +10,11 @@ public class Spine implements Obstacle {
     private final boolean isHarmful;
     private final int damage;
     private Point2D spinePosition;
-    private Hitbox spineHitbox;
+    private final Hitbox spineHitbox;
 
-    public Spine() {
+    public Spine(Hitbox hitbox) {
         this.isHarmful = true;
+        this.spineHitbox = hitbox;
         this.damage = 2;
     }
 
@@ -33,7 +34,7 @@ public class Spine implements Obstacle {
     }
 
     @Override
-    public javafx.geometry.Point2D getPosition() {
+    public Point2D getPosition() {
         return this.spinePosition;
     }
 
@@ -48,7 +49,7 @@ public class Spine implements Obstacle {
     }
 
     @Override
-    public boolean isHarmuful() {
+    public boolean isHarmful() {
         return this.isHarmful;
     }
 }

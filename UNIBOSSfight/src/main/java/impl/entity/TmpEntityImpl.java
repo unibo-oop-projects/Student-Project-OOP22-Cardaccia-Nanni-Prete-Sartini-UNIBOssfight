@@ -15,11 +15,7 @@ public class TmpEntityImpl implements ActiveEntity {
     private Transform position;
     private Renderer renderer;
     private Hitbox hitbox;
-
-    //TODO: aggiungere classe util HitBox
     private final Integer height, width;
-
-
 
     public TmpEntityImpl(int health, Transform position, Integer height, Integer width) {
         this.health = health;

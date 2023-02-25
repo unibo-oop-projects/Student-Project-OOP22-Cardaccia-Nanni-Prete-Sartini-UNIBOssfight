@@ -7,11 +7,12 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Platform implements Brick {
     private Point2D position;
-    private Hitbox platformHitbox;
+    private final Hitbox platformHitbox;
     private final boolean isHarmful;
 
-    public Platform() {
+    public Platform(Hitbox hitbox) {
         this.isHarmful = false;
+        this.platformHitbox = hitbox;
     }
 
     @Override
@@ -40,7 +41,7 @@ public class Platform implements Brick {
     }
 
     @Override
-    public boolean isHarmuful() {
+    public boolean isHarmful() {
         return this.isHarmful;
     }
 }

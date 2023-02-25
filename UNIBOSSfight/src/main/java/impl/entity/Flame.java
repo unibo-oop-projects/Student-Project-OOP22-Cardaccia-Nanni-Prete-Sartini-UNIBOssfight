@@ -10,9 +10,10 @@ public class Flame implements Obstacle {
     private final boolean isHarmful;
     private final int damage;
     private Point2D flamePosition;
-    private Hitbox flameHitbox;
+    private final Hitbox flameHitbox;
 
-    public Flame() {
+    public Flame(Hitbox hitbox) {
+        this.flameHitbox = hitbox;
         this.isHarmful = true;
         this.damage = 1;
     }
@@ -33,7 +34,7 @@ public class Flame implements Obstacle {
     }
 
     @Override
-    public javafx.geometry.Point2D getPosition() {
+    public Point2D getPosition() {
         return this.flamePosition;
     }
 
@@ -48,7 +49,7 @@ public class Flame implements Obstacle {
     }
 
     @Override
-    public boolean isHarmuful() {
+    public boolean isHarmful() {
         return this.isHarmful;
     }
 }
