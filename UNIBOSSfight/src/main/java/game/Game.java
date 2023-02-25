@@ -1,6 +1,6 @@
 package game;
 
-import core.component.Renderer;
+import UI.ConfirmBox;
 import core.component.Transform;
 import core.level.Level;
 import impl.entity.PlayerImpl;
@@ -21,6 +21,8 @@ import java.util.Queue;
 
 public class Game extends Application {
 
+    Stage gameWindow;
+
     private Level currentLevel = new LevelImpl(new PlayerImpl(100, new Transform(new Point2D(300, 300), 0) {
         @Override
         public void update() {
@@ -35,7 +37,13 @@ public class Game extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("UNIBOssfight");
+
+        this.gameWindow = primaryStage;
+        this.gameWindow.setTitle("UNIBOssfight");
+        this.gameWindow.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
 
         Canvas canvas = new Canvas(600, 600);
 
@@ -67,8 +75,8 @@ public class Game extends Application {
             }
         });
 
-        primaryStage.setScene(currentScene);
-        primaryStage.show();
+        this.gameWindow.setScene(currentScene);
+        this.gameWindow.show();
 
     }
 
@@ -101,4 +109,14 @@ public class Game extends Application {
 
         }
     }
+
+    private void closeProgram() {
+        Boolean answer = ConfirmBox.display("Confirm box",
+                "Are you sure you want to quit the game?");
+        if (answer) {
+            gameWindow.close();
+        }
+
+    }
+
 }
