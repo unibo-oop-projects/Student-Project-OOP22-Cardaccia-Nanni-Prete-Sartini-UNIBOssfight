@@ -17,28 +17,24 @@ public class EnemyImpl implements Enemy {
 
     }
 
-    @Override
     public int getHealth() {
         return 0;
     }
 
-    @Override
     public void attack() {
 
     }
 
-    @Override
     public boolean isDead() {
         return false;
     }
 
     @Override
-    public boolean isDisplayed() {
+    public boolean isDisplayed(Point2D position) {
         return false;
     }
-
     @Override
-    public void render(GraphicsContext gc) {
+    public void render(GraphicsContext gc, Point2D position) {
 
     }
 

@@ -26,14 +26,13 @@ public class BulletImpl implements Bullet {
     }
 
     @Override
-    public boolean isDisplayed() {
-        //TODO
+    public boolean isDisplayed(Point2D position) {
         return false;
     }
 
     @Override
-    public void render(GraphicsContext gc) {
-        //TODO
+    public void render(GraphicsContext gc, Point2D position) {
+
     }
 
     @Override
@@ -42,7 +41,7 @@ public class BulletImpl implements Bullet {
     }
 
     @Override
-    public javafx.geometry.Point2D getPosition() {
+    public Point2D getPosition() {
         return this.position;
     }
 

@@ -18,7 +18,7 @@ public class Flame implements PassiveEntity {
     }
 
     @Override
-    public boolean isDisplayed() {
+    public boolean isDisplayed(Point2D position) {
         return false;
     }
 
@@ -43,7 +43,7 @@ public class Flame implements PassiveEntity {
     }
 
     @Override
-    public void render(GraphicsContext gc) {
+    public void render(GraphicsContext gc, Point2D position) {
 
     }
 

@@ -25,17 +25,14 @@ public class BossImpl implements Boss {
         this.health = health;
     }
 
-    @Override
     public int getHealth() {
         return this.health;
     }
 
-    @Override
     public void attack() {
         //TODO
     }
 
-    @Override
     public boolean isDead() {
         //TODO
         return  this.health <= 0; //HP below 0
@@ -52,12 +49,10 @@ public class BossImpl implements Boss {
         return this.getDamage();
     }
 
-    @Override
     public boolean isDisplayed() {
         return false;//TODO
     }
 
-    @Override
     public void render(GraphicsContext gc) {
         //TODO
     }

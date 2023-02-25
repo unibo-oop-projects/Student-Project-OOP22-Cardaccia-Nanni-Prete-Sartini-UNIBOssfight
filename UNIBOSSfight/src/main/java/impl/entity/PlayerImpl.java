@@ -13,6 +13,7 @@ public class PlayerImpl extends ActiveEntity {
 
     //TODO: aggiungere classe util HitBox
     private final Integer height, width;
+    private Hitbox playerHitbox;
 
 
 
@@ -51,6 +52,6 @@ public class PlayerImpl extends ActiveEntity {
 
     @Override
     public Hitbox getHitbox() {
-        return null;//TODO
+        return this.playerHitbox;
     }
 }

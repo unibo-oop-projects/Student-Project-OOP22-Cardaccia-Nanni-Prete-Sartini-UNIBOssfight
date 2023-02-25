@@ -21,7 +21,7 @@ public abstract class Wall implements PassiveEntity {
         return this.isHarmful;
     }
     @Override
-    public boolean isDisplayed() {
+    public boolean isDisplayed(Point2D position) {
         return false;
     }
 
@@ -36,7 +36,7 @@ public abstract class Wall implements PassiveEntity {
     }
 
     @Override
-    public void render(GraphicsContext gc) {
+    public void render(GraphicsContext gc, Point2D position) {
 
     }
 

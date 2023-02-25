@@ -17,15 +17,14 @@ public class Spine implements PassiveEntity {
         this.spineHitbox = hitbox;
         this.damage = 2;
     }
-
-    @Override
-    public boolean isDisplayed() {
-        return false;
-    }
-
     @Override
     public boolean isHarmful() {
         return this.isHarmful;
+    }
+
+    @Override
+    public boolean isDisplayed(Point2D position) {
+        return false;
     }
 
     @Override
@@ -44,7 +43,7 @@ public class Spine implements PassiveEntity {
     }
 
     @Override
-    public void render(GraphicsContext gc) {
+    public void render(GraphicsContext gc, Point2D position) {
 
     }
 
