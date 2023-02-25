@@ -1,13 +1,17 @@
 package impl.entity;
 
 import core.component.Hitbox;
+import core.component.Transform;
 import core.entity.Enemy;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
-public class EnemyImpl implements Enemy {
+public class EnemyImpl extends Enemy {
 
-    @Override
+    public EnemyImpl(int health, Transform position) {
+        super(health, position);
+    }
+
     public int getDamage() {
         return 0;
     }
@@ -33,6 +37,7 @@ public class EnemyImpl implements Enemy {
     public boolean isDisplayed(Point2D position) {
         return false;
     }
+
     @Override
     public void render(GraphicsContext gc, Point2D position) {
 

@@ -7,7 +7,7 @@ import core.entity.Boss;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
-public class BossImpl implements Boss {
+public class BossImpl extends Boss {
 
     //Variables
     private Transform position;
@@ -15,6 +15,7 @@ public class BossImpl implements Boss {
     private Weapon weapon;
 
     public BossImpl(Transform startingPos, int health, Weapon weapon){
+        super(health, startingPos);
         this.position = startingPos;
         this.health = health;
         this.weapon = weapon;
@@ -38,12 +39,10 @@ public class BossImpl implements Boss {
         return  this.health <= 0; //HP below 0
     }
 
-    @Override
     public Weapon getWeapon() {
         return this.weapon;
     }
 
-    @Override
     public int getDamage() {
         //TODO
         return this.getDamage();

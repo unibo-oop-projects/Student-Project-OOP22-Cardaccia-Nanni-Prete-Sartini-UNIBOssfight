@@ -1,9 +1,16 @@
 package core.entity;
 
+import core.component.Transform;
 import core.component.Weapon;
 
-public interface Boss extends Enemy {
+public abstract class Boss extends Enemy {
 
-    Weapon getWeapon();
+    public Boss(int health, Transform position) {
+        super(health, position);
+    }
+
+    Weapon getWeapon(){
+        return null;
+    }
 
 }
