@@ -1,18 +1,18 @@
 package impl.entity;
 
 import core.component.Hitbox;
-import core.entity.Obstacle;
+import core.entity.PassiveEntity;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
-public class Spine implements Obstacle {
+public class Spine implements PassiveEntity {
 
-    private final boolean isHarmful;
-    private final int damage;
     private Point2D spinePosition;
     private final Hitbox spineHitbox;
+    private final boolean isHarmful;
+    private final int damage;
 
-    public Spine(Hitbox hitbox) {
+    public Spine(final Hitbox hitbox) {
         this.isHarmful = true;
         this.spineHitbox = hitbox;
         this.damage = 2;
@@ -24,13 +24,8 @@ public class Spine implements Obstacle {
     }
 
     @Override
-    public void render(GraphicsContext gc) {
-
-    }
-
-    @Override
-    public void update() {
-
+    public boolean isHarmful() {
+        return this.isHarmful;
     }
 
     @Override
@@ -49,7 +44,13 @@ public class Spine implements Obstacle {
     }
 
     @Override
-    public boolean isHarmful() {
-        return this.isHarmful;
+    public void render(GraphicsContext gc) {
+
     }
+
+    @Override
+    public void update() {
+
+    }
+
 }

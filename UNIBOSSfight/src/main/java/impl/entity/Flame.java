@@ -1,18 +1,17 @@
 package impl.entity;
 
 import core.component.Hitbox;
-import core.entity.Obstacle;
+import core.entity.PassiveEntity;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
-public class Flame implements Obstacle {
-
-    private final boolean isHarmful;
-    private final int damage;
+public class Flame implements PassiveEntity {
     private Point2D flamePosition;
     private final Hitbox flameHitbox;
+    private final boolean isHarmful;
+    private final int damage;
 
-    public Flame(Hitbox hitbox) {
+    public Flame(final Hitbox hitbox) {
         this.flameHitbox = hitbox;
         this.isHarmful = true;
         this.damage = 1;
@@ -24,13 +23,8 @@ public class Flame implements Obstacle {
     }
 
     @Override
-    public void render(GraphicsContext gc) {
-
-    }
-
-    @Override
-    public void update() {
-
+    public boolean isHarmful() {
+        return this.isHarmful;
     }
 
     @Override
@@ -49,7 +43,13 @@ public class Flame implements Obstacle {
     }
 
     @Override
-    public boolean isHarmful() {
-        return this.isHarmful;
+    public void render(GraphicsContext gc) {
+
     }
+
+    @Override
+    public void update() {
+
+    }
+
 }

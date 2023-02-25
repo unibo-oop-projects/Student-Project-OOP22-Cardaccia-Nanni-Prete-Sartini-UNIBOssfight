@@ -5,32 +5,27 @@ import core.entity.PassiveEntity;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.geometry.Point2D;
 
-public class Coin implements PassiveEntity {
-    private final boolean isHarmful;
-    private final int value;
+public abstract class Coin implements PassiveEntity {
     private Point2D coinPosition;
     private final Hitbox coinHitbox;
+    private final boolean isHarmful;
+    private final int value;
 
-    public Coin(Hitbox hitbox) {
-        this.coinHitbox = hitbox;
+    public Coin(final Hitbox hitbox) {
         this.isHarmful = false;
+        this.coinHitbox = hitbox;
         this.value = 1;
     }
 
     @Override
     public boolean isDisplayed() {
-        //true if pos.getx entity - pos.getx player < half screen width
+
         return false;
     }
 
     @Override
-    public void render(GraphicsContext gc) {
-
-    }
-
-    @Override
-    public void update() {
-
+    public boolean isHarmful() {
+        return this.isHarmful;
     }
 
     @Override
@@ -43,12 +38,18 @@ public class Coin implements PassiveEntity {
         return this.coinHitbox;
     }
 
-    @Override
-    public boolean isHarmful() {
-        return this.isHarmful;
-    }
-
     public int getValue() {
         return this.value;
     }
+
+    @Override
+    public void render(GraphicsContext gc) {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
+
 }

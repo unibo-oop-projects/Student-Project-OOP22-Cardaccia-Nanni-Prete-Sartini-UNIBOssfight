@@ -5,25 +5,21 @@ import core.entity.PassiveEntity;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
-public abstract class Platform implements PassiveEntity {
-    private Point2D position;
-    private final Hitbox platformHitbox;
+public abstract class Wall implements PassiveEntity {
+
+    private Point2D wallPosition;
+    private final Hitbox wallHitbox;
     private final boolean isHarmful;
 
-    //platform will eventually move
-    private final boolean isMoving;
-
-    public Platform(final Hitbox hitbox) {
+    public Wall(final Hitbox hitbox) {
         this.isHarmful = false;
-        this.isMoving = false;
-        this.platformHitbox = hitbox;
+        this.wallHitbox = hitbox;
     }
 
     @Override
     public boolean isHarmful() {
         return this.isHarmful;
     }
-
     @Override
     public boolean isDisplayed() {
         return false;
@@ -31,14 +27,13 @@ public abstract class Platform implements PassiveEntity {
 
     @Override
     public Point2D getPosition() {
-        return this.position;
+        return this.wallPosition;
     }
 
     @Override
     public Hitbox getHitbox() {
-        return this.platformHitbox;
+        return this.wallHitbox;
     }
-
 
     @Override
     public void render(GraphicsContext gc) {
