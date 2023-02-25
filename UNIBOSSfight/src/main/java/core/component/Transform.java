@@ -15,7 +15,18 @@ public abstract class Transform implements Component {
     public abstract void update();
 
     public void move (int x, int y) {
-        this.position = this.position.add(x, y);    }
+        this.position = this.position.add(x, y);
+    }
+
+    public void setGroundLevel(){
+        if(this.isUnderGroundLevel()) {
+            this.position = new Point2D(this.position.getX(), 600);
+        }
+    }
+
+    public boolean isUnderGroundLevel(){
+        return this.position.getY() > 600;
+    }
 
     public Point2D getPosition() {
         return new Point2D(this.position.getX(), this.position.getY());
