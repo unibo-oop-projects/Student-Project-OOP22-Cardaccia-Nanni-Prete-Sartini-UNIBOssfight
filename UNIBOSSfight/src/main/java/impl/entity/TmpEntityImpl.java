@@ -9,17 +9,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 
-public class TmpEntityImpl implements ActiveEntity {
+public class TmpEntityImpl extends ActiveEntity {
     private int health;
-
-    private Transform position;
-    private Renderer renderer;
     private Hitbox hitbox;
     private final Integer height, width;
 
     public TmpEntityImpl(int health, Transform position, Integer height, Integer width) {
-        this.health = health;
-        this.position = position;
+        super(health, position);
         this.height = height;
         this.width = width;
         this.renderer = new Renderer(this.height, this.width, Color.WHITE) {
@@ -37,29 +33,16 @@ public class TmpEntityImpl implements ActiveEntity {
 
     }
 
-    @Override
     public int getHealth() {
         return this.health;
     }
 
-    @Override
     public void attack() {
 
     }
 
-    @Override
     public boolean isDead() {
         return false;
-    }
-
-    @Override
-    public boolean isDisplayed() {
-        return true;
-    }
-
-    @Override
-    public void render(GraphicsContext gc) {
-        this.renderer.render(gc, this.getPosition());
     }
 
     @Override
@@ -67,20 +50,6 @@ public class TmpEntityImpl implements ActiveEntity {
 
     }
 
-    public void update(PlayerImpl.Inputs input) {
-        switch (input) {
-            case LEFT -> this.position.move(-5, 0);
-            case RIGHT -> this.position.move(5, 0);
-            case SPACE -> this.position.move(0, -5);
-        }
-    }
-
-    @Override
-    public Point2D getPosition() {
-        return this.position.getPosition();
-    }
-
-    @Override
     public Hitbox getHitbox() {
         return null;//TODO
     }
