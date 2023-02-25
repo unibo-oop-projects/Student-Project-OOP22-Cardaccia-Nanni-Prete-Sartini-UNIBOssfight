@@ -16,7 +16,7 @@ public abstract class ActiveEntity implements Entity {
     }
 
     private int health;
-    private Transform position;
+    protected Transform position;
 
     protected Renderer renderer;
 
@@ -43,7 +43,7 @@ public abstract class ActiveEntity implements Entity {
     }
 
     public void render(GraphicsContext gc, Point2D position) {
-        this.renderer.render(gc, this.getPosition().subtract(position).add(300, position.getY()));
+        this.renderer.render(gc, new Point2D(this.getPosition().subtract(position).add(300, 0).getX(), this.getPosition().getY()));
     }
 
     public boolean isDisplayed(Point2D playerPosition) {
