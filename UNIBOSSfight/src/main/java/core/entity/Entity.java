@@ -6,9 +6,9 @@ import javafx.scene.canvas.GraphicsContext;
 
 public interface Entity {
 
-    boolean isDisplayed();
+    boolean isDisplayed(Point2D position);
 
-    void render(GraphicsContext gc);
+    void render(GraphicsContext gc, Point2D position);
 
     void update();
 
