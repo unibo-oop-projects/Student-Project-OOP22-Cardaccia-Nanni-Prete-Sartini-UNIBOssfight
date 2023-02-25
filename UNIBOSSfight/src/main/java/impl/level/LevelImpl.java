@@ -33,8 +33,8 @@ public class LevelImpl implements Level {
 
 
     public void renderEntities(GraphicsContext gc) {
-        this.entities.stream().filter(Entity::isDisplayed).forEach(e -> e.render(gc));
-        this.player.render(gc);
+        this.entities.stream().filter(e -> true).forEach(e -> e.render(gc, this.player.getPosition()));
+        this.player.render(gc, this.player.getPosition());
     }
 
     @Override
