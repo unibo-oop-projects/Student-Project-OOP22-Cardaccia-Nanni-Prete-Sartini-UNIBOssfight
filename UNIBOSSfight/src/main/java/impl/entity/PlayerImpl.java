@@ -57,13 +57,13 @@ public class PlayerImpl extends ActiveEntity {
     @Override
     public void update(PlayerImpl.Inputs input) {
 
-        this.ySpeed = this.isJumping() ? Acceleration.accellerate(this.ySpeed, 10, 1) : 0;
+        this.ySpeed = this.isJumping() ? Acceleration.accellerate(this.ySpeed, 20, 1) : 0;
         switch (input) {
             case LEFT -> this.position.move(-5, ySpeed);
             case RIGHT -> this.position.move(5, ySpeed);
             case SPACE -> {
                 System.out.println("salto");
-                this.ySpeed = -10;
+                this.ySpeed = -30;
                 this.position.move(0, ySpeed);
             }
             case EMPTY -> this.position.move(0, ySpeed);
