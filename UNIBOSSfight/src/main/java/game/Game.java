@@ -85,9 +85,7 @@ public class Game extends Application {
     }
 
     private void update(){
-        if(this.currentCommand != PlayerImpl.Inputs.EMPTY){
             this.currentLevel.updatePlayer(this.currentCommand);
-        }
 
     }
 
