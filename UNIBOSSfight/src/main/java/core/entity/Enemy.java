@@ -9,13 +9,5 @@ public abstract class Enemy extends ActiveEntity {
         super(health, position);
     }
 
-    @Override
-    public void update() {
-
-    }
-
-    @Override
-    public Hitbox getHitbox() {
-        return null;
-    }
+    public abstract int getDamage();
 }

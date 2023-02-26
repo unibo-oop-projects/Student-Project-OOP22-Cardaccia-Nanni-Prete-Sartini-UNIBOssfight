@@ -14,7 +14,6 @@ public class PlayerImpl extends ActiveEntity {
 
     //TODO: aggiungere classe util HitBox
     private final Integer height, width;
-    private Hitbox playerHitbox;
 
     private int ySpeed = 0;
 
@@ -72,11 +71,6 @@ public class PlayerImpl extends ActiveEntity {
         this.position.setGroundLevel();
 
 
-    }
-
-    @Override
-    public Hitbox getHitbox() {
-        return this.playerHitbox;
     }
 
     private boolean isJumping() {
