@@ -23,7 +23,7 @@ public abstract class AbstractEntity implements Entity {
         this.width = width;
     }
 
-    public abstract void update(PlayerImpl.Inputs input);
+    public abstract void update(Inputs input);
 
     public Point2D getPosition() {
         return this.position.getPosition();

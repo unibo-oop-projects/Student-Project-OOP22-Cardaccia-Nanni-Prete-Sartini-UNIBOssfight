@@ -14,7 +14,7 @@ public interface Level {
 
     void updateEntities();
 
-    void updatePlayer(PlayerImpl.Inputs input);
+    void updatePlayer(Entity.Inputs input);
 
     void renderEntities(GraphicsContext gc);
 

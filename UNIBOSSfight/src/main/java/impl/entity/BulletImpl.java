@@ -36,7 +36,7 @@ public class BulletImpl implements Bullet {
     }
 
     @Override
-    public void update(PlayerImpl.Inputs input) {
+    public void update(Inputs input) {
         //TODO
     }
 

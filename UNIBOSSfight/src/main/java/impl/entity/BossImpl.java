@@ -53,7 +53,7 @@ public class BossImpl extends Boss {
     }
 
     @Override
-    public void update(PlayerImpl.Inputs input) {
+    public void update(Inputs input) {
         //TODO
     }
 

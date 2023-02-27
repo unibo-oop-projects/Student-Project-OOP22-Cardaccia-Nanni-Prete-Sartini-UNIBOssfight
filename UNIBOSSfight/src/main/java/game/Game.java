@@ -2,6 +2,7 @@ package game;
 
 import UI.ConfirmBox;
 import core.component.Transform;
+import core.entity.Entity;
 import core.level.Level;
 import impl.entity.PlayerImpl;
 import impl.entity.TmpEntityImpl;
@@ -23,27 +24,27 @@ public class Game extends Application {
 
     Stage gameWindow;
 
-    private Level currentLevel = new LevelImpl(new PlayerImpl(100, new Transform(new Point2D(300, 300), 0) {
+    private Level currentLevel = new LevelImpl(new PlayerImpl(new Transform(new Point2D(300, 300), 0) {
         @Override
         public void update() {
 
         }
-    },50, 25));
+    },250, 200, "testImage.png"));
     private boolean gameStarted = true;
 
-    private Queue<PlayerImpl.Inputs> inputsQueue = new PriorityQueue<>();
+    private Queue<Entity.Inputs> inputsQueue = new PriorityQueue<>();
 
-    private PlayerImpl.Inputs currentCommand;
+    private Entity.Inputs currentCommand;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
         this.gameWindow = primaryStage;
         this.gameWindow.setTitle("UNIBOssfight");
-        this.gameWindow.setOnCloseRequest(e -> {
+        /*this.gameWindow.setOnCloseRequest(e -> {
             e.consume();
             closeProgram();
-        });
+        });*/
 
         Canvas canvas = new Canvas(600, 600);
 
@@ -60,18 +61,18 @@ public class Game extends Application {
 
         Scene currentScene = new Scene(new StackPane(canvas));
 
-        this.currentLevel.addEntity(new TmpEntityImpl(100, new Transform(new Point2D(500, 500), 0) {
+        this.currentLevel.addEntity(new TmpEntityImpl(new Transform(new Point2D(500, 500), 0) {
             @Override
             public void update() {
 
             }
-        },50, 25));
+        },50, 25,  "testImage2.png"));
 
         currentScene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
-                case A -> inputsQueue.add(PlayerImpl.Inputs.LEFT);
-                case D -> inputsQueue.add(PlayerImpl.Inputs.RIGHT);
-                case SPACE -> inputsQueue.add(PlayerImpl.Inputs.SPACE);
+                case A -> inputsQueue.add(Entity.Inputs.LEFT);
+                case D -> inputsQueue.add(Entity.Inputs.RIGHT);
+                case SPACE -> inputsQueue.add(Entity.Inputs.SPACE);
             }
         });
 
@@ -81,7 +82,7 @@ public class Game extends Application {
     }
 
     private void inputPoll(){
-        this.currentCommand = this.inputsQueue.isEmpty() ? PlayerImpl.Inputs.EMPTY : this.inputsQueue.poll();
+        this.currentCommand = this.inputsQueue.isEmpty() ? Entity.Inputs.EMPTY : this.inputsQueue.poll();
     }
 
     private void update(){
@@ -94,10 +95,11 @@ public class Game extends Application {
     }
 
     private void run(GraphicsContext gc) {
-        gc.setFill(Color.BLACK);
+        gc.setFill(Color.rgb(26, 228, 255));
+
         gc.fillRect(0,0,600, 600);
 
-        gc.setFill(Color.WHITE);
+
 
         if(gameStarted){
 

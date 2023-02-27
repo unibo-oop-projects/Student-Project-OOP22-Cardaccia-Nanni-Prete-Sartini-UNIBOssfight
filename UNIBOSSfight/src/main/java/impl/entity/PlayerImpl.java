@@ -39,7 +39,7 @@ public class PlayerImpl extends AbstractEntity {
     }
 
     @Override
-    public void update(Entity.Inputs input) {
+    public void update(Inputs input) {
 
         this.ySpeed = this.isJumping() ? Acceleration.accellerate(this.ySpeed, 20, 1) : 0;
         switch (input) {
