@@ -20,7 +20,7 @@ public class WeaponImpl implements Weapon {
         this.renderer = renderer;
     }
 
-    void render(GraphicsContext gc){
+    public void render(GraphicsContext gc){
         this.renderer.render(gc, this.user.getPosition().add(0, 0));
     }
 
