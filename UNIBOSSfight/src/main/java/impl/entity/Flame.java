@@ -1,43 +1,28 @@
 package impl.entity;
 
-import core.component.Hitbox;
-import core.entity.PassiveEntity;
+import core.component.Transform;
+import core.entity.AbstractEntity;
+import impl.component.SpriteRenderer;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
-public class Flame implements PassiveEntity {
-    private Point2D flamePosition;
-    private final Hitbox flameHitbox;
+public class Flame extends AbstractEntity {
     private final boolean isHarmful;
     private final int damage;
 
-    public Flame(final Hitbox hitbox) {
-        this.flameHitbox = hitbox;
+    public Flame(final Transform position, final int height,
+                 final int width, final String filename) {
+        super(position, height, width,
+                new SpriteRenderer(height, width, Color.ORANGE, filename));
         this.isHarmful = true;
         this.damage = 1;
     }
 
-    @Override
-    public boolean isDisplayed(Point2D position) {
-        return false;
-    }
-
-    @Override
     public boolean isHarmful() {
         return this.isHarmful;
     }
 
-    @Override
-    public Point2D getPosition() {
-        return this.flamePosition;
-    }
-
-    @Override
-    public Hitbox getHitbox() {
-        return this.flameHitbox;
-    }
-
-    @Override
     public int getDamage() {
         return this.damage;
     }
@@ -48,7 +33,7 @@ public class Flame implements PassiveEntity {
     }
 
     @Override
-    public void update() {
+    public void update(Inputs input) {
 
     }
 
