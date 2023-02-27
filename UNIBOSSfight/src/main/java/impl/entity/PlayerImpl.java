@@ -1,60 +1,45 @@
 package impl.entity;
 
 import core.component.Hitbox;
-import core.component.Renderer;
 import core.component.Transform;
-import core.entity.ActiveEntity;
+import core.entity.AbstractEntity;
+import core.entity.Entity;
+import impl.component.SpriteRenderer;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import util.Acceleration;
 
 
-public class PlayerImpl extends ActiveEntity {
+public class PlayerImpl extends AbstractEntity {
 
     //TODO: aggiungere classe util HitBox
-    private final Integer height, width;
 
+    //TODO: aggiungere classe util HitBoxprivate Hitbox playerHitbox;
     private int ySpeed = 0;
+    private Hitbox playerHitbox;
 
 
-
-
-    public PlayerImpl(int health, Transform position, Integer height, Integer width) {
-        super(health, position);
-
-        this.height = height;
-        this.width = width;
-        this.renderer = new Renderer(this.height, this.width, Color.GREEN) {
-            @Override
-            public void update() {
-                super.update();
-            }
-        };
+    public PlayerImpl(Transform position, Integer height, Integer width, String filename) {
+        super(position, height, width, new SpriteRenderer(height, width, Color.RED, filename));
     }
-
-    @Override
-    public void setHealth(int health) {
-
-    }
-
     @Override
     public boolean isDisplayed(Point2D position) {
         return true;
     }
 
+
     @Override
     public void render(GraphicsContext gc, Point2D position) {
+        try{
         this.renderer.render(gc, new Point2D(300, this.getPosition().getY() - 30));
+        } catch (Exception e){
+            System.out.println("ERROR cannot load resource " + e);
+        }
     }
 
     @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void update(PlayerImpl.Inputs input) {
+    public void update(Entity.Inputs input) {
 
         this.ySpeed = this.isJumping() ? Acceleration.accellerate(this.ySpeed, 20, 1) : 0;
         switch (input) {
@@ -71,6 +56,11 @@ public class PlayerImpl extends ActiveEntity {
         this.position.setGroundLevel();
 
 
+    }
+
+    @Override
+    public Hitbox getHitbox() {
+        return this.playerHitbox;
     }
 
     private boolean isJumping() {

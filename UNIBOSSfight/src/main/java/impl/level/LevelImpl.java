@@ -26,7 +26,7 @@ public class LevelImpl implements Level {
         this.entities.forEach(e -> e.update(Entity.Inputs.EMPTY));
     }
 
-    public void updatePlayer(PlayerImpl.Inputs input){
+    public void updatePlayer(Entity.Inputs input){
         this.player.update(input);
     }
 
