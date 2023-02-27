@@ -7,7 +7,10 @@ import core.level.Level;
 import impl.entity.PlayerImpl;
 import impl.entity.TmpEntityImpl;
 import impl.level.LevelImpl;
+import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
 import javafx.scene.Scene;
@@ -16,6 +19,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -35,6 +39,9 @@ public class Game extends Application {
     private Queue<Entity.Inputs> inputsQueue = new PriorityQueue<>();
 
     private Entity.Inputs currentCommand;
+    private boolean isAPressed;
+    private boolean isDPressed;
+    private boolean isSpacePressed;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -50,14 +57,16 @@ public class Game extends Application {
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        AnimationTimer timer = new AnimationTimer() {
+        /*AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 run(gc);
             }
-        };
+        };*/
 
-        timer.start();
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(16), e -> run(gc)));
+        tl.setCycleCount(Animation.INDEFINITE);
+        //timer.start();
 
         Scene currentScene = new Scene(new StackPane(canvas));
 
@@ -68,26 +77,50 @@ public class Game extends Application {
             }
         },50, 25,  "testImage2.png"));
 
-        currentScene.setOnKeyPressed(e -> {
+        /*currentScene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case A -> inputsQueue.add(Entity.Inputs.LEFT);
                 case D -> inputsQueue.add(Entity.Inputs.RIGHT);
                 case SPACE -> inputsQueue.add(Entity.Inputs.SPACE);
+            }
+        });*/
+        currentScene.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case A -> this.isAPressed = true;
+                case D -> this.isDPressed = true;
+                case SPACE -> this.isSpacePressed = true;
+            }
+        });
+
+        currentScene.setOnKeyReleased(e -> {
+            switch (e.getCode()) {
+                case A -> this.isAPressed = false;
+                case D -> this.isDPressed = false;
+                case SPACE -> this.isSpacePressed = false;
             }
         });
 
         this.gameWindow.setScene(currentScene);
         this.gameWindow.show();
 
+        tl.play();
     }
 
     private void inputPoll(){
-        this.currentCommand = this.inputsQueue.isEmpty() ? Entity.Inputs.EMPTY : this.inputsQueue.poll();
+        //this.currentCommand = this.inputsQueue.isEmpty() ? Entity.Inputs.EMPTY : this.inputsQueue.poll();
+        if(this.inputsQueue.isEmpty())
+            this.inputsQueue.add(Entity.Inputs.EMPTY);
     }
 
     private void update(){
-            this.currentLevel.updatePlayer(this.currentCommand);
-
+        if(this.isSpacePressed)
+            this.currentLevel.updatePlayer(Entity.Inputs.SPACE);
+        if(this.isDPressed)
+            this.currentLevel.updatePlayer(Entity.Inputs.RIGHT);
+        if(this.isAPressed)
+            this.currentLevel.updatePlayer(Entity.Inputs.LEFT);
+        //if(!(this.isSpacePressed || this.isDPressed || this.isAPressed))
+        this.currentLevel.updatePlayer(Entity.Inputs.EMPTY);
     }
 
     private void render(GraphicsContext gc){
