@@ -7,10 +7,13 @@ import impl.entity.PlayerImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.Optional;
+
 public abstract class AbstractEntity implements Entity {
 
     private final int height;
     private final int width;
+    private Optional<Integer> damage;
 
     protected Transform position;
     protected Hitbox hitbox;
@@ -39,6 +42,14 @@ public abstract class AbstractEntity implements Entity {
 
     public Hitbox getHitbox() {
         return hitbox;
+    }
+
+    public Optional<Integer> getDamage() {
+        return this.damage;
+    }
+
+    protected void setDamage(Optional<Integer> damage) {
+        this.damage = damage;
     }
 
 
