@@ -1,6 +1,7 @@
 package impl.entity;
 
 import core.component.Hitbox;
+import core.component.Renderer;
 import core.component.Transform;
 import core.component.Weapon;
 import core.entity.Boss;
@@ -14,16 +15,11 @@ public class BossImpl extends Boss {
     private int health;
     private Weapon weapon;
 
-    public BossImpl(Transform startingPos, int health, Weapon weapon){
-        super(health, startingPos);
+    public BossImpl(Transform startingPos, int width, int height, int health, Weapon weapon, String filename){
+        super(startingPos, width, height, filename);
         this.position = startingPos;
         this.health = health;
         this.weapon = weapon;
-    }
-
-    @Override
-    public void setHealth(int health) {
-        this.health = health;
     }
 
     public int getHealth() {
@@ -57,7 +53,7 @@ public class BossImpl extends Boss {
     }
 
     @Override
-    public void update() {
+    public void update(PlayerImpl.Inputs input) {
         //TODO
     }
 
