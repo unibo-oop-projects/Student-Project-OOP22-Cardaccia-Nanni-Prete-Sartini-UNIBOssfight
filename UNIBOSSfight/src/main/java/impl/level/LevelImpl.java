@@ -23,7 +23,7 @@ public class LevelImpl implements Level {
     }
 
     public void updateEntities(){
-        this.entities.forEach(Entity::update);
+        this.entities.forEach(e -> e.update(Entity.Inputs.EMPTY));
     }
 
     public void updatePlayer(PlayerImpl.Inputs input){
@@ -33,7 +33,7 @@ public class LevelImpl implements Level {
 
 
     public void renderEntities(GraphicsContext gc) {
-        this.entities.stream().filter(e -> true).forEach(e -> e.render(gc, this.player.getPosition()));
+        this.entities.stream().filter(e -> e.isDisplayed(this.player.getPosition())).forEach(e -> e.render(gc, this.player.getPosition()));
         this.player.render(gc, this.player.getPosition());
     }
 

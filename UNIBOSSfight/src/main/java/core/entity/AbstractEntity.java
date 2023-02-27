@@ -7,36 +7,23 @@ import impl.entity.PlayerImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
-public abstract class ActiveEntity implements Entity {
+public abstract class AbstractEntity implements Entity {
 
-    public enum Inputs {
-        LEFT,
-        RIGHT,
-        SPACE,
-        EMPTY
-    }
+    private final int height;
+    private final int width;
 
-    private int health;
     protected Transform position;
     protected Hitbox hitbox;
     protected Renderer renderer;
 
-    public ActiveEntity(int health, Transform position) {
-        this.health = health;
+    public AbstractEntity(Transform position, int height, int width, Renderer renderer) {
         this.position = position;
+        this.renderer = renderer;
+        this.height = height;
+        this.width = width;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    public void update(PlayerImpl.Inputs input) {
-        switch (input) {
-            case LEFT -> this.position.move(-5, 0);
-            case RIGHT -> this.position.move(5, 0);
-            case SPACE -> this.position.move(0, -5);
-        }
-    }
+    public abstract void update(PlayerImpl.Inputs input);
 
     public Point2D getPosition() {
         return this.position.getPosition();
