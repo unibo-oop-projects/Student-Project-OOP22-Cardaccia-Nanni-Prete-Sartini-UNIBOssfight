@@ -32,7 +32,7 @@ public class PlayerImpl extends AbstractEntity {
     @Override
     public void render(GraphicsContext gc, Point2D position) {
         try{
-        this.renderer.render(gc, new Point2D(300, this.getPosition().getY() - 30));
+            this.renderer.render(gc, new Point2D(300, this.getPosition().getY()));
         } catch (Exception e){
             System.out.println("ERROR cannot load resource " + e);
         }
@@ -41,21 +41,27 @@ public class PlayerImpl extends AbstractEntity {
     @Override
     public void update(Inputs input) {
 
-        this.ySpeed = this.isJumping() ? Acceleration.accellerate(this.ySpeed, 20, 1) : 0;
+
         switch (input) {
-            case LEFT -> this.position.move(-5, ySpeed);
-            case RIGHT -> this.position.move(5, ySpeed);
-            case SPACE -> {
-                System.out.println("salto");
-                this.ySpeed = -30;
-                this.position.move(0, ySpeed);
+            case LEFT -> this.position.move(-5, 0);
+            case RIGHT -> this.position.move(5, 0);
+            case SPACE -> { if(!isJumping()) {
+                    System.out.println("salto");
+                    this.ySpeed = -20;
+                    this.position.move(0, -1);
+
+                }
+                //this.position.move(0, ySpeed);
             }
-            case EMPTY -> this.position.move(0, ySpeed);
+            case EMPTY -> {
+                this.position.move(0, ySpeed);
+                this.ySpeed = this.isJumping() ? Acceleration.accellerate(this.ySpeed, 20, 1) : 0;
+            }
         }
 
+        //this.position.move(0, ySpeed);
+
         this.position.setGroundLevel();
-
-
     }
 
     @Override
