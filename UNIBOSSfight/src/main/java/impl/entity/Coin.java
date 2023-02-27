@@ -8,24 +8,18 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
 public abstract class Coin extends AbstractEntity {
-    private final boolean isHarmful;
     private final int value;
 
     public Coin(final Transform position, final int height,
                 final int width, final String filename) {
         super(position, height, width,
                 new SpriteRenderer(height, width, Color.YELLOW, filename));
-        this.isHarmful = false;
         this.value = 1;
     }
 
     @Override
     public boolean isDisplayed(Point2D position) {
         return false;
-    }
-
-    public boolean isHarmful() {
-        return this.isHarmful;
     }
 
     public int getValue() {

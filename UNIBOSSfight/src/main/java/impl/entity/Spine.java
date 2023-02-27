@@ -9,22 +9,10 @@ import javafx.scene.paint.Color;
 
 public class Spine extends AbstractEntity {
 
-    private final boolean isHarmful;
-    private final int damage;
-
     public Spine(final Transform position, final int height,
                  final int width, final String filename) {
         super(position, height, width,
                 new SpriteRenderer(height, width, Color.GRAY, filename));
-        this.isHarmful = true;
-        this.damage = 2;
-    }
-    public boolean isHarmful() {
-        return this.isHarmful;
-    }
-
-    public int getDamage() {
-        return this.damage;
     }
 
     @Override
