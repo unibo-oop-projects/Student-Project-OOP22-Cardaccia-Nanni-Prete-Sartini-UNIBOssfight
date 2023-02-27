@@ -1,44 +1,29 @@
 package impl.entity;
 
-import core.component.Hitbox;
-import core.entity.PassiveEntity;
+import core.component.Transform;
+import core.entity.AbstractEntity;
+import impl.component.SpriteRenderer;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
-public abstract class Platform implements PassiveEntity {
-    private Point2D position;
-    private final Hitbox platformHitbox;
+public abstract class Platform extends AbstractEntity {
     private final boolean isHarmful;
 
     //platform will eventually move
     private final boolean isMoving;
 
-    public Platform(final Hitbox hitbox) {
+    public Platform(final Transform position, final int height,
+                    final int width, final String filename) {
+        super(position, height, width,
+                new SpriteRenderer(height, width, Color.GREEN, filename));
         this.isHarmful = false;
         this.isMoving = false;
-        this.platformHitbox = hitbox;
     }
 
-    @Override
     public boolean isHarmful() {
         return this.isHarmful;
     }
-
-    @Override
-    public boolean isDisplayed(Point2D position) {
-        return false;
-    }
-
-    @Override
-    public Point2D getPosition() {
-        return this.position;
-    }
-
-    @Override
-    public Hitbox getHitbox() {
-        return this.platformHitbox;
-    }
-
 
     @Override
     public void render(GraphicsContext gc, Point2D position) {
@@ -46,7 +31,7 @@ public abstract class Platform implements PassiveEntity {
     }
 
     @Override
-    public void update() {
+    public void update(Inputs input) {
 
     }
 

@@ -1,43 +1,28 @@
 package impl.entity;
 
-import core.component.Hitbox;
-import core.entity.PassiveEntity;
+import core.component.Transform;
+import core.entity.AbstractEntity;
+import impl.component.SpriteRenderer;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
-public class Spine implements PassiveEntity {
+public class Spine extends AbstractEntity {
 
-    private Point2D spinePosition;
-    private final Hitbox spineHitbox;
     private final boolean isHarmful;
     private final int damage;
 
-    public Spine(final Hitbox hitbox) {
+    public Spine(final Transform position, final int height,
+                 final int width, final String filename) {
+        super(position, height, width,
+                new SpriteRenderer(height, width, Color.GRAY, filename));
         this.isHarmful = true;
-        this.spineHitbox = hitbox;
         this.damage = 2;
     }
-    @Override
     public boolean isHarmful() {
         return this.isHarmful;
     }
 
-    @Override
-    public boolean isDisplayed(Point2D position) {
-        return false;
-    }
-
-    @Override
-    public Point2D getPosition() {
-        return this.spinePosition;
-    }
-
-    @Override
-    public Hitbox getHitbox() {
-        return this.spineHitbox;
-    }
-
-    @Override
     public int getDamage() {
         return this.damage;
     }
@@ -48,7 +33,7 @@ public class Spine implements PassiveEntity {
     }
 
     @Override
-    public void update() {
+    public void update(Inputs input) {
 
     }
 

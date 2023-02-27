@@ -1,38 +1,25 @@
 package impl.entity;
 
-import core.component.Hitbox;
-import core.entity.PassiveEntity;
+import core.component.Transform;
+import core.entity.AbstractEntity;
+import impl.component.SpriteRenderer;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
-public abstract class Wall implements PassiveEntity {
+public abstract class Wall extends AbstractEntity {
 
-    private Point2D wallPosition;
-    private final Hitbox wallHitbox;
     private final boolean isHarmful;
 
-    public Wall(final Hitbox hitbox) {
+    public Wall(final Transform position, final int height,
+                final int width, final String filename) {
+        super(position, height, width,
+                new SpriteRenderer(height, width, Color.BROWN, filename));
         this.isHarmful = false;
-        this.wallHitbox = hitbox;
     }
 
-    @Override
     public boolean isHarmful() {
         return this.isHarmful;
-    }
-    @Override
-    public boolean isDisplayed(Point2D position) {
-        return false;
-    }
-
-    @Override
-    public Point2D getPosition() {
-        return this.wallPosition;
-    }
-
-    @Override
-    public Hitbox getHitbox() {
-        return this.wallHitbox;
     }
 
     @Override
@@ -41,7 +28,7 @@ public abstract class Wall implements PassiveEntity {
     }
 
     @Override
-    public void update() {
+    public void update(Inputs input) {
 
     }
 
