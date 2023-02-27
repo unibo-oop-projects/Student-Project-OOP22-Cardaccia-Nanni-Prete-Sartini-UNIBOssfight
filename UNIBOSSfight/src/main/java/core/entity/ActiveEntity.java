@@ -1,5 +1,6 @@
 package core.entity;
 
+import core.component.Hitbox;
 import core.component.Renderer;
 import core.component.Transform;
 import impl.entity.PlayerImpl;
@@ -17,7 +18,7 @@ public abstract class ActiveEntity implements Entity {
 
     private int health;
     protected Transform position;
-
+    protected Hitbox hitbox;
     protected Renderer renderer;
 
     public ActiveEntity(int health, Transform position) {
@@ -37,7 +38,6 @@ public abstract class ActiveEntity implements Entity {
         }
     }
 
-    @Override
     public Point2D getPosition() {
         return this.position.getPosition();
     }
@@ -49,4 +49,10 @@ public abstract class ActiveEntity implements Entity {
     public boolean isDisplayed(Point2D playerPosition) {
         return this.getPosition().subtract(playerPosition).getX() < 300;
     }
+
+    public Hitbox getHitbox() {
+        return hitbox;
+    }
+
+
 }
