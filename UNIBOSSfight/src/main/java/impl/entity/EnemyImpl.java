@@ -9,6 +9,8 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.Optional;
+
 public class EnemyImpl extends Enemy {
 
     private static final int COLLISION_DAMAGE = 5;
@@ -16,10 +18,6 @@ public class EnemyImpl extends Enemy {
     public EnemyImpl(Transform position, int width, int height, String filename) {
         super(position, width, height,
                 new SpriteRenderer(height, width, Color.ALICEBLUE, filename));
-    }
-
-    public int getDamage() {
-        return COLLISION_DAMAGE;
     }
 
     @Override

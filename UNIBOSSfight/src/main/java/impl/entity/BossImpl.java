@@ -39,11 +39,6 @@ public class BossImpl extends Boss {
         return this.weapon;
     }
 
-    public int getDamage() {
-        //TODO
-        return this.getDamage();
-    }
-
     public boolean isDisplayed() {
         return false;//TODO
     }
