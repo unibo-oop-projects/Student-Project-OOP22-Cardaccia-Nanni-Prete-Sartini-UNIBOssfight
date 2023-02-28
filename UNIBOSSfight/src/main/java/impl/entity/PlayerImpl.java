@@ -1,15 +1,17 @@
 package impl.entity;
 
-import core.component.Hitbox;
+import core.component.Collider;
+import impl.component.ColliderImpl;
 import core.component.Transform;
 import core.entity.AbstractEntity;
-import core.entity.Entity;
 import impl.component.SpriteRenderer;
 import impl.component.WeaponImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import util.Acceleration;
+
+import java.util.Optional;
 
 
 public class PlayerImpl extends AbstractEntity {
@@ -70,5 +72,14 @@ public class PlayerImpl extends AbstractEntity {
 
     private boolean isJumping() {
         return this.getPosition().getY() < 599;
+    }
+
+    @Override
+    protected void initCollider() {
+        var collider = new ColliderImpl();
+        collider.addBehaviour(Collider.Entities.TMPENTITY, e -> {
+            this.position.move(getDirection() * -20, -60);
+        });
+        this.collider = Optional.of(collider);
     }
 }

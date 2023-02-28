@@ -1,7 +1,5 @@
 package impl.entity;
 
-import core.component.Hitbox;
-import core.component.Renderer;
 import core.component.Transform;
 import core.entity.AbstractEntity;
 import impl.component.SpriteRenderer;

@@ -127,6 +127,10 @@ public class Game extends Application {
         this.currentLevel.renderEntities(gc);
     }
 
+    private void collision() {
+        this.currentLevel.collision();
+    }
+
     private void run(GraphicsContext gc) {
         gc.setFill(Color.rgb(26, 228, 255));
 
@@ -138,6 +142,7 @@ public class Game extends Application {
 
             this.inputPoll();
             this.update();
+            this.collision();
             this.render(gc);
 
         }

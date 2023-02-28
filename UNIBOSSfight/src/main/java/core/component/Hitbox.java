@@ -19,7 +19,7 @@ public abstract class Hitbox implements Component {
 
     public boolean collide(Hitbox target){
         //X an Y axis collisions
-        return this.rightSide >= target.leftSide && this.leftSide <= target.rightSide && this.bottomSide <= target.topSide && this.topSide >= target.bottomSide;
+        return this.rightSide >= target.leftSide && this.leftSide <= target.rightSide && this.bottomSide >= target.topSide && this.topSide <= target.bottomSide;
     }
 
     public void update(Point2D newPos){

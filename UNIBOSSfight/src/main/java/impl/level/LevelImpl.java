@@ -38,6 +38,24 @@ public class LevelImpl implements Level {
     }
 
     @Override
+    public void collision() {
+        // Player collisions
+        this.entities.stream()
+                .filter(e -> this.player.getHitbox().collide(e.getHitbox()))
+                .forEach(this.player::manageCollision);
+
+
+        // Entity collisions
+        var collidingEntities = this.entities.stream()
+                .filter(e -> e.getCollider().isPresent())
+                .toList();
+
+        collidingEntities.forEach(ce -> this.entities.stream()
+                .filter(e -> e.getHitbox().collide(ce.getHitbox()))
+                .forEach(ce::manageCollision));
+    }
+
+    @Override
     public List<Entity> getEntities() {
         return List.copyOf(this.entities);
     }

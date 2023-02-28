@@ -18,4 +18,6 @@ public interface Level {
 
     void renderEntities(GraphicsContext gc);
 
+    void collision();
+
 }
