@@ -1,9 +1,9 @@
 package core.entity;
 
+import core.component.Collider;
 import core.component.Hitbox;
 import core.component.Renderer;
 import core.component.Transform;
-import impl.entity.PlayerImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -18,6 +18,7 @@ public abstract class AbstractEntity implements Entity {
     protected Transform position;
     protected Hitbox hitbox;
     protected Renderer renderer;
+    protected Optional<Collider> collider;
 
     protected int direction = 1;
 
@@ -34,6 +35,8 @@ public abstract class AbstractEntity implements Entity {
 
             }
         };
+
+        initCollider();
     }
 
     public abstract void update(Inputs input);
@@ -66,5 +69,15 @@ public abstract class AbstractEntity implements Entity {
         this.damage = damage;
     }
 
+    protected void initCollider() {
+        this.collider = Optional.empty();
+    }
 
+    public Optional<Collider> getCollider() {
+        return this.collider;
+    }
+
+    public void manageCollision(Entity e) {
+        this.collider.ifPresent(x -> x.manageCollision(e));
+    }
 }

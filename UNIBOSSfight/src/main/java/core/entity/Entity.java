@@ -1,8 +1,11 @@
 package core.entity;
 
+import core.component.Collider;
 import core.component.Hitbox;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+
+import java.util.Optional;
 
 public interface Entity {
 
@@ -22,5 +25,9 @@ public interface Entity {
     Point2D getPosition();
 
     Hitbox getHitbox();
+
+    Optional<Collider> getCollider();
+
+    void manageCollision(Entity e);
 
 }
