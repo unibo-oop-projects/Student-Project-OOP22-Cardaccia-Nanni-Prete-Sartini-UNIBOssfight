@@ -21,8 +21,8 @@ public class WeaponImpl implements Weapon {
     }
 
     @Override
-    public void render(GraphicsContext gc){
-        this.renderer.render(gc, this.user.getPosition().add(0, 0));
+    public void render(GraphicsContext gc, int direction){
+        this.renderer.render(gc, this.user.getPosition().subtract(this.user.getPosition().getX()-300 - 5 * direction, 24), direction);
     }
 
     @Override

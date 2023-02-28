@@ -75,7 +75,7 @@ public class Game extends Application {
             public void update() {
 
             }
-        },50, 25,  "testImage2.png"));
+        },50, 50,  "goomba.png"));
 
         /*currentScene.setOnKeyPressed(e -> {
             switch (e.getCode()) {

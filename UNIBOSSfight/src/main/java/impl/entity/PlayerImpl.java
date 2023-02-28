@@ -5,6 +5,7 @@ import core.component.Transform;
 import core.entity.AbstractEntity;
 import core.entity.Entity;
 import impl.component.SpriteRenderer;
+import impl.component.WeaponImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -17,6 +18,8 @@ public class PlayerImpl extends AbstractEntity {
 
     //TODO: aggiungere classe util HitBoxprivate Hitbox playerHitbox;
     private int ySpeed = 0;
+
+    private WeaponImpl weapon = new WeaponImpl(this, 10, new SpriteRenderer(150, 180, Color.RED, "gnu.png"));
 
 
     public PlayerImpl(Transform position, Integer height, Integer width, String filename) {
@@ -31,7 +34,8 @@ public class PlayerImpl extends AbstractEntity {
     @Override
     public void render(GraphicsContext gc, Point2D position) {
         try{
-            this.renderer.render(gc, new Point2D(300, this.getPosition().getY()));
+            this.renderer.render(gc, new Point2D(300, this.getPosition().getY()), this.getDirection());
+            this.weapon.render(gc, this.getDirection());
         } catch (Exception e){
             System.out.println("ERROR cannot load resource " + e);
         }
@@ -42,8 +46,8 @@ public class PlayerImpl extends AbstractEntity {
 
 
         switch (input) {
-            case LEFT -> this.position.move(-5, 0);
-            case RIGHT -> this.position.move(5, 0);
+            case LEFT -> {this.position.move(-5, 0); this.direction = -1;}
+            case RIGHT -> {this.position.move(5, 0); this.direction = 1;}
             case SPACE -> { if(!isJumping()) {
                     System.out.println("salto");
                     this.ySpeed = -20;
@@ -61,6 +65,7 @@ public class PlayerImpl extends AbstractEntity {
         //this.position.move(0, ySpeed);
 
         this.position.setGroundLevel();
+        this.hitbox.update(this.getPosition());
     }
 
     private boolean isJumping() {

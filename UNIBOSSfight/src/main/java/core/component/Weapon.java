@@ -7,5 +7,5 @@ public interface Weapon extends Component {
 
     Bullet fire(Transform target);
 
-    void render(GraphicsContext gc);
+    void render(GraphicsContext gc, int direction);
 }
