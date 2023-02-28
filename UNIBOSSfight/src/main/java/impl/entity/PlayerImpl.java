@@ -19,7 +19,7 @@ public class PlayerImpl extends AbstractEntity {
     //TODO: aggiungere classe util HitBoxprivate Hitbox playerHitbox;
     private int ySpeed = 0;
 
-    private WeaponImpl weapon = new WeaponImpl(this, 10, new SpriteRenderer(150, 180, Color.RED, "gnu.png"));
+    private WeaponImpl weapon = new WeaponImpl(this.position, 10, new SpriteRenderer(150, 180, Color.RED, "gnu.png"));
 
 
     public PlayerImpl(Transform position, Integer height, Integer width, String filename) {
