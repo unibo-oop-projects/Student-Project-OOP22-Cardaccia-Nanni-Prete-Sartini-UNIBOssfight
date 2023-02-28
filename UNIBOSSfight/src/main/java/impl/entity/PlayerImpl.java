@@ -17,7 +17,6 @@ public class PlayerImpl extends AbstractEntity {
 
     //TODO: aggiungere classe util HitBoxprivate Hitbox playerHitbox;
     private int ySpeed = 0;
-    private Hitbox playerHitbox;
 
 
     public PlayerImpl(Transform position, Integer height, Integer width, String filename) {
@@ -62,11 +61,6 @@ public class PlayerImpl extends AbstractEntity {
         //this.position.move(0, ySpeed);
 
         this.position.setGroundLevel();
-    }
-
-    @Override
-    public Hitbox getHitbox() {
-        return this.playerHitbox;
     }
 
     private boolean isJumping() {

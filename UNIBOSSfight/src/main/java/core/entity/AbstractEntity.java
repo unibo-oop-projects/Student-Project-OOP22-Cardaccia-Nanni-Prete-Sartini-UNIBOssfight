@@ -19,11 +19,19 @@ public abstract class AbstractEntity implements Entity {
     protected Hitbox hitbox;
     protected Renderer renderer;
 
-    public AbstractEntity(Transform position, int height, int width, Renderer renderer) {
+    public AbstractEntity(final Transform position, final int height,
+                          final int width, final Renderer renderer) {
         this.position = position;
         this.renderer = renderer;
         this.height = height;
         this.width = width;
+
+        this.hitbox = new Hitbox(width / 2.0, height, getPosition()) {
+            @Override
+            public void update() {
+
+            }
+        };
     }
 
     public abstract void update(Inputs input);

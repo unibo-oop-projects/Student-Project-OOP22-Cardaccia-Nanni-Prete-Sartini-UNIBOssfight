@@ -8,8 +8,9 @@ import java.util.Optional;
 
 public abstract class Enemy extends AbstractEntity {
 
-    public Enemy(Transform position, int width, int height, Renderer renderer) {
-        super(position, width, height, renderer);
+    public Enemy(final Transform position, final int height,
+                 final int width, final Renderer renderer) {
+        super(position, height, width, renderer);
     }
 
 

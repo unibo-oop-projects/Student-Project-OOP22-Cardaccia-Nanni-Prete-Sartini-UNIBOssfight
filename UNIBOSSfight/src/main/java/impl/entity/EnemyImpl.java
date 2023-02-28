@@ -15,8 +15,8 @@ public class EnemyImpl extends Enemy {
 
     private static final int COLLISION_DAMAGE = 5;
 
-    public EnemyImpl(Transform position, int width, int height, String filename) {
-        super(position, width, height,
+    public EnemyImpl(final Transform position, final int height, final int width, final String filename) {
+        super(position, height, width,
                 new SpriteRenderer(height, width, Color.ALICEBLUE, filename));
     }
 

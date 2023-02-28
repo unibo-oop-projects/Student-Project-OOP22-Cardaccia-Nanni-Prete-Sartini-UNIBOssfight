@@ -10,16 +10,11 @@ import javafx.scene.paint.Color;
 
 public class TmpEntityImpl extends AbstractEntity {
     private int health;
-    private Hitbox hitbox;
 
     public TmpEntityImpl(Transform position, Integer height, Integer width, String filename) {
         super(position, height, width, new SpriteRenderer(height, width, Color.GREEN, filename));
 
         //TODO implement health
-        //TODO init hitbox
-    }
-    public Hitbox getHitbox() {
-        return null;//TODO
     }
 
     @Override
