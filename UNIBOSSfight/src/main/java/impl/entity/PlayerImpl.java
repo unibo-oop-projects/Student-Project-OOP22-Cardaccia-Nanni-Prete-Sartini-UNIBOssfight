@@ -55,7 +55,7 @@ public class PlayerImpl extends AbstractEntity {
             }
             case EMPTY -> {
                 this.position.move(0, ySpeed);
-                this.ySpeed = this.isJumping() ? Acceleration.accellerate(this.ySpeed, 20, 1) : 0;
+                this.ySpeed = this.isJumping() ? Acceleration.accelerate(this.ySpeed, 20, 1) : 0;
             }
         }
 

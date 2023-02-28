@@ -1,22 +1,31 @@
 package impl.entity;
 
 import core.component.Hitbox;
+import core.component.Transform;
 import core.entity.Bullet;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.geometry.Point2D;
+import java.lang.Math;
 
 public class BulletImpl implements Bullet {
 
-    int damage;
-    Point2D position;
-    Point2D target;
-    Point2D trajectory;
-    Hitbox hitbox;
+    private final double RIGHT_ANGLE = 90;
 
-    public BulletImpl(Point2D startingPos, Point2D target, int damage, Hitbox hitbox){
+    private int damage;
+    private  int speed;
+    private double angle;
+    private Transform position;
+    private Transform startingPosition;
+    private Transform target;
+    private Hitbox hitbox;
+
+    public BulletImpl(Transform startingPos, Transform target, int damage, int speed, double angle, Hitbox hitbox){
+        this.startingPosition = startingPos;
         this.position = startingPos;
         this.target = target;
         this.damage = damage;
+        this.speed = speed;
+        this.angle = angle;
         this.hitbox = hitbox;
     }
 
@@ -37,12 +46,20 @@ public class BulletImpl implements Bullet {
 
     @Override
     public void update(Inputs input) {
-        //TODO
+
+        double deltaX, deltaY;
+        double oppositeAngleX = RIGHT_ANGLE - angle;
+        double oppositeAngleY = RIGHT_ANGLE - (RIGHT_ANGLE - angle);
+
+        deltaX = this.speed * Math.cos(oppositeAngleX);
+        deltaY = this.speed * Math.cos(oppositeAngleY);
+
+        position.move((int)deltaX, (int)deltaY);
     }
 
     @Override
     public Point2D getPosition() {
-        return this.position;
+        return this.position.getPosition();
     }
 
     @Override

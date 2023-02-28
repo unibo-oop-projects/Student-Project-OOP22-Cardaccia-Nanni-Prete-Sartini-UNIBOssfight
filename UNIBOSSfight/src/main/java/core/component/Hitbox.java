@@ -17,7 +17,7 @@ public abstract class Hitbox implements Component {
         findBorders(this.position);
     }
 
-    boolean collide(Hitbox target){
+    public boolean collide(Hitbox target){
         //X an Y axis collisions
         return this.rightSide >= target.leftSide && this.leftSide <= target.rightSide && this.bottomSide <= target.topSide && this.topSide >= target.bottomSide;
     }
@@ -31,7 +31,7 @@ public abstract class Hitbox implements Component {
     private void findBorders(Point2D pos){
         this.leftSide = pos.getX() - this.lateralOffset;
         this.rightSide = pos.getX() + this.lateralOffset;
-        this.topSide = pos.getY() + this.height;
+        this.topSide = pos.getY() - this.height;
         this.bottomSide = pos.getY();
     }
 }
