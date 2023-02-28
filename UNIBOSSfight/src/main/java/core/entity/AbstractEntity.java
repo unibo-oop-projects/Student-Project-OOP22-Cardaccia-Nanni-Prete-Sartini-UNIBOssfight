@@ -19,6 +19,8 @@ public abstract class AbstractEntity implements Entity {
     protected Hitbox hitbox;
     protected Renderer renderer;
 
+    protected int direction = 1;
+
     public AbstractEntity(final Transform position, final int height,
                           final int width, final Renderer renderer) {
         this.position = position;
@@ -41,7 +43,7 @@ public abstract class AbstractEntity implements Entity {
     }
 
     public void render(GraphicsContext gc, Point2D position) {
-        this.renderer.render(gc, new Point2D(this.getPosition().subtract(position).add(300, 0).getX(), this.getPosition().getY()));
+        this.renderer.render(gc, new Point2D(this.getPosition().subtract(position).add(300, 0).getX(), this.getPosition().getY()), this.getDirection());
     }
 
     public boolean isDisplayed(Point2D playerPosition) {
@@ -50,6 +52,10 @@ public abstract class AbstractEntity implements Entity {
 
     public Hitbox getHitbox() {
         return hitbox;
+    }
+
+    protected int getDirection() {
+        return this.direction;
     }
 
     public Optional<Integer> getDamage() {

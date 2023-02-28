@@ -32,7 +32,7 @@ public abstract class Renderer implements Component{
 
   }
 
-  public void render(GraphicsContext gc, Point2D position){
+  public void render(GraphicsContext gc, Point2D position, int direction){
     gc.setFill(this.color);
     gc.fillRect(position.getX() - width / 2 , position.getY()-height, width, height);
     gc.setFill(Color.RED);

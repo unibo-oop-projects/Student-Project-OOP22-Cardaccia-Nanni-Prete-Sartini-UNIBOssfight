@@ -21,17 +21,19 @@ public class SpriteRenderer extends Renderer {
     }
 
     @Override
-    public void render(GraphicsContext gc, Point2D position)  {
+    public void render(GraphicsContext gc, Point2D position, int direction)  {
         try {
             gc.drawImage(
                     new Image(
                             new FileInputStream("assets/" + filename),
                             getWidth(), getHeight(),
                             false,
-                            false
+                            true
                     ),
-                    position.getX() - getWidth() / 2,
-                    position.getY() - getHeight()
+                    position.getX() - direction * getWidth() / 2,
+                    position.getY() - getHeight(),
+                    direction * this.getWidth(),
+                    this.getHeight()
             );
             gc.setFill(Color.RED);
             gc.fillOval(position.getX() - 2, position.getY() - 2, 4, 4);
