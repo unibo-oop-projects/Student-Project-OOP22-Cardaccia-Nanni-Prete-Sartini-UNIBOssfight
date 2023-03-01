@@ -135,6 +135,8 @@ public class Game extends Application {
             this.currentLevel.updatePlayer(Entity.Inputs.LEFT);
         //if(!(this.isSpacePressed || this.isDPressed || this.isAPressed))
         this.currentLevel.updatePlayer(Entity.Inputs.EMPTY);
+
+        this.currentLevel.updateEntities();
     }
 
     private void render(GraphicsContext gc){

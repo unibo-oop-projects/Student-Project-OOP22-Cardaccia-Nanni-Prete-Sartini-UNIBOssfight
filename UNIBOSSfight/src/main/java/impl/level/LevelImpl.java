@@ -51,7 +51,7 @@ public class LevelImpl implements Level {
                 .toList();
 
         collidingEntities.forEach(ce -> this.entities.stream()
-                .filter(e -> e.getHitbox().collide(ce.getHitbox()))
+                .filter(e -> !e.equals(ce) && e.getHitbox().collide(ce.getHitbox()))
                 .forEach(ce::manageCollision));
     }
 

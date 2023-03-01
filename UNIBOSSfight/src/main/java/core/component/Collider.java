@@ -12,13 +12,12 @@ public interface Collider {
         // TODO valutare se mettere questa enum in un file a parte
         TMPENTITY(TmpEntityImpl.class),
         PLAYER(PlayerImpl.class),
-        ENEMY(Enemy.class),
-        BOSS(Boss.class),
-        WALL(Wall.class),
+        ENEMY(EnemyImpl.class),
+        BOSS(BossImpl.class),
         PLATFORM(Platform.class),
         FLAME(Flame.class),
         SPINE(Spine.class),
-        BULLET(Bullet.class);
+        BULLET(BulletImpl.class);
 
         private final Class<? extends Entity> type;
 
