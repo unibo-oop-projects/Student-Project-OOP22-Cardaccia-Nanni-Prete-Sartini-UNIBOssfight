@@ -5,8 +5,6 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
 
-import java.util.List;
-
 public interface Entity {
 
     public enum Inputs {
@@ -16,7 +14,7 @@ public interface Entity {
         EMPTY
     }
 
-    boolean isDisplayed(Point2D position);
+    boolean isDisplayed(Point2D position, double width);
 
     void render(GraphicsContext gc, Point2D position);
 

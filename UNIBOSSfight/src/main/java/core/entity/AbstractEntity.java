@@ -6,6 +6,7 @@ import core.component.Transform;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
+import util.Window;
 
 import java.util.Optional;
 
@@ -48,11 +49,12 @@ public abstract class AbstractEntity implements Entity {
 
     @Override
     public ImageView render(Point2D position) {
-        return this.renderer.render(new Point2D(this.getPosition().subtract(position).add(300, 0).getX(), this.getPosition().getY()), this.getDirection());
+        return this.renderer.render(new Point2D(this.getPosition().subtract(position).add(Window.getWidth() /2, 0).getX(), this.getPosition().getY()-190), this.getDirection(), 0);
     }
 
-    public boolean isDisplayed(Point2D playerPosition) {
-        return this.getPosition().subtract(playerPosition).getX() < 300;
+    @Override
+    public boolean isDisplayed(Point2D playerPosition, double width) {
+        return this.getPosition().subtract(playerPosition).getX() < width / 2;
     }
 
     public Hitbox getHitbox() {
