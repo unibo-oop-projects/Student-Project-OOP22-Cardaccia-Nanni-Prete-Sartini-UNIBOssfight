@@ -3,6 +3,9 @@ package core.entity;
 import core.component.Hitbox;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.ImageView;
+
+import java.util.List;
 
 public interface Entity {
 
@@ -16,6 +19,8 @@ public interface Entity {
     boolean isDisplayed(Point2D position);
 
     void render(GraphicsContext gc, Point2D position);
+
+    ImageView render(Point2D position);
 
     void update(Inputs input);
 

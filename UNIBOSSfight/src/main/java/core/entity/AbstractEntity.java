@@ -3,9 +3,9 @@ package core.entity;
 import core.component.Hitbox;
 import core.component.Renderer;
 import core.component.Transform;
-import impl.entity.PlayerImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.ImageView;
 
 import java.util.Optional;
 
@@ -44,6 +44,11 @@ public abstract class AbstractEntity implements Entity {
 
     public void render(GraphicsContext gc, Point2D position) {
         this.renderer.render(gc, new Point2D(this.getPosition().subtract(position).add(300, 0).getX(), this.getPosition().getY()), this.getDirection());
+    }
+
+    @Override
+    public ImageView render(Point2D position) {
+        return this.renderer.render(new Point2D(this.getPosition().subtract(position).add(300, 0).getX(), this.getPosition().getY()), this.getDirection());
     }
 
     public boolean isDisplayed(Point2D playerPosition) {
