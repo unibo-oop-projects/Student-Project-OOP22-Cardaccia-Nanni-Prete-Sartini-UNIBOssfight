@@ -1,6 +1,7 @@
 package core.component;
 
 import javafx.geometry.Point2D;
+import util.Window;
 
 public abstract class Transform implements Component {
 
@@ -20,12 +21,12 @@ public abstract class Transform implements Component {
 
     public void setGroundLevel(){
         if(this.isUnderGroundLevel()) {
-            this.position = new Point2D(this.position.getX(), 600);
+            this.position = new Point2D(this.position.getX(), Window.getHeight());
         }
     }
 
     public boolean isUnderGroundLevel(){
-        return this.position.getY() > 600;
+        return this.position.getY() > Window.getHeight();
     }
 
     public Point2D getPosition() {
