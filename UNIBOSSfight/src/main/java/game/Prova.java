@@ -70,12 +70,18 @@ public class Prova extends Application {
             }
         },50, 50,  "goomba.png"));
 
+        this.currentLevel.addEntity(new TmpEntityImpl(new Transform(new Point2D(200, 500), 0) {
+            @Override
+            public void update() {
+
+            }
+        },50, 50,  "goomba.png"));
+
         //Setting the image vie
 
         stage.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                currentLevel.setWindowHeight(stage.getHeight());
                 Window.setHeight(stage.getHeight());
             }
         });
@@ -83,7 +89,6 @@ public class Prova extends Application {
         stage.widthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                currentLevel.setWindowWidth(stage.getWidth());
                 Window.setWidth(stage.getWidth());
             }
         });
