@@ -8,6 +8,7 @@ import impl.component.SpriteRenderer;
 import impl.component.WeaponImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import util.Acceleration;
 
@@ -42,6 +43,18 @@ public class PlayerImpl extends AbstractEntity {
     }
 
     @Override
+    public ImageView render(Point2D position) {
+        try{
+            return this.renderer.render(new Point2D(300, this.getPosition().getY()), this.getDirection());
+            //this.weapon.render(this.getDirection());
+        } catch (Exception e){
+            System.out.println("ERROR cannot load resource " + e);
+        }
+
+        return null;
+    }
+
+    @Override
     public void update(Inputs input) {
 
 
@@ -70,5 +83,9 @@ public class PlayerImpl extends AbstractEntity {
 
     private boolean isJumping() {
         return this.getPosition().getY() < 599;
+    }
+
+    public void rotateWeapon(Point2D mousePosition) {
+        this.weapon.rotation = this.getPosition().angle(mousePosition);
     }
 }
