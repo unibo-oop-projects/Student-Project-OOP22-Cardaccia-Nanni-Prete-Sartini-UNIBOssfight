@@ -7,20 +7,27 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
 public abstract class Bullet extends AbstractEntity {
-    private final double RIGHT_ANGLE = 90;
+    private final double ROUND_ANGLE = 360;
     private final int SPEED = 10;
 
-    private int damage;
-    private Point2D target;
-    private  double angle;
+    private final int damage;
+    private final  double angle;
+    private final double xShift;
+    private final double yShift;
 
     public Bullet(Transform startingPos, int height, int width, Renderer renderer, int damage, Point2D target){
 
         super(startingPos, height, width, renderer);
 
+        //Bullet damage
         this.damage = damage;
-        this.target = target;
-        this.angle = startingPos.getPosition().angle(target);
+
+        //Finding vector angle
+        this.angle = Math.toDegrees(Math.atan2(target.getX() - startingPos.getPosition().getX(), target.getY() - startingPos.getPosition().getY()));
+
+        //Shifs on vector
+        this.xShift = SPEED * Math.cos(angle);
+        this.yShift = SPEED * Math.sin(angle);
     }
 
     @Override
@@ -35,15 +42,7 @@ public abstract class Bullet extends AbstractEntity {
 
     @Override
     public void update(Inputs input) {
-
-        double deltaX, deltaY;
-        double oppositeAngleX = RIGHT_ANGLE - angle;
-        double oppositeAngleY = RIGHT_ANGLE - (RIGHT_ANGLE - angle);
-
-        deltaX = SPEED * Math.cos(oppositeAngleX);
-        deltaY = SPEED * Math.cos(oppositeAngleY);
-
-        position.move((int)deltaX, (int)deltaY);
+        this.position.move((int)xShift, (int)yShift);
     }
 
     @Override

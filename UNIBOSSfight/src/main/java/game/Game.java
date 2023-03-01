@@ -124,7 +124,7 @@ public class Game extends Application {
     }
 
     private void render(GraphicsContext gc){
-        this.currentLevel.renderEntities(gc);
+        //this.currentLevel.renderEntities(gc);
     }
 
     private void run(GraphicsContext gc) {

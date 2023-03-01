@@ -4,10 +4,12 @@ import core.component.Renderer;
 import core.component.Transform;
 import core.component.Weapon;
 import core.entity.Bullet;
-import core.entity.Entity;
 import impl.entity.BulletImpl;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import util.Window;
 
 public class WeaponImpl implements Weapon {
 
@@ -28,6 +30,16 @@ public class WeaponImpl implements Weapon {
     }
 
     @Override
+    public ImageView render(int direction) {
+        return null;
+    }
+
+    @Override
+    public ImageView render(int direction, int rotation) {
+        return this.renderer.render(new Point2D(Window.getWidth() / 2 + 10 * direction, this.userPos.getPosition().getY() + 80 - 110), direction, rotation);
+    }
+
+    @Override
     public void update() {
         //TODO
     }
@@ -37,3 +49,4 @@ public class WeaponImpl implements Weapon {
         return new BulletImpl(this.userPos, 10, 10, new SpriteRenderer(10, 10, Color.BLACK, "bullet.png"), 1, target.getPosition());
     }
 }
+
