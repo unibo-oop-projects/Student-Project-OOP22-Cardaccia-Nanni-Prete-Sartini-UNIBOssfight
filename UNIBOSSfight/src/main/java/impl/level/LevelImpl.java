@@ -14,6 +14,8 @@ public class LevelImpl implements Level {
 
     private List<Entity> entities;
     private PlayerImpl player;
+    private int cont = 0;
+    private boolean goLeft = true;
 
     public LevelImpl(PlayerImpl player) {
         this.entities = new ArrayList<>();
@@ -25,7 +27,15 @@ public class LevelImpl implements Level {
     }
 
     public void updateEntities(){
+
         this.entities.forEach(e -> e.update(Entity.Inputs.EMPTY));
+        if(this.goLeft)
+        this.entities.forEach(e -> e.update(Entity.Inputs.RIGHT));
+        else
+        this.entities.forEach(e -> e.update(Entity.Inputs.LEFT));
+
+        if (this.cont++ %100 == 0)
+            this.goLeft = !this.goLeft;
     }
 
     public void updatePlayer(Entity.Inputs input){
@@ -45,6 +55,10 @@ public class LevelImpl implements Level {
         return this.player.render(this.player.getPosition());
     }
 
+    public ImageView renderWeapon() {
+        return this.player.renderWeapon();
+    }
+
 
     public void renderEntities(GraphicsContext gc) {
         this.entities
@@ -55,8 +69,8 @@ public class LevelImpl implements Level {
     }
 
     @Override
-    public void updateWeaponRotation(Point2D mousePosition) {
-        //this.player.rotateWeapon(mousePosition);
+    public void rotatePlayerWeapon(Point2D point2D) {
+        this.player.rotateWeapon(point2D);
     }
 
     @Override
@@ -67,5 +81,9 @@ public class LevelImpl implements Level {
     @Override
     public void addEntity(Entity e) {
         this.entities.add(e);
+    }
+
+    public Point2D getPlayerPosition() {
+        return this.player.getPosition();
     }
 }

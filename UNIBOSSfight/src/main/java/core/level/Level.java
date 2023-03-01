@@ -12,7 +12,7 @@ public interface Level {
 
     List<Entity> getEntities();
 
-    public void addEntity(Entity e);
+    void addEntity(Entity e);
 
     void updateEntities();
 
@@ -22,5 +22,5 @@ public interface Level {
 
     List<ImageView> renderEntities();
 
-    void updateWeaponRotation(Point2D mousePosition);
+    void rotatePlayerWeapon(Point2D mousePosition);
 }
