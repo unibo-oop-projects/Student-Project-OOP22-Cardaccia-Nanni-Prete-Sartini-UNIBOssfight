@@ -14,7 +14,7 @@ public interface Entity {
         EMPTY
     }
 
-    boolean isDisplayed(Point2D position, double width);
+    boolean isDisplayed(Point2D position);
 
     void render(GraphicsContext gc, Point2D position);
 

@@ -49,12 +49,20 @@ public abstract class AbstractEntity implements Entity {
 
     @Override
     public ImageView render(Point2D position) {
-        return this.renderer.render(new Point2D(this.getPosition().subtract(position).add(Window.getWidth() /2, 0).getX(), this.getPosition().getY()-190), this.getDirection(), 0);
+        return this.renderer.render(
+                new Point2D(
+                        this.getPosition().subtract(position)
+                                .add(Window.getWidth() / 2, 0).getX(),
+                        this.getPosition().getY() - 190
+                ),
+                this.getDirection(),
+                0
+        );
     }
 
     @Override
-    public boolean isDisplayed(Point2D playerPosition, double width) {
-        return this.getPosition().subtract(playerPosition).getX() < width / 2;
+    public boolean isDisplayed(Point2D playerPosition) {
+        return this.getPosition().subtract(playerPosition).getX() < Window.getWidth() / 2;
     }
 
     public Hitbox getHitbox() {
