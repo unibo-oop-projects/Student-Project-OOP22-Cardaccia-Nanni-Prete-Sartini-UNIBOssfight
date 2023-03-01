@@ -9,8 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.nio.file.Path;
 
 public class SpriteRenderer extends Renderer {
     private final String filename;
@@ -27,7 +25,6 @@ public class SpriteRenderer extends Renderer {
         this.filename = filename;
 
         try {
-            System.out.print("assets/" + filename);
             this.img = new Image(new FileInputStream("assets/" + filename),
                     getWidth(), getHeight(),
                     false,
@@ -56,14 +53,17 @@ public class SpriteRenderer extends Renderer {
         }
     }
 
-    public ImageView render(Point2D position, int direction) {
+    @Override
+    public ImageView render(Point2D position, int direction, int rotation) {
 
         ImageView iv2 = new ImageView();
 
         iv2.setImage(this.img);
         iv2.setFitWidth(getWidth());
+        iv2.setScaleX(direction);
         iv2.setFitHeight(getHeight());
-        iv2.setX(position.getX());
+        iv2.setRotate(rotation);
+        iv2.setX(position.getX() - getWidth() / 2);
         iv2.setY(position.getY());
         iv2.setPreserveRatio(false);
         iv2.setSmooth(true);

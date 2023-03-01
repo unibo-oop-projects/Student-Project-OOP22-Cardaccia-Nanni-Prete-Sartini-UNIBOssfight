@@ -42,7 +42,7 @@ public abstract class Renderer implements Component{
     gc.fillOval(position.getX()-2, position.getY() - 2, 4,4);
   }
 
-  public ImageView render(Point2D position, int direction) {
+  public ImageView render(Point2D position, int direction, int rotation) {
     Image img = null;
     try {
       img = new Image(new FileInputStream("assets/gnu.png"));
@@ -53,8 +53,8 @@ public abstract class Renderer implements Component{
     ImageView iv2 = new ImageView();
 
     iv2.setImage(img);
-    iv2.setFitWidth(100);
-    iv2.setX(position.getX() - width / 2 );
+    iv2.setFitWidth(-100);
+    iv2.setX(position.getX() - width / 2);
     iv2.setY(position.getY() - height);
     iv2.setPreserveRatio(false);
     iv2.setSmooth(true);
