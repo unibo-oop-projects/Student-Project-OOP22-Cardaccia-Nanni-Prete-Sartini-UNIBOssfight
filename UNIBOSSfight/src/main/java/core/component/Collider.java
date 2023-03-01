@@ -1,20 +1,24 @@
 package core.component;
 
-import core.entity.Entity;
-import impl.entity.EnemyImpl;
-import impl.entity.PlayerImpl;
-import impl.entity.TmpEntityImpl;
+
+import core.entity.*;
+import impl.entity.*;
 
 import java.util.function.Consumer;
 
 public interface Collider {
 
     enum Entities {
-        // TODO aggiungere le entity mancanti
         // TODO valutare se mettere questa enum in un file a parte
         TMPENTITY(TmpEntityImpl.class),
         PLAYER(PlayerImpl.class),
-        ENEMY(EnemyImpl.class);
+        ENEMY(Enemy.class),
+        BOSS(Boss.class),
+        WALL(Wall.class),
+        PLATFORM(Platform.class),
+        FLAME(Flame.class),
+        SPINE(Spine.class),
+        BULLET(Bullet.class);
 
         private final Class<? extends Entity> type;
 

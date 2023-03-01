@@ -1,9 +1,11 @@
 package impl.entity;
 
+import core.component.Collider;
 import core.component.Hitbox;
 import core.component.Transform;
 import core.entity.Enemy;
 import core.entity.Entity;
+import impl.component.ColliderImpl;
 import impl.component.SpriteRenderer;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
@@ -22,6 +24,17 @@ public class EnemyImpl extends Enemy {
 
     @Override
     public void update(Inputs input) {
+        this.position.move(this.direction, 0);
+    }
 
+    @Override
+    protected void initCollider() {
+        var collider = new ColliderImpl();
+        collider.addBehaviour(Collider.Entities.WALL, e -> {
+            this.position.move(getDirection() * 5, 0);
+            this.direction = this.direction * -1;
+        });
+
+        this.collider = Optional.of(collider);
     }
 }

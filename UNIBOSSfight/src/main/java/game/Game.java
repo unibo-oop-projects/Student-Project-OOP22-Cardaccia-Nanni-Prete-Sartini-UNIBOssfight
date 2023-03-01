@@ -4,6 +4,8 @@ import UI.ConfirmBox;
 import core.component.Transform;
 import core.entity.Entity;
 import core.level.Level;
+import impl.entity.EnemyImpl;
+import impl.entity.Platform;
 import impl.entity.PlayerImpl;
 import impl.entity.TmpEntityImpl;
 import impl.level.LevelImpl;
@@ -70,12 +72,24 @@ public class Game extends Application {
 
         Scene currentScene = new Scene(new StackPane(canvas));
 
-        this.currentLevel.addEntity(new TmpEntityImpl(new Transform(new Point2D(500, 500), 0) {
+        this.currentLevel.addEntity(new EnemyImpl(new Transform(new Point2D(500, 500), 0) {
             @Override
             public void update() {
 
             }
         },50, 50,  "goomba.png"));
+        this.currentLevel.addEntity(new Platform(new Transform(new Point2D(120, 500), 0) {
+            @Override
+            public void update() {
+
+            }
+        },50, 50,  null));
+        this.currentLevel.addEntity(new Platform(new Transform(new Point2D(580, 500), 0) {
+            @Override
+            public void update() {
+
+            }
+        },50, 50,  null));
 
         /*currentScene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
