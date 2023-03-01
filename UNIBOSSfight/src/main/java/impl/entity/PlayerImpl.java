@@ -77,8 +77,13 @@ public class PlayerImpl extends AbstractEntity {
     @Override
     protected void initCollider() {
         var collider = new ColliderImpl();
-        collider.addBehaviour(Collider.Entities.TMPENTITY, e -> {
-            this.position.move(getDirection() * -20, -60);
+        collider.addBehaviour(Collider.Entities.ENEMY, e -> {
+            this.position.move(getDirection() * -20, 0);
+        });
+
+        collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
+            // TODO comportamento in base alla direzione della collisione
+            this.position.move((int)(getPosition().getX() - e.getPosition().getX()), 0);
         });
         this.collider = Optional.of(collider);
     }
