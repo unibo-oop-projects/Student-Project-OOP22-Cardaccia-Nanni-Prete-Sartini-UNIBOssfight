@@ -15,7 +15,10 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
@@ -23,38 +26,41 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import util.Window;
 
 public class Prova extends Application {
 
-    Stage gameWindow;
-
-    private LevelImpl currentLevel = new LevelImpl(new PlayerImpl(new Transform(new Point2D(300, 300), 0) {
+    private LevelImpl currentLevel = new LevelImpl(new PlayerImpl(new Transform(new Point2D(0, 300), 0) {
         @Override
         public void update() {
 
         }
     },250, 200, "testImage.png"));
-    private boolean gameStarted = true;
 
     private Queue<Entity.Inputs> inputsQueue = new PriorityQueue<>();
-
-    private Entity.Inputs currentCommand;
     private boolean isAPressed;
     private boolean isDPressed;
     private boolean isSpacePressed;
 
-    Group root = new Group();
-    Scene currentScene;
+    private Group root = new Group();
+    private Scene currentScene;
+
+    private double windowHeight;
+
+    private double windowWidth;
+
     @Override
     public void start(Stage stage) throws FileNotFoundException {
         stage.setTitle("UNIBOssfight");
-        //Creating an image
-        Image image = new Image(new FileInputStream("assets/gnu.png"));
 
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(16), e -> run()));
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(16), e -> {
+            run();}));
         tl.setCycleCount(Animation.INDEFINITE);
 
         this.currentLevel.addEntity(new TmpEntityImpl(new Transform(new Point2D(500, 500), 0) {
@@ -64,28 +70,33 @@ public class Prova extends Application {
             }
         },50, 50,  "goomba.png"));
 
-        //Setting the image view
-        ImageView imageView = new ImageView(image);
+        //Setting the image vie
 
-        //Setting the position of the image
-        imageView.setX(50);
-        imageView.setY(25);
+        stage.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                currentLevel.setWindowHeight(stage.getHeight());
+                Window.setHeight(stage.getHeight());
+            }
+        });
 
-        Rotate rt = new Rotate();
-        rt.setAngle(10);
-
-        imageView.getTransforms().add(rt);
-
-        //setting the fit height and width of the image view
-        imageView.setFitHeight(455);
-        imageView.setFitWidth(500);
-
-        //Setting the preserve ratio of the image view
-        imageView.setPreserveRatio(true);
+        stage.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                currentLevel.setWindowWidth(stage.getWidth());
+                Window.setWidth(stage.getWidth());
+            }
+        });
 
         this.root = new Group();
 
-        this.root.getChildren().add(imageView);
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+
+        stage.setX(bounds.getMinX());
+        stage.setY(bounds.getMinY());
+        stage.setWidth(bounds.getWidth());
+        stage.setHeight(bounds.getHeight());
 
         //Creating a scene object
         currentScene = new Scene(root);
@@ -97,6 +108,8 @@ public class Prova extends Application {
                 case SPACE -> this.isSpacePressed = true;
             }
         });
+
+        currentScene.setOnMouseMoved(e -> this.currentLevel.rotatePlayerWeapon(new Point2D(e.getX(), e.getY())));
 
         currentScene.setOnKeyReleased(e -> {
             switch (e.getCode()) {
@@ -131,12 +144,37 @@ public class Prova extends Application {
             this.currentLevel.updatePlayer(Entity.Inputs.LEFT);
         //if(!(this.isSpacePressed || this.isDPressed || this.isAPressed))
         this.currentLevel.updatePlayer(Entity.Inputs.EMPTY);
+
+        this.currentLevel.updateEntities();
     }
 
     private void render(){
         this.root.getChildren().clear();
         this.currentLevel.renderEntities().forEach(e -> root.getChildren().add(e));
         root.getChildren().add(this.currentLevel.renderPlayer());
+        root.getChildren().add(this.currentLevel.renderWeapon());
+
+        FileInputStream input = null;
+        try {
+            input = new FileInputStream("assets/ground.png");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        // create a image
+        Image image = new Image(input);
+
+        // create ImagePattern
+        ImagePattern image_pattern = new ImagePattern(image, -this.currentLevel.getPlayerPosition().getX(), 60,
+                200, 200, false);
+
+        // create a Rectangle
+        Rectangle rect = new Rectangle(0, Window.getHeight() - 200, Window.getWidth(), 200);
+
+        // set fill for rectangle
+        rect.setFill(image_pattern);
+
+        root.getChildren().add(rect);
     }
 
     private void run() {
