@@ -1,9 +1,7 @@
 package impl.entity;
 
-import core.component.Hitbox;
 import core.component.Transform;
 import core.entity.AbstractEntity;
-import core.entity.Entity;
 import impl.component.SpriteRenderer;
 import impl.component.WeaponImpl;
 import javafx.geometry.Point2D;
@@ -11,6 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import util.Acceleration;
+import util.Window;
 
 
 public class PlayerImpl extends AbstractEntity {
@@ -21,6 +20,7 @@ public class PlayerImpl extends AbstractEntity {
     private int ySpeed = 0;
 
     private WeaponImpl weapon = new WeaponImpl(this.position, 10, new SpriteRenderer(150, 180, Color.RED, "gnu.png"));
+    private double rotation;
 
 
     public PlayerImpl(Transform position, Integer height, Integer width, String filename) {
@@ -35,7 +35,7 @@ public class PlayerImpl extends AbstractEntity {
     @Override
     public void render(GraphicsContext gc, Point2D position) {
         try{
-            this.renderer.render(gc, new Point2D(300, this.getPosition().getY()), this.getDirection());
+            this.renderer.render(gc, new Point2D(Window.getWidth() / 2, this.getPosition().getY()), this.getDirection());
             this.weapon.render(gc, this.getDirection());
         } catch (Exception e){
             System.out.println("ERROR cannot load resource " + e);
@@ -45,8 +45,16 @@ public class PlayerImpl extends AbstractEntity {
     @Override
     public ImageView render(Point2D position) {
         try{
-            return this.renderer.render(new Point2D(300, this.getPosition().getY()), this.getDirection());
-            //this.weapon.render(this.getDirection());
+            return this.renderer.render(new Point2D(Window.getWidth() / 2, this.getPosition().getY()-110), this.getDirection(), 0);
+        } catch (Exception e){
+            System.out.println("ERROR cannot load resource " + e);
+        }
+
+        return null;
+    }
+    public ImageView renderWeapon() {
+        try{
+            return this.weapon.render(this.getDirection(), (int)this.rotation);
         } catch (Exception e){
             System.out.println("ERROR cannot load resource " + e);
         }
@@ -62,7 +70,6 @@ public class PlayerImpl extends AbstractEntity {
             case LEFT -> {this.position.move(-5, 0); this.direction = -1;}
             case RIGHT -> {this.position.move(5, 0); this.direction = 1;}
             case SPACE -> { if(!isJumping()) {
-                    System.out.println("salto");
                     this.ySpeed = -20;
                     this.position.move(0, -1);
 
@@ -86,6 +93,7 @@ public class PlayerImpl extends AbstractEntity {
     }
 
     public void rotateWeapon(Point2D mousePosition) {
-        this.weapon.rotation = this.getPosition().angle(mousePosition);
+        System.out.println(mousePosition + " "+ this.getPosition().angle(mousePosition));
+        this.rotation = this.direction * (mousePosition.getY() / Window.getHeight() * 120 - 55);
     }
 }
