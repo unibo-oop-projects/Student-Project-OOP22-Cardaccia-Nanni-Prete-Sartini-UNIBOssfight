@@ -50,14 +50,13 @@ public class Menu extends Application {
 
         //Button Confirm
         buttonConfirm = new Button("Confirm box");
-        buttonConfirm.setOnAction(e -> ConfirmBox.display("Confirm box",
-                    "Are you sure you want to quit the game?"));
+        buttonConfirm.setOnAction(e -> ConfirmBox.display("Are you sure you want to quit the game?"));
 
         VBox layout = new VBox(20);
         layout.getChildren().addAll(label1, button1, buttonConfirm, buttonAlert);
         scene = new Scene(layout, 400, 300);
         window.setScene(scene);
-        window.setTitle("UNIBOSSfight");
+        window.setTitle("UNIBOssfight");
         window.show();
 
     }
