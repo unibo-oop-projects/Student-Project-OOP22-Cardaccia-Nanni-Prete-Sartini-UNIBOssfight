@@ -32,4 +32,13 @@ public abstract class Transform implements Component {
     public Point2D getPosition() {
         return new Point2D(this.position.getX(), this.position.getY());
     }
+
+    public static Transform copyOf(Transform input) {
+        return new Transform(new Point2D(input.getPosition().getX(), input.getPosition().getY()), input.rotation) {
+            @Override
+            public void update() {
+
+            }
+        };
+    }
 }
