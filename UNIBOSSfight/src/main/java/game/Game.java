@@ -8,7 +8,6 @@ import impl.entity.PlayerImpl;
 import impl.entity.TmpEntityImpl;
 import impl.level.LevelImpl;
 import javafx.animation.Animation;
-import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -26,7 +25,7 @@ import java.util.Queue;
 
 public class Game extends Application {
 
-    Stage gameWindow;
+    private Stage gameWindow;
 
     private Level currentLevel = new LevelImpl(new PlayerImpl(new Transform(new Point2D(300, 300), 0) {
         @Override
@@ -48,10 +47,10 @@ public class Game extends Application {
 
         this.gameWindow = primaryStage;
         this.gameWindow.setTitle("UNIBOssfight");
-        /*this.gameWindow.setOnCloseRequest(e -> {
+        this.gameWindow.setOnCloseRequest(e -> {
             e.consume();
             closeProgram();
-        });*/
+        });
 
         Canvas canvas = new Canvas(600, 600);
 
@@ -144,8 +143,7 @@ public class Game extends Application {
     }
 
     private void closeProgram() {
-        Boolean answer = ConfirmBox.display("Confirm box",
-                "Are you sure you want to quit the game?");
+        boolean answer = ConfirmBox.display("Are you sure you want to quit the game?");
         if (answer) {
             gameWindow.close();
         }
