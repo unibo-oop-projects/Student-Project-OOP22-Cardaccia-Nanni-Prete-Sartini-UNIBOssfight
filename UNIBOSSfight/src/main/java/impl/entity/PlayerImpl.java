@@ -67,12 +67,12 @@ public class PlayerImpl extends AbstractEntity {
 
         //this.position.move(0, ySpeed);
 
-        this.position.setGroundLevel();
+        this.position.resetGroundLevel();
         this.hitbox.update(this.getPosition());
     }
 
     private boolean isJumping() {
-        return this.getPosition().getY() < 599;
+        return this.getPosition().getY() < this.position.getGroundLevel();
     }
 
     @Override
@@ -83,15 +83,18 @@ public class PlayerImpl extends AbstractEntity {
         });
 
         collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
-            int delta = e.getHeight() / 3;
-            int xDelta = 5;
-            // TODO comportamento in base alla direzione della collisione
-            if (e.getPosition().getY() - getPosition().getY() != 0) {
-                this.position.move(0, -getIntersectionOnY(e));
-                this.position.moveTo((int)getPosition().getX(), e.getHeight() + (int)e.getPosition().getY());
-            } else {
-                this.position.move(getIntersection(e), 0);
-            }
+                int topSide = (int) e.getPosition().getY() - e.getHeight();
+
+                // TODO comportamento in base alla direzione della collisione
+                if (e.getPosition().getY() - getPosition().getY() > 0) {
+                    this.position.setGroundLevel(topSide);
+                    if (this.position.isUnderGroundLevel()) {
+                        this.position.setGroundLevel();
+                    }
+                } else {
+                    this.position.move(getIntersection(e), 0);
+                }
+
         });
         this.collider = Optional.of(collider);
     }
@@ -101,16 +104,6 @@ public class PlayerImpl extends AbstractEntity {
 
         int wallside = (int)e.getPosition().getX() + (e.getWidth() / 2 * side);
         int playerSide = (int)getPosition().getX() - (getWidth() / 2 * side);
-
-        return wallside - playerSide;
-    }
-
-
-    private int getIntersectionOnY(Entity e) {
-        int side = (int)Math.signum(e.getPosition().getY() - getPosition().getY());
-
-        int wallside = (int)e.getPosition().getY() + side > 0 ? e.getHeight() : 0;
-        int playerSide = (int)getPosition().getY() - side > 0 ? 0 : getHeight();
 
         return wallside - playerSide;
     }
