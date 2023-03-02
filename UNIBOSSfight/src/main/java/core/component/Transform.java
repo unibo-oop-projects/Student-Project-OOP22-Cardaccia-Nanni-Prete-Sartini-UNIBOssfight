@@ -31,4 +31,8 @@ public abstract class Transform implements Component {
     public Point2D getPosition() {
         return new Point2D(this.position.getX(), this.position.getY());
     }
+
+    public void moveTo(int x, int y) {
+        this.position = new Point2D(x, y);
+    }
 }

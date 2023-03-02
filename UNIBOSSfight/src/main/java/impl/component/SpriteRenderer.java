@@ -38,7 +38,10 @@ public class SpriteRenderer extends Renderer {
             gc.setFill(Color.RED);
             gc.fillOval(position.getX() - 2, position.getY() - 2, 4, 4);
         } catch (Exception e){
-            System.out.println("ERRORE: risorsa non trovata");
+            gc.setFill(Color.BROWN);
+            gc.fillRect(position.getX() - getWidth() / 2.0, position.getY() - getHeight(), getWidth(), getHeight());
+            gc.setFill(Color.RED);
+            gc.fillOval(position.getX() - 2, position.getY() - 2, 4, 4);
         }
     }
 }

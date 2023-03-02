@@ -80,4 +80,12 @@ public abstract class AbstractEntity implements Entity {
     public void manageCollision(Entity e) {
         this.collider.ifPresent(x -> x.manageCollision(e));
     }
+
+    public int getHeight() {
+        return this.height;
+    }
+
+    public int getWidth() {
+        return this.width;
+    }
 }

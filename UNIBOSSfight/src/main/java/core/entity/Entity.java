@@ -30,4 +30,8 @@ public interface Entity {
 
     void manageCollision(Entity e);
 
+    int getWidth();
+
+    int getHeight();
+
 }

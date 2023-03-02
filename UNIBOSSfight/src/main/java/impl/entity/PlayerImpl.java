@@ -1,6 +1,7 @@
 package impl.entity;
 
 import core.component.Collider;
+import core.entity.Entity;
 import impl.component.ColliderImpl;
 import core.component.Transform;
 import core.entity.AbstractEntity;
@@ -21,7 +22,7 @@ public class PlayerImpl extends AbstractEntity {
     //TODO: aggiungere classe util HitBoxprivate Hitbox playerHitbox;
     private int ySpeed = 0;
 
-    private WeaponImpl weapon = new WeaponImpl(this, 10, new SpriteRenderer(150, 180, Color.RED, "gnu.png"));
+    private WeaponImpl weapon = new WeaponImpl(this, 10, new SpriteRenderer(75, 90, Color.RED, "gnu.png"));
 
 
     public PlayerImpl(Transform position, Integer height, Integer width, String filename) {
@@ -78,13 +79,39 @@ public class PlayerImpl extends AbstractEntity {
     protected void initCollider() {
         var collider = new ColliderImpl();
         collider.addBehaviour(Collider.Entities.ENEMY, e -> {
-            this.position.move(getDirection() * -20, 0);
+            this.position.move(getIntersection(e), 0);
         });
 
         collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
+            int delta = e.getHeight() / 3;
+            int xDelta = 5;
             // TODO comportamento in base alla direzione della collisione
-            this.position.move((int)(getPosition().getX() - e.getPosition().getX()), 0);
+            if (e.getPosition().getY() - getPosition().getY() != 0) {
+                this.position.move(0, -getIntersectionOnY(e));
+                this.position.moveTo((int)getPosition().getX(), e.getHeight() + (int)e.getPosition().getY());
+            } else {
+                this.position.move(getIntersection(e), 0);
+            }
         });
         this.collider = Optional.of(collider);
+    }
+
+    private int getIntersection(Entity e) {
+        int side = (int)Math.signum(getPosition().getX() - e.getPosition().getX());
+
+        int wallside = (int)e.getPosition().getX() + (e.getWidth() / 2 * side);
+        int playerSide = (int)getPosition().getX() - (getWidth() / 2 * side);
+
+        return wallside - playerSide;
+    }
+
+
+    private int getIntersectionOnY(Entity e) {
+        int side = (int)Math.signum(e.getPosition().getY() - getPosition().getY());
+
+        int wallside = (int)e.getPosition().getY() + side > 0 ? e.getHeight() : 0;
+        int playerSide = (int)getPosition().getY() - side > 0 ? 0 : getHeight();
+
+        return wallside - playerSide;
     }
 }

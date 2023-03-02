@@ -35,7 +35,7 @@ public class Game extends Application {
         public void update() {
 
         }
-    },250, 200, "testImage.png"));
+    },125, 100, "testImage.png"));
     private boolean gameStarted = true;
 
     private Queue<Entity.Inputs> inputsQueue = new PriorityQueue<>();
@@ -72,19 +72,19 @@ public class Game extends Application {
 
         Scene currentScene = new Scene(new StackPane(canvas));
 
-        this.currentLevel.addEntity(new EnemyImpl(new Transform(new Point2D(500, 500), 0) {
+        this.currentLevel.addEntity(new EnemyImpl(new Transform(new Point2D(500, 600), 0) {
             @Override
             public void update() {
 
             }
         },50, 50,  "goomba.png"));
-        this.currentLevel.addEntity(new Platform(new Transform(new Point2D(120, 500), 0) {
+        this.currentLevel.addEntity(new Platform(new Transform(new Point2D(120, 600), 0) {
             @Override
             public void update() {
 
             }
         },50, 50,  null));
-        this.currentLevel.addEntity(new Platform(new Transform(new Point2D(580, 500), 0) {
+        this.currentLevel.addEntity(new Platform(new Transform(new Point2D(580, 600), 0) {
             @Override
             public void update() {
 
