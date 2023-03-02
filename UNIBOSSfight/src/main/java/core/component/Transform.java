@@ -39,7 +39,8 @@ public abstract class Transform implements Component {
     }
 
     public void resetGroundLevel() {
-        setGroundLevel(600); // TODO heigth della window
+        setGroundLevel(600);
+        setGroundLevel();
     }
 
     public Point2D getPosition() {

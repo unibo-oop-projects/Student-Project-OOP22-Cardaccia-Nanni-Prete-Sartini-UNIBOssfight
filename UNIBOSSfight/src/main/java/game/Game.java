@@ -90,6 +90,12 @@ public class Game extends Application {
 
             }
         },50, 50,  null));
+        this.currentLevel.addEntity(new Platform(new Transform(new Point2D(200, 400), 0) {
+            @Override
+            public void update() {
+
+            }
+        },50, 50,  null));
 
         /*currentScene.setOnKeyPressed(e -> {
             switch (e.getCode()) {

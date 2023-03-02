@@ -87,10 +87,13 @@ public class PlayerImpl extends AbstractEntity {
 
                 // TODO comportamento in base alla direzione della collisione
                 if (e.getPosition().getY() - getPosition().getY() > 0) {
+                    final int topSide = (int) e.getPosition().getY() - e.getHeight();
                     this.position.setGroundLevel(topSide);
                     if (this.position.isUnderGroundLevel()) {
                         this.position.setGroundLevel();
                     }
+                } else if (e.getPosition().getY() - getPosition().getY() < 0) {
+                    this.position.moveTo((int) getPosition().getX(), (int)e.getPosition().getY() + getHeight() + 1);
                 } else {
                     this.position.move(getIntersection(e), 0);
                 }
