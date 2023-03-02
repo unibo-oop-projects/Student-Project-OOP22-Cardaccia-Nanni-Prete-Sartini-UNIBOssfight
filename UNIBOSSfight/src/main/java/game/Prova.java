@@ -70,12 +70,12 @@ public class Prova extends Application {
             }
         },50, 50,  "goomba.png"));
 
-        this.currentLevel.addEntity(new TmpEntityImpl(new Transform(new Point2D(200, 500), 0) {
+        /*this.currentLevel.addEntity(new TmpEntityImpl(new Transform(new Point2D(200, 500), 0) {
             @Override
             public void update() {
 
             }
-        },50, 50,  "goomba.png"));
+        },50, 50,  "goomba.png"));**/
 
         //Setting the image vie
 
@@ -141,6 +141,7 @@ public class Prova extends Application {
     }
 
     private void update(){
+        this.currentLevel.updateEntities();
         if(this.isSpacePressed)
             this.currentLevel.updatePlayer(Entity.Inputs.SPACE);
         if(this.isDPressed)
@@ -150,7 +151,7 @@ public class Prova extends Application {
         //if(!(this.isSpacePressed || this.isDPressed || this.isAPressed))
         this.currentLevel.updatePlayer(Entity.Inputs.EMPTY);
 
-        this.currentLevel.updateEntities();
+
     }
 
     private void render(){
@@ -183,6 +184,7 @@ public class Prova extends Application {
     }
 
     private void run() {
+
         inputPoll();
         update();
         render();
