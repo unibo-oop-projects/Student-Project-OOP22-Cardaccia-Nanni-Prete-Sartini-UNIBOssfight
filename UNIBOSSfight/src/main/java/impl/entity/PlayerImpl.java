@@ -52,7 +52,6 @@ public class PlayerImpl extends AbstractEntity {
             case LEFT -> {this.position.move(-5, 0); this.direction = -1;}
             case RIGHT -> {this.position.move(5, 0); this.direction = 1;}
             case SPACE -> { if(!isJumping()) {
-                    System.out.println("salto");
                     this.ySpeed = -20;
                     this.position.move(0, -1);
 
@@ -83,8 +82,6 @@ public class PlayerImpl extends AbstractEntity {
         });
 
         collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
-                int topSide = (int) e.getPosition().getY() - e.getHeight();
-
                 // TODO comportamento in base alla direzione della collisione
                 if (e.getPosition().getY() - getPosition().getY() > 0) {
                     final int topSide = (int) e.getPosition().getY() - e.getHeight();
@@ -94,6 +91,7 @@ public class PlayerImpl extends AbstractEntity {
                     }
                 } else if (e.getPosition().getY() - getPosition().getY() < 0) {
                     this.position.moveTo((int) getPosition().getX(), (int)e.getPosition().getY() + getHeight() + 1);
+                    this.ySpeed = 0;
                 } else {
                     this.position.move(getIntersection(e), 0);
                 }
