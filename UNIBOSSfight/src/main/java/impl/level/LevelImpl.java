@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class LevelImpl implements Level {
 
@@ -44,10 +45,9 @@ public class LevelImpl implements Level {
 
     @Override
     public List<ImageView> renderEntities() {
-        return this.entities.stream()
+        return Stream.concat(this.entities.stream()
                 .filter(e -> e.isDisplayed(this.player.getPosition()))
-                .map(e -> e.render(this.player.getPosition()))
-                .toList();
+                .map(e -> e.render(this.player.getPosition())), this.player.getBullets().stream()).toList();
 
     }
 
