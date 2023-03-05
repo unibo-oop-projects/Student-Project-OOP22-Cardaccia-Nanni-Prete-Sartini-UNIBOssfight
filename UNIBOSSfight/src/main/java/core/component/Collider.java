@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 public interface Collider {
 
     /**
-     * Enum con tutte le entità possibili
+     * Enum con tutte le entità possibili.
      */
     enum Entities {
         // TODO valutare se mettere questa enum in un file a parte
@@ -34,7 +34,7 @@ public interface Collider {
 
         /**
          * Verifica se il parametro è dello stesso tipo runtime di quello
-         * associato al valore dell'enum
+         * associato al valore dell'enum.
          * @param e entità da confrontare
          * @param <T> sottotipo di entity
          * @return true se il parametro è dello stesso tipo, false altrimenti
@@ -45,13 +45,13 @@ public interface Collider {
     }
 
     /**
-     * Esegue la procedura di gestione della collisione
+     * Esegue la procedura di gestione della collisione.
      * @param e entità con cui il chiamante collide
      */
     void manageCollision(Entity e);
 
     /**
-     * Associa un comportamento ad una determinata entità
+     * Associa un comportamento ad una determinata entità.
      * @param key enum dell'entità
      * @param value comportamento
      */
