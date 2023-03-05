@@ -34,7 +34,7 @@ public class Prova extends Application {
     private InputManager inputManager;
 
     @Override
-    public void start(Stage stage){
+    public void start(final Stage stage) {
 
         stage.setTitle("UNIBOssfight");
 
@@ -72,7 +72,8 @@ public class Prova extends Application {
         stage.show();
 
         Timeline tl = new Timeline(new KeyFrame(Duration.millis(FRAME_DURATION), e -> {
-            run();}));
+            run();
+        }));
         tl.setCycleCount(Animation.INDEFINITE);
 
         this.currentLevel.addEntity(
@@ -87,21 +88,24 @@ public class Prova extends Application {
         tl.play();
     }
 
-    private void inputPoll(){
+    private void inputPoll() {
     }
 
-    private void update(){
+    private void update() {
         this.currentLevel.updateEntities();
-        if(this.inputManager.isSpacePressed)
+        if (this.inputManager.isSpacePressed) {
             this.currentLevel.updatePlayer(Entity.Inputs.SPACE);
-        if(this.inputManager.isDPressed)
+        }
+        if (this.inputManager.isDPressed) {
             this.currentLevel.updatePlayer(Entity.Inputs.RIGHT);
-        if(this.inputManager.isAPressed)
+        }
+        if (this.inputManager.isAPressed) {
             this.currentLevel.updatePlayer(Entity.Inputs.LEFT);
+        }
         this.currentLevel.updatePlayer(Entity.Inputs.EMPTY);
     }
 
-    private void render(){
+    private void render() {
         this.root.getChildren().clear();
         this.currentLevel.renderEntities().forEach(e -> root.getChildren().add(e));
         root.getChildren().add(this.currentLevel.renderPlayer());
@@ -119,10 +123,10 @@ public class Prova extends Application {
 
 
         // create ImagePattern
-        ImagePattern image_pattern = new ImagePattern(
+        ImagePattern imagePattern = new ImagePattern(
                 image,
                 -this.currentLevel.getPlayerPosition().getX(),
-                Window.getHeight()-image.getHeight(),
+                Window.getHeight() - image.getHeight(),
                 image.getWidth(), image.getHeight(),
                 false
         );
@@ -131,7 +135,7 @@ public class Prova extends Application {
         Rectangle rect = new Rectangle(0, Window.getHeight() - image.getHeight(), Window.getWidth(), image.getHeight());
 
         // set fill for rectangle
-        rect.setFill(image_pattern);
+        rect.setFill(imagePattern);
 
         root.getChildren().add(rect);
     }
@@ -159,7 +163,7 @@ public class Prova extends Application {
         private boolean isSpacePressed = false;
 
 
-        public InputManager(Scene scene) {
+        public InputManager(final Scene scene) {
             this.scene = scene;
 
             this.scene.setOnKeyPressed(e -> {

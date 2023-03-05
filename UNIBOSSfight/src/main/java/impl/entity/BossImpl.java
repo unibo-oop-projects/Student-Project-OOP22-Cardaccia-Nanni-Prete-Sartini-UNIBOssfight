@@ -1,7 +1,6 @@
 package impl.entity;
 
 import core.component.Hitbox;
-import core.component.Renderer;
 import core.component.Transform;
 import core.component.Weapon;
 import core.entity.Boss;
@@ -16,7 +15,7 @@ public class BossImpl extends Boss {
     private Weapon weapon;
 
     public BossImpl(final Transform startingPos, final int height, final int width,
-                    final int health, final Weapon weapon, final String filename){
+                    final int health, final Weapon weapon, final String filename) {
         super(startingPos, height, width, filename);
         this.position = startingPos;
         this.health = health;
@@ -41,15 +40,15 @@ public class BossImpl extends Boss {
     }
 
     public boolean isDisplayed() {
-        return false;//TODO
+        return false; //TODO
     }
 
-    public void render(GraphicsContext gc) {
+    public void render(final GraphicsContext gc) {
         //TODO
     }
 
     @Override
-    public void update(Inputs input) {
+    public void update(final Inputs input) {
         //TODO
     }
 
@@ -60,6 +59,6 @@ public class BossImpl extends Boss {
 
     @Override
     public Hitbox getHitbox() {
-        return null;//TODO
+        return null; //TODO
     }
 }

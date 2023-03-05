@@ -4,8 +4,6 @@ import core.component.Collider;
 import core.component.Hitbox;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.ImageView;
 
 import java.util.Optional;
 
@@ -14,7 +12,7 @@ public interface Entity {
     /**
      * Enumerazione per la gestione dell'input delle  Entity
      */
-    public enum Inputs {
+    enum Inputs {
         LEFT,
         RIGHT,
         SPACE,

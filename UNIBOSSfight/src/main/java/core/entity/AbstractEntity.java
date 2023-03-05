@@ -10,6 +10,9 @@ import util.Window;
 
 import java.util.Optional;
 
+/**
+ *
+ */
 public abstract class AbstractEntity implements Entity {
 
     private final int height;
@@ -64,7 +67,7 @@ public abstract class AbstractEntity implements Entity {
      * @return Node generato dal renderer che verrà passato alla Scene
      */
     @Override
-    public Node render(Point2D position) {
+    public Node render(final Point2D position) {
         return this.renderer.render(
                 new Point2D(
                         this.getPosition()
@@ -84,11 +87,11 @@ public abstract class AbstractEntity implements Entity {
      * renderizzato all'interno della finestra di gioco, false altrimenti
      */
     @Override
-    public boolean isDisplayed(Point2D playerPosition) {
+    public boolean isDisplayed(final Point2D playerPosition) {
         //System.out.println(this.getClass() + " " + this.getPosition().getY() + " " + Window.getHeight());
         return Math.abs(this.getPosition().subtract(playerPosition).getX()) < Window.getWidth() / 2 &&
-                this.getPosition().getY() <= Window.getHeight() &&
-                this.getPosition().getY() > 0;
+                this.getPosition().getY() <= Window.getHeight()
+                && this.getPosition().getY() > 0;
     }
 
     /**
@@ -128,7 +131,7 @@ public abstract class AbstractEntity implements Entity {
         return this.collider;
     }
 
-    public void manageCollision(Entity e) {
+    public void manageCollision(final Entity e) {
         this.collider.ifPresent(x -> x.manageCollision(e));
     }
 

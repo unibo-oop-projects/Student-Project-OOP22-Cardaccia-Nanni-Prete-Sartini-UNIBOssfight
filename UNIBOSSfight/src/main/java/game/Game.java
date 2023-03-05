@@ -1,30 +1,10 @@
 package game;
 
-import UI.ConfirmBox;
-import core.component.Transform;
-import core.entity.Entity;
-import core.level.Level;
-import impl.entity.PlayerImpl;
-import impl.entity.TmpEntityImpl;
-import impl.level.LevelImpl;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.geometry.Point2D;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 public class Game extends Application {
-    public void start(Stage primaryStage) throws Exception {}
+    public void start(final Stage primaryStage) throws Exception {}
 
     /*private Stage gameWindow;
 

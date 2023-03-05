@@ -15,7 +15,7 @@ public class Transform implements Component {
      * @param position
      * @param rotation
      */
-    public Transform(Point2D position, float rotation) {
+    public Transform(final Point2D position, final float rotation) {
         this.position = position;
         this.rotation = rotation;
     }
@@ -25,15 +25,15 @@ public class Transform implements Component {
      * @param x
      * @param y
      */
-    public void move (int x, int y) {
+    public void move(final int x, final int y) {
         this.position = this.position.add(x, y);
     }
 
     /**
      * riposizinona l'entity sul livello del terreno se questo vi si trova al di sotto
      */
-    public void setGroundLevel(){
-        if(this.isUnderGroundLevel()) {
+    public void setGroundLevel() {
+        if (this.isUnderGroundLevel()) {
             this.position = new Point2D(this.position.getX(), yGround);
         }
     }
@@ -49,7 +49,7 @@ public class Transform implements Component {
     /**
      * @return true se l'entity si trova sotto il livello del terreno
      */
-    public boolean isUnderGroundLevel(){
+    public boolean isUnderGroundLevel() {
         return this.position.getY() > yGround;
     }
 
@@ -69,7 +69,7 @@ public class Transform implements Component {
      * @param input
      * @return Transform che è l'esatta copia di quello passato in input
      */
-    public static Transform copyOf(Transform input) {
+    public static Transform copyOf(final Transform input) {
         return new Transform(
                 new Point2D(input.getPosition().getX(), input.getPosition().getY()),
                 input.rotation

@@ -6,9 +6,6 @@ import core.level.Level;
 import impl.entity.PlayerImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.ImageView;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -34,19 +31,21 @@ public class LevelImpl implements Level {
 
     }
 
-    public void updateEntities(){
+    public void updateEntities() {
 
         this.entities.forEach(e -> e.update(Entity.Inputs.EMPTY));
-        if(this.goLeft)
+        if (this.goLeft) {
             this.entities.forEach(e -> e.update(Entity.Inputs.RIGHT));
-        else
+        } else {
             this.entities.forEach(e -> e.update(Entity.Inputs.LEFT));
+        }
 
-        if (this.cont++ %100 == 0)
+        if (this.cont++ % 100 == 0) {
             this.goLeft = !this.goLeft;
+        }
     }
 
-    public void updatePlayer(Entity.Inputs input){
+    public void updatePlayer(final Entity.Inputs input) {
         this.player.update(input);
     }
 
@@ -58,7 +57,7 @@ public class LevelImpl implements Level {
 
     }
 
-    public Node renderPlayer(){
+    public Node renderPlayer() {
         return this.player.render(this.player.getPosition());
     }
 
@@ -67,7 +66,7 @@ public class LevelImpl implements Level {
     }
 
     @Override
-    public void rotatePlayerWeapon(Point2D point2D) {
+    public void rotatePlayerWeapon(final Point2D point2D) {
         this.player.rotateWeapon(point2D);
     }
 
@@ -95,7 +94,7 @@ public class LevelImpl implements Level {
     }
 
     @Override
-    public void addEntity(Entity e) {
+    public void addEntity(final Entity e) {
         this.entities.add(e);
     }
 
@@ -103,7 +102,7 @@ public class LevelImpl implements Level {
         return this.player.getPosition();
     }
 
-    public void playerShoot(Point2D target){
+    public void playerShoot(final Point2D target) {
         this.player.shoot(target);
     }
 }

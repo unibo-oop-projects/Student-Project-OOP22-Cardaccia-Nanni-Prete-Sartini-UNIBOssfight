@@ -1,14 +1,10 @@
 package impl.entity;
 
 import core.component.Collider;
-import core.component.Hitbox;
 import core.component.Transform;
 import core.entity.Enemy;
-import core.entity.Entity;
 import impl.component.ColliderImpl;
 import impl.component.SpriteRenderer;
-import javafx.geometry.Point2D;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import java.util.Optional;
@@ -23,7 +19,7 @@ public class EnemyImpl extends Enemy {
     }
 
     @Override
-    public void update(Inputs input) {
+    public void update(final Inputs input) {
         this.position.move(this.direction, 0);
         this.hitbox.update(getPosition());
     }

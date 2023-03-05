@@ -1,6 +1,5 @@
 package core.entity;
 
-import core.component.Renderer;
 import core.component.Transform;
 import core.component.Weapon;
 import impl.component.SpriteRenderer;
@@ -13,7 +12,7 @@ public abstract class Boss extends Enemy {
         super(position, height, width, new SpriteRenderer(height, width, Color.RED, filename));
     }
 
-    Weapon getWeapon(){
+    Weapon getWeapon() {
         return null;
     }
 

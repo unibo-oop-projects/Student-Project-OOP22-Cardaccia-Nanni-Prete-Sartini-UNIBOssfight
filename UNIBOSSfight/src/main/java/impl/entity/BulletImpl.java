@@ -7,7 +7,9 @@ import javafx.geometry.Point2D;
 
 public class BulletImpl extends Bullet {
 
-    public BulletImpl(Transform startingPos, int height, int width, Renderer renderer, int damage, Point2D target, int speed) {
+    public BulletImpl(final Transform startingPos, final int height, final int width,
+                      final Renderer renderer, final int damage, final Point2D target,
+                      final int speed) {
         super(startingPos, height, width, renderer, damage, target, speed);
     }
 }
