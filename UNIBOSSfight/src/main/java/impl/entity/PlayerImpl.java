@@ -10,6 +10,8 @@ import impl.component.SpriteRenderer;
 import impl.component.WeaponImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import util.Acceleration;
 import util.Window;
@@ -27,7 +29,7 @@ public class PlayerImpl extends AbstractEntity {
     //TODO: aggiungere classe util HitBoxprivate Hitbox playerHitbox;
     private int ySpeed = 0;
 
-    private WeaponImpl weapon = new WeaponImpl(this.position, 10, new SpriteRenderer(75, 90, Color.RED, "gnu.png"));
+    private WeaponImpl weapon = new WeaponImpl(this.position, 10, new SpriteRenderer(150, 180, Color.RED, "gnu.png"));
     private double rotation;
     private List<Bullet> bullets = new ArrayList<>();
     private int cont = 1;
@@ -41,7 +43,6 @@ public class PlayerImpl extends AbstractEntity {
         return true;
     }
 
-
     @Override
     public Node render(Point2D position) {
         try{
@@ -49,6 +50,7 @@ public class PlayerImpl extends AbstractEntity {
         } catch (Exception e){
             System.out.println("ERROR cannot load resource " + e);
         }
+
         return null;
     }
 
@@ -67,23 +69,15 @@ public class PlayerImpl extends AbstractEntity {
 
 
         switch (input) {
-            case LEFT -> {
-                this.position.move(-5, 0);
-                this.direction = -1;
+            case LEFT -> {this.position.move(-5, 0); this.direction = -1;}
+            case RIGHT -> {this.position.move(5, 0); this.direction = 1;}
+            case SPACE -> { if(!isJumping()) {
+                this.ySpeed = -20;
+                this.position.move(0, -1);
             }
-            case RIGHT -> {
-                this.position.move(5, 0);
-                this.direction = 1;
-            }
-            case SPACE -> {
-                if (!isJumping()) {
-                    this.ySpeed = -20;
-                    this.position.move(0, -1);
-                }
-                if (this.cont++ % 3 == 0) {
-                    shoot();
-                    System.out.println(this.bullets.size());
-                }
+            if(this.cont++ % 3 == 0)
+                shoot();
+
 
                 //this.position.move(0, ySpeed);
             }
