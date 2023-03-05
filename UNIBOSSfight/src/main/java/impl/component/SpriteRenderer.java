@@ -4,7 +4,6 @@ import core.component.Renderer;
 import javafx.animation.PathTransition;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -24,7 +23,8 @@ public class SpriteRenderer extends Renderer {
      * @param color
      * @param filename
      */
-    public SpriteRenderer(int height, int width, Color color, String filename) {
+    public SpriteRenderer(final int height, final int width,
+                          final Color color, final String filename) {
 
         super(height, width, color);
         this.filename = filename;
@@ -34,7 +34,7 @@ public class SpriteRenderer extends Renderer {
                     getWidth(), getHeight(),
                     false,
                     true);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("ERRORE: risorsa non trovata");
         }
 
@@ -48,9 +48,9 @@ public class SpriteRenderer extends Renderer {
      * renderizzato il rettangolo della classe padre
      */
     @Override
-    public Node render(Point2D position, int direction, int rotation) {
+    public Node render(final Point2D position, final int direction, final int rotation) {
 
-        if(this.img != null) {
+        if (this.img != null) {
 
             ImageView iv2 = new ImageView();
 

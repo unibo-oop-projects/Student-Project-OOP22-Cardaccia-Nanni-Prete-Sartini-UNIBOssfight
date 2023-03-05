@@ -17,7 +17,7 @@ public class WeaponImpl implements Weapon {
     private Transform userPos;
     private Renderer renderer;
 
-    public WeaponImpl(Transform userPos, int damage, Renderer renderer){
+    public WeaponImpl(final Transform userPos, final int damage, final Renderer renderer) {
         //TODO
         this.userPos = userPos;
         this.damage = damage;
@@ -25,18 +25,21 @@ public class WeaponImpl implements Weapon {
     }
 
     @Override
-    public ImageView render(int direction) {
+    public ImageView render(final int direction) {
         return null;
     }
 
     @Override
-    public Node render(int direction, int rotation) {
-        return this.renderer.render(new Point2D(Window.getWidth() / 2 + 10 * direction, this.userPos.getPosition().getY() + 80 - 110), direction, rotation);
+    public Node render(final int direction, final int rotation) {
+        return this.renderer.render(new Point2D(Window.getWidth() / 2 + 10 * direction,
+                this.userPos.getPosition().getY() + 80 - 110), direction, rotation);
     }
 
     @Override
-    public Bullet fire(Point2D target) {
-        return new BulletImpl(Transform.copyOf(this.userPos), 20, 20, new SpriteRenderer(20, 20, Color.BLACK, "gnu.png"), 1, target, 20);
+    public Bullet fire(final Point2D target) {
+        return new BulletImpl(Transform.copyOf(this.userPos), 20, 20,
+                new SpriteRenderer(20, 20, Color.BLACK, "gnu.png"),
+                1, target, 20);
     }
 }
 

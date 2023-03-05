@@ -5,7 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public abstract class Renderer implements Component{
+public abstract class Renderer implements Component {
 
   private int height;
   private int width;
@@ -17,7 +17,7 @@ public abstract class Renderer implements Component{
    * @param width
    * @param color
    */
-  public Renderer(int height, int width, Color color) {
+  public Renderer(final int height, final int width, final Color color) {
     this.height = height;
     this.width = width;
     this.color = color;
@@ -31,7 +31,7 @@ public abstract class Renderer implements Component{
    * @param rotation
    * @return Node che verrà passato alla scena
    */
-  public Node render(Point2D position, int direction, int rotation) {
+  public Node render(final Point2D position, final int direction, final int rotation) {
     Rectangle rectangle = new Rectangle(
             position.getX() - width / 2,
             position.getY() - height,

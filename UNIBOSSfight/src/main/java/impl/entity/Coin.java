@@ -3,7 +3,6 @@ package impl.entity;
 import core.component.Transform;
 import core.entity.AbstractEntity;
 import impl.component.SpriteRenderer;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
@@ -18,7 +17,7 @@ public abstract class Coin extends AbstractEntity {
     }
 
     @Override
-    public boolean isDisplayed(Point2D position) {
+    public boolean isDisplayed(final Point2D position) {
         return false;
     }
 
@@ -27,7 +26,7 @@ public abstract class Coin extends AbstractEntity {
     }
 
     @Override
-    public void update(Inputs input) {
+    public void update(final Inputs input) {
 
     }
 

@@ -13,7 +13,9 @@ public abstract class Bullet extends AbstractEntity {
     private final double xShift;
     private final double yShift;
 
-    public Bullet(Transform startingPos, int height, int width, Renderer renderer, int damage, Point2D target, int speed){
+    public Bullet(final Transform startingPos, final int height, final int width,
+                  final Renderer renderer, final int damage, final Point2D target,
+                  final int speed) {
 
         super(startingPos, height, width, renderer);
 
@@ -22,8 +24,8 @@ public abstract class Bullet extends AbstractEntity {
         this.speed = speed;
 
         //Finding vector angle
-        double dx = (target.getX() + this.position.getPosition().getX() - Window.getWidth()/2)-this.position.getPosition().getX();
-        double dy = (target.getY())-this.position.getPosition().getY();
+        double dx = (target.getX() + this.position.getPosition().getX() - Window.getWidth() / 2) - this.position.getPosition().getX();
+        double dy = (target.getY()) - this.position.getPosition().getY();
         double angle = Math.atan2(dy, dx);
 
         //Shifs on vector
@@ -32,8 +34,8 @@ public abstract class Bullet extends AbstractEntity {
     }
 
     @Override
-    public void update(Inputs input) {
-        this.position.move((int)xShift, (int)yShift);
+    public void update(final Inputs input) {
+        this.position.move((int) xShift, (int) yShift);
     }
 
     @Override

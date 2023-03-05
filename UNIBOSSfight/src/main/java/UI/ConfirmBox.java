@@ -11,7 +11,7 @@ public class ConfirmBox {
     private static final int WIDTH = 300;
     private static final int HEIGHT = 200;
     private static boolean answer;
-    public static boolean display(String message) {
+    public static boolean display(final String message) {
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);

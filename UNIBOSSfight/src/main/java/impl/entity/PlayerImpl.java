@@ -11,15 +11,11 @@ import impl.component.SpriteRenderer;
 import impl.component.WeaponImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import util.Acceleration;
 import util.Window;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.Optional;
 
 
@@ -37,19 +33,22 @@ public class PlayerImpl extends AbstractEntity {
     private int cont = 1;
 
 
-    public PlayerImpl(Transform position, Integer height, Integer width, String filename) {
-        super(position, height, width, new SpriteRenderer(height, width, Color.RED, filename));
+    public PlayerImpl(final Transform position, final Integer height,
+                      final Integer width, final String filename) {
+        super(position, height, width,
+                new SpriteRenderer(height, width, Color.RED, filename));
     }
     @Override
-    public boolean isDisplayed(Point2D position) {
+    public boolean isDisplayed(final Point2D position) {
         return true;
     }
 
     @Override
-    public Node render(Point2D position) {
-        try{
-            return this.renderer.render(new Point2D(Window.getWidth() / 2, this.getPosition().getY() - 57), this.getDirection(), 0);
-        } catch (Exception e){
+    public Node render(final Point2D position) {
+        try {
+            return this.renderer.render(new Point2D(Window.getWidth() / 2,
+                    this.getPosition().getY() - 57), this.getDirection(), 0);
+        } catch (Exception e) {
             System.out.println("ERROR cannot load resource " + e);
         }
 
@@ -57,9 +56,9 @@ public class PlayerImpl extends AbstractEntity {
     }
 
     public Node renderWeapon() {
-        try{
-            return this.weapon.render(this.getDirection(), (int)this.rotation);
-        } catch (Exception e){
+        try {
+            return this.weapon.render(this.getDirection(), (int) this.rotation);
+        } catch (Exception e) {
             System.out.println("ERROR cannot load resource " + e);
         }
 
@@ -67,7 +66,7 @@ public class PlayerImpl extends AbstractEntity {
     }
 
     @Override
-    public void update(Inputs input) {
+    public void update(final Inputs input) {
 
 
         switch (input) {
@@ -80,7 +79,7 @@ public class PlayerImpl extends AbstractEntity {
                 this.direction = 1;
             }
             case SPACE -> {
-                if(!isJumping()) {
+                if (!isJumping()) {
                     this.ySpeed = -20;
                     this.position.move(0, -1);
                 }
@@ -120,7 +119,7 @@ public class PlayerImpl extends AbstractEntity {
                         this.position.setGroundLevel();
                     }
                 } else if (e.getPosition().getY() - getPosition().getY() < 0) {
-                    this.position.moveTo((int) getPosition().getX(), (int)e.getPosition().getY() + getHeight() + 1);
+                    this.position.moveTo((int) getPosition().getX(), (int) e.getPosition().getY() + getHeight() + 1);
                     this.ySpeed = 0;
                 } else {
                     this.position.move(getIntersection(e), 0);
@@ -130,24 +129,25 @@ public class PlayerImpl extends AbstractEntity {
         this.collider = Optional.of(collider);
     }
 
-    private int getIntersection(Entity e) {
-        int side = (int)Math.signum(getPosition().getX() - e.getPosition().getX());
+    private int getIntersection(final Entity e) {
+        int side = (int) Math.signum(getPosition().getX() - e.getPosition().getX());
 
-        int wallSide = (int)e.getPosition().getX() + (e.getWidth() / 2 * side);
-        int playerSide = (int)getPosition().getX() - (getWidth() / 2 * side);
+        int wallSide = (int) e.getPosition().getX() + (e.getWidth() / 2 * side);
+        int playerSide = (int) getPosition().getX() - (getWidth() / 2 * side);
 
         return wallSide - playerSide;
     }
 
-    public void rotateWeapon(Point2D mousePosition) {
-        this.rotation = this.direction * (mousePosition.getY() / Window.getHeight() * 120 - 55);
+    public void rotateWeapon(final Point2D mousePosition) {
+        this.rotation = this.direction
+                * (mousePosition.getY() / Window.getHeight() * 120 - 55);
     }
 
-    public void shoot(Point2D target) {
+    public void shoot(final Point2D target) {
         this.bullets.add(this.weapon.fire(target));
     }
 
-    private void removeBullets(){
+    private void removeBullets() {
         this.bullets.removeIf(e -> !e.isDisplayed(this.getPosition()));
     }
 

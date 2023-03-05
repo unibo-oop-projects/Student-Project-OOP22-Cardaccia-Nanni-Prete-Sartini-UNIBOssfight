@@ -13,7 +13,8 @@ public class TmpEntityImpl extends AbstractEntity {
 
     private int ySpeed = 0;
 
-    public TmpEntityImpl(Transform position, Integer height, Integer width, String filename) {
+    public TmpEntityImpl(final Transform position, final Integer height,
+                         final Integer width, final String filename) {
         super(position, height, width, new SpriteRenderer(height, width, Color.GREEN, filename) {
             @Override
             public int getHeight() {
@@ -25,14 +26,14 @@ public class TmpEntityImpl extends AbstractEntity {
     }
 
     @Override
-    public void update(Inputs input) {
+    public void update(final Inputs input) {
 
 
 
         switch (input) {
             case LEFT -> {this.position.move(-5, 0); this.direction = 1;}
             case RIGHT -> {this.position.move(5, 0); this.direction = -1;}
-            case SPACE -> { if(!isJumping()) {
+            case SPACE -> { if (!isJumping()) {
                 this.ySpeed = -20;
                 this.position.move(0, -1);
 
