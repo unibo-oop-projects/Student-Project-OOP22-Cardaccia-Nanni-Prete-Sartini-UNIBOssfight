@@ -10,7 +10,7 @@ import java.util.function.Consumer;
  * Interfaccia che gestisce i comportamenti delle entità alle collisioni con
  * le varie entità.
  */
-public interface Collider {
+public interface Collider extends Component {
 
     /**
      * Enum con tutte le entità possibili.
