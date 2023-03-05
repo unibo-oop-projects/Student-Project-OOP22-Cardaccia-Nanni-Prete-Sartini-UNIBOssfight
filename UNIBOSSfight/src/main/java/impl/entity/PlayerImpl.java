@@ -1,6 +1,7 @@
 package impl.entity;
 
 import core.component.Collider;
+import core.component.Hitbox;
 import core.entity.Bullet;
 import core.entity.Entity;
 import impl.component.ColliderImpl;
@@ -26,9 +27,10 @@ public class PlayerImpl extends AbstractEntity {
 
     //TODO: aggiungere classe util HitBox
 
-    //TODO: aggiungere classe util HitBoxprivate Hitbox playerHitbox;
-    private int ySpeed = 0;
+    //TODO: aggiungere classe util HitBox
 
+    private Hitbox playerHitbox;
+    private int ySpeed = 0;
     private WeaponImpl weapon = new WeaponImpl(this.position, 10, new SpriteRenderer(150, 180, Color.RED, "gnu.png"));
     private double rotation;
     private List<Bullet> bullets = new ArrayList<>();
@@ -69,28 +71,28 @@ public class PlayerImpl extends AbstractEntity {
 
 
         switch (input) {
-            case LEFT -> {this.position.move(-5, 0); this.direction = -1;}
-            case RIGHT -> {this.position.move(5, 0); this.direction = 1;}
-            case SPACE -> { if(!isJumping()) {
-                this.ySpeed = -20;
-                this.position.move(0, -1);
+            case LEFT -> {
+                this.position.move(-5, 0);
+                this.direction = -1;
             }
-            if(this.cont++ % 3 == 0)
-                shoot();
-
-
-                //this.position.move(0, ySpeed);
+            case RIGHT -> {
+                this.position.move(5, 0);
+                this.direction = 1;
+            }
+            case SPACE -> {
+                if(!isJumping()) {
+                    this.ySpeed = -20;
+                    this.position.move(0, -1);
+                }
+                if(this.cont++ % 3 == 0)
+                    shoot();
             }
             case EMPTY -> {
                 this.position.move(0, ySpeed);
                 this.ySpeed = this.isJumping() ? Acceleration.accelerate(this.ySpeed, 20, 1) : 0;
                 //System.out.println(this.bullets.stream().filter(e -> e.isDisplayed(this.getPosition())).count());
                 this.bullets.forEach(e -> e.update(Inputs.EMPTY));
-                for(int i = 0; i < this.bullets.size(); i++){
-                    if(!this.bullets.get(i).isDisplayed(this.getPosition())){
-                        this.bullets.remove(i);
-                    }
-                }
+                this.removeBullets();
             }
         }
 
@@ -112,19 +114,19 @@ public class PlayerImpl extends AbstractEntity {
         });
 
         collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
-                // TODO comportamento in base alla direzione della collisione
-                if (e.getPosition().getY() - getPosition().getY() > 0) {
-                    final int topSide = (int) e.getPosition().getY() - e.getHeight();
-                    this.position.setGroundLevel(topSide);
-                    if (this.position.isUnderGroundLevel()) {
-                        this.position.setGroundLevel();
-                    }
-                } else if (e.getPosition().getY() - getPosition().getY() < 0) {
-                    this.position.moveTo((int) getPosition().getX(), (int)e.getPosition().getY() + getHeight() + 1);
-                    this.ySpeed = 0;
-                } else {
-                    this.position.move(getIntersection(e), 0);
+            // TODO comportamento in base alla direzione della collisione
+            if (e.getPosition().getY() - getPosition().getY() > 0) {
+                final int topSide = (int) e.getPosition().getY() - e.getHeight();
+                this.position.setGroundLevel(topSide);
+                if (this.position.isUnderGroundLevel()) {
+                    this.position.setGroundLevel();
                 }
+            } else if (e.getPosition().getY() - getPosition().getY() < 0) {
+                this.position.moveTo((int) getPosition().getX(), (int)e.getPosition().getY() + getHeight() + 1);
+                this.ySpeed = 0;
+            } else {
+                this.position.move(getIntersection(e), 0);
+            }
 
         });
         this.collider = Optional.of(collider);
@@ -145,6 +147,10 @@ public class PlayerImpl extends AbstractEntity {
 
     private void shoot() {
         this.bullets.add(this.weapon.fire(new Point2D(0, 100 )));
+    }
+
+    private void removeBullets(){
+        this.bullets.removeIf(e -> !e.isDisplayed(this.getPosition()));
     }
 
     public List<Node> getBullets() {
