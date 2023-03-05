@@ -23,6 +23,12 @@ public abstract class AbstractEntity implements Entity {
 
     protected int direction = 1;
 
+    /** Genera una nuova istanza della classe astratta AbstractEntity.
+     * @param position
+     * @param height
+     * @param width
+     * @param renderer
+     */
     public AbstractEntity(
             final Transform position,
             final int height,
@@ -40,12 +46,23 @@ public abstract class AbstractEntity implements Entity {
         initCollider();
     }
 
+    /** Prende come input un elemento dell'enumerazione di Inputs e in base a quello
+     * la classe eseguirà l'update.
+     * @param input
+     */
     public abstract void update(Inputs input);
 
+    /**
+     * @return la posizione dell'Entity
+     */
     public Point2D getPosition() {
         return this.position.getPosition();
     }
 
+    /**
+     * @param position
+     * @return Node generato dal renderer che verrà passato alla Scene
+     */
     @Override
     public Node render(Point2D position) {
         return this.renderer.render(
@@ -61,6 +78,11 @@ public abstract class AbstractEntity implements Entity {
         );
     }
 
+    /**
+     * @param playerPosition
+     * @return true se l'Entity si trova abbastanza vicino al player per poter essere
+     * renderizzato all'interno della finestra di gioco, false altrimenti
+     */
     @Override
     public boolean isDisplayed(Point2D playerPosition) {
         //System.out.println(this.getClass() + " " + this.getPosition().getY() + " " + Window.getHeight());
@@ -69,18 +91,31 @@ public abstract class AbstractEntity implements Entity {
                 this.getPosition().getY() > 0;
     }
 
+    /**
+     * @return l'hitbox dell'entity
+     */
     public Hitbox getHitbox() {
         return hitbox;
     }
 
+    /**
+     * @return la direzione dell'entity
+     */
     protected int getDirection() {
         return this.direction;
     }
 
+    /**
+     * @return il danno inferto dall'entity
+     */
     public Optional<Integer> getDamage() {
         return this.damage;
     }
 
+    /**
+     * assegna all'entity il danno che infierisce
+     * @param damage
+     */
     protected void setDamage(Optional<Integer> damage) {
         this.damage = damage;
     }

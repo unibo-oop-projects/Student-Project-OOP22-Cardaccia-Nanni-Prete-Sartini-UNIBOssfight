@@ -8,8 +8,6 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
@@ -26,6 +24,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class Prova extends Application {
+
+    private static final int FRAME_RATE = 30;
+    private static final double FRAME_DURATION = 1000 / FRAME_RATE;
 
     private LevelImpl currentLevel = new LevelImpl();
     private Group root = new Group();
@@ -52,19 +53,13 @@ public class Prova extends Application {
 
         this.inputManager = new InputManager(currentScene);
 
-        this.currentScene.heightProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                Window.setHeight(currentScene.getHeight());
-            }
-        });
+        this.currentScene.heightProperty().addListener(
+                (observable, oldValue, newValue) -> Window.setHeight(currentScene.getHeight())
+        );
 
-        this.currentScene.widthProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                Window.setWidth(currentScene.getWidth());
-            }
-        });
+        this.currentScene.widthProperty().addListener(
+                (observable, oldValue, newValue) -> Window.setWidth(currentScene.getWidth())
+        );
 
 
         //Adding scene to the stage
@@ -73,7 +68,7 @@ public class Prova extends Application {
         //Displaying the contents of the stage
         stage.show();
 
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(16), e -> {
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(FRAME_DURATION), e -> {
             run();}));
         tl.setCycleCount(Animation.INDEFINITE);
 
@@ -121,11 +116,16 @@ public class Prova extends Application {
 
 
         // create ImagePattern
-        ImagePattern image_pattern = new ImagePattern(image, -this.currentLevel.getPlayerPosition().getX(), Window.getHeight()-57,
-                317, 57, false);
+        ImagePattern image_pattern = new ImagePattern(
+                image,
+                -this.currentLevel.getPlayerPosition().getX(),
+                Window.getHeight()-image.getHeight(),
+                image.getWidth(), image.getHeight(),
+                false
+        );
 
         // create a Rectangle
-        Rectangle rect = new Rectangle(0, Window.getHeight() - 57, Window.getWidth(), 57);
+        Rectangle rect = new Rectangle(0, Window.getHeight() - image.getHeight(), Window.getWidth(), image.getHeight());
 
         // set fill for rectangle
         rect.setFill(image_pattern);

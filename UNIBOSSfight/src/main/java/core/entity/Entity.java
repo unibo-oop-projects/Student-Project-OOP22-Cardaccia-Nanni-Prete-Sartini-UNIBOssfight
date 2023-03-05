@@ -40,8 +40,14 @@ public interface Entity {
      */
     void update(Inputs input);
 
+    /**
+     * @return la posizione attuale dell'entity
+     */
     Point2D getPosition();
 
+    /**
+     * @return l'hitbox dell'entity
+     */
     Hitbox getHitbox();
 
     Optional<Collider> getCollider();
