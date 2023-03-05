@@ -84,8 +84,6 @@ public class PlayerImpl extends AbstractEntity {
                     this.ySpeed = -20;
                     this.position.move(0, -1);
                 }
-                if(this.cont++ % 3 == 0)
-                    shoot();
             }
             case EMPTY -> {
                 this.position.move(0, ySpeed);
@@ -114,19 +112,19 @@ public class PlayerImpl extends AbstractEntity {
         });
 
         collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
-            // TODO comportamento in base alla direzione della collisione
-            if (e.getPosition().getY() - getPosition().getY() > 0) {
-                final int topSide = (int) e.getPosition().getY() - e.getHeight();
-                this.position.setGroundLevel(topSide);
-                if (this.position.isUnderGroundLevel()) {
-                    this.position.setGroundLevel();
+                // TODO comportamento in base alla direzione della collisione
+                if (e.getPosition().getY() - getPosition().getY() > 0) {
+                    final int topSide = (int) e.getPosition().getY() - e.getHeight();
+                    this.position.setGroundLevel(topSide);
+                    if (this.position.isUnderGroundLevel()) {
+                        this.position.setGroundLevel();
+                    }
+                } else if (e.getPosition().getY() - getPosition().getY() < 0) {
+                    this.position.moveTo((int) getPosition().getX(), (int)e.getPosition().getY() + getHeight() + 1);
+                    this.ySpeed = 0;
+                } else {
+                    this.position.move(getIntersection(e), 0);
                 }
-            } else if (e.getPosition().getY() - getPosition().getY() < 0) {
-                this.position.moveTo((int) getPosition().getX(), (int)e.getPosition().getY() + getHeight() + 1);
-                this.ySpeed = 0;
-            } else {
-                this.position.move(getIntersection(e), 0);
-            }
 
         });
         this.collider = Optional.of(collider);
@@ -145,8 +143,8 @@ public class PlayerImpl extends AbstractEntity {
         this.rotation = this.direction * (mousePosition.getY() / Window.getHeight() * 120 - 55);
     }
 
-    private void shoot() {
-        this.bullets.add(this.weapon.fire(new Point2D(0, 100 )));
+    public void shoot(Point2D target) {
+        this.bullets.add(this.weapon.fire(target));
     }
 
     private void removeBullets(){

@@ -102,4 +102,8 @@ public class LevelImpl implements Level {
     public Point2D getPlayerPosition() {
         return this.player.getPosition();
     }
+
+    public void playerShoot(Point2D target){
+        this.player.shoot(target);
+    }
 }
