@@ -16,13 +16,19 @@ public class TmpEntityImpl extends AbstractEntity {
     private int ySpeed = 0;
 
     public TmpEntityImpl(Transform position, Integer height, Integer width, String filename) {
-        super(position, height, width, new SpriteRenderer(height, width, Color.GREEN, filename));
+        super(position, height, width, new SpriteRenderer(height, width, Color.GREEN, filename) {
+            @Override
+            public int getHeight() {
+                return super.getHeight();
+            }
+        });
 
         //TODO implement health
     }
 
     @Override
     public void update(Inputs input) {
+
 
 
         switch (input) {

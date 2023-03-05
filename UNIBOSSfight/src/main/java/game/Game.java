@@ -24,15 +24,12 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class Game extends Application {
+    public void start(Stage primaryStage) throws Exception {}
 
-    private Stage gameWindow;
+    /*private Stage gameWindow;
 
-    private Level currentLevel = new LevelImpl(new PlayerImpl(new Transform(new Point2D(300, 300), 0) {
-        @Override
-        public void update() {
-
-        }
-    },250, 200, "testImage.png"));
+    //private Level currentLevel = new LevelImpl(new PlayerImpl(new Transform(new Point2D(300, 300), 0) {
+    //},250, 200, "testImage.png"));
     private boolean gameStarted = true;
 
     private Queue<Entity.Inputs> inputsQueue = new PriorityQueue<>();
@@ -61,7 +58,7 @@ public class Game extends Application {
             public void handle(long now) {
                 run(gc);
             }
-        };*/
+        };
 
         Timeline tl = new Timeline(new KeyFrame(Duration.millis(16), e -> run(gc)));
         tl.setCycleCount(Animation.INDEFINITE);
@@ -70,10 +67,6 @@ public class Game extends Application {
         Scene currentScene = new Scene(new StackPane(canvas));
 
         this.currentLevel.addEntity(new TmpEntityImpl(new Transform(new Point2D(500, 500), 0) {
-            @Override
-            public void update() {
-
-            }
         },50, 50,  "goomba.png"));
 
         /*currentScene.setOnKeyPressed(e -> {
@@ -82,7 +75,7 @@ public class Game extends Application {
                 case D -> inputsQueue.add(Entity.Inputs.RIGHT);
                 case SPACE -> inputsQueue.add(Entity.Inputs.SPACE);
             }
-        });*/
+        });
         currentScene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case A -> this.isAPressed = true;
@@ -148,6 +141,6 @@ public class Game extends Application {
             gameWindow.close();
         }
 
-    }
+    }*/
 
 }

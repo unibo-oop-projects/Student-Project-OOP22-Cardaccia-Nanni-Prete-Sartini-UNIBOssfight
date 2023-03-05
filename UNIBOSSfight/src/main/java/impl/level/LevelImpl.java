@@ -1,9 +1,11 @@
 package impl.level;
 
+import core.component.Transform;
 import core.entity.Entity;
 import core.level.Level;
 import impl.entity.PlayerImpl;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
 
@@ -18,9 +20,14 @@ public class LevelImpl implements Level {
     private int cont = 0;
     private boolean goLeft = true;
 
-    public LevelImpl(PlayerImpl player) {
+    public LevelImpl() {
         this.entities = new ArrayList<>();
-        this.player = player;
+        this.player = new PlayerImpl(
+                new Transform(new Point2D(0, 300), 0),
+                250,
+                200,
+                "testImage.png"
+        );
     }
 
     public void init() {
@@ -31,9 +38,9 @@ public class LevelImpl implements Level {
 
         this.entities.forEach(e -> e.update(Entity.Inputs.EMPTY));
         if(this.goLeft)
-        this.entities.forEach(e -> e.update(Entity.Inputs.RIGHT));
+            this.entities.forEach(e -> e.update(Entity.Inputs.RIGHT));
         else
-        this.entities.forEach(e -> e.update(Entity.Inputs.LEFT));
+            this.entities.forEach(e -> e.update(Entity.Inputs.LEFT));
 
         if (this.cont++ %100 == 0)
             this.goLeft = !this.goLeft;
@@ -44,28 +51,19 @@ public class LevelImpl implements Level {
     }
 
     @Override
-    public List<ImageView> renderEntities() {
+    public List<Node> renderEntities() {
         return Stream.concat(this.entities.stream()
                 .filter(e -> e.isDisplayed(this.player.getPosition()))
                 .map(e -> e.render(this.player.getPosition())), this.player.getBullets().stream()).toList();
 
     }
 
-    public ImageView renderPlayer(){
+    public Node renderPlayer(){
         return this.player.render(this.player.getPosition());
     }
 
-    public ImageView renderWeapon() {
+    public Node renderWeapon() {
         return this.player.renderWeapon();
-    }
-
-
-    public void renderEntities(GraphicsContext gc) {
-        this.entities
-                .stream()
-                .filter(e -> e.isDisplayed(this.player.getPosition()))
-                .forEach(e -> e.render(gc, this.player.getPosition()));
-        this.player.render(gc, this.player.getPosition());
     }
 
     @Override

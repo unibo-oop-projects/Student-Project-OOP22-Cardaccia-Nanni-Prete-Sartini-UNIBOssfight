@@ -6,7 +6,7 @@ import core.component.Weapon;
 import core.entity.Bullet;
 import impl.entity.BulletImpl;
 import javafx.geometry.Point2D;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import util.Window;
@@ -25,23 +25,13 @@ public class WeaponImpl implements Weapon {
     }
 
     @Override
-    public void render(GraphicsContext gc, int direction){
-        this.renderer.render(gc, this.userPos.getPosition().subtract(this.userPos.getPosition().getX()-300 - 5 * direction, 24), direction);
-    }
-
-    @Override
     public ImageView render(int direction) {
         return null;
     }
 
     @Override
-    public ImageView render(int direction, int rotation) {
+    public Node render(int direction, int rotation) {
         return this.renderer.render(new Point2D(Window.getWidth() / 2 + 10 * direction, this.userPos.getPosition().getY() + 80 - 110), direction, rotation);
-    }
-
-    @Override
-    public void update() {
-        //TODO
     }
 
     @Override

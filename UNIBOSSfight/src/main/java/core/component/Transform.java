@@ -3,7 +3,7 @@ package core.component;
 import javafx.geometry.Point2D;
 import util.Window;
 
-public abstract class Transform implements Component {
+public class Transform implements Component {
 
     private Point2D position;
     private float rotation;
@@ -12,8 +12,6 @@ public abstract class Transform implements Component {
         this.position = position;
         this.rotation = rotation;
     }
-
-    public abstract void update();
 
     public void move (int x, int y) {
         this.position = this.position.add(x, y);
@@ -35,10 +33,6 @@ public abstract class Transform implements Component {
 
     public static Transform copyOf(Transform input) {
         return new Transform(new Point2D(input.getPosition().getX(), input.getPosition().getY()), input.rotation) {
-            @Override
-            public void update() {
-
-            }
         };
     }
 }

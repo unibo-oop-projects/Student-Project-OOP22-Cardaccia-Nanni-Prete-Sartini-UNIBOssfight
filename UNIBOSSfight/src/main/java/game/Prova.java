@@ -1,14 +1,7 @@
 package game;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.PriorityQueue;
-import java.util.Queue;
-
 import core.component.Transform;
 import core.entity.Entity;
-import core.level.Level;
-import impl.entity.PlayerImpl;
 import impl.entity.TmpEntityImpl;
 import impl.level.LevelImpl;
 import javafx.animation.Animation;
@@ -21,79 +14,28 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import util.Window;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class Prova extends Application {
 
-    private LevelImpl currentLevel = new LevelImpl(new PlayerImpl(new Transform(new Point2D(0, 300), 0) {
-        @Override
-        public void update() {
-
-        }
-    },250, 200, "testImage.png"));
-
-    private Queue<Entity.Inputs> inputsQueue = new PriorityQueue<>();
-    private boolean isAPressed;
-    private boolean isDPressed;
-    private boolean isSpacePressed;
-
+    private LevelImpl currentLevel = new LevelImpl();
     private Group root = new Group();
     private Scene currentScene;
-
-    private double windowHeight;
-
-    private double windowWidth;
+    private InputManager inputManager;
 
     @Override
-    public void start(Stage stage) throws FileNotFoundException {
+    public void start(Stage stage){
+
         stage.setTitle("UNIBOssfight");
-
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(16), e -> {
-            run();}));
-        tl.setCycleCount(Animation.INDEFINITE);
-
-        this.currentLevel.addEntity(new TmpEntityImpl(new Transform(new Point2D(500, 500), 0) {
-            @Override
-            public void update() {
-
-            }
-        },50, 50,  "goomba.png"));
-
-        /*this.currentLevel.addEntity(new TmpEntityImpl(new Transform(new Point2D(200, 500), 0) {
-            @Override
-            public void update() {
-
-            }
-        },50, 50,  "goomba.png"));**/
-
-        //Setting the image vie
-
-        stage.heightProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                Window.setHeight(stage.getHeight());
-            }
-        });
-
-        stage.widthProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                Window.setWidth(stage.getWidth());
-            }
-        });
-
-        this.root = new Group();
 
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
@@ -103,24 +45,24 @@ public class Prova extends Application {
         stage.setWidth(bounds.getWidth());
         stage.setHeight(bounds.getHeight());
 
+        this.root = new Group();
+
         //Creating a scene object
         currentScene = new Scene(root);
 
-        currentScene.setOnKeyPressed(e -> {
-            switch (e.getCode()) {
-                case A -> this.isAPressed = true;
-                case D -> this.isDPressed = true;
-                case SPACE -> this.isSpacePressed = true;
+        this.inputManager = new InputManager(currentScene);
+
+        this.currentScene.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                Window.setHeight(currentScene.getHeight());
             }
         });
 
-        currentScene.setOnMouseMoved(e -> this.currentLevel.rotatePlayerWeapon(new Point2D(e.getX(), e.getY())));
-
-        currentScene.setOnKeyReleased(e -> {
-            switch (e.getCode()) {
-                case A -> this.isAPressed = false;
-                case D -> this.isDPressed = false;
-                case SPACE -> this.isSpacePressed = false;
+        this.currentScene.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                Window.setWidth(currentScene.getWidth());
             }
         });
 
@@ -131,27 +73,34 @@ public class Prova extends Application {
         //Displaying the contents of the stage
         stage.show();
 
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(16), e -> {
+            run();}));
+        tl.setCycleCount(Animation.INDEFINITE);
+
+        this.currentLevel.addEntity(
+                new TmpEntityImpl(
+                        new Transform(new Point2D(500, 500), 0),
+                        50,
+                        50,
+                        "goomba.png"
+                )
+        );
+
         tl.play();
     }
 
     private void inputPoll(){
-        //this.currentCommand = this.inputsQueue.isEmpty() ? Entity.Inputs.EMPTY : this.inputsQueue.poll();
-        if(this.inputsQueue.isEmpty())
-            this.inputsQueue.add(Entity.Inputs.EMPTY);
     }
 
     private void update(){
         this.currentLevel.updateEntities();
-        if(this.isSpacePressed)
+        if(this.inputManager.isSpacePressed)
             this.currentLevel.updatePlayer(Entity.Inputs.SPACE);
-        if(this.isDPressed)
+        if(this.inputManager.isDPressed)
             this.currentLevel.updatePlayer(Entity.Inputs.RIGHT);
-        if(this.isAPressed)
+        if(this.inputManager.isAPressed)
             this.currentLevel.updatePlayer(Entity.Inputs.LEFT);
-        //if(!(this.isSpacePressed || this.isDPressed || this.isAPressed))
         this.currentLevel.updatePlayer(Entity.Inputs.EMPTY);
-
-
     }
 
     private void render(){
@@ -162,7 +111,7 @@ public class Prova extends Application {
 
         FileInputStream input = null;
         try {
-            input = new FileInputStream("assets/ground.png");
+            input = new FileInputStream("assets/ground2.png");
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -170,12 +119,13 @@ public class Prova extends Application {
         // create a image
         Image image = new Image(input);
 
+
         // create ImagePattern
-        ImagePattern image_pattern = new ImagePattern(image, -this.currentLevel.getPlayerPosition().getX(), 60,
-                200, 200, false);
+        ImagePattern image_pattern = new ImagePattern(image, -this.currentLevel.getPlayerPosition().getX(), Window.getHeight()-57,
+                317, 57, false);
 
         // create a Rectangle
-        Rectangle rect = new Rectangle(0, Window.getHeight() - 200, Window.getWidth(), 200);
+        Rectangle rect = new Rectangle(0, Window.getHeight() - 57, Window.getWidth(), 57);
 
         // set fill for rectangle
         rect.setFill(image_pattern);
@@ -183,10 +133,56 @@ public class Prova extends Application {
         root.getChildren().add(rect);
     }
 
-    private void run() {
+    public LevelImpl getCurrentLevel() {
+        return this.currentLevel;
+    }
 
+    private void run() {
         inputPoll();
         update();
         render();
+    }
+
+    private class InputManager {
+
+        private final Scene scene;
+        private boolean isAPressed = false;
+        private boolean isDPressed = false;
+        private boolean isSpacePressed = false;
+
+
+        public InputManager(Scene scene) {
+            this.scene = scene;
+
+            this.scene.setOnKeyPressed(e -> {
+                switch (e.getCode()) {
+                    case A -> this.isAPressed = true;
+                    case D -> this.isDPressed = true;
+                    case SPACE -> this.isSpacePressed = true;
+                }
+            });
+
+            this.scene.setOnMouseMoved(e -> currentLevel.rotatePlayerWeapon(new Point2D(e.getX(), e.getY())));
+
+            this.scene.setOnKeyReleased(e -> {
+                switch (e.getCode()) {
+                    case A -> this.isAPressed = false;
+                    case D -> this.isDPressed = false;
+                    case SPACE -> this.isSpacePressed = false;
+                }
+            });
+        }
+
+        public boolean isAPressed() {
+            return this.isAPressed;
+        }
+
+        public boolean isDPressed() {
+            return this.isDPressed;
+        }
+
+        public boolean isSpacePressed() {
+            return this.isSpacePressed;
+        }
     }
 }

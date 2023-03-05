@@ -3,6 +3,7 @@ package core.level;
 import core.entity.Entity;
 import impl.entity.PlayerImpl;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
 
@@ -18,9 +19,7 @@ public interface Level {
 
     void updatePlayer(Entity.Inputs input);
 
-    //void renderEntities(GraphicsContext gc);
-
-    List<ImageView> renderEntities();
+    List<Node> renderEntities();
 
     void rotatePlayerWeapon(Point2D mousePosition);
 }
