@@ -1,17 +1,15 @@
 package impl.entity;
 
 import core.component.Collider;
+import core.entity.Bullet;
 import core.entity.Entity;
 import impl.component.ColliderImpl;
 import core.component.Transform;
 import core.entity.AbstractEntity;
-import core.entity.Bullet;
 import impl.component.SpriteRenderer;
 import impl.component.WeaponImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import util.Acceleration;
 import util.Window;
@@ -69,15 +67,23 @@ public class PlayerImpl extends AbstractEntity {
 
 
         switch (input) {
-            case LEFT -> {this.position.move(-5, 0); this.direction = -1;}
-            case RIGHT -> {this.position.move(5, 0); this.direction = 1;}
-            case SPACE -> { if(!isJumping()) {
-                this.ySpeed = -20;
-                this.position.move(0, -1);
+            case LEFT -> {
+                this.position.move(-5, 0);
+                this.direction = -1;
             }
-            if(this.cont++ % 3 == 0)
-                shoot();
-                System.out.println(this.bullets.size());
+            case RIGHT -> {
+                this.position.move(5, 0);
+                this.direction = 1;
+            }
+            case SPACE -> {
+                if (!isJumping()) {
+                    this.ySpeed = -20;
+                    this.position.move(0, -1);
+                }
+                if (this.cont++ % 3 == 0) {
+                    shoot();
+                    System.out.println(this.bullets.size());
+                }
 
                 //this.position.move(0, ySpeed);
             }
@@ -107,7 +113,7 @@ public class PlayerImpl extends AbstractEntity {
     @Override
     protected void initCollider() {
         var collider = new ColliderImpl();
-        collider.addBehaviour(Collider.Entities.ENEMY, e -> {
+        collider.addBehaviour(Collider.Entities.TMPENTITY, e -> {
             this.position.move(getIntersection(e), 0);
         });
 
@@ -133,18 +139,17 @@ public class PlayerImpl extends AbstractEntity {
     private int getIntersection(Entity e) {
         int side = (int)Math.signum(getPosition().getX() - e.getPosition().getX());
 
-        int wallside = (int)e.getPosition().getX() + (e.getWidth() / 2 * side);
+        int wallSide = (int)e.getPosition().getX() + (e.getWidth() / 2 * side);
         int playerSide = (int)getPosition().getX() - (getWidth() / 2 * side);
 
-        return wallside - playerSide;
-        return this.getPosition().getY() < Window.getHeight();
+        return wallSide - playerSide;
     }
 
     public void rotateWeapon(Point2D mousePosition) {
         this.rotation = this.direction * (mousePosition.getY() / Window.getHeight() * 120 - 55);
     }
 
-    private void shoot(){
+    private void shoot() {
         this.bullets.add(this.weapon.fire(new Point2D(0, 100 )));
     }
 

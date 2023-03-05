@@ -79,7 +79,7 @@ public class Prova extends Application {
 
         this.currentLevel.addEntity(
                 new TmpEntityImpl(
-                        new Transform(new Point2D(500, 500), 0),
+                        new Transform(new Point2D(500, Window.getHeight()), 0),
                         50,
                         50,
                         "goomba.png"
@@ -133,6 +133,10 @@ public class Prova extends Application {
         root.getChildren().add(rect);
     }
 
+    private void collision() {
+        this.currentLevel.collision();
+    }
+
     public LevelImpl getCurrentLevel() {
         return this.currentLevel;
     }
@@ -140,6 +144,7 @@ public class Prova extends Application {
     private void run() {
         inputPoll();
         update();
+        collision();
         render();
     }
 

@@ -8,7 +8,7 @@ public class Transform implements Component {
     private Point2D position;
     private float rotation;
 
-    private int yGround = Window.getHeight(); // TODO height della window
+    private double yGround = Window.getHeight(); // TODO height della window
 
     public Transform(Point2D position, float rotation) {
         this.position = position;
@@ -25,11 +25,11 @@ public class Transform implements Component {
         }
     }
 
-    public int getGroundLevel() {
+    public double getGroundLevel() {
         return this.yGround;
     }
 
-    public void setGroundLevel(int yGround) {
+    public void setGroundLevel(final double yGround) {
         this.yGround = yGround;
     }
 
@@ -38,7 +38,7 @@ public class Transform implements Component {
     }
 
     public void resetGroundLevel() {
-        setGroundLevel(600);
+        setGroundLevel(Window.getHeight());
         setGroundLevel();
     }
 
@@ -47,11 +47,10 @@ public class Transform implements Component {
     }
 
     public static Transform copyOf(Transform input) {
-        return new Transform(new Point2D(input.getPosition().getX(), input.getPosition().getY()), input.rotation) {
-        };
+        return new Transform(new Point2D(input.getPosition().getX(), input.getPosition().getY()), input.rotation);
     }
 
-    public void moveTo(int x, int y) {
+    public void moveTo(final double x, final double y) {
         this.position = new Point2D(x, y);
     }
 }

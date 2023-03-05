@@ -4,7 +4,6 @@ import core.component.Hitbox;
 import core.component.Renderer;
 import core.component.Transform;
 import javafx.geometry.Point2D;
-import javafx.scene.canvas.GraphicsContext;
 import util.Window;
 
 public abstract class Bullet extends AbstractEntity {
