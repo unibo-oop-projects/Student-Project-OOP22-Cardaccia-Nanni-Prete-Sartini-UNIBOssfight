@@ -2,6 +2,7 @@ plugins {
     java
     application
     id("org.openjfx.javafxplugin") version "0.0.13"
+    id("org.danilopianini.gradle-java-qa") version "0.40.0"
 }
 
 javafx {

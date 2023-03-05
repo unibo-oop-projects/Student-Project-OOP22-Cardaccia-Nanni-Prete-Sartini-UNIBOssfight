@@ -11,6 +11,12 @@ public abstract class Renderer implements Component{
   private int width;
   private Color color;
 
+  /** Nuova istanza della classe Renderer che con una altezza, larghezza e un colore che
+   * utilizzato in fase di rendering
+   * @param height
+   * @param width
+   * @param color
+   */
   public Renderer(int height, int width, Color color) {
     this.height = height;
     this.width = width;
@@ -23,7 +29,7 @@ public abstract class Renderer implements Component{
    * @param position
    * @param direction
    * @param rotation
-   * @return Node
+   * @return Node che verrà passato alla scena
    */
   public Node render(Point2D position, int direction, int rotation) {
     Rectangle rectangle = new Rectangle(

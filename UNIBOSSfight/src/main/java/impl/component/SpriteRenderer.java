@@ -16,6 +16,14 @@ public class SpriteRenderer extends Renderer {
     private final PathTransition pt = new PathTransition();
     private Image img;
 
+    /**
+     * Genera una nuova istanza della classe Sprite renderer che prende come parametro
+     * anche il filename dello sprite da utilizzare per il render
+     * @param height
+     * @param width
+     * @param color
+     * @param filename
+     */
     public SpriteRenderer(int height, int width, Color color, String filename) {
 
         super(height, width, color);

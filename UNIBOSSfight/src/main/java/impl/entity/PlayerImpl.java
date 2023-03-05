@@ -71,11 +71,12 @@ public class PlayerImpl extends AbstractEntity {
             }
             if(this.cont++ % 3 == 0)
                 shoot();
-                System.out.println(this.bullets.size());
+
 
                 //this.position.move(0, ySpeed);
             }
             case EMPTY -> {
+                System.out.println(this.bullets.size());
                 this.position.move(0, ySpeed);
                 this.ySpeed = this.isJumping() ? Acceleration.accelerate(this.ySpeed, 20, 1) : 0;
                 //System.out.println(this.bullets.stream().filter(e -> e.isDisplayed(this.getPosition())).count());
