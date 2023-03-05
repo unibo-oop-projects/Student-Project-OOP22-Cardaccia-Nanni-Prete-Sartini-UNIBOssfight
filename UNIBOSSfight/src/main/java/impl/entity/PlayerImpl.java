@@ -5,12 +5,19 @@ import core.entity.Entity;
 import impl.component.ColliderImpl;
 import core.component.Transform;
 import core.entity.AbstractEntity;
+import core.entity.Bullet;
 import impl.component.SpriteRenderer;
 import impl.component.WeaponImpl;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import util.Acceleration;
+import util.Window;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import java.util.Optional;
 
@@ -22,7 +29,10 @@ public class PlayerImpl extends AbstractEntity {
     //TODO: aggiungere classe util HitBoxprivate Hitbox playerHitbox;
     private int ySpeed = 0;
 
-    private WeaponImpl weapon = new WeaponImpl(this, 10, new SpriteRenderer(75, 90, Color.RED, "gnu.png"));
+    private WeaponImpl weapon = new WeaponImpl(this.position, 10, new SpriteRenderer(75, 90, Color.RED, "gnu.png"));
+    private double rotation;
+    private List<Bullet> bullets = new ArrayList<>();
+    private int cont = 1;
 
 
     public PlayerImpl(Transform position, Integer height, Integer width, String filename) {
@@ -35,13 +45,23 @@ public class PlayerImpl extends AbstractEntity {
 
 
     @Override
-    public void render(GraphicsContext gc, Point2D position) {
+    public Node render(Point2D position) {
         try{
-            this.renderer.render(gc, new Point2D(300, this.getPosition().getY()), this.getDirection());
-            this.weapon.render(gc, this.getDirection());
+            return this.renderer.render(new Point2D(Window.getWidth() / 2, this.getPosition().getY() - 57), this.getDirection(), 0);
         } catch (Exception e){
             System.out.println("ERROR cannot load resource " + e);
         }
+        return null;
+    }
+
+    public Node renderWeapon() {
+        try{
+            return this.weapon.render(this.getDirection(), (int)this.rotation);
+        } catch (Exception e){
+            System.out.println("ERROR cannot load resource " + e);
+        }
+
+        return null;
     }
 
     @Override
@@ -52,15 +72,25 @@ public class PlayerImpl extends AbstractEntity {
             case LEFT -> {this.position.move(-5, 0); this.direction = -1;}
             case RIGHT -> {this.position.move(5, 0); this.direction = 1;}
             case SPACE -> { if(!isJumping()) {
-                    this.ySpeed = -20;
-                    this.position.move(0, -1);
+                this.ySpeed = -20;
+                this.position.move(0, -1);
+            }
+            if(this.cont++ % 3 == 0)
+                shoot();
+                System.out.println(this.bullets.size());
 
-                }
                 //this.position.move(0, ySpeed);
             }
             case EMPTY -> {
                 this.position.move(0, ySpeed);
                 this.ySpeed = this.isJumping() ? Acceleration.accelerate(this.ySpeed, 20, 1) : 0;
+                //System.out.println(this.bullets.stream().filter(e -> e.isDisplayed(this.getPosition())).count());
+                this.bullets.forEach(e -> e.update(Inputs.EMPTY));
+                for(int i = 0; i < this.bullets.size(); i++){
+                    if(!this.bullets.get(i).isDisplayed(this.getPosition())){
+                        this.bullets.remove(i);
+                    }
+                }
             }
         }
 
@@ -107,5 +137,18 @@ public class PlayerImpl extends AbstractEntity {
         int playerSide = (int)getPosition().getX() - (getWidth() / 2 * side);
 
         return wallside - playerSide;
+        return this.getPosition().getY() < Window.getHeight();
+    }
+
+    public void rotateWeapon(Point2D mousePosition) {
+        this.rotation = this.direction * (mousePosition.getY() / Window.getHeight() * 120 - 55);
+    }
+
+    private void shoot(){
+        this.bullets.add(this.weapon.fire(new Point2D(0, 100 )));
+    }
+
+    public List<Node> getBullets() {
+        return this.bullets.stream().map(e -> e.render(getPosition())).toList();
     }
 }

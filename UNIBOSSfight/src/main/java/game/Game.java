@@ -4,13 +4,10 @@ import UI.ConfirmBox;
 import core.component.Transform;
 import core.entity.Entity;
 import core.level.Level;
-import impl.entity.EnemyImpl;
-import impl.entity.Platform;
 import impl.entity.PlayerImpl;
 import impl.entity.TmpEntityImpl;
 import impl.level.LevelImpl;
 import javafx.animation.Animation;
-import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -27,15 +24,12 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class Game extends Application {
+    public void start(Stage primaryStage) throws Exception {}
 
-    Stage gameWindow;
+    /*private Stage gameWindow;
 
-    private Level currentLevel = new LevelImpl(new PlayerImpl(new Transform(new Point2D(300, 300), 0) {
-        @Override
-        public void update() {
-
-        }
-    },125, 100, "testImage.png"));
+    //private Level currentLevel = new LevelImpl(new PlayerImpl(new Transform(new Point2D(300, 300), 0) {
+    //},250, 200, "testImage.png"));
     private boolean gameStarted = true;
 
     private Queue<Entity.Inputs> inputsQueue = new PriorityQueue<>();
@@ -50,10 +44,10 @@ public class Game extends Application {
 
         this.gameWindow = primaryStage;
         this.gameWindow.setTitle("UNIBOssfight");
-        /*this.gameWindow.setOnCloseRequest(e -> {
+        this.gameWindow.setOnCloseRequest(e -> {
             e.consume();
             closeProgram();
-        });*/
+        });
 
         Canvas canvas = new Canvas(600, 600);
 
@@ -64,7 +58,7 @@ public class Game extends Application {
             public void handle(long now) {
                 run(gc);
             }
-        };*/
+        };
 
         Timeline tl = new Timeline(new KeyFrame(Duration.millis(16), e -> run(gc)));
         tl.setCycleCount(Animation.INDEFINITE);
@@ -72,30 +66,8 @@ public class Game extends Application {
 
         Scene currentScene = new Scene(new StackPane(canvas));
 
-        this.currentLevel.addEntity(new EnemyImpl(new Transform(new Point2D(500, 600), 0) {
-            @Override
-            public void update() {
-
-            }
+        this.currentLevel.addEntity(new TmpEntityImpl(new Transform(new Point2D(500, 500), 0) {
         },50, 50,  "goomba.png"));
-        this.currentLevel.addEntity(new Platform(new Transform(new Point2D(120, 600), 0) {
-            @Override
-            public void update() {
-
-            }
-        },50, 50,  null));
-        this.currentLevel.addEntity(new Platform(new Transform(new Point2D(580, 600), 0) {
-            @Override
-            public void update() {
-
-            }
-        },50, 50,  null));
-        this.currentLevel.addEntity(new Platform(new Transform(new Point2D(200, 400), 0) {
-            @Override
-            public void update() {
-
-            }
-        },50, 50,  null));
 
         /*currentScene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
@@ -103,7 +75,7 @@ public class Game extends Application {
                 case D -> inputsQueue.add(Entity.Inputs.RIGHT);
                 case SPACE -> inputsQueue.add(Entity.Inputs.SPACE);
             }
-        });*/
+        });
         currentScene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case A -> this.isAPressed = true;
@@ -141,16 +113,10 @@ public class Game extends Application {
             this.currentLevel.updatePlayer(Entity.Inputs.LEFT);
         //if(!(this.isSpacePressed || this.isDPressed || this.isAPressed))
         this.currentLevel.updatePlayer(Entity.Inputs.EMPTY);
-
-        this.currentLevel.updateEntities();
     }
 
     private void render(GraphicsContext gc){
-        this.currentLevel.renderEntities(gc);
-    }
-
-    private void collision() {
-        this.currentLevel.collision();
+        //this.currentLevel.renderEntities(gc);
     }
 
     private void run(GraphicsContext gc) {
@@ -164,19 +130,17 @@ public class Game extends Application {
 
             this.inputPoll();
             this.update();
-            this.collision();
             this.render(gc);
 
         }
     }
 
     private void closeProgram() {
-        Boolean answer = ConfirmBox.display("Confirm box",
-                "Are you sure you want to quit the game?");
+        boolean answer = ConfirmBox.display("Are you sure you want to quit the game?");
         if (answer) {
             gameWindow.close();
         }
 
-    }
+    }*/
 
 }

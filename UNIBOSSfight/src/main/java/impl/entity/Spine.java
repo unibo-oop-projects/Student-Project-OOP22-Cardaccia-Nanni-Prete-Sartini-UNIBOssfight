@@ -16,11 +16,6 @@ public class Spine extends AbstractEntity {
     }
 
     @Override
-    public void render(GraphicsContext gc, Point2D position) {
-
-    }
-
-    @Override
     public void update(Inputs input) {
 
     }

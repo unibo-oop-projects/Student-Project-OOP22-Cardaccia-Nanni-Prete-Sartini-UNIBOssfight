@@ -5,50 +5,38 @@ import core.component.Renderer;
 import core.component.Transform;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import util.Window;
 
 public abstract class Bullet extends AbstractEntity {
-    private final double RIGHT_ANGLE = 90;
+    private final double ROUND_ANGLE = 360;
     private final int SPEED = 10;
 
-    private int damage;
-    private Point2D target;
-    private  double angle;
+    private final int damage;
+    private   double angle;
+    private final double xShift;
+    private final double yShift;
 
     public Bullet(Transform startingPos, int height, int width, Renderer renderer, int damage, Point2D target){
 
         super(startingPos, height, width, renderer);
 
+        //Bullet damage
         this.damage = damage;
-        this.target = target;
-        this.angle = startingPos.getPosition().angle(target);
-    }
 
-    @Override
-    public boolean isDisplayed(Point2D position) {
-        return false;
-    }
+        //Finding vector angle
 
-    @Override
-    public void render(GraphicsContext gc, Point2D position) {
+        double dx = (target.getX() + this.position.getPosition().getX() - Window.getWidth()/2)-this.position.getPosition().getX();
+        double dy = (target.getY())-this.position.getPosition().getY();
+        double dir = Math.atan2(dy, dx);
 
+        //Shifs on vector
+        this.xShift = SPEED * Math.cos(dir);
+        this.yShift = SPEED * Math.sin(dir);
     }
 
     @Override
     public void update(Inputs input) {
-
-        double deltaX, deltaY;
-        double oppositeAngleX = RIGHT_ANGLE - angle;
-        double oppositeAngleY = RIGHT_ANGLE - (RIGHT_ANGLE - angle);
-
-        deltaX = SPEED * Math.cos(oppositeAngleX);
-        deltaY = SPEED * Math.cos(oppositeAngleY);
-
-        position.move((int)deltaX, (int)deltaY);
-    }
-
-    @Override
-    public Point2D getPosition() {
-        return this.position.getPosition();
+        this.position.move((int)xShift, (int)yShift);
     }
 
     @Override

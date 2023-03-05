@@ -1,4 +1,5 @@
 package UI;
+
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
@@ -7,14 +8,15 @@ import javafx.geometry.*;
 
 public class ConfirmBox {
 
-    static boolean answer;
-    public static boolean display(String title, String message) {
+    private static final int WIDTH = 300;
+    private static final int HEIGHT = 200;
+    private static boolean answer;
+    public static boolean display(String message) {
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle(title);
-        window.setMinWidth(400);
-        window.setMinHeight(300);
+        window.setMinWidth(WIDTH);
+        window.setMinHeight(HEIGHT);
 
         Label label = new Label();
         label.setText(message);
@@ -38,6 +40,7 @@ public class ConfirmBox {
 
         Scene scene = new Scene(layout);
         window.setScene(scene);
+        window.setResizable(false);
         window.showAndWait();
 
         return answer;

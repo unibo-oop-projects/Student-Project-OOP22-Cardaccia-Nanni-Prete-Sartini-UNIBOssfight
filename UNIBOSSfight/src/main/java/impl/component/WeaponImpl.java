@@ -4,37 +4,39 @@ import core.component.Renderer;
 import core.component.Transform;
 import core.component.Weapon;
 import core.entity.Bullet;
-import core.entity.Entity;
-import javafx.scene.canvas.GraphicsContext;
+import impl.entity.BulletImpl;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import util.Window;
 
 public class WeaponImpl implements Weapon {
 
     private int damage;
-    private Entity user;
+    private Transform userPos;
     private Renderer renderer;
 
-    public WeaponImpl(Entity user, int damage, Renderer renderer){
+    public WeaponImpl(Transform userPos, int damage, Renderer renderer){
         //TODO
-        this.user = user;
+        this.userPos = userPos;
         this.damage = damage;
         this.renderer = renderer;
     }
 
     @Override
-    public void render(GraphicsContext gc, int direction){
-        this.renderer.render(gc, this.user.getPosition().subtract(this.user.getPosition().getX()-300 - 5 * direction, 24), direction);
-    }
-
-    @Override
-    public void update() {
-        //TODO
-    }
-
-    @Override
-    public Bullet fire(Transform target) {
-        //TODO
-        //Maybe return bullet to draw
-        //Find the trajectory to the target and create the bullet object
+    public ImageView render(int direction) {
         return null;
     }
+
+    @Override
+    public Node render(int direction, int rotation) {
+        return this.renderer.render(new Point2D(Window.getWidth() / 2 + 10 * direction, this.userPos.getPosition().getY() + 80 - 110), direction, rotation);
+    }
+
+    @Override
+    public Bullet fire(Point2D target) {
+        return new BulletImpl(Transform.copyOf(this.userPos), 20, 20, new SpriteRenderer(20, 20, Color.BLACK, "gnu.png"), 1, target);
+    }
 }
+
