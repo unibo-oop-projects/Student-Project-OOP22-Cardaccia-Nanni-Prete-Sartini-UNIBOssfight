@@ -74,12 +74,7 @@ public class PlayerImpl extends AbstractEntity {
             case SPACE -> { if(!isJumping()) {
                 this.ySpeed = -20;
                 this.position.move(0, -1);
-            }
-            if(this.cont++ % 3 == 0)
-                shoot();
-
-
-                //this.position.move(0, ySpeed);
+                }
             }
             case EMPTY -> {
                 this.position.move(0, ySpeed);
@@ -143,8 +138,8 @@ public class PlayerImpl extends AbstractEntity {
         this.rotation = this.direction * (mousePosition.getY() / Window.getHeight() * 120 - 55);
     }
 
-    private void shoot() {
-        this.bullets.add(this.weapon.fire(new Point2D(0, 100 )));
+    public void shoot(Point2D target) {
+        this.bullets.add(this.weapon.fire(target));
     }
 
     public List<Node> getBullets() {

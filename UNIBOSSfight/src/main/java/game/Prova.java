@@ -62,6 +62,9 @@ public class Prova extends Application {
         );
 
 
+        currentScene.setOnMouseClicked(e -> this.currentLevel.playerShoot(new Point2D(e.getX(), e.getY())));
+
+
         //Adding scene to the stage
         stage.setScene(currentScene);
 
