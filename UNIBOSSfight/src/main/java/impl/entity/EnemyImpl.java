@@ -7,8 +7,6 @@ import impl.component.ColliderImpl;
 import impl.component.SpriteRenderer;
 import javafx.scene.paint.Color;
 
-import java.util.Optional;
-
 public class EnemyImpl extends Enemy {
 
     private static final int COLLISION_DAMAGE = 5;
@@ -20,7 +18,7 @@ public class EnemyImpl extends Enemy {
 
     @Override
     public void update(final Inputs input) {
-        getTransform().move(this.direction, 0);
+        getTransform().move(getDirection(), 0);
         getHitbox().update(getPosition());
     }
 
@@ -28,7 +26,7 @@ public class EnemyImpl extends Enemy {
     protected void initCollider() {
         var collider = new ColliderImpl();
         collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
-            this.direction = this.direction * -1;
+            setDirection(getDirection() * -1);
             getTransform().move(getDirection() * 5, 0);
         });
 

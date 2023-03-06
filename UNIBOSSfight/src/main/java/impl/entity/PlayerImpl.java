@@ -72,11 +72,11 @@ public class PlayerImpl extends AbstractEntity {
         switch (input) {
             case LEFT -> {
                 getTransform().move(-5, 0);
-                this.direction = -1;
+                setDirection(-1);
             }
             case RIGHT -> {
                 getTransform().move(5, 0);
-                this.direction = 1;
+                setDirection(1);
             }
             case SPACE -> {
                 if (!isJumping()) {
@@ -142,7 +142,7 @@ public class PlayerImpl extends AbstractEntity {
     }
 
     public void rotateWeapon(final Point2D mousePosition) {
-        this.rotation = this.direction
+        this.rotation = getDirection()
                 * (mousePosition.getY() / Window.getHeight() * 120 - 55);
     }
 

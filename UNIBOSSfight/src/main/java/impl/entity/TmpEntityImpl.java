@@ -31,8 +31,8 @@ public class TmpEntityImpl extends AbstractEntity {
 
 
         switch (input) {
-            case LEFT -> {getTransform().move(-5, 0); this.direction = 1;}
-            case RIGHT -> {getTransform().move(5, 0); this.direction = -1;}
+            case LEFT -> {getTransform().move(-5, 0); setDirection(1);}
+            case RIGHT -> {getTransform().move(5, 0); setDirection(-1);}
             case SPACE -> { if (!isJumping()) {
                 this.ySpeed = -20;
                 getTransform().move(0, -1);

@@ -11,7 +11,7 @@ import util.Window;
 import java.util.Optional;
 
 /**
- * {@inheritDoc}
+ * This class in an implementation of Entity.
  */
 public abstract class AbstractEntity implements Entity {
     private final int height;
@@ -21,7 +21,7 @@ public abstract class AbstractEntity implements Entity {
     private Hitbox hitbox;
     private Renderer renderer;
     private Optional<Collider> collider;
-    protected int direction = 1;
+    private int direction;
 
     /**
      * Creates a new instance of the abstract class AbstractEntity.
@@ -40,6 +40,7 @@ public abstract class AbstractEntity implements Entity {
         this.renderer = renderer;
         this.height = height;
         this.width = width;
+        this.direction = 1;
         this.hitbox = new Hitbox(width / 2.0, height, getPosition());
 
         initCollider();
@@ -78,6 +79,14 @@ public abstract class AbstractEntity implements Entity {
      */
     protected int getDirection() {
         return this.direction;
+    }
+
+    /**
+     * Assigns to the entity its direction.
+     * @param direction the direction of the entity
+     */
+    protected void setDirection(final int direction) {
+        this.direction = direction;
     }
 
     /**
@@ -148,13 +157,13 @@ public abstract class AbstractEntity implements Entity {
     @Override
     public boolean isDisplayed(final Point2D playerPosition) {
         //System.out.println(this.getClass() + " " + this.getPosition().getY() + " " + Window.getHeight());
-        return Math.abs(this.getPosition().subtract(playerPosition).getX()) < Window.getWidth() / 2 &&
-                this.getPosition().getY() <= Window.getHeight()
+        return Math.abs(this.getPosition().subtract(playerPosition).getX()) < Window.getWidth() / 2
+                && this.getPosition().getY() <= Window.getHeight()
                 && this.getPosition().getY() > 0;
     }
 
     /**
-     * Initialise the collider of the entity
+     * Initialise the collider of the entity.
      */
     protected void initCollider() {
         this.collider = Optional.empty();
@@ -170,6 +179,6 @@ public abstract class AbstractEntity implements Entity {
     /**
      * {@inheritDoc}
      */
-    public abstract void update(final Inputs input);
+    public abstract void update(Inputs input);
 
 }

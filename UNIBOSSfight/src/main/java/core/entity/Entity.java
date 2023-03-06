@@ -12,12 +12,24 @@ import java.util.Optional;
 public interface Entity {
 
     /**
-     * Enumeration to manage the input of the entities
+     * Enumeration to manage the input of the entities.
      */
     enum Inputs {
+        /**
+         * left input.
+         */
         LEFT,
+        /**
+         * right input.
+         */
         RIGHT,
+        /**
+         * space input.
+         */
         SPACE,
+        /**
+         * empty input.
+         */
         EMPTY
     }
 
@@ -68,7 +80,7 @@ public interface Entity {
     void update(Inputs input);
 
     /**
-     * Manages the collision of the entity
+     * Manages the collision of the entity.
      * @param e the entity colliding
      */
     void manageCollision(Entity e);
