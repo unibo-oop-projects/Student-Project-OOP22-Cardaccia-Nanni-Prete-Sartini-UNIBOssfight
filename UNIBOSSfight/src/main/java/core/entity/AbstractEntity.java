@@ -11,26 +11,24 @@ import util.Window;
 import java.util.Optional;
 
 /**
- *
+ * {@inheritDoc}
  */
 public abstract class AbstractEntity implements Entity {
-
     private final int height;
     private final int width;
     private Optional<Integer> damage;
-
-    protected Transform position;
-    protected Hitbox hitbox;
-    protected Renderer renderer;
-    protected Optional<Collider> collider;
-
+    private Transform position;
+    private Hitbox hitbox;
+    private Renderer renderer;
+    private Optional<Collider> collider;
     protected int direction = 1;
 
-    /** Genera una nuova istanza della classe astratta AbstractEntity.
-     * @param position
-     * @param height
-     * @param width
-     * @param renderer
+    /**
+     * Creates a new instance of the abstract class AbstractEntity.
+     * @param position the position of the entity
+     * @param height the height of the entity
+     * @param width the width of the entity
+     * @param renderer the renderer of the entity
      */
     public AbstractEntity(
             final Transform position,
@@ -42,29 +40,92 @@ public abstract class AbstractEntity implements Entity {
         this.renderer = renderer;
         this.height = height;
         this.width = width;
-
-        this.hitbox = new Hitbox(width / 2.0, height, getPosition()) {
-        };
+        this.hitbox = new Hitbox(width / 2.0, height, getPosition());
 
         initCollider();
     }
 
-    /** Prende come input un elemento dell'enumerazione di Inputs e in base a quello
-     * la classe eseguirà l'update.
-     * @param input
-     */
-    public abstract void update(Inputs input);
-
     /**
-     * @return la posizione dell'Entity
+     * {@inheritDoc}
      */
     public Point2D getPosition() {
         return this.position.getPosition();
     }
 
     /**
-     * @param position
-     * @return Node generato dal renderer che verrà passato alla Scene
+     * @return the Renderer of the entity
+     */
+    protected Renderer getRenderer() {
+        return this.renderer;
+    }
+
+    /**
+     * @return the Transform of the entity
+     */
+    protected Transform getTransform() {
+        return this.position;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Hitbox getHitbox() {
+        return hitbox;
+    }
+
+    /**
+     * @return the direction of the entity
+     */
+    protected int getDirection() {
+        return this.direction;
+    }
+
+    /**
+     * @return the inflicted damage to the entity
+     */
+    protected Optional<Integer> getDamage() {
+        return this.damage;
+    }
+
+    /**
+     * Assigns to the entity the damage that it inflicts.
+     * @param damage harm inflicted
+     */
+    protected void setDamage(final Optional<Integer> damage) {
+        this.damage = damage;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Optional<Collider> getCollider() {
+        return this.collider;
+    }
+
+    /**
+     * Assigns to the entity its collider.
+     * @param collider the collider of the entity
+     */
+    protected void setCollider(final Collider collider) {
+        this.collider = Optional.ofNullable(collider);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public int getHeight() {
+        return this.height;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public int getWidth() {
+        return this.width;
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Node render(final Point2D position) {
@@ -82,9 +143,7 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     * @param playerPosition
-     * @return true se l'Entity si trova abbastanza vicino al player per poter essere
-     * renderizzato all'interno della finestra di gioco, false altrimenti
+     * {@inheritDoc}
      */
     @Override
     public boolean isDisplayed(final Point2D playerPosition) {
@@ -95,51 +154,22 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     * @return l'hitbox dell'entity
+     * Initialise the collider of the entity
      */
-    public Hitbox getHitbox() {
-        return hitbox;
-    }
-
-    /**
-     * @return la direzione dell'entity
-     */
-    protected int getDirection() {
-        return this.direction;
-    }
-
-    /**
-     * @return il danno inferto dall'entity
-     */
-    public Optional<Integer> getDamage() {
-        return this.damage;
-    }
-
-    /**
-     * assegna all'entity il danno che infierisce
-     * @param damage
-     */
-    protected void setDamage(Optional<Integer> damage) {
-        this.damage = damage;
-    }
-
     protected void initCollider() {
         this.collider = Optional.empty();
     }
 
-    public Optional<Collider> getCollider() {
-        return this.collider;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     public void manageCollision(final Entity e) {
         this.collider.ifPresent(x -> x.manageCollision(e));
     }
 
-    public int getHeight() {
-        return this.height;
-    }
+    /**
+     * {@inheritDoc}
+     */
+    public abstract void update(final Inputs input);
 
-    public int getWidth() {
-        return this.width;
-    }
 }

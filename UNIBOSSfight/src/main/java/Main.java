@@ -1,16 +1,13 @@
-import UI.Menu;
-import game.Game;
 import game.Prova;
 import javafx.application.Application;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         Prova game = new Prova();
+        //Game game = new Game();
         Application.launch(Prova.class, args);
 
-        //Uncomment the following lines to see the temporary menu
-        Menu menu = new Menu();
-        //Application.launch(Menu.class, args);
+        //MainMenu.run(args);
 
     }
 }

@@ -1,6 +1,5 @@
 package impl.entity;
 
-import core.component.Hitbox;
 import core.component.Transform;
 import core.component.Weapon;
 import core.entity.Boss;
@@ -57,8 +56,4 @@ public class BossImpl extends Boss {
         return this.position.getPosition();
     }
 
-    @Override
-    public Hitbox getHitbox() {
-        return null; //TODO
-    }
 }

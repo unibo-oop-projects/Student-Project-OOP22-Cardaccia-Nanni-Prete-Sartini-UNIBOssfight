@@ -27,7 +27,7 @@ public class PlayerImpl extends AbstractEntity {
 
     private Hitbox playerHitbox;
     private int ySpeed = 0;
-    private WeaponImpl weapon = new WeaponImpl(this.position, 10, new SpriteRenderer(150, 180, Color.RED, "gnu.png"));
+    private WeaponImpl weapon = new WeaponImpl(getTransform(), 10, new SpriteRenderer(150, 180, Color.RED, "gnu.png"));
     private double rotation;
     private List<Bullet> bullets = new ArrayList<>();
     private int cont = 1;
@@ -46,7 +46,7 @@ public class PlayerImpl extends AbstractEntity {
     @Override
     public Node render(final Point2D position) {
         try {
-            return this.renderer.render(new Point2D(Window.getWidth() / 2,
+            return getRenderer().render(new Point2D(Window.getWidth() / 2,
                     this.getPosition().getY() - 57), this.getDirection(), 0);
         } catch (Exception e) {
             System.out.println("ERROR cannot load resource " + e);
@@ -71,22 +71,23 @@ public class PlayerImpl extends AbstractEntity {
 
         switch (input) {
             case LEFT -> {
-                this.position.move(-5, 0);
+                getTransform().move(-5, 0);
                 this.direction = -1;
             }
             case RIGHT -> {
-                this.position.move(5, 0);
+                getTransform().move(5, 0);
                 this.direction = 1;
             }
             case SPACE -> {
                 if (!isJumping()) {
                     this.ySpeed = -20;
-                    this.position.move(0, -1);
+                    getTransform().move(0, -1);
                 }
             }
             case EMPTY -> {
-                this.position.move(0, ySpeed);
-                this.ySpeed = this.isJumping() ? Acceleration.accelerate(this.ySpeed, 20, 1) : 0;
+                getTransform().move(0, ySpeed);
+                this.ySpeed = this.isJumping() ?
+                        Acceleration.accelerate(this.ySpeed, 20, 1) : 0;
                 //System.out.println(this.bullets.stream().filter(e -> e.isDisplayed(this.getPosition())).count());
                 this.bullets.forEach(e -> e.update(Inputs.EMPTY));
                 this.removeBullets();
@@ -95,38 +96,40 @@ public class PlayerImpl extends AbstractEntity {
 
         //this.position.move(0, ySpeed);
 
-        this.position.resetGroundLevel();
-        this.hitbox.update(this.getPosition());
+        getTransform().resetGroundLevel();
+        getHitbox().update(this.getPosition());
     }
 
     private boolean isJumping() {
-        return this.getPosition().getY() < this.position.getGroundLevel();
+        return this.getPosition().getY() < getTransform().getGroundLevel();
     }
 
     @Override
     protected void initCollider() {
         var collider = new ColliderImpl();
         collider.addBehaviour(Collider.Entities.TMPENTITY, e -> {
-            this.position.move(getIntersection(e), 0);
+            getTransform().move(getIntersection(e), 0);
         });
 
         collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
                 // TODO comportamento in base alla direzione della collisione
                 if (e.getPosition().getY() - getPosition().getY() > 0) {
                     final int topSide = (int) e.getPosition().getY() - e.getHeight();
-                    this.position.setGroundLevel(topSide);
-                    if (this.position.isUnderGroundLevel()) {
-                        this.position.setGroundLevel();
+                    getTransform().setGroundLevel(topSide);
+                    if (getTransform().isUnderGroundLevel()) {
+                        getTransform().setGroundLevel();
                     }
                 } else if (e.getPosition().getY() - getPosition().getY() < 0) {
-                    this.position.moveTo((int) getPosition().getX(), (int) e.getPosition().getY() + getHeight() + 1);
+                    getTransform().moveTo((int) getPosition().getX(),
+                            (int) e.getPosition().getY() + getHeight() + 1);
                     this.ySpeed = 0;
                 } else {
-                    this.position.move(getIntersection(e), 0);
+                    getTransform().move(getIntersection(e), 0);
                 }
 
         });
-        this.collider = Optional.of(collider);
+
+        setCollider(collider);
     }
 
     private int getIntersection(final Entity e) {

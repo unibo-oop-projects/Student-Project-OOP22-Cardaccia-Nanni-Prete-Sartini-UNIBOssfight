@@ -20,8 +20,8 @@ public class EnemyImpl extends Enemy {
 
     @Override
     public void update(final Inputs input) {
-        this.position.move(this.direction, 0);
-        this.hitbox.update(getPosition());
+        getTransform().move(this.direction, 0);
+        getHitbox().update(getPosition());
     }
 
     @Override
@@ -29,9 +29,9 @@ public class EnemyImpl extends Enemy {
         var collider = new ColliderImpl();
         collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
             this.direction = this.direction * -1;
-            this.position.move(getDirection() * 5, 0);
+            getTransform().move(getDirection() * 5, 0);
         });
 
-        this.collider = Optional.of(collider);
+        setCollider(collider);
     }
 }

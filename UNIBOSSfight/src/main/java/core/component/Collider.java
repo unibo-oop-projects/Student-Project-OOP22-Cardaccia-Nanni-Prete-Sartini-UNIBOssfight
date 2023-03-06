@@ -1,9 +1,14 @@
 package core.component;
 
-
-import core.entity.*;
-import impl.entity.*;
-
+import core.entity.Entity;
+import impl.entity.BossImpl;
+import impl.entity.BulletImpl;
+import impl.entity.EnemyImpl;
+import impl.entity.Flame;
+import impl.entity.Platform;
+import impl.entity.PlayerImpl;
+import impl.entity.Spine;
+import impl.entity.TmpEntityImpl;
 import java.util.function.Consumer;
 
 /**
@@ -34,12 +39,12 @@ public interface Collider extends Component {
 
         /**
          * Verifica se il parametro è dello stesso tipo runtime di quello
-         * associato al valore dell'enum.
+         * associato al valore dell'enumerazione.
          * @param e entità da confrontare
          * @param <T> sottotipo di entity
          * @return true se il parametro è dello stesso tipo, false altrimenti
          */
-        public <T extends Entity> boolean equals(T e) {
+        public <T extends Entity> boolean equals(final T e) {
             return e.getClass().equals(type);
         }
     }
@@ -51,7 +56,7 @@ public interface Collider extends Component {
     void manageCollision(Entity e);
 
     /**
-     * Associa un comportamento ad una determinata entità.
+     * Associa un comportamento a una determinata entità.
      * @param key enum dell'entità
      * @param value comportamento
      */

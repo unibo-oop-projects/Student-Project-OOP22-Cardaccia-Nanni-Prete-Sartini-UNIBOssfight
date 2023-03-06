@@ -11,7 +11,7 @@ public class Transform implements Component {
     private double yGround = Window.getHeight(); // TODO height della window
 
     /**
-     * Nuova istanza della classe Transform con posizione di partenza e rotazione
+     * Nuova istanza della classe Transform con posizione di partenza e rotazione.
      * @param position
      * @param rotation
      */
@@ -21,7 +21,7 @@ public class Transform implements Component {
     }
 
     /**
-     * trasla la posizione attuale con il vettore di componenti x e y
+     * Trasla la posizione attuale con il vettore di componenti x e y.
      * @param x
      * @param y
      */
@@ -30,7 +30,7 @@ public class Transform implements Component {
     }
 
     /**
-     * riposizinona l'entity sul livello del terreno se questo vi si trova al di sotto
+     * Riposiziona entity sul livello del terreno se questo vi si trova al di sotto.
      */
     public void setGroundLevel() {
         if (this.isUnderGroundLevel()) {

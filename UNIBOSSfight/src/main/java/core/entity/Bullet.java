@@ -1,6 +1,5 @@
 package core.entity;
 
-import core.component.Hitbox;
 import core.component.Renderer;
 import core.component.Transform;
 import javafx.geometry.Point2D;
@@ -23,24 +22,20 @@ public abstract class Bullet extends AbstractEntity {
         this.damage = damage;
         this.speed = speed;
 
-        //Finding vector angle
-        double dx = (target.getX() + this.position.getPosition().getX() - Window.getWidth() / 2) - this.position.getPosition().getX();
-        double dy = (target.getY()) - this.position.getPosition().getY();
+        // Finding vector angle
+        double dx = (target.getX() + getPosition().getX() - Window.getWidth() / 2)
+                - getPosition().getX();
+        double dy = (target.getY()) - getPosition().getY();
         double angle = Math.atan2(dy, dx);
 
-        //Shifs on vector
+        // Shifts on vector
         this.xShift = this.speed * Math.cos(angle);
         this.yShift = this.speed * Math.sin(angle);
     }
 
     @Override
     public void update(final Inputs input) {
-        this.position.move((int) xShift, (int) yShift);
-    }
-
-    @Override
-    public Hitbox getHitbox() {
-        return this.hitbox;
+        getTransform().move((int) xShift, (int) yShift);
     }
 
 }

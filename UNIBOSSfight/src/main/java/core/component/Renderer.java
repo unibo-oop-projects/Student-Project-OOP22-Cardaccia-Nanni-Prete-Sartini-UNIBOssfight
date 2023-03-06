@@ -12,7 +12,7 @@ public abstract class Renderer implements Component {
   private Color color;
 
   /** Nuova istanza della classe Renderer che con una altezza, larghezza e un colore che
-   * utilizzato in fase di rendering
+   * utilizzato in fase di rendering.
    * @param height
    * @param width
    * @param color
@@ -25,7 +25,7 @@ public abstract class Renderer implements Component {
 
   /**
    * Data una posizione, una direzione e una rotazione restituisce un nodo renderizzato
-   * che verrà inserita nella scena
+   * che verrà inserita nella scena.
    * @param position
    * @param direction
    * @param rotation

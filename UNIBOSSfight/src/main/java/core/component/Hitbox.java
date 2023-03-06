@@ -2,7 +2,7 @@ package core.component;
 
 import javafx.geometry.Point2D;
 
-public abstract class Hitbox implements Component {
+public class Hitbox implements Component {
 
     private double lateralOffset;
     private double height;
