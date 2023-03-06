@@ -7,18 +7,18 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
 /**
- * This class represents a coin which contributes to computing the final
+ * This class models a coin, which contributes to computing the final
  * score of the player by adding points every time a coin is collected.
  */
 public abstract class Coin extends AbstractEntity {
     private final int value;
 
     /**
-     * The constructor of the class which generates a new instance of Coin.
+     * The constructor of the class which creates a new instance of Coin.
      * @param position the position of the coin
      * @param height the height of the coin
      * @param width the width of the coin
-     * @param filename the file containing the sprite for the renderer
+     * @param filename the name of the file containing the sprite for the renderer
      */
     public Coin(final Transform position, final int height,
                 final int width, final String filename) {

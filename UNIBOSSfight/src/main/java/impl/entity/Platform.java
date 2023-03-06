@@ -5,11 +5,22 @@ import core.entity.AbstractEntity;
 import impl.component.SpriteRenderer;
 import javafx.scene.paint.Color;
 
+/**
+ * This class models a platform, which is an obstacle
+ * on which the player can jump and run.
+ */
 public class Platform extends AbstractEntity {
 
     //platform will eventually move
     private final boolean isMoving;
 
+    /**
+     * The constructor of the class which creates a new instance of Platform.
+     * @param position the position of the platform
+     * @param height the height of the platform
+     * @param width the width of the platform
+     * @param filename the name of the file containing the sprite for the renderer
+     */
     public Platform(final Transform position, final int height,
                     final int width, final String filename) {
         super(position, height, width,
@@ -17,6 +28,9 @@ public class Platform extends AbstractEntity {
         this.isMoving = false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update(final Inputs input) {
 
