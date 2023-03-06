@@ -6,8 +6,7 @@ import util.Window;
 public class Transform implements Component {
 
     private Point2D position;
-    private float rotation;
-
+    private final float rotation;
     private double yGround = Window.getHeight(); // TODO height della window
 
     /**

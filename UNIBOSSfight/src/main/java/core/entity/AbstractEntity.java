@@ -11,15 +11,15 @@ import util.Window;
 import java.util.Optional;
 
 /**
- * This class in an implementation of Entity.
+ * This class is an implementation of Entity.
  */
 public abstract class AbstractEntity implements Entity {
     private final int height;
     private final int width;
     private Optional<Integer> damage;
-    private Transform position;
-    private Hitbox hitbox;
-    private Renderer renderer;
+    private final Transform position;
+    private final Hitbox hitbox;
+    private final Renderer renderer;
     private Optional<Collider> collider;
     private int direction;
 

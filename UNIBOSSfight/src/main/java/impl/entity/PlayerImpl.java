@@ -16,8 +16,6 @@ import util.Acceleration;
 import util.Window;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 
 public class PlayerImpl extends AbstractEntity {
 
@@ -86,8 +84,8 @@ public class PlayerImpl extends AbstractEntity {
             }
             case EMPTY -> {
                 getTransform().move(0, ySpeed);
-                this.ySpeed = this.isJumping() ?
-                        Acceleration.accelerate(this.ySpeed, 20, 1) : 0;
+                this.ySpeed = this.isJumping()
+                        ? Acceleration.accelerate(this.ySpeed, 20, 1) : 0;
                 //System.out.println(this.bullets.stream().filter(e -> e.isDisplayed(this.getPosition())).count());
                 this.bullets.forEach(e -> e.update(Inputs.EMPTY));
                 this.removeBullets();

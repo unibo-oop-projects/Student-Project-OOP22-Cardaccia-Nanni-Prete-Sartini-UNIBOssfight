@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 /**
- * {@inheritDoc}
+ * This class implements the Collider.
  */
 public class ColliderImpl implements Collider {
 
