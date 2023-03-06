@@ -28,7 +28,7 @@ public class Prova extends Application {
     private static final int FRAME_RATE = 30;
     private static final double FRAME_DURATION = 1000 / FRAME_RATE;
 
-    private LevelImpl currentLevel = new LevelImpl();
+    private final LevelImpl currentLevel = new LevelImpl();
     private Group root = new Group();
     private Scene currentScene;
     private InputManager inputManager;
@@ -38,8 +38,8 @@ public class Prova extends Application {
 
         stage.setTitle("UNIBOssfight");
 
-        Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
+        final Screen screen = Screen.getPrimary();
+        final Rectangle2D bounds = screen.getVisualBounds();
 
         stage.setX(bounds.getMinX());
         stage.setY(bounds.getMinY());
@@ -71,7 +71,7 @@ public class Prova extends Application {
         //Displaying the contents of the stage
         stage.show();
 
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(FRAME_DURATION), e -> {
+        final Timeline tl = new Timeline(new KeyFrame(Duration.millis(FRAME_DURATION), e -> {
             run();
         }));
         tl.setCycleCount(Animation.INDEFINITE);
@@ -119,11 +119,11 @@ public class Prova extends Application {
         }
 
         // create a image
-        Image image = new Image(input);
+        final Image image = new Image(input);
 
 
         // create ImagePattern
-        ImagePattern imagePattern = new ImagePattern(
+        final ImagePattern imagePattern = new ImagePattern(
                 image,
                 -this.currentLevel.getPlayerPosition().getX(),
                 Window.getHeight() - image.getHeight(),
@@ -132,7 +132,8 @@ public class Prova extends Application {
         );
 
         // create a Rectangle
-        Rectangle rect = new Rectangle(0, Window.getHeight() - image.getHeight(), Window.getWidth(), image.getHeight());
+        final Rectangle rect = new Rectangle(0, Window.getHeight() - image.getHeight(),
+                Window.getWidth(), image.getHeight());
 
         // set fill for rectangle
         rect.setFill(imagePattern);

@@ -12,12 +12,13 @@ import java.util.stream.Stream;
 
 public class LevelImpl implements Level {
 
-    private List<Entity> entities;
-    private PlayerImpl player;
-    private int cont = 0;
+    private final List<Entity> entities;
+    private final PlayerImpl player;
+    private int count = 0;
     private boolean goLeft = true;
 
     public LevelImpl() {
+
         this.entities = new ArrayList<>();
         this.player = new PlayerImpl(
                 new Transform(new Point2D(0, 300), 0),
@@ -31,6 +32,7 @@ public class LevelImpl implements Level {
 
     }
 
+    @Override
     public void updateEntities() {
 
         this.entities.forEach(e -> e.update(Entity.Inputs.EMPTY));
@@ -40,11 +42,12 @@ public class LevelImpl implements Level {
             this.entities.forEach(e -> e.update(Entity.Inputs.LEFT));
         }
 
-        if (this.cont++ % 100 == 0) {
+        if (this.count++ % 100 == 0) {
             this.goLeft = !this.goLeft;
         }
     }
 
+    @Override
     public void updatePlayer(final Entity.Inputs input) {
         this.player.update(input);
     }
@@ -79,7 +82,7 @@ public class LevelImpl implements Level {
 
 
         // Entity collisions
-        var collidingEntities = this.entities.stream()
+        final var collidingEntities = this.entities.stream()
                 .filter(e -> e.getCollider().isPresent())
                 .toList();
 

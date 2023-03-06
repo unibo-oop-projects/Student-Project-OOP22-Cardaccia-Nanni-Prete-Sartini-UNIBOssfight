@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 import java.io.FileInputStream;
 
 public class SpriteRenderer extends Renderer {
-    private String filename;
+    private final String filename;
     private final PathTransition pt = new PathTransition();
     private Image img;
 
@@ -52,7 +52,7 @@ public class SpriteRenderer extends Renderer {
 
         if (this.img != null) {
 
-            ImageView iv2 = new ImageView();
+            final ImageView iv2 = new ImageView();
 
             iv2.setImage(this.img);
 

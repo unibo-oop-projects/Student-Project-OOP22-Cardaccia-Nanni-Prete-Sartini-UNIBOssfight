@@ -9,9 +9,9 @@ import javafx.scene.canvas.GraphicsContext;
 public class BossImpl extends Boss {
 
     //Variables
-    private Transform position;
-    private int health;
-    private Weapon weapon;
+    private final Transform position;
+    private final int health;
+    private final Weapon weapon;
 
     public BossImpl(final Transform startingPos, final int height, final int width,
                     final int health, final Weapon weapon, final String filename) {
@@ -34,6 +34,7 @@ public class BossImpl extends Boss {
         return  this.health <= 0; //HP below 0
     }
 
+    @Override
     public Weapon getWeapon() {
         return this.weapon;
     }

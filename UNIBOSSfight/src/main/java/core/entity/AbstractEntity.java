@@ -49,6 +49,7 @@ public abstract class AbstractEntity implements Entity {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Point2D getPosition() {
         return this.position.getPosition();
     }
@@ -70,6 +71,7 @@ public abstract class AbstractEntity implements Entity {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Hitbox getHitbox() {
         return hitbox;
     }
@@ -107,6 +109,7 @@ public abstract class AbstractEntity implements Entity {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Optional<Collider> getCollider() {
         return this.collider;
     }
@@ -122,6 +125,7 @@ public abstract class AbstractEntity implements Entity {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int getHeight() {
         return this.height;
     }
@@ -129,6 +133,7 @@ public abstract class AbstractEntity implements Entity {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int getWidth() {
         return this.width;
     }
@@ -172,6 +177,7 @@ public abstract class AbstractEntity implements Entity {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void manageCollision(final Entity e) {
         this.collider.ifPresent(x -> x.manageCollision(e));
     }
@@ -179,6 +185,7 @@ public abstract class AbstractEntity implements Entity {
     /**
      * {@inheritDoc}
      */
+    @Override
     public abstract void update(Inputs input);
 
 }

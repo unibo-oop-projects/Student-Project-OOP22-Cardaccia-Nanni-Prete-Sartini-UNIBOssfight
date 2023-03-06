@@ -8,7 +8,7 @@ import util.Window;
 public abstract class Bullet extends AbstractEntity {
 
     private final int damage;
-    private int speed;
+    private final int speed;
     private final double xShift;
     private final double yShift;
 
@@ -23,10 +23,10 @@ public abstract class Bullet extends AbstractEntity {
         this.speed = speed;
 
         // Finding vector angle
-        double dx = (target.getX() + getPosition().getX() - Window.getWidth() / 2)
+        final double dx = (target.getX() + getPosition().getX() - Window.getWidth() / 2)
                 - getPosition().getX();
-        double dy = (target.getY()) - getPosition().getY();
-        double angle = Math.atan2(dy, dx);
+        final double dy = target.getY() - getPosition().getY();
+        final double angle = Math.atan2(dy, dx);
 
         // Shifts on vector
         this.xShift = this.speed * Math.cos(angle);

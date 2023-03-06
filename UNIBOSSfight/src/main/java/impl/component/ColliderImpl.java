@@ -24,6 +24,7 @@ public class ColliderImpl implements Collider {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void manageCollision(final Entity e) {
         this.behaviours.entrySet().stream().filter(b -> b.getKey().equals(e))
                 .findFirst().ifPresent(b -> b.getValue().accept(e));
@@ -32,6 +33,7 @@ public class ColliderImpl implements Collider {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void addBehaviour(final Entities key, final Consumer<Entity> value) {
         this.behaviours.putIfAbsent(key, value);
     }

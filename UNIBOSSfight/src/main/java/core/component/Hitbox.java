@@ -4,8 +4,8 @@ import javafx.geometry.Point2D;
 
 public class Hitbox implements Component {
 
-    private double lateralOffset;
-    private double height;
+    private final double lateralOffset;
+    private final double height;
     private Point2D position;
     private double leftSide, rightSide, topSide, bottomSide;
 

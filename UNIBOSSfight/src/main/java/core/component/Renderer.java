@@ -7,9 +7,9 @@ import javafx.scene.shape.Rectangle;
 
 public abstract class Renderer implements Component {
 
-  private int height;
-  private int width;
-  private Color color;
+  private final int height;
+  private final int width;
+  private final Color color;
 
   /** Nuova istanza della classe Renderer che con una altezza, larghezza e un colore che
    * utilizzato in fase di rendering.
@@ -32,7 +32,7 @@ public abstract class Renderer implements Component {
    * @return Node che verrà passato alla scena
    */
   public Node render(final Point2D position, final int direction, final int rotation) {
-    Rectangle rectangle = new Rectangle(
+    final Rectangle rectangle = new Rectangle(
             position.getX() - width / 2,
             position.getY() - height,
             width,

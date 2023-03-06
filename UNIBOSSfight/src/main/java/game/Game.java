@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class Game extends Application {
-    public void start(final Stage primaryStage) throws Exception {}
+
+    @Override
+    public void start(final Stage primaryStage) {}
 
     /*private Stage gameWindow;
 

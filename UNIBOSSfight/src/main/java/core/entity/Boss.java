@@ -12,7 +12,7 @@ public abstract class Boss extends Enemy {
         super(position, height, width, new SpriteRenderer(height, width, Color.RED, filename));
     }
 
-    Weapon getWeapon() {
+    public Weapon getWeapon() {
         return null;
     }
 

@@ -24,7 +24,7 @@ public class EnemyImpl extends Enemy {
 
     @Override
     protected void initCollider() {
-        var collider = new ColliderImpl();
+        final var collider = new ColliderImpl();
         collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
             setDirection(getDirection() * -1);
             getTransform().move(getDirection() * 5, 0);

@@ -25,10 +25,11 @@ public class PlayerImpl extends AbstractEntity {
 
     private Hitbox playerHitbox;
     private int ySpeed = 0;
-    private WeaponImpl weapon = new WeaponImpl(getTransform(), 10, new SpriteRenderer(150, 180, Color.RED, "gnu.png"));
+    private final WeaponImpl weapon = new WeaponImpl(getTransform(), 10,
+            new SpriteRenderer(150, 180, Color.RED, "gnu.png"));
     private double rotation;
-    private List<Bullet> bullets = new ArrayList<>();
-    private int cont = 1;
+    private final List<Bullet> bullets = new ArrayList<>();
+    private final int cont = 1;
 
 
     public PlayerImpl(final Transform position, final Integer height,
@@ -104,7 +105,7 @@ public class PlayerImpl extends AbstractEntity {
 
     @Override
     protected void initCollider() {
-        var collider = new ColliderImpl();
+        final var collider = new ColliderImpl();
         collider.addBehaviour(Collider.Entities.TMPENTITY, e -> {
             getTransform().move(getIntersection(e), 0);
         });
@@ -131,10 +132,10 @@ public class PlayerImpl extends AbstractEntity {
     }
 
     private int getIntersection(final Entity e) {
-        int side = (int) Math.signum(getPosition().getX() - e.getPosition().getX());
+        final int side = (int) Math.signum(getPosition().getX() - e.getPosition().getX());
 
-        int wallSide = (int) e.getPosition().getX() + (e.getWidth() / 2 * side);
-        int playerSide = (int) getPosition().getX() - (getWidth() / 2 * side);
+        final int wallSide = (int) e.getPosition().getX() + (e.getWidth() / 2 * side);
+        final int playerSide = (int) getPosition().getX() - (getWidth() / 2 * side);
 
         return wallSide - playerSide;
     }

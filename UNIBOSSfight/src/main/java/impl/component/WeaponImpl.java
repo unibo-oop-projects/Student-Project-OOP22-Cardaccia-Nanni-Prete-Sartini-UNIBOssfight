@@ -13,9 +13,9 @@ import util.Window;
 
 public class WeaponImpl implements Weapon {
 
-    private int damage;
-    private Transform userPos;
-    private Renderer renderer;
+    private final int damage;
+    private final Transform userPos;
+    private final Renderer renderer;
 
     public WeaponImpl(final Transform userPos, final int damage, final Renderer renderer) {
         //TODO
