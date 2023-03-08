@@ -16,7 +16,7 @@ import java.util.Optional;
 public abstract class AbstractEntity implements Entity {
     private final int height;
     private final int width;
-    private Optional<Integer> damage;
+    private int damage;
     private final Transform position;
     private final Hitbox hitbox;
     private final Renderer renderer;
@@ -95,7 +95,7 @@ public abstract class AbstractEntity implements Entity {
     /**
      * @return the inflicted damage to the entity
      */
-    protected Optional<Integer> getDamage() {
+    public int getDamage() {
         return this.damage;
     }
 
@@ -103,7 +103,7 @@ public abstract class AbstractEntity implements Entity {
      * Assigns to the entity the damage that it inflicts.
      * @param damage harm inflicted
      */
-    protected void setDamage(final Optional<Integer> damage) {
+    protected void setDamage(final int damage) {
         this.damage = damage;
     }
 

@@ -150,10 +150,15 @@ public class PlayerImpl extends AbstractEntity {
     }
 
     private void removeBullets() {
-        this.bullets.removeIf(e -> !e.isDisplayed(this.getPosition()));
+        this.bullets.removeIf(e -> !e.isDisplayed(this.getPosition()) || e.isDestroyed());
     }
 
-    public List<Node> getBullets() {
+    public List<Node> getBulletsNodes() {
         return this.bullets.stream().map(e -> e.render(getPosition())).toList();
     }
+
+    public List<Bullet> getBullets() {
+        return new ArrayList<>(this.bullets);
+    }
+
 }

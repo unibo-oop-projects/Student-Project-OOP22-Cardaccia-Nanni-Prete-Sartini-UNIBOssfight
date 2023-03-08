@@ -56,7 +56,7 @@ public class LevelImpl implements Level {
     public List<Node> renderEntities() {
         return Stream.concat(this.entities.stream()
                 .filter(e -> e.isDisplayed(this.player.getPosition()))
-                .map(e -> e.render(this.player.getPosition())), this.player.getBullets().stream()).toList();
+                .map(e -> e.render(this.player.getPosition())), this.player.getBulletsNodes().stream()).toList();
 
     }
 
@@ -82,11 +82,14 @@ public class LevelImpl implements Level {
 
 
         // Entity collisions
-        final var collidingEntities = this.entities.stream()
+        final List<Entity> collidingEntities = this.entities.stream()
                 .filter(e -> e.getCollider().isPresent())
                 .toList();
 
-        collidingEntities.forEach(ce -> this.entities.stream()
+        final List<Entity> allEntities = new ArrayList<>(this.entities);
+        allEntities.addAll(this.player.getBullets());
+
+        collidingEntities.forEach(ce -> allEntities.stream()
                 .filter(e -> !e.equals(ce) && e.getHitbox().collide(ce.getHitbox()))
                 .forEach(ce::manageCollision));
     }
