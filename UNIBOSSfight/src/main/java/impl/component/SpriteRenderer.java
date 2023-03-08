@@ -7,21 +7,23 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-
 import java.io.FileInputStream;
 
+/**
+ * This class is used to generate the sprites representing the entities of the game.
+ */
 public class SpriteRenderer extends Renderer {
     private final String filename;
     private final PathTransition pt = new PathTransition();
     private Image img;
 
     /**
-     * Genera una nuova istanza della classe Sprite renderer che prende come parametro
-     * anche il filename dello sprite da utilizzare per il render
-     * @param height
-     * @param width
-     * @param color
-     * @param filename
+     * Creates a new instance of the class SpriteRenderer.
+     * @param height the height of the entity
+     * @param width the width of the entity
+     * @param color the color which will be given to the sprite
+     * @param filename the name of the file containing the sprite
+     *                 to be used for rendering
      */
     public SpriteRenderer(final int height, final int width,
                           final Color color, final String filename) {
@@ -41,11 +43,13 @@ public class SpriteRenderer extends Renderer {
     }
 
     /**
-     * @param position
-     * @param direction
-     * @param rotation
-     * @return ImageView se la l'asset passato come argomento esiste, altrimenti verrà
-     * renderizzato il rettangolo della classe padre
+     * The method that actually returns the image representing
+     * the sprite of the entity.
+     * @param position the position of the entity
+     * @param direction the direction of the entity
+     * @param rotation the rotation of the entity
+     * @return an ImageView if the asset given as input does exist,
+     * the rectangle of the super class will be rendered otherwise
      */
     @Override
     public Node render(final Point2D position, final int direction, final int rotation) {

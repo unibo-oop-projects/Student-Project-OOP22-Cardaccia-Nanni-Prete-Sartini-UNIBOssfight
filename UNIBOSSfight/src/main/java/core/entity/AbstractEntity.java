@@ -22,6 +22,7 @@ public abstract class AbstractEntity implements Entity {
     private final Renderer renderer;
     private Optional<Collider> collider;
     private int direction;
+    private static final int GROUND_LEVEL = 57;
 
     /**
      * Creates a new instance of the abstract class AbstractEntity.
@@ -149,7 +150,7 @@ public abstract class AbstractEntity implements Entity {
                                 .subtract(position)
                                 .add(Window.getWidth() / 2, 0)
                                 .getX(),
-                        this.getPosition().getY() - 57
+                        this.getPosition().getY() - GROUND_LEVEL
                 ),
                 this.getDirection(),
                 0

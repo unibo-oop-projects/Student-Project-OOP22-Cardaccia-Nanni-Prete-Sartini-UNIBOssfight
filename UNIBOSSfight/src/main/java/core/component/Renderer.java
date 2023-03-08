@@ -5,17 +5,20 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * This class represents the object used to render the entities of the game.
+ */
 public abstract class Renderer implements Component {
 
   private final int height;
   private final int width;
   private final Color color;
 
-  /** Nuova istanza della classe Renderer che con una altezza, larghezza e un colore che
-   * utilizzato in fase di rendering.
-   * @param height
-   * @param width
-   * @param color
+  /**
+   * Creates a new instance of the class Renderer.
+   * @param height the height of the entity
+   * @param width the width of the entity
+   * @param color the color which will be given to the rendered object
    */
   public Renderer(final int height, final int width, final Color color) {
     this.height = height;
@@ -24,12 +27,25 @@ public abstract class Renderer implements Component {
   }
 
   /**
-   * Data una posizione, una direzione e una rotazione restituisce un nodo renderizzato
-   * che verrà inserita nella scena.
-   * @param position
-   * @param direction
-   * @param rotation
-   * @return Node che verrà passato alla scena
+   * @return the height of the rendered object
+   */
+  public int getHeight() {
+    return height;
+  }
+
+  /**
+   * @return the width of the rendered object
+   */
+  public int getWidth() {
+    return width;
+  }
+
+  /**
+   * The method used to render the entity.
+   * @param position the position of the entity
+   * @param direction the direction of the entity
+   * @param rotation the rotation of the entity
+   * @return a Node that will be given as input to the Scene
    */
   public Node render(final Point2D position, final int direction, final int rotation) {
     final Rectangle rectangle = new Rectangle(
@@ -43,17 +59,4 @@ public abstract class Renderer implements Component {
     return rectangle;
   }
 
-  /**
-   * @return l'altezza dell'oggetto renderizzato
-   */
-  public int getHeight() {
-    return height;
-  }
-
-  /**
-   * @return la larghezza dell'oggetto renderizzato
-   */
-  public int getWidth() {
-    return width;
-  }
 }
