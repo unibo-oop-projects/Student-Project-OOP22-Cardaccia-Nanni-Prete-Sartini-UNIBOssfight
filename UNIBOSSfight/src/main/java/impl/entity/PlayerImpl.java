@@ -150,7 +150,7 @@ public class PlayerImpl extends AbstractEntity {
     }
 
     private void removeBullets() {
-        this.bullets.removeIf(e -> !e.isDisplayed(this.getPosition()) || e.isDestroyed());
+        this.bullets.removeIf(e -> !e.isDisplayed(this.getPosition()));
     }
 
     public List<Node> getBulletsNodes() {
