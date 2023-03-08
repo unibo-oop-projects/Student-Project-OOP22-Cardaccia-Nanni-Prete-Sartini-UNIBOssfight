@@ -67,7 +67,6 @@ public class PlayerImpl extends AbstractEntity {
     @Override
     public void update(final Inputs input) {
 
-
         switch (input) {
             case LEFT -> {
                 getTransform().move(-5, 0);

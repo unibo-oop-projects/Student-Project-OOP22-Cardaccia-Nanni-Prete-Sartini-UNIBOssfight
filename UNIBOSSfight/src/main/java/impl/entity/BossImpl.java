@@ -16,7 +16,7 @@ public class BossImpl extends Boss {
     public BossImpl(final Transform startingPos, final int height, final int width,
                     final int health, final Weapon weapon, final String filename) {
         super(startingPos, height, width, filename);
-        this.position = startingPos;
+        this.position = Transform.copyOf(startingPos);
         this.health = health;
         this.weapon = weapon;
     }

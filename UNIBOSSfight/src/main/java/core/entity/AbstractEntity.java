@@ -37,7 +37,7 @@ public abstract class AbstractEntity implements Entity {
             final int width,
             final Renderer renderer
     ) {
-        this.position = position;
+        this.position = Transform.copyOf(position);
         this.renderer = renderer;
         this.height = height;
         this.width = width;

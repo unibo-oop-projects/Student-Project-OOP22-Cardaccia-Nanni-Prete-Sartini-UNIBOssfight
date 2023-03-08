@@ -67,7 +67,7 @@ public class SpriteRenderer extends Renderer {
 
             iv2.setRotate(rotation);
 
-            iv2.setX(position.getX() - getWidth() / 2);
+            iv2.setX(position.getX() - getWidth() / 2.0);
             iv2.setY(position.getY() - getHeight());
 
             iv2.setPreserveRatio(false);

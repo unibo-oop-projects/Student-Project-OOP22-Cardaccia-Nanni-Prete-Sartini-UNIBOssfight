@@ -145,6 +145,7 @@ public class Prova extends Application {
         this.currentLevel.collision();
     }
 
+    // TODO creare copyOf del level
     public LevelImpl getCurrentLevel() {
         return this.currentLevel;
     }
@@ -157,7 +158,6 @@ public class Prova extends Application {
     }
 
     private class InputManager {
-
         private final Scene scene;
         private boolean isAPressed = false;
         private boolean isDPressed = false;

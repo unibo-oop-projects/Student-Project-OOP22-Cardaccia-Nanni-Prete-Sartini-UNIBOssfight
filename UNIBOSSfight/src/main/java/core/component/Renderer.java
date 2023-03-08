@@ -49,7 +49,7 @@ public abstract class Renderer implements Component {
    */
   public Node render(final Point2D position, final int direction, final int rotation) {
     final Rectangle rectangle = new Rectangle(
-            position.getX() - width / 2,
+            position.getX() - width / 2.0,
             position.getY() - height,
             width,
             height
