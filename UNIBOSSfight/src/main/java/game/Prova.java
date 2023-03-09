@@ -101,6 +101,7 @@ public class Prova extends Application {
         );
 
         tl.play();
+        this.currentLevel.init();
     }
 
     private void inputPoll() {

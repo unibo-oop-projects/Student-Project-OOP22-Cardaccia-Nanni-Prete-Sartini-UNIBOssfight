@@ -29,7 +29,8 @@ public class LevelImpl implements Level {
     }
 
     public void init() {
-
+        this.player.initCollider();
+        this.entities.forEach(Entity::initCollider);
     }
 
     @Override

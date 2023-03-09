@@ -23,7 +23,7 @@ public class EnemyImpl extends Enemy {
     }
 
     @Override
-    protected void initCollider() {
+    public void initCollider() {
         final var collider = new ColliderImpl();
         collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
             setDirection(getDirection() * -1);

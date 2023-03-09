@@ -103,7 +103,7 @@ public class PlayerImpl extends AbstractEntity {
     }
 
     @Override
-    protected void initCollider() {
+    public void initCollider() {
         final var collider = new ColliderImpl();
         collider.addBehaviour(Collider.Entities.TMPENTITY, e -> {
             getTransform().move(getIntersection(e), 0);

@@ -42,7 +42,8 @@ public abstract class AbstractEntity implements Entity {
         this.direction = 1;
         this.hitbox = new Hitbox(width / 2.0, height, getPosition());
 
-        initCollider();
+        // initCollider();
+        this.collider = Optional.empty();
     }
 
     /**
@@ -171,9 +172,9 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     * Initialise the collider of the entity.
+     * {@inheritDoc}
      */
-    protected void initCollider() {
+    public void initCollider() {
         this.collider = Optional.empty();
     }
 

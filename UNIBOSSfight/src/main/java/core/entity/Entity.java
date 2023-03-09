@@ -91,4 +91,9 @@ public interface Entity {
      */
     void manageCollision(Entity e);
 
+    /**
+     * Initialise the collider of the entity.
+     */
+    void initCollider();
+
 }
