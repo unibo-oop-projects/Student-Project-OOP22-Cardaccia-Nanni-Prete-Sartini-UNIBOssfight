@@ -50,6 +50,8 @@ public abstract class Bullet extends AbstractEntity {
     @Override
     public void update(final Inputs input) {
         getTransform().move((int) xShift, (int) yShift);
+
+        this.getHitbox().update(this.getPosition());
     }
 
 }

@@ -28,6 +28,12 @@ public class Transform implements Component {
         this.position = this.position.add(x, y);
     }
 
+
+    //FIXME Method to delete
+    public void move(final double x, final double y) {
+        this.position = this.position.add(x, y);
+    }
+
     /**
      * Riposiziona entity sul livello del terreno se questo vi si trova al di sotto.
      */

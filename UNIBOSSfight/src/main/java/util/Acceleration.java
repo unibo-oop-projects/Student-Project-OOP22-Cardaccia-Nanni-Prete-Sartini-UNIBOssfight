@@ -16,9 +16,12 @@ public final class Acceleration {
      * @param timeDelta the time delta
      * @return an int
      */
-    public static int accelerate(final int currentVelocity, final int targetVelocity,
-                                 final int timeDelta) {
-        final int velocityDelta = targetVelocity - currentVelocity;
+    public static double accelerate(final double currentVelocity, final double targetVelocity,
+                                 final double timeDelta) {
+        final double velocityDelta = targetVelocity - currentVelocity;
+
+        if(currentVelocity == targetVelocity)
+            return targetVelocity;
 
         if (velocityDelta > timeDelta) {
             return currentVelocity + timeDelta;

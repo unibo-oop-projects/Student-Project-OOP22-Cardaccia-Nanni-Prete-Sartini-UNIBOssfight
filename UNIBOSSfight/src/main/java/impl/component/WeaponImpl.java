@@ -37,8 +37,12 @@ public class WeaponImpl implements Weapon {
 
     @Override
     public Bullet fire(final Point2D target) {
-        return new BulletImpl(Transform.copyOf(this.userPos), 20, 20,
-                new SpriteRenderer(20, 20, Color.BLACK, "gnu.png"),
+
+        Transform shootingPosition = Transform.copyOf(this.userPos);
+        shootingPosition.move(0, -125);
+
+        return new BulletImpl(shootingPosition, 20, 20,
+                new SpriteRenderer(20, 20, Color.BLACK, "testImage2.png"),
                 1, target, 20);
     }
 }
