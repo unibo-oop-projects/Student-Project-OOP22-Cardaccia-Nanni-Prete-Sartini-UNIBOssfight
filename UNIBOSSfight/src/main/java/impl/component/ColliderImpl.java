@@ -15,7 +15,7 @@ public class ColliderImpl implements Collider {
     private final Map<Entities, Consumer<Entity>> behaviours;
 
     /**
-     * Crea una nuova istanza del gestore delle collisioni.
+     * Creates a new instance of the Collider.
      */
     public ColliderImpl() {
         this.behaviours = new EnumMap<>(Entities.class);
