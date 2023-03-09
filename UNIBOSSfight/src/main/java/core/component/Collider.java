@@ -12,8 +12,7 @@ import impl.entity.TmpEntityImpl;
 import java.util.function.Consumer;
 
 /**
- * Interfaccia che gestisce i comportamenti delle entità alle collisioni con
- * le varie entità.
+ * An interface modelling the behaviours of the entities on collisions.
  */
 public interface Collider extends Component {
 
@@ -38,11 +37,11 @@ public interface Collider extends Component {
         }
 
         /**
-         * Verifica se il parametro è dello stesso tipo runtime di quello
-         * associato al valore dell'enumerazione.
-         * @param e entità da confrontare
-         * @param <T> sottotipo di entity
-         * @return true se il parametro è dello stesso tipo, false altrimenti
+         * Verifies if the parameter is the same runtime type of the one associated
+         * to the value of the enumeration.
+         * @param e comparing entity
+         * @param <T> subtype of Entity
+         * @return true if the type is the same, false if it's not
          */
         public <T extends Entity> boolean equals(final T e) {
             return e.getClass().equals(type);
@@ -50,15 +49,15 @@ public interface Collider extends Component {
     }
 
     /**
-     * Esegue la procedura di gestione della collisione.
-     * @param e entità con cui il chiamante collide
+     * Manages the collision executing the procedure associated to the colliding entity.
+     * @param e entity with which the caller collides
      */
     void manageCollision(Entity e);
 
     /**
-     * Associa un comportamento a una determinata entità.
-     * @param key enum dell'entità
-     * @param value comportamento
+     * Associates a behaviour to a specific entity.
+     * @param key enum value of the entity
+     * @param value behaviour
      */
     void addBehaviour(Entities key, Consumer<Entity> value);
 }
