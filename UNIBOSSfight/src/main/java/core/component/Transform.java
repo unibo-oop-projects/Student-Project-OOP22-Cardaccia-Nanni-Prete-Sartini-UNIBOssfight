@@ -24,12 +24,6 @@ public class Transform implements Component {
      * @param x
      * @param y
      */
-    public void move(final int x, final int y) {
-        this.position = this.position.add(x, y);
-    }
-
-
-    //FIXME Method to delete
     public void move(final double x, final double y) {
         this.position = this.position.add(x, y);
     }

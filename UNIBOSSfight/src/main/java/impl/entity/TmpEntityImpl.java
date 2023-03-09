@@ -11,7 +11,7 @@ import util.Window;
 public class TmpEntityImpl extends AbstractEntity {
     private int health;
 
-    private int ySpeed = 0;
+    private double ySpeed = 0;
 
     public TmpEntityImpl(final Transform position, final Integer height,
                          final Integer width, final String filename) {

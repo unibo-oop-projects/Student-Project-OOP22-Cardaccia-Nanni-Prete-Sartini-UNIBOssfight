@@ -2,6 +2,7 @@ package impl.entity;
 
 import core.component.Collider;
 import core.component.Hitbox;
+import core.component.Weapon;
 import core.entity.Bullet;
 import core.entity.Entity;
 import impl.component.ColliderImpl;
@@ -19,17 +20,12 @@ import java.util.List;
 
 public class PlayerImpl extends AbstractEntity {
 
-    //TODO: aggiungere classe util HitBox
-
-    //TODO: aggiungere classe util HitBox
-
-    private Hitbox playerHitbox;
-    private int ySpeed = 0;
-    private final WeaponImpl weapon = new WeaponImpl(getTransform(), 10,
+    private double ySpeed = 0;
+    private final Weapon weapon = new WeaponImpl(getTransform(), 10,
             new SpriteRenderer(150, 180, Color.RED, "gnu.png"));
     private double rotation;
     private final List<Bullet> bullets = new ArrayList<>();
-    private final int cont = 1;
+    private double xSpeed = 0;
 
 
     public PlayerImpl(final Transform position, final Integer height,
@@ -69,11 +65,11 @@ public class PlayerImpl extends AbstractEntity {
 
         switch (input) {
             case LEFT -> {
-                getTransform().move(-5, 0);
+                this.xSpeed =  Acceleration.accelerate(this.xSpeed, -10, 1);
                 setDirection(-1);
             }
             case RIGHT -> {
-                getTransform().move(5, 0);
+                this.xSpeed = Acceleration.accelerate(this.xSpeed, 10, 1);
                 setDirection(1);
             }
             case SPACE -> {
@@ -83,7 +79,8 @@ public class PlayerImpl extends AbstractEntity {
                 }
             }
             case EMPTY -> {
-                getTransform().move(0, ySpeed);
+                getTransform().move(this.xSpeed, ySpeed);
+                this.xSpeed = Acceleration.accelerate(this.xSpeed, 0, 0.5);
                 this.ySpeed = this.isJumping()
                         ? Acceleration.accelerate(this.ySpeed, 20, 1) : 0;
                 //System.out.println(this.bullets.stream().filter(e -> e.isDisplayed(this.getPosition())).count());
@@ -106,7 +103,9 @@ public class PlayerImpl extends AbstractEntity {
     public void initCollider() {
         final var collider = new ColliderImpl();
         collider.addBehaviour(Collider.Entities.TMPENTITY, e -> {
-            getTransform().move(getIntersection(e), 0);
+            this.ySpeed = -20;
+            this.xSpeed = -20;
+            //getTransform().move(getIntersection(e), 0);
         });
 
         collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
