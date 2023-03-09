@@ -1,16 +1,21 @@
 plugins {
     java
     application
-    id("org.openjfx.javafxplugin") version "0.0.13"
     id("org.danilopianini.gradle-java-qa") version "1.0.0"
     // id("com.github.spotbugs") version "5.0.13"
     // id("de.aaschmid.cpd") version "3.3"
 
 }
 
-javafx {
-    modules("javafx.controls", "javafx.fxml")
-}
+val javaFXModules = listOf(
+        "base",
+        "controls",
+        "fxml",
+        "swing",
+        "graphics"
+)
+
+val supportedPlatforms = listOf("linux", "mac", "win")
 
 
 group = "org.example"
@@ -28,6 +33,13 @@ application {
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+
+    val javaFxVersion = 19
+    for (platform in supportedPlatforms) {
+        for (module in javaFXModules) {
+            implementation("org.openjfx:javafx-$module:$javaFxVersion:$platform")
+        }
+    }
 }
 
 tasks.getByName<Test>("test") {
