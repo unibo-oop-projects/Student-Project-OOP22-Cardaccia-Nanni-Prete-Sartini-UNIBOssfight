@@ -46,7 +46,7 @@ public class PlayerImpl extends AbstractEntity {
     public Node render(final Point2D position) {
         try {
             return getRenderer().render(new Point2D(Window.getWidth() / 2,
-                    this.getPosition().getY() - 57), this.getDirection(), 0);
+                    this.getPosition().getY()), this.getDirection(), 0);
         } catch (Exception e) {
             System.out.println("ERROR cannot load resource " + e);
         }
@@ -160,4 +160,7 @@ public class PlayerImpl extends AbstractEntity {
         return new ArrayList<>(this.bullets);
     }
 
+    public double getRotation() {
+        return this.rotation;
+    }
 }
