@@ -84,14 +84,13 @@ public class LevelImpl implements Level {
                 .filter(e -> this.player.getHitbox().collide(e.getHitbox()))
                 .forEach(this.player::manageCollision);
 
-
-        // Entity collisions
-        final List<Entity> collidingEntities = this.entities.stream()
-                .filter(e -> e.getCollider().isPresent())
-                .toList();
-
         final List<Entity> allEntities = new ArrayList<>(this.entities);
         allEntities.addAll(this.player.getBullets());
+
+        // Entity collisions
+        final List<Entity> collidingEntities = allEntities.stream()
+                .filter(e -> e.getCollider().isPresent())
+                .toList();
 
         collidingEntities.forEach(ce -> allEntities.stream()
                 .filter(e -> !e.equals(ce) && e.getHitbox().collide(ce.getHitbox()))

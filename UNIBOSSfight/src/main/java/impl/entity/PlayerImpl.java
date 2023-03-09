@@ -144,7 +144,9 @@ public class PlayerImpl extends AbstractEntity {
     }
 
     public void shoot(final Point2D target) {
-        this.bullets.add(this.weapon.fire(target));
+        final Bullet newBullet = this.weapon.fire(target);
+        newBullet.initCollider();
+        this.bullets.add(newBullet);
     }
 
     private void removeBullets() {
