@@ -111,4 +111,8 @@ public class LevelImpl implements Level {
     public void playerShoot(final Point2D target) {
         this.player.shoot(target);
     }
+
+    public double getRotation() {
+        return this.player.getRotation();
+    }
 }

@@ -14,7 +14,9 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -25,13 +27,15 @@ import java.io.FileNotFoundException;
 
 public class Prova extends Application {
 
-    private static final int FRAME_RATE = 30;
+    private static final int FRAME_RATE = 60;
     private static final double FRAME_DURATION = 1000 / FRAME_RATE;
 
     private final LevelImpl currentLevel = new LevelImpl();
     private Group root = new Group();
     private Scene currentScene;
     private InputManager inputManager;
+    private Image image;
+    private Paint imagePattern;
 
     @Override
     public void start(final Stage stage) {
@@ -40,6 +44,17 @@ public class Prova extends Application {
 
         final Screen screen = Screen.getPrimary();
         final Rectangle2D bounds = screen.getVisualBounds();
+
+        FileInputStream input = null;
+        try {
+            input = new FileInputStream("assets/ground2.png");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        this.image = new Image(input);
+
+
 
         stage.setX(bounds.getMinX());
         stage.setY(bounds.getMinY());
@@ -54,7 +69,7 @@ public class Prova extends Application {
         this.inputManager = new InputManager(currentScene);
 
         this.currentScene.heightProperty().addListener(
-                (observable, oldValue, newValue) -> Window.setHeight(currentScene.getHeight())
+                (observable, oldValue, newValue) -> Window.setHeight(currentScene.getHeight() - this.image.getHeight())
         );
 
         this.currentScene.widthProperty().addListener(
@@ -107,23 +122,15 @@ public class Prova extends Application {
 
     private void render() {
         this.root.getChildren().clear();
-        this.currentLevel.renderEntities().forEach(e -> root.getChildren().add(e));
         root.getChildren().add(this.currentLevel.renderPlayer());
         root.getChildren().add(this.currentLevel.renderWeapon());
+        this.currentLevel.renderEntities().forEach(e -> root.getChildren().add(e));
 
-        FileInputStream input = null;
-        try {
-            input = new FileInputStream("assets/ground2.png");
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        // create a Rectangle
+        Rectangle rect = new Rectangle(0, Window.getHeight(), Window.getWidth(), image.getHeight());
 
-        // create a image
-        final Image image = new Image(input);
-
-
-        // create ImagePattern
-        final ImagePattern imagePattern = new ImagePattern(
+        // set fill for rectangle
+        this.imagePattern = new ImagePattern(
                 image,
                 -this.currentLevel.getPlayerPosition().getX(),
                 Window.getHeight() - image.getHeight(),
@@ -131,14 +138,15 @@ public class Prova extends Application {
                 false
         );
 
-        // create a Rectangle
-        final Rectangle rect = new Rectangle(0, Window.getHeight() - image.getHeight(),
-                Window.getWidth(), image.getHeight());
-
-        // set fill for rectangle
-        rect.setFill(imagePattern);
+        rect.setFill(this.imagePattern);
 
         root.getChildren().add(rect);
+
+        Text text = new Text(""+this.currentLevel.getRotation());
+        text.setX(100);
+        text.setY(100);
+
+        root.getChildren().add(text);
     }
 
     private void collision() {
