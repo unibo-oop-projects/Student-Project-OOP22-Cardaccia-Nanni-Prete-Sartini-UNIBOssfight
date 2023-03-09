@@ -3,16 +3,19 @@ package core.component;
 import javafx.geometry.Point2D;
 import util.Window;
 
+/**
+ * This class models the concept of the position and the rotation of an entity.
+ */
 public class Transform implements Component {
 
     private Point2D position;
     private final float rotation;
-    private double yGround = Window.getHeight(); // TODO height della window
+    private double yGround = Window.getHeight();
 
     /**
-     * Nuova istanza della classe Transform con posizione di partenza e rotazione.
-     * @param position
-     * @param rotation
+     * Creates a new instance of the class Transform.
+     * @param position the starting position of the entity
+     * @param rotation the rotation of the entity
      */
     public Transform(final Point2D position, final float rotation) {
         this.position = position;
@@ -20,53 +23,63 @@ public class Transform implements Component {
     }
 
     /**
-     * Trasla la posizione attuale con il vettore di componenti x e y.
-     * @param x
-     * @param y
+     * Translates the current position with the vector of components x and y.
+     * @param x position on x-axis
+     * @param y position on y-axis
      */
     public void move(final double x, final double y) {
         this.position = this.position.add(x, y);
     }
 
     /**
-     * Riposiziona entity sul livello del terreno se questo vi si trova al di sotto.
+     * Takes the entity back on the ground level if it is under it.
      */
-    public void setGroundLevel() {
+    public void moveOnGroundLevel() {
         if (this.isUnderGroundLevel()) {
             this.position = new Point2D(this.position.getX(), yGround);
         }
     }
 
+    /**
+     * @return the current ground level
+     */
     public double getGroundLevel() {
         return this.yGround;
     }
 
+    /**
+     * Changes the ground level.
+     * @param yGround the new value of the ground
+     */
     public void setGroundLevel(final double yGround) {
         this.yGround = yGround;
     }
 
     /**
-     * @return true se l'entity si trova sotto il livello del terreno
+     * @return true is the entity is under the gound level
      */
     public boolean isUnderGroundLevel() {
         return this.position.getY() > yGround;
     }
 
+    /**
+     * Sets the ground level to the default one, which is the height of the window.
+     */
     public void resetGroundLevel() {
         setGroundLevel(Window.getHeight());
-        setGroundLevel();
+        moveOnGroundLevel();
     }
 
     /**
-     * @return Point2D della posizione corrente
+     * @return a copy of the current position of the entity
      */
     public Point2D getPosition() {
         return new Point2D(this.position.getX(), this.position.getY());
     }
 
     /**
-     * @param input
-     * @return Transform che è l'esatta copia di quello passato in input
+     * @param input the Transform to copy
+     * @return a Transform which is the exact copy of the passed one
      */
     public static Transform copyOf(final Transform input) {
         return new Transform(
@@ -75,6 +88,11 @@ public class Transform implements Component {
         );
     }
 
+    /**
+     * Moves the entity to a new position.
+     * @param x new position on x-axis
+     * @param y new position on y-axis
+     */
     public void moveTo(final double x, final double y) {
         this.position = new Point2D(x, y);
     }

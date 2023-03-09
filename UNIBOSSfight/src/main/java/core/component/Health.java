@@ -14,7 +14,6 @@ public class Health implements Component {
         this.hp = 100;
     }
 
-
     /**
      * The current health value.
      * @return the current health value
