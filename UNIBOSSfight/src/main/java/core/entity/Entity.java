@@ -1,6 +1,7 @@
 package core.entity;
 
 import core.component.Collider;
+import core.component.Health;
 import core.component.Hitbox;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -57,6 +58,11 @@ public interface Entity {
      * @return the Collider of the entity
      */
     Optional<Collider> getCollider();
+
+    /**
+     * @return the Health of the entity
+     */
+    Health getHealth();
 
     /**
      * @param position position of the player

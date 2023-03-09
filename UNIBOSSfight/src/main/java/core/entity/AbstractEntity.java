@@ -1,9 +1,6 @@
 package core.entity;
 
-import core.component.Collider;
-import core.component.Hitbox;
-import core.component.Renderer;
-import core.component.Transform;
+import core.component.*;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import util.Window;
@@ -20,6 +17,7 @@ public abstract class AbstractEntity implements Entity {
     private final Transform position;
     private final Hitbox hitbox;
     private final Renderer renderer;
+    private final Health health;
     private Optional<Collider> collider;
     private int direction;
 
@@ -38,6 +36,7 @@ public abstract class AbstractEntity implements Entity {
     ) {
         this.position = Transform.copyOf(position);
         this.renderer = renderer;
+        this.health = new Health();
         this.height = height;
         this.width = width;
         this.direction = 1;
@@ -120,6 +119,10 @@ public abstract class AbstractEntity implements Entity {
      */
     protected void setCollider(final Collider collider) {
         this.collider = Optional.ofNullable(collider);
+    }
+
+    public Health getHealth() {
+        return this.health;
     }
 
     /**

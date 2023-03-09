@@ -21,10 +21,6 @@ public class BossImpl extends Boss {
         this.weapon = weapon;
     }
 
-    public int getHealth() {
-        return this.health;
-    }
-
     public void attack() {
         //TODO
     }

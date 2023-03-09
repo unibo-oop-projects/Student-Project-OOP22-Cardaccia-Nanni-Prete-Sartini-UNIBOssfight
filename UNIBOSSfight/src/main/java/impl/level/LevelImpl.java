@@ -45,6 +45,8 @@ public class LevelImpl implements Level {
         if (this.count++ % 100 == 0) {
             this.goLeft = !this.goLeft;
         }
+
+        this.entities.removeIf(e -> e.getHealth().isDead());
     }
 
     @Override

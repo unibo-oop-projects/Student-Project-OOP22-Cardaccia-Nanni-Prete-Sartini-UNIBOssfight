@@ -11,7 +11,12 @@ public class Health implements Component {
         this.hp = 100;
     }
 
-    public int getHealth() {
+
+    /**
+     * The current health value.
+     * @return the current health value
+     */
+    public int getValue() {
         return this.hp;
     }
 
