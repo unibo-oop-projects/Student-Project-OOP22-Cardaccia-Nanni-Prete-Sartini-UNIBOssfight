@@ -1,9 +1,11 @@
 package util;
 
-public class Window {
+public final class Window {
 
     private static double width;
     private static double height;
+
+    private Window() {}
 
     public static void setHeight(final double height) {
         Window.height = height;

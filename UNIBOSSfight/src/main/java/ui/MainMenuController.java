@@ -16,6 +16,5 @@ public class MainMenuController {
     private Label mainTitle;
 
     public void changeScene(final ActionEvent actionEvent) {
-        System.out.println("test");
     }
 }

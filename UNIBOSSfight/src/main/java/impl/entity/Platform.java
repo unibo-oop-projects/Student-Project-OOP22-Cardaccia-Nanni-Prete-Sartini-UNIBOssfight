@@ -12,7 +12,6 @@ import javafx.scene.paint.Color;
 public class Platform extends AbstractEntity {
 
     //platform will eventually move
-    private final boolean isMoving;
 
     /**
      * The constructor of the class which creates a new instance of Platform.
@@ -25,7 +24,6 @@ public class Platform extends AbstractEntity {
                     final int width, final String filename) {
         super(position, height, width,
                 new SpriteRenderer(height, width, Color.GREEN, filename));
-        this.isMoving = false;
     }
 
     /**

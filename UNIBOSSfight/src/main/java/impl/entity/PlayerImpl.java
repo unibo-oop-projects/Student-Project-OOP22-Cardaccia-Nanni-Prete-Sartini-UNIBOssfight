@@ -132,9 +132,8 @@ public class PlayerImpl extends AbstractEntity {
 
     private int getIntersection(final Entity e) {
         final int side = (int) Math.signum(getPosition().getX() - e.getPosition().getX());
-
-        final int wallSide = (int) e.getPosition().getX() + (e.getWidth() / 2 * side);
-        final int playerSide = (int) getPosition().getX() - (getWidth() / 2 * side);
+        final int wallSide = (int) e.getPosition().getX() + e.getWidth() / 2 * side;
+        final int playerSide = (int) getPosition().getX() - getWidth() / 2 * side;
 
         return wallSide - playerSide;
     }

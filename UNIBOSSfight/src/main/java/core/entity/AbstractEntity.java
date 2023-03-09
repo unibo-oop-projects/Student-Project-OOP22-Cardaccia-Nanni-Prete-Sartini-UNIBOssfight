@@ -40,7 +40,7 @@ public abstract class AbstractEntity implements Entity {
         this.height = height;
         this.width = width;
         this.direction = 1;
-        this.hitbox = new Hitbox(width / 2.0, height, getPosition());
+        this.hitbox = new Hitbox(width / 2.0, height, this.position.getPosition());
 
         // initCollider();
         this.collider = Optional.empty();
@@ -122,6 +122,11 @@ public abstract class AbstractEntity implements Entity {
         this.collider = Optional.ofNullable(collider);
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Health getHealth() {
         return this.health;
     }
@@ -174,6 +179,7 @@ public abstract class AbstractEntity implements Entity {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void initCollider() {
         this.collider = Optional.empty();
     }

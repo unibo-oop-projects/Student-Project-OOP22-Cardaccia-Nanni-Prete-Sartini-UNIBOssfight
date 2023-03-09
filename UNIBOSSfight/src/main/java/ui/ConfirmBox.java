@@ -6,11 +6,14 @@ import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
 
-public class ConfirmBox {
+public final class ConfirmBox {
 
     private static final int WIDTH = 300;
     private static final int HEIGHT = 200;
     private static boolean answer;
+
+    private ConfirmBox() {}
+
     public static boolean display(final String message) {
         final Stage window = new Stage();
 

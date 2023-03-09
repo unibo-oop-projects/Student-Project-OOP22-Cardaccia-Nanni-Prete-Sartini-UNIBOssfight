@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+//import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.util.Objects;
 
@@ -16,7 +16,7 @@ public class MainMenu extends Application {
     public void start(final Stage primaryStage) throws Exception {
         final Parent root = FXMLLoader.load(ClassLoader.getSystemResource("layouts/mainMenu.fxml"));
         final Scene scene = new Scene(Objects.requireNonNull(root), WIDTH, HEIGHT);
-        final Label lbl = (Label) scene.lookup("#mainTitle");
+        //final Label lbl = (Label) scene.lookup("#mainTitle");
         primaryStage.setTitle("UNIBOssfight");
         primaryStage.setScene(scene);
         primaryStage.show();

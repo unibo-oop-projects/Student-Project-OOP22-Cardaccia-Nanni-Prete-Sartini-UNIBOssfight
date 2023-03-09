@@ -36,7 +36,6 @@ public class TmpEntityImpl extends AbstractEntity {
             case SPACE -> { if (!isJumping()) {
                 this.ySpeed = -20;
                 getTransform().move(0, -1);
-
             }
                 //this.position.move(0, ySpeed);
             }

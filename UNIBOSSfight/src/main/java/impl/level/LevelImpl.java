@@ -43,7 +43,8 @@ public class LevelImpl implements Level {
             this.entities.forEach(e -> e.update(Entity.Inputs.LEFT));
         }
 
-        if (this.count++ % 100 == 0) {
+        this.count++;
+        if (this.count % 100 == 0) {
             this.goLeft = !this.goLeft;
         }
 

@@ -128,7 +128,7 @@ public class Prova extends Application {
         this.currentLevel.renderEntities().forEach(e -> root.getChildren().add(e));
 
         // create a Rectangle
-        Rectangle rect = new Rectangle(0, Window.getHeight(), Window.getWidth(), image.getHeight());
+        final Rectangle rect = new Rectangle(0, Window.getHeight(), Window.getWidth(), image.getHeight());
 
         // set fill for rectangle
         this.imagePattern = new ImagePattern(
@@ -143,7 +143,7 @@ public class Prova extends Application {
 
         root.getChildren().add(rect);
 
-        Text text = new Text(""+this.currentLevel.getRotation());
+        Text text = new Text(Double.toString(currentLevel.getRotation()));
         text.setX(100);
         text.setY(100);
 
@@ -178,9 +178,15 @@ public class Prova extends Application {
 
             this.scene.setOnKeyPressed(e -> {
                 switch (e.getCode()) {
-                    case A -> this.isAPressed = true;
-                    case D -> this.isDPressed = true;
-                    case SPACE -> this.isSpacePressed = true;
+                    case A:
+                        this.isAPressed = true;
+                        break;
+                    case D:
+                        this.isDPressed = true;
+                        break;
+                    case SPACE:
+                        this.isSpacePressed = true;
+                        break;
                 }
             });
 
@@ -188,9 +194,15 @@ public class Prova extends Application {
 
             this.scene.setOnKeyReleased(e -> {
                 switch (e.getCode()) {
-                    case A -> this.isAPressed = false;
-                    case D -> this.isDPressed = false;
-                    case SPACE -> this.isSpacePressed = false;
+                    case A:
+                        this.isAPressed = false;
+                        break;
+                    case D:
+                        this.isDPressed = false;
+                        break;
+                    case SPACE:
+                        this.isSpacePressed = false;
+                        break;
                 }
             });
         }
