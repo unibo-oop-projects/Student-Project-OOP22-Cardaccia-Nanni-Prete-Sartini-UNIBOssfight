@@ -27,7 +27,7 @@ import java.io.FileNotFoundException;
 
 public class Prova extends Application {
 
-    private static final int FRAME_RATE = 60;
+    private static final int FRAME_RATE = 10;
     private static final double FRAME_DURATION = 1000 / FRAME_RATE;
 
     private final LevelImpl currentLevel = new LevelImpl();
@@ -119,12 +119,14 @@ public class Prova extends Application {
             this.currentLevel.updatePlayer(Entity.Inputs.LEFT);
         }
         this.currentLevel.updatePlayer(Entity.Inputs.EMPTY);
+
+        this.currentLevel.collision();
     }
 
     private void render() {
         this.root.getChildren().clear();
         root.getChildren().add(this.currentLevel.renderPlayer());
-        root.getChildren().add(this.currentLevel.renderWeapon());
+        //root.getChildren().add(this.currentLevel.renderWeapon());
         this.currentLevel.renderEntities().forEach(e -> root.getChildren().add(e));
 
         // create a Rectangle
@@ -150,10 +152,6 @@ public class Prova extends Application {
         root.getChildren().add(text);
     }
 
-    private void collision() {
-        this.currentLevel.collision();
-    }
-
     // TODO creare copyOf del level
     public LevelImpl getCurrentLevel() {
         return this.currentLevel;
@@ -162,7 +160,6 @@ public class Prova extends Application {
     private void run() {
         inputPoll();
         update();
-        collision();
         render();
     }
 

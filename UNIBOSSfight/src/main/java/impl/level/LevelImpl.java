@@ -23,8 +23,8 @@ public class LevelImpl implements Level {
         this.player = new PlayerImpl(
                 new Transform(new Point2D(0, 300), 0),
                 250,
-                200,
-                "testImage.png"
+                250,
+                "guido"
         );
     }
 
