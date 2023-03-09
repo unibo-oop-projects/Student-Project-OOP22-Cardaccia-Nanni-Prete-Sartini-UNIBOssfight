@@ -2,6 +2,7 @@ package impl.entity;
 
 import core.component.Collider;
 import core.component.Transform;
+import core.entity.Bullet;
 import core.entity.Enemy;
 import impl.component.ColliderImpl;
 import impl.component.SpriteRenderer;
@@ -28,6 +29,12 @@ public class EnemyImpl extends Enemy {
         collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
             setDirection(getDirection() * -1);
             getTransform().move(getDirection() * 5, 0);
+        });
+
+        collider.addBehaviour(Collider.Entities.BULLET, e -> {
+            final Bullet b = (Bullet) e;
+            getHealth().damage(b.getDamage());
+            b.getHealth().damage(b.getHealth().getValue());
         });
 
         setCollider(collider);
