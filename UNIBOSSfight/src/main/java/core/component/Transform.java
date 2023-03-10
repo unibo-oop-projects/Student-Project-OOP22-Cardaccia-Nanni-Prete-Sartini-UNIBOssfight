@@ -4,7 +4,8 @@ import javafx.geometry.Point2D;
 import util.Window;
 
 /**
- * This class models the concept of the position and the rotation of an entity.
+ * This class models the component representing the concept
+ * of the position and the rotation of an entity.
  */
 public class Transform implements Component {
 
@@ -56,7 +57,7 @@ public class Transform implements Component {
     }
 
     /**
-     * @return true is the entity is under the gound level
+     * @return true is the entity is under the ground level
      */
     public boolean isUnderGroundLevel() {
         return this.position.getY() > yGround;
@@ -78,6 +79,7 @@ public class Transform implements Component {
     }
 
     /**
+     * Creates a copy of the Transform given as input.
      * @param input the Transform to copy
      * @return a Transform which is the exact copy of the passed one
      */

@@ -17,17 +17,49 @@ import java.util.function.Consumer;
 public interface Collider extends Component {
 
     /**
-     * Enum con tutte le entità possibili.
+     * Enum with all the possible entities.
      */
     enum Entities {
         // TODO valutare se mettere questa enum in un file a parte
+
+        /**
+         * The temporary entity (will be removed).
+         */
         TMPENTITY(TmpEntityImpl.class),
+
+        /**
+         * The player.
+         */
         PLAYER(PlayerImpl.class),
+
+        /**
+         * The enemy.
+         */
         ENEMY(EnemyImpl.class),
+
+        /**
+         * The boss.
+         */
         BOSS(BossImpl.class),
+
+        /**
+         * The platform.
+         */
         PLATFORM(Platform.class),
+
+        /**
+         * The flame.
+         */
         FLAME(Flame.class),
+
+        /**
+         * The spine.
+         */
         SPINE(Spine.class),
+
+        /**
+         * The bullet.
+         */
         BULLET(BulletImpl.class);
 
         private final Class<? extends Entity> type;
