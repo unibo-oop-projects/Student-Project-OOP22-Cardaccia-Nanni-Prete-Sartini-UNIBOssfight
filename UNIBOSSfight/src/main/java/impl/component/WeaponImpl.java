@@ -25,11 +25,6 @@ public class WeaponImpl implements Weapon {
     }
 
     @Override
-    public ImageView render(final int direction) {
-        return null;
-    }
-
-    @Override
     public Node render(final int direction, final int rotation) {
         return this.renderer.render(new Point2D(Window.getWidth() / 2 + 10 * direction,
                 this.userPos.getPosition().getY() + 80 - 110), direction, rotation);

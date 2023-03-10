@@ -19,7 +19,7 @@ public abstract class Bullet extends AbstractEntity {
 
     /**
      * Creates a new instance of the class Bullet.
-     * @param startingPos the starting position of the entity shooting
+     * @param startingPos the starting position of the bullet
      * @param height the height of the bullet
      * @param width the width of the bullet
      * @param renderer the renderer of the bullet

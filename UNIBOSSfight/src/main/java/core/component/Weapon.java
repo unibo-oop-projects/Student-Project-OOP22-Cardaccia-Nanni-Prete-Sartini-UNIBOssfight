@@ -11,5 +11,4 @@ public interface Weapon extends Component {
 
     Bullet fire(Point2D target);
 
-    Node render(int direction);
 }
