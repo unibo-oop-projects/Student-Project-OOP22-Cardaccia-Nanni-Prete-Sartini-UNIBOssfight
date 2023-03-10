@@ -9,7 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class is used to generate the sprites representing the entities of the game.
@@ -46,7 +45,7 @@ public class SpriteRenderer extends Renderer {
         }
 
         try {
-            for(int i = 1; i <= 8; i++){
+            for (int i = 1; i <= 8; i++) {
                 this.sprites.add(
                         new Image(new FileInputStream("assets/" + filename + i + ".png"),
                         getWidth(), getHeight(),
@@ -73,7 +72,7 @@ public class SpriteRenderer extends Renderer {
 
         if (this.img != null || this.sprites.size() > 0) {
 
-            if(this.sprites.size() == 0){
+            if (this.sprites.size() == 0) {
                 final ImageView iv2 = new ImageView();
 
                 iv2.setImage(this.img);

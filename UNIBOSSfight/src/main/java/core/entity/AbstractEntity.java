@@ -8,7 +8,6 @@ import core.component.Transform;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import util.Window;
-
 import java.util.Optional;
 
 /**
