@@ -114,7 +114,7 @@ public class PlayerImpl extends AbstractEntity {
                     final int topSide = (int) e.getPosition().getY() - e.getHeight();
                     getTransform().setGroundLevel(topSide);
                     if (getTransform().isUnderGroundLevel()) {
-                        getTransform().setGroundLevel();
+                        getTransform().moveOnGroundLevel();
                     }
                 } else if (e.getPosition().getY() - getPosition().getY() < 0) {
                     getTransform().moveTo((int) getPosition().getX(),
