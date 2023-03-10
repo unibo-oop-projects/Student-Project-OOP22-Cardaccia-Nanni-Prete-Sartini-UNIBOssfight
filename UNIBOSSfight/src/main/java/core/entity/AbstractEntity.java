@@ -1,6 +1,10 @@
 package core.entity;
 
-import core.component.*;
+import core.component.Collider;
+import core.component.Health;
+import core.component.Hitbox;
+import core.component.Renderer;
+import core.component.Transform;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import util.Window;

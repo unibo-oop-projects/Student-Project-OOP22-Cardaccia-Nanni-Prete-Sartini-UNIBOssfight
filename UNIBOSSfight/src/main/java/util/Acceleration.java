@@ -20,7 +20,7 @@ public final class Acceleration {
                                  final double timeDelta) {
         final double velocityDelta = targetVelocity - currentVelocity;
 
-        if(currentVelocity == targetVelocity) {
+        if (currentVelocity == targetVelocity) {
             return targetVelocity;
         }
 
