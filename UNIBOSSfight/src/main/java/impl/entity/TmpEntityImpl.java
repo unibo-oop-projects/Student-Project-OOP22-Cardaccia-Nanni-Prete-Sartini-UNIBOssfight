@@ -47,7 +47,7 @@ public class TmpEntityImpl extends AbstractEntity {
 
         //this.position.move(0, ySpeed);
 
-        getTransform().setGroundLevel();
+        getTransform().moveOnGroundLevel();
         getHitbox().update(this.getPosition());
     }
 
