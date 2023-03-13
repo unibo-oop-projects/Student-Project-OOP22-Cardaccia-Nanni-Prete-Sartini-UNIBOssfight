@@ -118,4 +118,9 @@ public class LevelImpl implements Level {
     public double getRotation() {
         return this.player.getRotation();
     }
+
+    @Override
+    public PlayerImpl getPlayer() {
+        return player;
+    }
 }

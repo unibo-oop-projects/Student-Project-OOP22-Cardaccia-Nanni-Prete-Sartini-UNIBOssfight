@@ -12,7 +12,6 @@ import util.Window;
  */
 public abstract class Bullet extends AbstractEntity {
 
-    private final int damage;
     private final int speed;
     private final double xShift;
     private final double yShift;
@@ -32,7 +31,7 @@ public abstract class Bullet extends AbstractEntity {
                   final int speed) {
 
         super(startingPos, height, width, renderer);
-        this.damage = damage;
+        this.setDamage(damage);
         this.speed = speed;
 
         // Finding vector angle

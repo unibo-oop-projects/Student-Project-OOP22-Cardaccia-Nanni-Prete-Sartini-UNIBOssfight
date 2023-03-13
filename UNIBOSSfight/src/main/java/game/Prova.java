@@ -27,8 +27,10 @@ import java.io.FileNotFoundException;
 
 public class Prova extends Application {
 
-    private static final int FRAME_RATE = 10;
+    private static final int FRAME_RATE = 60;
     private static final double FRAME_DURATION = 1000 / FRAME_RATE;
+    private static final int MIN_WINDOW_HEIGHT = 600;
+    private static final int MIN_WINDOW_WIDTH = 800;
 
     private final LevelImpl currentLevel = new LevelImpl();
     private Group root = new Group();
@@ -60,6 +62,8 @@ public class Prova extends Application {
         stage.setY(bounds.getMinY());
         stage.setWidth(bounds.getWidth());
         stage.setHeight(bounds.getHeight());
+        stage.setMinHeight(MIN_WINDOW_HEIGHT);
+        stage.setMinWidth(MIN_WINDOW_WIDTH);
 
         this.root = new Group();
 

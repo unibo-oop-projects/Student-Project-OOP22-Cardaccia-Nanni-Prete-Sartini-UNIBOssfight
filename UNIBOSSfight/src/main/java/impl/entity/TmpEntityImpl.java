@@ -9,7 +9,6 @@ import util.Window;
 
 
 public class TmpEntityImpl extends AbstractEntity {
-    private int health;
 
     private double ySpeed = 0;
 
@@ -47,7 +46,8 @@ public class TmpEntityImpl extends AbstractEntity {
 
         //this.position.move(0, ySpeed);
 
-        getTransform().moveOnGroundLevel();
+        this.getTransform().resetGroundLevel();
+        System.out.println(this.getPosition());
         getHitbox().update(this.getPosition());
     }
 
