@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
  * This class models a coin, which contributes to computing the final
  * score of the player by adding points every time a coin is collected.
  */
-public abstract class Coin extends AbstractEntity {
+public class Coin extends AbstractEntity {
     private final int value;
     private boolean collected;
 

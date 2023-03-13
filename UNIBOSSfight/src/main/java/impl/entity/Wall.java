@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
  * This class models a wall, which is an obstacle that stops
  * the player while running but can be climbed.
  */
-public abstract class Wall extends AbstractEntity {
+public class Wall extends AbstractEntity {
 
     /**
      * The constructor of the class which creates a new instance of Wall.
