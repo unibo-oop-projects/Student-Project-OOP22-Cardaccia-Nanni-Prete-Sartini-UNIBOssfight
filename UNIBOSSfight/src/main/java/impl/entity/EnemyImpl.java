@@ -17,6 +17,7 @@ public class EnemyImpl extends Enemy {
 
     /**
      * Creates a new instance of the class EnemyImpl.
+     *
      * @param position the position of the enemy
      * @param height the height of the enemy
      * @param width the width of the enemy

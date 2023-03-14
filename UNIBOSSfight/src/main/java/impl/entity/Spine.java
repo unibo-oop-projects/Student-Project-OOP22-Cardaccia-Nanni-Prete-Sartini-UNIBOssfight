@@ -13,6 +13,7 @@ public class Spine extends AbstractEntity {
 
     /**
      * The constructor of the class which creates a new instance of Spine.
+     *
      * @param position the position of the spine
      * @param height the height of the spine
      * @param width the width of the spine

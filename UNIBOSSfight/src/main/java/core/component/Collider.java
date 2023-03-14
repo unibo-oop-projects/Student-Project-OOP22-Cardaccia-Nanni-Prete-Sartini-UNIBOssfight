@@ -82,12 +82,14 @@ public interface Collider extends Component {
 
     /**
      * Manages the collision executing the procedure associated to the colliding entity.
+     *
      * @param e entity with which the caller collides
      */
     void manageCollision(Entity e);
 
     /**
      * Associates a behaviour to a specific entity.
+     *
      * @param key enum value of the entity
      * @param value behaviour
      */

@@ -6,18 +6,22 @@ package core.component;
 public interface Health extends Component {
 
     /**
+     * This method returns the current health value.
+     *
      * @return the current health value
      */
     int getValue();
 
     /**
      * Subtracts the specified damage from the health.
+     *
      * @param damage the damage received
      */
     void damage(int damage);
 
     /**
      * Determines if the entity is dead.
+     *
      * @return if the entity is dead or not
      */
     boolean isDead();

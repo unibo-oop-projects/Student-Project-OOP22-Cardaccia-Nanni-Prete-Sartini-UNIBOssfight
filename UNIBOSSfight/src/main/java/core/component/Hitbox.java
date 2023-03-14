@@ -21,6 +21,7 @@ public interface Hitbox extends Component {
 
     /**
      * Updates the hitbox by giving it a new position.
+     *
      * @param newPos new position of the hitbox
      */
     void update(Point2D newPos);

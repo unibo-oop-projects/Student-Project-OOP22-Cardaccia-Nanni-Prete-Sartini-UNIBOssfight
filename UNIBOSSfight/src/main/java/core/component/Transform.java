@@ -15,6 +15,7 @@ public class Transform implements Component {
 
     /**
      * Creates a new instance of the class Transform.
+     *
      * @param position the starting position of the entity
      * @param rotation the rotation of the entity
      */
@@ -25,6 +26,7 @@ public class Transform implements Component {
 
     /**
      * Translates the current position with the vector of components x and y.
+     *
      * @param x position on x-axis
      * @param y position on y-axis
      */
@@ -42,6 +44,8 @@ public class Transform implements Component {
     }
 
     /**
+     * This method returns the current ground level.
+     *
      * @return the current ground level
      */
     public double getGroundLevel() {
@@ -50,6 +54,7 @@ public class Transform implements Component {
 
     /**
      * Changes the ground level.
+     *
      * @param yGround the new value of the ground
      */
     public void setGroundLevel(final double yGround) {
@@ -57,6 +62,9 @@ public class Transform implements Component {
     }
 
     /**
+     * This method returns true if the entity is under the ground
+     * level, false otherwise.
+     *
      * @return true is the entity is under the ground level
      */
     public boolean isUnderGroundLevel() {
@@ -72,6 +80,8 @@ public class Transform implements Component {
     }
 
     /**
+     * This method returns a copy of the current position of the entity.
+     *
      * @return a copy of the current position of the entity
      */
     public Point2D getPosition() {
@@ -80,6 +90,7 @@ public class Transform implements Component {
 
     /**
      * Creates a copy of the Transform given as input.
+     *
      * @param input the Transform to copy
      * @return a Transform which is the exact copy of the passed one
      */
@@ -92,6 +103,7 @@ public class Transform implements Component {
 
     /**
      * Moves the entity to a new position.
+     *
      * @param x new position on x-axis
      * @param y new position on y-axis
      */

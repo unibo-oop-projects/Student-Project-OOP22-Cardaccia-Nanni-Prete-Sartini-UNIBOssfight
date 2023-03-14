@@ -12,6 +12,7 @@ public interface Weapon extends Component {
 
     /**
      * Renders the weapon.
+     *
      * @param direction the direction of the weapon
      * @param rotation the rotation of the weapon
      * @return the Node that will be given as input to the Scene,
@@ -21,6 +22,7 @@ public interface Weapon extends Component {
 
     /**
      * Used to create new bullets shot by the weapon towards a certain target.
+     *
      * @param target the target at which the weapon is pointing
      * @return the bullet fired
      */

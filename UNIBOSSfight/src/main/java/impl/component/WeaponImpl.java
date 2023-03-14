@@ -21,6 +21,7 @@ public class WeaponImpl implements Weapon {
 
     /**
      * Creates a new instance of the class Weapon.
+     *
      * @param userPos the position of the entity
      *                which the weapon will be given to
      * @param damage the damage that the weapon can cause

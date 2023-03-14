@@ -16,6 +16,7 @@ public abstract class Renderer implements Component {
 
   /**
    * Creates a new instance of the class Renderer.
+   *
    * @param height the height of the entity
    * @param width the width of the entity
    * @param color the color which will be given to the rendered object
@@ -27,6 +28,8 @@ public abstract class Renderer implements Component {
   }
 
   /**
+   * This method returns the height of the rendered object.
+   *
    * @return the height of the rendered object
    */
   public int getHeight() {
@@ -34,6 +37,8 @@ public abstract class Renderer implements Component {
   }
 
   /**
+   * This method returns the width of the rendered object.
+   *
    * @return the width of the rendered object
    */
   public int getWidth() {
@@ -42,6 +47,7 @@ public abstract class Renderer implements Component {
 
   /**
    * The method used to render the entity.
+   *
    * @param position the position of the entity
    * @param direction the direction of the entity
    * @param rotation the rotation of the entity
