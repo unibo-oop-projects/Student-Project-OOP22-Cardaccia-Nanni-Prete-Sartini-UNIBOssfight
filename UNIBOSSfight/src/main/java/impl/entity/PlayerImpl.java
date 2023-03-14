@@ -104,7 +104,7 @@ public class PlayerImpl extends AbstractEntity {
         final var collider = new ColliderImpl();
         collider.addBehaviour(Collider.Entities.TMPENTITY, e -> {
             this.ySpeed = -20;
-            this.xSpeed = -20;
+            this.xSpeed = -20 * this.getDirection();
             //getTransform().move(getIntersection(e), 0);
         });
 
@@ -149,7 +149,8 @@ public class PlayerImpl extends AbstractEntity {
     }
 
     private void removeBullets() {
-        this.bullets.removeIf(e -> !e.isDisplayed(this.getPosition()));
+        this.bullets.removeIf(e -> !e.isDisplayed(this.getPosition())
+                || e.getHealth().isDead());
     }
 
     public List<Node> getBulletsNodes() {
