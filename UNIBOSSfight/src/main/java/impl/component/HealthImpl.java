@@ -36,4 +36,13 @@ public class HealthImpl implements Health {
     public boolean isDead() {
         return this.hp <= 0;
     }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void destroy() {
+        this.hp = 0;
+    }
 }

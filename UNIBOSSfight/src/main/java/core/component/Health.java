@@ -22,4 +22,9 @@ public interface Health extends Component {
      */
     boolean isDead();
 
+    /**
+     * Sets the health to zero, killing the entity.
+     */
+    void destroy();
+
 }
