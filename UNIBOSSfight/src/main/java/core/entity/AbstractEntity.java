@@ -3,6 +3,7 @@ package core.entity;
 import core.component.Collider;
 import core.component.Health;
 import core.component.Hitbox;
+import impl.component.HitboxImpl;
 import core.component.Renderer;
 import core.component.Transform;
 import impl.component.HealthImpl;
@@ -44,7 +45,7 @@ public abstract class AbstractEntity implements Entity {
         this.height = height;
         this.width = width;
         this.direction = 1;
-        this.hitbox = new Hitbox(width / 2.0, height, this.position.getPosition());
+        this.hitbox = new HitboxImpl(width / 2.0, height, this.position.getPosition());
 
         // initCollider();
         this.collider = Optional.empty();
