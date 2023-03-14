@@ -5,6 +5,7 @@ import core.component.Health;
 import core.component.Hitbox;
 import core.component.Renderer;
 import core.component.Transform;
+import impl.component.HealthImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import util.Window;
@@ -39,7 +40,7 @@ public abstract class AbstractEntity implements Entity {
     ) {
         this.position = Transform.copyOf(position);
         this.renderer = renderer;
-        this.health = new Health();
+        this.health = new HealthImpl();
         this.height = height;
         this.width = width;
         this.direction = 1;

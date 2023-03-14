@@ -3,37 +3,23 @@ package core.component;
 /**
  * This class models the health component which determines if an entity is dead or not.
  */
-public class Health implements Component {
-
-    private int hp;
-
-    /**
-     * Creates a new instance of health.
-     */
-    public Health() {
-        this.hp = 100;
-    }
+public interface Health extends Component {
 
     /**
      * @return the current health value
      */
-    public int getValue() {
-        return this.hp;
-    }
+    int getValue();
 
     /**
      * Subtracts the specified damage from the health.
      * @param damage the damage received
      */
-    public void damage(final int damage) {
-        this.hp -= damage;
-    }
+    void damage(int damage);
 
     /**
      * Determines if the entity is dead.
      * @return if the entity is dead or not
      */
-    public boolean isDead() {
-        return this.hp <= 0;
-    }
+    boolean isDead();
+
 }
