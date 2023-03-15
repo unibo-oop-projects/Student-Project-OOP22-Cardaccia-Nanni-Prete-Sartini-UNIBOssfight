@@ -76,7 +76,7 @@ public interface Collider extends Component {
          * @return true if the type is the same, false if it's not
          */
         public <T extends Entity> boolean equals(final T e) {
-            return e.getClass().equals(type);
+            return type.isInstance(e);
         }
     }
 
