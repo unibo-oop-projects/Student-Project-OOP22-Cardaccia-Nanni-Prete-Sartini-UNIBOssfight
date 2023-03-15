@@ -13,8 +13,6 @@ import javafx.scene.paint.Color;
  */
 public class EnemyImpl extends Enemy {
 
-    private static final int COLLISION_DAMAGE = 5;
-
     /**
      * Creates a new instance of the class EnemyImpl.
      *
@@ -35,6 +33,7 @@ public class EnemyImpl extends Enemy {
     @Override
     public void update(final Inputs input) {
         getTransform().move(getDirection(), 0);
+        getTransform().resetGroundLevel();
         getHitbox().update(getPosition());
     }
 
