@@ -51,7 +51,6 @@ public class EnemyImpl extends Enemy {
         collider.addBehaviour(Collider.Entities.BULLET, e -> {
             final Bullet b = (Bullet) e;
             getHealth().damage(b.getDamage());
-            b.getHealth().damage(b.getHealth().getValue());
         });
 
         setCollider(collider);
