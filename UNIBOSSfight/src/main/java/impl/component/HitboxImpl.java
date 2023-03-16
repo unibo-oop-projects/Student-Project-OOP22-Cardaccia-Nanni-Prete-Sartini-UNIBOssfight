@@ -64,6 +64,7 @@ public class HitboxImpl implements Hitbox {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean collide(final Hitbox target) {
         //X an Y axis collisions
         return this.rightSide >= target.getLeftSide()
@@ -75,6 +76,7 @@ public class HitboxImpl implements Hitbox {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void update(final Point2D newPos) {
         this.position = newPos;
 

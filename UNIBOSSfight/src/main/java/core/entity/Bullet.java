@@ -56,6 +56,9 @@ public abstract class Bullet extends AbstractEntity {
         this.getHitbox().update(this.getPosition());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initCollider() {
         final var collider = new ColliderImpl();

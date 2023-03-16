@@ -19,6 +19,7 @@ public class HealthImpl implements Health {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int getValue() {
         return this.hp;
     }
@@ -26,6 +27,7 @@ public class HealthImpl implements Health {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void damage(final int damage) {
         this.hp -= damage;
     }
@@ -33,6 +35,7 @@ public class HealthImpl implements Health {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isDead() {
         return this.hp <= 0;
     }
