@@ -23,7 +23,7 @@ public abstract class AbstractEntity implements Entity {
     private final Hitbox hitbox;
     private final Renderer renderer;
     private final Health health;
-    private Optional<Collider> collider;
+    private Collider collider;
     private int direction;
 
     /**
@@ -47,9 +47,7 @@ public abstract class AbstractEntity implements Entity {
         this.width = width;
         this.direction = 1;
         this.hitbox = new HitboxImpl(width / 2.0, height, this.position.getPosition());
-
-        // initCollider();
-        this.collider = Optional.empty();
+        this.collider = null;
     }
 
     /**
@@ -127,7 +125,7 @@ public abstract class AbstractEntity implements Entity {
      */
     @Override
     public Optional<Collider> getCollider() {
-        return this.collider;
+        return Optional.ofNullable(this.collider);
     }
 
     /**
@@ -136,9 +134,8 @@ public abstract class AbstractEntity implements Entity {
      * @param collider the collider of the entity
      */
     protected void setCollider(final Collider collider) {
-        this.collider = Optional.ofNullable(collider);
+        this.collider = collider;
     }
-
 
     /**
      * {@inheritDoc}
@@ -198,7 +195,7 @@ public abstract class AbstractEntity implements Entity {
      */
     @Override
     public void initCollider() {
-        this.collider = Optional.empty();
+        this.collider = null;
     }
 
     /**
@@ -206,7 +203,7 @@ public abstract class AbstractEntity implements Entity {
      */
     @Override
     public void manageCollision(final Entity e) {
-        this.collider.ifPresent(x -> x.manageCollision(e));
+        this.getCollider().ifPresent(x -> x.manageCollision(e));
     }
 
     /**
