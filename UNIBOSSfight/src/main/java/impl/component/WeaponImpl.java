@@ -5,6 +5,7 @@ import core.component.Transform;
 import core.component.Weapon;
 import core.entity.Bullet;
 import impl.entity.BulletImpl;
+import impl.factory.BulletFactory;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -18,6 +19,7 @@ public class WeaponImpl implements Weapon {
     private final int damage;
     private final Transform userPos;
     private final Renderer renderer;
+    private final BulletFactory bulletFactory = new BulletFactory();
 
     /**
      * Creates a new instance of the class Weapon.
@@ -48,13 +50,9 @@ public class WeaponImpl implements Weapon {
      */
     @Override
     public Bullet fire(final Point2D target) {
-
-        Transform shootingPosition = Transform.copyOf(this.userPos);
-        shootingPosition.move(0, -125);
-
-        return new BulletImpl(shootingPosition, 20, 20,
-                new SpriteRenderer(20, 20, Color.BLACK, "testImage2.png"),
-                1, target, 20);
+        Bullet tempBullet = this.bulletFactory.getPlayerBullet(this.userPos, target);
+        System.out.println(tempBullet.getClass());
+        return tempBullet;
     }
 }
 

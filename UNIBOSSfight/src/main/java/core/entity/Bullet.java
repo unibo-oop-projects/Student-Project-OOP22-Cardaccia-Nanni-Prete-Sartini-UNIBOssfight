@@ -1,7 +1,9 @@
 package core.entity;
 
+import core.component.Collider;
 import core.component.Renderer;
 import core.component.Transform;
+import impl.component.ColliderImpl;
 import javafx.geometry.Point2D;
 import util.Window;
 
@@ -54,4 +56,13 @@ public abstract class Bullet extends AbstractEntity {
         this.getHitbox().update(this.getPosition());
     }
 
+    @Override
+    public void initCollider() {
+        final var collider = new ColliderImpl();
+        collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
+            this.getHealth().destroy();
+        });
+
+        setCollider(collider);
+    }
 }
