@@ -3,8 +3,10 @@ package core.entity;
 import core.component.Collider;
 import core.component.Health;
 import core.component.Hitbox;
+import impl.component.HitboxImpl;
 import core.component.Renderer;
 import core.component.Transform;
+import impl.component.HealthImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import util.Window;
@@ -21,11 +23,12 @@ public abstract class AbstractEntity implements Entity {
     private final Hitbox hitbox;
     private final Renderer renderer;
     private final Health health;
-    private Optional<Collider> collider;
+    private Collider collider;
     private int direction;
 
     /**
      * Creates a new instance of the abstract class AbstractEntity.
+     *
      * @param position the position of the entity
      * @param height the height of the entity
      * @param width the width of the entity
@@ -39,14 +42,12 @@ public abstract class AbstractEntity implements Entity {
     ) {
         this.position = Transform.copyOf(position);
         this.renderer = renderer;
-        this.health = new Health();
+        this.health = new HealthImpl();
         this.height = height;
         this.width = width;
         this.direction = 1;
-        this.hitbox = new Hitbox(width / 2.0, height, this.position.getPosition());
-
-        // initCollider();
-        this.collider = Optional.empty();
+        this.hitbox = new HitboxImpl(width / 2.0, height, this.position.getPosition());
+        this.collider = null;
     }
 
     /**
@@ -58,6 +59,8 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
+     * This method returns the Renderer of the entity.
+     *
      * @return the Renderer of the entity
      */
     protected Renderer getRenderer() {
@@ -65,6 +68,8 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
+     * This method returns the Transform of the entity.
+     *
      * @return the Transform of the entity
      */
     protected Transform getTransform() {
@@ -80,6 +85,8 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
+     * This method returns the direction of the entity.
+     *
      * @return the direction of the entity
      */
     protected int getDirection() {
@@ -88,6 +95,7 @@ public abstract class AbstractEntity implements Entity {
 
     /**
      * Assigns to the entity its direction.
+     *
      * @param direction the direction of the entity
      */
     protected void setDirection(final int direction) {
@@ -95,6 +103,8 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
+     * This method returns the damage inflicted to the entity.
+     *
      * @return the inflicted damage to the entity
      */
     public int getDamage() {
@@ -103,6 +113,7 @@ public abstract class AbstractEntity implements Entity {
 
     /**
      * Assigns to the entity the damage that it inflicts.
+     *
      * @param damage harm inflicted
      */
     protected void setDamage(final int damage) {
@@ -114,17 +125,17 @@ public abstract class AbstractEntity implements Entity {
      */
     @Override
     public Optional<Collider> getCollider() {
-        return this.collider;
+        return Optional.ofNullable(this.collider);
     }
 
     /**
      * Assigns to the entity its collider.
+     *
      * @param collider the collider of the entity
      */
     protected void setCollider(final Collider collider) {
-        this.collider = Optional.ofNullable(collider);
+        this.collider = collider;
     }
-
 
     /**
      * {@inheritDoc}
@@ -184,7 +195,7 @@ public abstract class AbstractEntity implements Entity {
      */
     @Override
     public void initCollider() {
-        this.collider = Optional.empty();
+        this.collider = null;
     }
 
     /**
@@ -192,7 +203,7 @@ public abstract class AbstractEntity implements Entity {
      */
     @Override
     public void manageCollision(final Entity e) {
-        this.collider.ifPresent(x -> x.manageCollision(e));
+        this.getCollider().ifPresent(x -> x.manageCollision(e));
     }
 
     /**

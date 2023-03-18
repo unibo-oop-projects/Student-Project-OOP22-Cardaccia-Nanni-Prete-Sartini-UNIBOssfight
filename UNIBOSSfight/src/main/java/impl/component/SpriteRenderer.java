@@ -22,6 +22,7 @@ public class SpriteRenderer extends Renderer {
 
     /**
      * Creates a new instance of the class SpriteRenderer.
+     *
      * @param height the height of the entity
      * @param width the width of the entity
      * @param color the color which will be given to the sprite
@@ -61,6 +62,7 @@ public class SpriteRenderer extends Renderer {
     /**
      * The method that actually returns the image representing
      * the sprite of the entity.
+     *
      * @param position the position of the entity
      * @param direction the direction of the entity
      * @param rotation the rotation of the entity

@@ -13,6 +13,7 @@ public abstract class Boss extends Enemy {
 
     /**
      * Creates a new instance of the class Boss.
+     *
      * @param position the position of the boss
      * @param height the height of the boss
      * @param width the width of the boss
@@ -25,6 +26,8 @@ public abstract class Boss extends Enemy {
     }
 
     /**
+     * This method returns the weapon of the boss.
+     *
      * @return the weapon of the boss
      */
     public Weapon getWeapon() {

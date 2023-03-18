@@ -13,10 +13,9 @@ import javafx.scene.paint.Color;
  */
 public class EnemyImpl extends Enemy {
 
-    private static final int COLLISION_DAMAGE = 5;
-
     /**
      * Creates a new instance of the class EnemyImpl.
+     *
      * @param position the position of the enemy
      * @param height the height of the enemy
      * @param width the width of the enemy
@@ -34,6 +33,7 @@ public class EnemyImpl extends Enemy {
     @Override
     public void update(final Inputs input) {
         getTransform().move(getDirection(), 0);
+        getTransform().resetGroundLevel();
         getHitbox().update(getPosition());
     }
 
@@ -51,7 +51,6 @@ public class EnemyImpl extends Enemy {
         collider.addBehaviour(Collider.Entities.BULLET, e -> {
             final Bullet b = (Bullet) e;
             getHealth().damage(b.getDamage());
-            b.getHealth().damage(b.getHealth().getValue());
         });
 
         setCollider(collider);

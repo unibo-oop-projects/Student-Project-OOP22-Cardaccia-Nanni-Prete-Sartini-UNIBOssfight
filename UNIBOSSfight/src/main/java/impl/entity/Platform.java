@@ -14,7 +14,7 @@ public class Platform extends AbstractEntity {
     //platform will eventually move
 
     /**
-     * The constructor of the class which creates a new instance of Platform.
+     * Creates a new instance of the class Platform.
      * @param position the position of the platform
      * @param height the height of the platform
      * @param width the width of the platform

@@ -1,56 +1,40 @@
 package impl.entity;
 
+import core.component.Health;
 import core.component.Transform;
 import core.component.Weapon;
 import core.entity.Boss;
-import javafx.geometry.Point2D;
-import javafx.scene.canvas.GraphicsContext;
+import impl.component.HealthImpl;
 
 public class BossImpl extends Boss {
 
-    //Variables
-    private final Transform position;
-    private final int health;
-    private final Weapon weapon;
+    private Weapon weapon;
+    private Health health;
 
     public BossImpl(final Transform startingPos, final int height, final int width,
                     final int health, final Weapon weapon, final String filename) {
         super(startingPos, height, width, filename);
-        this.position = Transform.copyOf(startingPos);
-        this.health = health;
-        this.weapon = weapon;
-    }
 
-    public void attack() {
-        //TODO
+        this.weapon = weapon;
+        this.health = new HealthImpl();
+
+        //TODO health
     }
 
     public boolean isDead() {
-        //TODO
-        return  this.health <= 0; //HP below 0
+        return  this.health.isDead();
     }
 
     @Override
-    public Weapon getWeapon() {
-        return this.weapon;
-    }
-
-    public boolean isDisplayed() {
-        return false; //TODO
-    }
-
-    public void render(final GraphicsContext gc) {
-        //TODO
-    }
+    public Weapon getWeapon() { return this.weapon; }
 
     @Override
     public void update(final Inputs input) {
-        //TODO
-    }
 
-    @Override
-    public Point2D getPosition() {
-        return this.position.getPosition();
+        getTransform().move(getDirection(), 0);
+        getHitbox().update(getTransform().getPosition());
+        //TODO
+
     }
 
 }

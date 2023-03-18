@@ -16,6 +16,7 @@ public class Coin extends AbstractEntity {
 
     /**
      * Creates a new instance of the class Coin.
+     *
      * @param position the position of the coin
      * @param height the height of the coin
      * @param width the width of the coin
@@ -32,6 +33,7 @@ public class Coin extends AbstractEntity {
     /**
      * This method is used to collect the coin and get its value,
      * that will be added to the player's score.
+     *
      * @return the value of the coin
      */
     public int collect() {

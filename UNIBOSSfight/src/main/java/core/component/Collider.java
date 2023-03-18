@@ -76,18 +76,20 @@ public interface Collider extends Component {
          * @return true if the type is the same, false if it's not
          */
         public <T extends Entity> boolean equals(final T e) {
-            return e.getClass().equals(type);
+            return type.isInstance(e);
         }
     }
 
     /**
      * Manages the collision executing the procedure associated to the colliding entity.
+     *
      * @param e entity with which the caller collides
      */
     void manageCollision(Entity e);
 
     /**
      * Associates a behaviour to a specific entity.
+     *
      * @param key enum value of the entity
      * @param value behaviour
      */

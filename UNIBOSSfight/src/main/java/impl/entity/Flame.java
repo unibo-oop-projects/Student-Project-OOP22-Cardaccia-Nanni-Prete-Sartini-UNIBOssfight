@@ -12,6 +12,8 @@ import javafx.scene.paint.Color;
 public class Flame extends AbstractEntity {
 
     /**
+     * Creates a new instance of the class Flame.
+     *
      * @param position the position of the flame
      * @param height the height of the flame
      * @param width the width of the flame
