@@ -115,7 +115,6 @@ public class Prova extends Application {
 
         try {
             String json = readFile("output.json", StandardCharsets.UTF_8);
-            System.out.println("\n\n\n\nciaone");
             GsonBuilder gsonBuilder = new GsonBuilder();
 
             JsonDeserializer<PlayerImpl> deserializer = new PlayerImplDeserializer(); // implementation detail
@@ -129,7 +128,6 @@ public class Prova extends Application {
 
         tl.play();
         this.currentLevel.init();
-        System.out.println("questo livello ha questo numero di entità " + this.currentLevel.getEntities().size());
     }
 
     private void inputPoll() {
@@ -257,7 +255,7 @@ public class Prova extends Application {
             FileWriter file = new FileWriter("output.json");
             file.write(jsonString);
             file.close();
-            System.out.println(jsonString);} catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         super.stop();
@@ -280,8 +278,6 @@ public class Prova extends Application {
 
             Gson customGson = gsonBuilder.create();
             LevelImpl customObject = customGson.fromJson(json, LevelImpl.class);
-            System.out.println(customObject.getPlayer().getPosition());
-            System.out.println("entities " + customObject.getPlayer().getBullets());
 
             return customObject;
 

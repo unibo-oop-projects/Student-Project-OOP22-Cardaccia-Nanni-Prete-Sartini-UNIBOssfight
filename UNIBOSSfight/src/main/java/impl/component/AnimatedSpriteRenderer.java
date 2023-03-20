@@ -50,7 +50,6 @@ public class AnimatedSpriteRenderer extends SpriteRenderer{
                 */1)
                         .limit(this.animationLength)
                         .forEach(e -> {
-                            System.out.println("loaded img "+e);
                             try {
                                 this.sprites.add(new Image(new FileInputStream("assets/" + filename + "/" + filename + e + ".png"),
                                         getWidth(), getHeight(),
