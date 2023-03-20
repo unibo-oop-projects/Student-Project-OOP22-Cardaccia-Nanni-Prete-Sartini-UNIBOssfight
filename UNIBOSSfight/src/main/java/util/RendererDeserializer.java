@@ -12,10 +12,6 @@ public class RendererDeserializer implements JsonDeserializer<Renderer> {
     public Renderer deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
 
-        System.out.println("\n\n\n\nRenderer");
-        System.out.println(jsonObject);
-
-
         return new SpriteRenderer(
                 jsonObject.get("height").getAsInt(),
                 jsonObject.get("width").getAsInt(),

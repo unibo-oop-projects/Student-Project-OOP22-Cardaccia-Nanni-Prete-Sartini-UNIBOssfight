@@ -183,7 +183,6 @@ public abstract class AbstractEntity implements Entity {
      */
     @Override
     public boolean isDisplayed(final Point2D playerPosition) {
-        //System.out.println(this.getClass() + " " + this.getPosition().getY() + " " + Window.getHeight());
         return Math.abs(this.getPosition().subtract(playerPosition).getX()) < Window.getWidth() / 2
                 && this.getPosition().getY() <= Window.getHeight()
                 && this.getPosition().getY() > 0;

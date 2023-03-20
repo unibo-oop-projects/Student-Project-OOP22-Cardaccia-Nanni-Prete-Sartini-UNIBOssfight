@@ -12,10 +12,6 @@ public class PlayerImplDeserializer implements JsonDeserializer<PlayerImpl> {
     public PlayerImpl deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
 
-        System.out.println("\n\n\n\nPlayer");
-        System.out.println(jsonObject.getAsJsonObject("position").get("position"));
-
-
         return new PlayerImpl(
                         new Gson().fromJson(jsonObject.get("position"), Transform.class),
                 250,

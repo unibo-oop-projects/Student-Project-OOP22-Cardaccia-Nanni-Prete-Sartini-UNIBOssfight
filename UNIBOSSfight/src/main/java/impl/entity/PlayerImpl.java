@@ -161,6 +161,4 @@ public class PlayerImpl extends AbstractEntity {
     public double getRotation() {
         return this.rotation;
     }
-
-
 }

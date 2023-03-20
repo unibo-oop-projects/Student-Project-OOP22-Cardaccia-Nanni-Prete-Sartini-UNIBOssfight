@@ -16,10 +16,6 @@ public class AbstractEntityDeserializer implements JsonDeserializer<AbstractEnti
     public AbstractEntity deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
 
-        System.out.println("\n\n\n\nAbstract");
-        System.out.println(jsonObject);
-
-
         return new TmpEntityImpl(
                 new Gson().fromJson(jsonObject.get("position"), Transform.class),
                 jsonObject.get("height").getAsInt(),
