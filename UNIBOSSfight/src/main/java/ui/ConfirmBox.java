@@ -14,7 +14,9 @@ public final class ConfirmBox {
     private static final int HEIGHT = 200;
     private static boolean answer;
 
-    private ConfirmBox() {}
+    private ConfirmBox() {
+
+    }
 
     public static boolean display(final String message) {
         final Stage window = new Stage();
@@ -31,12 +33,12 @@ public final class ConfirmBox {
 
         yesButton.setOnAction(e -> {
             answer = true;
-            System.exit(0);
+            window.close();
         });
 
         noButton.setOnAction(e -> {
             answer = false;
-            window.close();
+            System.exit(0);
         });
 
         final VBox layout = new VBox(10);

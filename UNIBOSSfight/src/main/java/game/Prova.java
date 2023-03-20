@@ -24,6 +24,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import ui.ConfirmBox;
 import util.AbstractEntityDeserializer;
 import util.PlayerImplDeserializer;
 import util.RendererDeserializer;
@@ -62,6 +63,11 @@ public class Prova extends Application {
     public void start(final Stage stage) {
 
         stage.setTitle("UNIBOssfight");
+
+        stage.setOnCloseRequest(e -> {
+            e.consume();
+            saveState();
+        });
 
         final Screen screen = Screen.getPrimary();
         final Rectangle2D bounds = screen.getVisualBounds();
@@ -245,7 +251,6 @@ public class Prova extends Application {
 
     @Override
     public void stop() throws Exception {
-        if(false)
             try {
                 String jsonString = new GsonBuilder()
                         //.excludeFieldsWithoutExposeAnnotation()
@@ -288,4 +293,15 @@ public class Prova extends Application {
         }
     }
 
+    private void saveState() {
+        boolean answer = ConfirmBox.display("Do you want to save the state?");
+        if (answer) {
+            try {
+                this.stop();
+                System.exit(0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
