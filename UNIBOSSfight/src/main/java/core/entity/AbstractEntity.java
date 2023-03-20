@@ -16,6 +16,8 @@ import java.util.Optional;
  * This class is an implementation of Entity.
  */
 public abstract class AbstractEntity implements Entity {
+
+    private final String className;
     private final int height;
     private final int width;
     private transient int damage;
@@ -39,6 +41,7 @@ public abstract class AbstractEntity implements Entity {
             final int width,
             final Renderer renderer
     ) {
+        this.className = this.getClass().getName();
         this.position = Transform.copyOf(position);
         this.renderer = renderer;
         this.health = new HealthImpl();
@@ -186,6 +189,11 @@ public abstract class AbstractEntity implements Entity {
         return Math.abs(this.getPosition().subtract(playerPosition).getX()) < Window.getWidth() / 2
                 && this.getPosition().getY() <= Window.getHeight()
                 && this.getPosition().getY() > 0;
+    }
+
+    @Override
+    public boolean isUpdated(Point2D position) {
+        return Math.abs(this.getPosition().subtract(position).getX()) < Window.getWidth();
     }
 
     /**
