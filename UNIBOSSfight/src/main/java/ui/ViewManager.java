@@ -30,6 +30,12 @@ public class ViewManager {
         createButtons();
         setBackground();
         createLogo();
+
+        CostumizedSubScene subScene = new CostumizedSubScene();
+
+        subScene.setLayoutX(5);
+        subScene.setLayoutY(5);
+        mainPane.getChildren().add(subScene);
     }
 
     public Stage getMainStage() {
