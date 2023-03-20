@@ -10,7 +10,8 @@ import util.Window;
 
 public class TmpEntityImpl extends AbstractEntity {
 
-    private double ySpeed = 0;
+    private final String filename;
+    private transient double ySpeed = 0;
 
     public TmpEntityImpl(final Transform position, final Integer height,
                          final Integer width, final String filename) {
@@ -21,6 +22,7 @@ public class TmpEntityImpl extends AbstractEntity {
             }
         });
 
+        this.filename = filename;
         //TODO implement health
     }
 
@@ -47,7 +49,6 @@ public class TmpEntityImpl extends AbstractEntity {
         //this.position.move(0, ySpeed);
 
         this.getTransform().resetGroundLevel();
-        System.out.println(this.getPosition());
         getHitbox().update(this.getPosition());
     }
 

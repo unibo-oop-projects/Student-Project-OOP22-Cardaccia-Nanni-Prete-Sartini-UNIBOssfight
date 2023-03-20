@@ -13,19 +13,13 @@ import java.util.stream.Stream;
 public class LevelImpl implements Level {
 
     private final List<Entity> entities;
-    private final PlayerImpl player;
-    private int count = 0;
-    private boolean goLeft = true;
+    private PlayerImpl player;
+    private transient int count = 0;
+    private transient boolean goLeft = true;
 
     public LevelImpl() {
 
         this.entities = new ArrayList<>();
-        this.player = new PlayerImpl(
-                new Transform(new Point2D(0, 300), 0),
-                250,
-                250,
-                "guido"
-        );
     }
 
     public void init() {

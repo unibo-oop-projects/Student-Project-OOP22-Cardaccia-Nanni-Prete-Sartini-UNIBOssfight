@@ -11,7 +11,7 @@ public class Transform implements Component {
 
     private Point2D position;
     private final float rotation;
-    private double yGround = Window.getHeight();
+    private transient double yGround = Window.getHeight();
 
     /**
      * Creates a new instance of the class Transform.

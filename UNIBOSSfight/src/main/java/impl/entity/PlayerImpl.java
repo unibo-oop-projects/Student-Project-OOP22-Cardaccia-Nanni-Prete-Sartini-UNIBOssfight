@@ -1,13 +1,13 @@
 package impl.entity;
 
 import core.component.Collider;
-import core.component.Hitbox;
+import core.component.Transform;
 import core.component.Weapon;
+import core.entity.AbstractEntity;
 import core.entity.Bullet;
 import core.entity.Entity;
+import impl.component.AnimatedSpriteRenderer;
 import impl.component.ColliderImpl;
-import core.component.Transform;
-import core.entity.AbstractEntity;
 import impl.component.SpriteRenderer;
 import impl.component.WeaponImpl;
 import javafx.geometry.Point2D;
@@ -15,23 +15,24 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import util.Acceleration;
 import util.Window;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerImpl extends AbstractEntity {
 
-    private double ySpeed = 0;
-    private final Weapon weapon = new WeaponImpl(getTransform(), 10,
+    private transient double ySpeed = 0;
+    private transient final Weapon weapon = new WeaponImpl(getTransform(), 10,
             new SpriteRenderer(150, 180, Color.RED, "gnu.png"));
-    private double rotation;
-    private final List<Bullet> bullets = new ArrayList<>();
-    private double xSpeed = 0;
+    private transient double rotation;
+    private transient final List<Bullet> bullets = new ArrayList<>();
+    private transient double xSpeed = 0;
 
 
     public PlayerImpl(final Transform position, final Integer height,
                       final Integer width, final String filename) {
         super(position, height, width,
-                new SpriteRenderer(height, width, Color.RED, filename));
+                new AnimatedSpriteRenderer(height, width, Color.RED, filename));
     }
     @Override
     public boolean isDisplayed(final Point2D position) {
@@ -83,13 +84,10 @@ public class PlayerImpl extends AbstractEntity {
                 this.xSpeed = Acceleration.accelerate(this.xSpeed, 0, 0.5);
                 this.ySpeed = this.isJumping()
                         ? Acceleration.accelerate(this.ySpeed, 20, 1) : 0;
-                //System.out.println(this.bullets.stream().filter(e -> e.isDisplayed(this.getPosition())).count());
                 this.bullets.forEach(e -> e.update(Inputs.EMPTY));
                 this.removeBullets();
             }
         }
-
-        //this.position.move(0, ySpeed);
 
         getTransform().resetGroundLevel();
         getHitbox().update(this.getPosition());
@@ -105,7 +103,6 @@ public class PlayerImpl extends AbstractEntity {
         collider.addBehaviour(Collider.Entities.TMPENTITY, e -> {
             this.ySpeed = -20;
             this.xSpeed = -20 * this.getDirection();
-            //getTransform().move(getIntersection(e), 0);
         });
 
         collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
@@ -164,4 +161,6 @@ public class PlayerImpl extends AbstractEntity {
     public double getRotation() {
         return this.rotation;
     }
+
+
 }

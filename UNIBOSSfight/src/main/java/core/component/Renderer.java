@@ -10,8 +10,8 @@ import javafx.scene.shape.Rectangle;
  */
 public abstract class Renderer implements Component {
 
-  private final int height;
-  private final int width;
+  private transient final int height;
+  private transient final int width;
   private final Color color;
 
   /**

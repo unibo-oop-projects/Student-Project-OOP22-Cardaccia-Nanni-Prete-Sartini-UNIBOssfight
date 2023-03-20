@@ -18,17 +18,16 @@ import java.util.Optional;
 public abstract class AbstractEntity implements Entity {
     private final int height;
     private final int width;
-    private int damage;
+    private transient int damage;
     private final Transform position;
-    private final Hitbox hitbox;
-    private final Renderer renderer;
+    private transient final Hitbox hitbox;
+    private  final Renderer renderer;
     private final Health health;
-    private Collider collider;
-    private int direction;
+    private transient Collider collider;
+    private transient int direction;
 
     /**
      * Creates a new instance of the abstract class AbstractEntity.
-     *
      * @param position the position of the entity
      * @param height the height of the entity
      * @param width the width of the entity
