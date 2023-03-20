@@ -1,0 +1,44 @@
+{
+  "entities": [
+    {
+      "filename": "guido/guido1.png",
+      "height": 50,
+      "width": 50,
+      "position": {
+        "position": {
+          "x": 2575.0,
+          "y": 790.0,
+          "hash": 0
+        },
+        "rotation": 0.0
+      },
+      "health": {
+        "hp": 100
+      }
+    }
+  ],
+  "player": {
+    "height": 250,
+    "width": 250,
+    "position": {
+      "position": {
+        "x": 3150.5,
+        "y": 790.0,
+        "hash": 0
+      },
+      "rotation": 0.0
+    },
+    "renderer": {
+      "filename": "guido",
+      "color": {
+        "red": 1.0,
+        "green": 0.0,
+        "blue": 0.0,
+        "opacity": 1.0
+      }
+    },
+    "health": {
+      "hp": 100
+    }
+  }
+}
