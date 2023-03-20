@@ -1,7 +1,6 @@
 {
   "entities": [
     {
-      "filename": "guido/guido1.png",
       "className": "impl.entity.EnemyImpl",
       "height": 50,
       "width": 50,
@@ -13,18 +12,30 @@
         },
         "rotation": 0.0
       },
+      "renderer": {
+        "filename": "guido/guido1.png",
+        "color": {
+          "red": 0,
+          "green": 0,
+          "blue": 1.0,
+          "opacity": 1.0
+        }
+      },
       "health": {
         "hp": 100
       }
     }
   ],
   "player": {
+    "weaponFactory": {
+      "bulletFactory": {}
+    },
     "className": "impl.entity.PlayerImpl",
     "height": 250,
     "width": 250,
     "position": {
       "position": {
-        "x": 2386.5,
+        "x": 0,
         "y": 790.0,
         "hash": 0
       },

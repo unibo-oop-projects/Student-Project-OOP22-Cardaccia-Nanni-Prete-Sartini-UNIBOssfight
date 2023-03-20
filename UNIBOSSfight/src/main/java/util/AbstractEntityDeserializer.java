@@ -29,7 +29,7 @@ public class AbstractEntityDeserializer implements JsonDeserializer<AbstractEnti
                     new Gson().fromJson(jsonObject.get("position"), Transform.class),
                     jsonObject.get("height").getAsInt(),
                     jsonObject.get("width").getAsInt(),
-                    jsonObject.get("filename").getAsString()
+                    jsonObject.getAsJsonObject("renderer").get("filename").getAsString()
             );
 
 
