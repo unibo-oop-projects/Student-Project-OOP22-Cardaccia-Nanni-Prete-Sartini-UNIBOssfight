@@ -32,7 +32,7 @@ public class SpriteRenderer extends Renderer {
         this.filename = filename;
 
         try {
-            this.img = new Image(new FileInputStream("assets/" + filename),
+            this.img = new Image(new FileInputStream("assets/" + this.filename),
                     getWidth(), getHeight(),
                     false,
                     true);
@@ -56,25 +56,25 @@ public class SpriteRenderer extends Renderer {
     public Node render(final Point2D position, final int direction, final int rotation) {
 
         if (this.img != null) {
-            final ImageView iv2 = new ImageView();
+            final ImageView renderedImage = new ImageView();
 
-            iv2.setImage(this.img);
+            renderedImage.setImage(this.img);
 
-            iv2.setFitWidth(getWidth());
-            iv2.setScaleX(direction);
+            renderedImage.setFitWidth(getWidth());
+            renderedImage.setScaleX(direction);
 
-            iv2.setFitHeight(getHeight());
+            renderedImage.setFitHeight(getHeight());
 
-            iv2.setRotate(rotation);
+            renderedImage.setRotate(rotation);
 
-            iv2.setX(position.getX() - getWidth() / 2.0);
-            iv2.setY(position.getY() - getHeight());
+            renderedImage.setX(position.getX() - getWidth() / 2.0);
+            renderedImage.setY(position.getY() - getHeight());
 
-            iv2.setPreserveRatio(false);
-            iv2.setSmooth(true);
-            iv2.setCache(true);
+            renderedImage.setPreserveRatio(false);
+            renderedImage.setSmooth(true);
+            renderedImage.setCache(true);
 
-            return iv2;
+            return renderedImage;
         } else {
             return super.render(position, direction, rotation);
         }

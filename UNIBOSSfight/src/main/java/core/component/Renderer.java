@@ -61,6 +61,7 @@ public abstract class Renderer implements Component {
             height
     );
     rectangle.setFill(this.color);
+    rectangle.setRotate(rotation);
 
     return rectangle;
   }
