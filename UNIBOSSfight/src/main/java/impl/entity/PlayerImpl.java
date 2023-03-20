@@ -10,6 +10,7 @@ import impl.component.AnimatedSpriteRenderer;
 import impl.component.ColliderImpl;
 import impl.component.SpriteRenderer;
 import impl.component.WeaponImpl;
+import impl.factory.WeaponFactory;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -22,8 +23,8 @@ import java.util.List;
 public class PlayerImpl extends AbstractEntity {
 
     private transient double ySpeed = 0;
-    private transient final Weapon weapon = new WeaponImpl(getTransform(), 10,
-            new SpriteRenderer(150, 180, Color.RED, "gnu.png"));
+    private WeaponFactory weaponFactory = new WeaponFactory();
+    private transient final Weapon weapon = weaponFactory.getPlayerWeapon(this.getTransform());
     private transient double rotation;
     private transient final List<Bullet> bullets = new ArrayList<>();
     private transient double xSpeed = 0;

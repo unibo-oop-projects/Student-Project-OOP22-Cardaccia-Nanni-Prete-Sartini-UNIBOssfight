@@ -51,7 +51,6 @@ public class WeaponImpl implements Weapon {
     @Override
     public Bullet fire(final Point2D target) {
         Bullet tempBullet = this.bulletFactory.getPlayerBullet(this.userPos, target);
-        System.out.println(tempBullet.getClass());
         return tempBullet;
     }
 }
