@@ -1,14 +1,8 @@
 package core.component;
 
 import core.entity.Entity;
-import impl.entity.BossImpl;
-import impl.entity.BulletImpl;
-import impl.entity.EnemyImpl;
-import impl.entity.Flame;
-import impl.entity.Platform;
-import impl.entity.PlayerImpl;
-import impl.entity.Spine;
-import impl.entity.TmpEntityImpl;
+import impl.entity.*;
+
 import java.util.function.Consumer;
 
 /**
@@ -46,6 +40,11 @@ public interface Collider extends Component {
          * The platform.
          */
         PLATFORM(Platform.class),
+
+        /**
+         * The wall.
+         */
+        WALL(Wall.class),
 
         /**
          * The flame.
