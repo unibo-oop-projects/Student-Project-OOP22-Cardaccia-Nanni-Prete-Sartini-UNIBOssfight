@@ -245,19 +245,20 @@ public class Prova extends Application {
 
     @Override
     public void stop() throws Exception {
-        try {
-            String jsonString = new GsonBuilder()
-                    //.excludeFieldsWithoutExposeAnnotation()
-                    .setPrettyPrinting()
-                    .create()
-                    .toJson(this.currentLevel);
+        if(false)
+            try {
+                String jsonString = new GsonBuilder()
+                        //.excludeFieldsWithoutExposeAnnotation()
+                        .setPrettyPrinting()
+                        .create()
+                        .toJson(this.currentLevel);
 
-            FileWriter file = new FileWriter("output.json");
-            file.write(jsonString);
-            file.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                FileWriter file = new FileWriter("output.json");
+                file.write(jsonString);
+                file.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         super.stop();
     }
 
