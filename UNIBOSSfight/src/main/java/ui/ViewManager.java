@@ -1,7 +1,9 @@
 package ui;
 
 import javafx.scene.Scene;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class ViewManager {
         mainStage.setScene(mainScene);
         createButtons();
         setBackground();
+        createLogo();
     }
 
     public Stage getMainStage() {
@@ -68,5 +71,14 @@ public class ViewManager {
     private void createExitButton() {
         CostumizedButton exitButton = new CostumizedButton("EXIT");
         addMenuButton(exitButton);
+    }
+
+    private void createLogo() {
+        ImageView logo = new ImageView("UNIBOssfight-1.png");
+        logo.setLayoutX(5);
+        logo.setLayoutY(5);
+        logo.setOnMouseEntered(event -> logo.setEffect(new DropShadow()));
+        logo.setOnMouseExited(event -> logo.setEffect(null));
+        mainPane.getChildren().add(logo);
     }
 }
