@@ -85,6 +85,8 @@ public interface Entity {
      */
     boolean isDisplayed(Point2D position);
 
+    boolean isUpdated(Point2D position);
+
     /**
      * This method is used to render the entity.
      *
