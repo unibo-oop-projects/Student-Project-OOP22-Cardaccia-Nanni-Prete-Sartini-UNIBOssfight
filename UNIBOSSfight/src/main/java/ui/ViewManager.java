@@ -11,15 +11,18 @@ import java.util.List;
 
 public class ViewManager {
 
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 600;
+    private static final int WIDTH = 1024;
+    private static final int HEIGHT = 768;
     private final AnchorPane mainPane;
     private final Scene mainScene;
     private final Stage mainStage;
     private final static int MENU_BUTTONS_START_X = 100;
     private final static int MENU_BUTTONS_START_Y = 150;
     private final List<CostumizedButton> menuButtons;
-
+    private CostumizedSubScene scoreSubScene;
+    private CostumizedSubScene levelChoiceSubScene;
+    private CostumizedSubScene helpSubScene;
+    private CostumizedSubScene exitSubScene;
 
     public ViewManager() {
         menuButtons = new ArrayList<>();
@@ -27,17 +30,22 @@ public class ViewManager {
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         mainStage = new Stage();
         mainStage.setScene(mainScene);
+        createSubScenes();
         createButtons();
         setBackground();
         createLogo();
 
-        CostumizedSubScene subScene = new CostumizedSubScene();
 
-        subScene.setLayoutX(5);
-        subScene.setLayoutY(5);
-        mainPane.getChildren().add(subScene);
     }
 
+    private void createSubScenes() {
+        scoreSubScene = new CostumizedSubScene();
+        levelChoiceSubScene = new CostumizedSubScene();
+        helpSubScene = new CostumizedSubScene();
+        exitSubScene = new CostumizedSubScene();
+
+        mainPane.getChildren().addAll(scoreSubScene, levelChoiceSubScene, helpSubScene, exitSubScene);
+    }
     public Stage getMainStage() {
         return this.mainStage;
     }
@@ -62,6 +70,8 @@ public class ViewManager {
     private void createButtons() {
         createStartButton();
         createScoresButton();
+        createLevelButton();
+        createHelpButton();
         createExitButton();
     }
     private void createStartButton() {
@@ -72,11 +82,25 @@ public class ViewManager {
     private void createScoresButton() {
         CostumizedButton scoreButton = new CostumizedButton("SCORES");
         addMenuButton(scoreButton);
+        scoreButton.setOnAction(event -> scoreSubScene.moveSubScene());
+    }
+
+    private void createLevelButton() {
+        CostumizedButton levelButton = new CostumizedButton("LEVEL");
+        addMenuButton(levelButton);
+        levelButton.setOnAction(event -> levelChoiceSubScene.moveSubScene());
+    }
+
+    private void createHelpButton() {
+        CostumizedButton helpButton = new CostumizedButton("HELP");
+        addMenuButton(helpButton);
+        helpButton.setOnAction(event -> helpSubScene.moveSubScene());
     }
 
     private void createExitButton() {
         CostumizedButton exitButton = new CostumizedButton("EXIT");
         addMenuButton(exitButton);
+        exitButton.setOnAction(event -> exitSubScene.moveSubScene());
     }
 
     private void createLogo() {
