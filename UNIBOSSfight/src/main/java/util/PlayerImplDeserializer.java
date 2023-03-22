@@ -1,9 +1,8 @@
 package util;
 
 import com.google.gson.*;
-import core.component.Transform;
+import impl.component.TransformImpl;
 import impl.entity.PlayerImpl;
-import javafx.geometry.Point2D;
 
 import java.lang.reflect.Type;
 
@@ -13,10 +12,12 @@ public class PlayerImplDeserializer implements JsonDeserializer<PlayerImpl> {
         JsonObject jsonObject = json.getAsJsonObject();
 
         return new PlayerImpl(
-                        new Gson().fromJson(jsonObject.get("position"), Transform.class),
+                        new Gson().fromJson(jsonObject.get("position"), TransformImpl.class),
                 250,
                 250,
-                "guido"
+                jsonObject.getAsJsonObject("renderer")
+                        .get("filename")
+                        .getAsString()
         );
     }
 }
