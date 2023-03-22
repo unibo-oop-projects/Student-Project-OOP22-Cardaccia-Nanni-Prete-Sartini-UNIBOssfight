@@ -22,8 +22,8 @@ public final class ConfirmBox {
         final Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setMinWidth(WIDTH);
-        window.setMinHeight(HEIGHT);
+        window.setWidth(WIDTH);
+        window.setHeight(HEIGHT);
 
         final Label label = new Label();
         label.setText(message);

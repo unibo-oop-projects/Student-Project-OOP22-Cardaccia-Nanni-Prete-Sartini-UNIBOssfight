@@ -49,12 +49,7 @@ public interface Collider extends Component {
         /**
          * The flame.
          */
-        FLAME(Flame.class),
-
-        /**
-         * The spine.
-         */
-        SPINE(Spine.class),
+        HARMFUL_OBSTACLE(HarmfulObstacle.class),
 
         /**
          * The bullet.
