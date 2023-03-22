@@ -84,7 +84,7 @@ public class PlayerImpl extends AbstractEntity {
                 getTransform().move(this.xSpeed, ySpeed);
                 this.xSpeed = Acceleration.accelerate(this.xSpeed, 0, 0.5);
                 this.ySpeed = this.isJumping()
-                        ? Acceleration.accelerate(this.ySpeed, 20, 1) : 0;
+                        ? Acceleration.accelerate(this.ySpeed, 2, 1) : 0;
                 this.bullets.forEach(e -> e.update(Inputs.EMPTY));
                 this.removeBullets();
             }

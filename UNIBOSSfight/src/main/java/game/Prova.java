@@ -7,6 +7,7 @@ import core.component.Renderer;
 import core.component.Transform;
 import core.entity.AbstractEntity;
 import core.entity.Entity;
+import impl.component.TransformImpl;
 import impl.entity.PlayerImpl;
 import impl.entity.Wall;
 import impl.level.LevelImpl;
@@ -123,7 +124,7 @@ public class Prova extends Application {
 
 
         this.currentLevel.addEntity(
-            new Wall(new Transform(
+            new Wall(new TransformImpl(
                     new Point2D(this.currentLevel.getPlayerPosition().getX() + 300, Window.getHeight())
                     , 0),
                     50, 50, "wall.png")

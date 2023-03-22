@@ -1,6 +1,6 @@
 package core.entity;
 
-import core.component.Transform;
+import impl.component.TransformImpl;
 import core.component.Weapon;
 import impl.component.SpriteRenderer;
 import javafx.scene.paint.Color;
@@ -20,7 +20,7 @@ public abstract class Boss extends Enemy {
      * @param filename the name of the file containing
      *                 the sprite of the boss
      */
-    public Boss(final Transform position, final int height,
+    public Boss(final TransformImpl position, final int height,
                 final int width, final String filename) {
         super(position, height, width, new SpriteRenderer(height, width, Color.RED, filename));
     }

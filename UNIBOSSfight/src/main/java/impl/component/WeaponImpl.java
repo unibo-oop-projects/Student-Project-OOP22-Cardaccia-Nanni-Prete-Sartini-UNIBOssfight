@@ -4,11 +4,9 @@ import core.component.Renderer;
 import core.component.Transform;
 import core.component.Weapon;
 import core.entity.Bullet;
-import impl.entity.BulletImpl;
 import impl.factory.BulletFactory;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
 import util.Window;
 
 /**

@@ -1,6 +1,6 @@
 package impl.entity;
 
-import core.component.Transform;
+import impl.component.TransformImpl;
 import core.entity.AbstractEntity;
 import impl.component.SpriteRenderer;
 import javafx.scene.paint.Color;
@@ -13,7 +13,7 @@ public class TmpEntityImpl extends AbstractEntity {
     private final String filename;
     private transient double ySpeed = 0;
 
-    public TmpEntityImpl(final Transform position, final Integer height,
+    public TmpEntityImpl(final TransformImpl position, final Integer height,
                          final Integer width, final String filename) {
         super(position, height, width, new SpriteRenderer(height, width, Color.GREEN, filename) {
             @Override

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * This class is used to generate the sprites representing the entities of the game.
  */
-public class SpriteRenderer extends Renderer {
+public class SpriteRenderer extends RendererImpl {
     private final String filename;
     private transient Image img;
 

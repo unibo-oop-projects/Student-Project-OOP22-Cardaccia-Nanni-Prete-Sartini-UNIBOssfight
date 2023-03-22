@@ -1,12 +1,12 @@
 package impl.factory;
 
 import core.component.Transform;
+import impl.component.TransformImpl;
 import core.component.Weapon;
 import core.entity.Bullet;
 import impl.component.SpriteRenderer;
 import impl.component.WeaponImpl;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
 
 public class WeaponFactory {
@@ -25,7 +25,7 @@ public class WeaponFactory {
         };
     }
 
-    public Weapon getBigBulletGun(Transform userPos){
+    public Weapon getBigBulletGun(TransformImpl userPos){
         return new WeaponImpl(userPos, 100, new SpriteRenderer(150, 180, Color.RED, "gnu.png")){
 
             @Override

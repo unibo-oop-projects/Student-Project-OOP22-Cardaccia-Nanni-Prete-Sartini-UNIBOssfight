@@ -2,6 +2,7 @@ package impl.factory;
 
 import core.component.Collider;
 import core.component.Transform;
+import impl.component.TransformImpl;
 import core.entity.Bullet;
 import impl.component.SpriteRenderer;
 import impl.entity.BulletImpl;
@@ -12,7 +13,7 @@ public class BulletFactory {
 
     public Bullet getPlayerBullet(Transform playerPos, Point2D target) {
 
-        Transform startingPosCopy = Transform.copyOf(playerPos);
+        Transform startingPosCopy = TransformImpl.copyOf(playerPos);
         startingPosCopy.move(0, -125);
 
         return new BulletImpl(startingPosCopy,  20, 20,
@@ -29,7 +30,7 @@ public class BulletFactory {
         };
     }
 
-    public Bullet getBigBullet(Transform starttingPos, Point2D target) {
+    public Bullet getBigBullet(TransformImpl starttingPos, Point2D target) {
         return new BulletImpl(starttingPos, 40, 40,
                 new SpriteRenderer(40, 40, Color.BLACK, "testImage2.png"), 200, target, 5);
     }

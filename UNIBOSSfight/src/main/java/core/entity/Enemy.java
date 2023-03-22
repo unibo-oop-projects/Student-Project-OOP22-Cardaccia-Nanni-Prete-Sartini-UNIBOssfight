@@ -1,7 +1,7 @@
 package core.entity;
 
 import core.component.Renderer;
-import core.component.Transform;
+import impl.component.TransformImpl;
 
 /**
  * This class models the enemy of the game, which causes damage
@@ -17,7 +17,7 @@ public abstract class Enemy extends AbstractEntity {
      * @param width the width of the enemy
      * @param renderer the renderer of the enemy
      */
-    public Enemy(final Transform position, final int height,
+    public Enemy(final TransformImpl position, final int height,
                  final int width, final Renderer renderer) {
         super(position, height, width, renderer);
     }

@@ -1,6 +1,6 @@
 package impl.level;
 
-import core.component.Transform;
+import impl.component.TransformImpl;
 import core.entity.Entity;
 import core.level.Level;
 import impl.entity.PlayerImpl;
@@ -20,7 +20,7 @@ public class LevelImpl implements Level {
     public LevelImpl() {
 
         this.entities = new ArrayList<>();
-        this.player = new PlayerImpl(new Transform(new Point2D(0, 300), 0), 250, 250, "guido");
+        this.player = new PlayerImpl(new TransformImpl(new Point2D(0, 300), 0), 250, 250, "guido");
     }
 
     public void init() {
@@ -34,7 +34,6 @@ public class LevelImpl implements Level {
         this.entities.stream()
                 .filter(e -> e.isUpdated(this.getPlayerPosition()))
                 .forEach(e -> {
-                    //System.out.println(e.getClass().getName());
                     e.update(Entity.Inputs.EMPTY);
                     if (this.goLeft) {
                         e.update(Entity.Inputs.RIGHT);

@@ -3,6 +3,7 @@ package core.entity;
 import core.component.Collider;
 import core.component.Renderer;
 import core.component.Transform;
+import impl.component.TransformImpl;
 import impl.component.ColliderImpl;
 import javafx.geometry.Point2D;
 import util.Window;

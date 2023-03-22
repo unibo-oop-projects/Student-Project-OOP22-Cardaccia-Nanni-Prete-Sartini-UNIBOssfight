@@ -1,12 +1,9 @@
 package core.entity;
 
-import core.component.Collider;
-import core.component.Health;
-import core.component.Hitbox;
+import core.component.*;
 import impl.component.HitboxImpl;
-import core.component.Renderer;
-import core.component.Transform;
 import impl.component.HealthImpl;
+import impl.component.TransformImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import util.Window;
@@ -23,7 +20,7 @@ public abstract class AbstractEntity implements Entity {
     private transient int damage;
     private final Transform position;
     private transient final Hitbox hitbox;
-    private  final Renderer renderer;
+    private final Renderer renderer;
     private final Health health;
     private transient Collider collider;
     private transient int direction;
@@ -42,7 +39,7 @@ public abstract class AbstractEntity implements Entity {
             final Renderer renderer
     ) {
         this.className = this.getClass().getName();
-        this.position = Transform.copyOf(position);
+        this.position = TransformImpl.copyOf(position);
         this.renderer = renderer;
         this.health = new HealthImpl();
         this.height = height;

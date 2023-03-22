@@ -1,6 +1,6 @@
 package impl.entity;
 
-import core.component.Transform;
+import impl.component.TransformImpl;
 import core.entity.AbstractEntity;
 import impl.component.SpriteRenderer;
 import javafx.scene.paint.Color;
@@ -20,7 +20,7 @@ public class Platform extends AbstractEntity {
      * @param width the width of the platform
      * @param filename the name of the file containing the sprite for the renderer
      */
-    public Platform(final Transform position, final int height,
+    public Platform(final TransformImpl position, final int height,
                     final int width, final String filename) {
         super(position, height, width,
                 new SpriteRenderer(height, width, Color.GREEN, filename));
