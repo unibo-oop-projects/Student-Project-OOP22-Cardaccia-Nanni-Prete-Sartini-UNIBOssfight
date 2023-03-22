@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import core.component.Renderer;
+import core.component.Transform;
 import core.entity.AbstractEntity;
 import core.entity.Entity;
 import impl.entity.PlayerImpl;
+import impl.entity.Wall;
 import impl.level.LevelImpl;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -46,7 +48,7 @@ public class Prova extends Application {
     private static final int MIN_WINDOW_HEIGHT = 600;
     private static final int MIN_WINDOW_WIDTH = 800;
 
-    private final LevelImpl currentLevel = loadLevel();
+    private final LevelImpl currentLevel = new LevelImpl();//loadLevel();
     private Group root = new Group();
     private Scene currentScene;
     private InputManager inputManager;
@@ -118,6 +120,14 @@ public class Prova extends Application {
             run();
         }));
         tl.setCycleCount(Animation.INDEFINITE);
+
+
+        this.currentLevel.addEntity(
+            new Wall(new Transform(
+                    new Point2D(this.currentLevel.getPlayerPosition().getX() + 300, Window.getHeight())
+                    , 0),
+                    50, 50, "wall.png")
+        );
 
         try {
             String json = readFile("output.json", StandardCharsets.UTF_8);

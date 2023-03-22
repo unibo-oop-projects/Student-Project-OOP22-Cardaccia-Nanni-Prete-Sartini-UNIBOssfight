@@ -34,7 +34,7 @@ public class LevelImpl implements Level {
         this.entities.stream()
                 .filter(e -> e.isUpdated(this.getPlayerPosition()))
                 .forEach(e -> {
-                    System.out.println(e.getClass().getName());
+                    //System.out.println(e.getClass().getName());
                     e.update(Entity.Inputs.EMPTY);
                     if (this.goLeft) {
                         e.update(Entity.Inputs.RIGHT);

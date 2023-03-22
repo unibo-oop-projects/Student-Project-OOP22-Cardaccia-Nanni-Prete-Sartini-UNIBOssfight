@@ -106,33 +106,50 @@ public class PlayerImpl extends AbstractEntity {
             this.xSpeed = -20 * this.getDirection();
         });
 
-        collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
-                // TODO comportamento in base alla direzione della collisione
-                if (e.getPosition().getY() - getPosition().getY() > 0) {
+        collider.addBehaviour(Collider.Entities.WALL, e -> {
+            // TODO comportamento in base alla direzione della collisione
+
+            if (Math.abs(getIntersectionOnX(e)) > Math.abs(getYIntersection(e))) {
+                if (Math.signum(getPosition().getY() - e.getPosition().getY()) > 0) {
+                    getTransform().moveTo((int) getPosition().getX(),
+                            (int) e.getPosition().getY() + getHeight() + 1);
+                    this.ySpeed = 0;
+                } else {
                     final int topSide = (int) e.getPosition().getY() - e.getHeight();
                     getTransform().setGroundLevel(topSide);
                     if (getTransform().isUnderGroundLevel()) {
                         getTransform().moveOnGroundLevel();
                     }
-                } else if (e.getPosition().getY() - getPosition().getY() < 0) {
-                    getTransform().moveTo((int) getPosition().getX(),
-                            (int) e.getPosition().getY() + getHeight() + 1);
-                    this.ySpeed = 0;
-                } else {
-                    getTransform().move(getIntersection(e), 0);
                 }
+            } else {
+                getTransform().move(getIntersectionOnX(e), 0);
+            }
 
         });
 
         setCollider(collider);
     }
 
-    private int getIntersection(final Entity e) {
+    private double getIntersectionOnX(final Entity e) {
+        // side < 0 => left
+        // side > 0 => right
         final int side = (int) Math.signum(getPosition().getX() - e.getPosition().getX());
-        final int wallSide = (int) e.getPosition().getX() + e.getWidth() / 2 * side;
-        final int playerSide = (int) getPosition().getX() - getWidth() / 2 * side;
+
+        final double wallSide = side > 0 ? e.getHitbox().getRightSide() : e.getHitbox().getLeftSide();
+        final double playerSide = side > 0 ? getHitbox().getLeftSide() : getHitbox().getRightSide();
 
         return wallSide - playerSide;
+    }
+
+    private double getYIntersection(final Entity e) {
+        // side < 0 => top
+        // side > 0 => bottom
+        final int side = (int) Math.signum(getPosition().getY() - e.getPosition().getY());
+
+        final double wallSide = side > 0 ? e.getHitbox().getTopSide() : e.getPosition().getY();
+        final double playerSide = side > 0 ? getHitbox().getTopSide() : getPosition().getY();
+
+        return e.getHeight() + (wallSide - playerSide) * side;
     }
 
     public void rotateWeapon(final Point2D mousePosition) {
