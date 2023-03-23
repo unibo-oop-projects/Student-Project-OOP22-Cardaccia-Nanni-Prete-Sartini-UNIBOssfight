@@ -1,7 +1,7 @@
 package impl.entity;
 
 import core.component.Transform;
-import impl.component.TransformImpl;
+import core.entity.Entity;
 import core.entity.AbstractEntity;
 import impl.component.SpriteRenderer;
 import javafx.scene.paint.Color;
@@ -34,5 +34,23 @@ public class Platform extends AbstractEntity {
     public void update(final Inputs input) {
 
     }
+
+    /**
+     * This method is used to let the entity jump on the platform by
+     * checking the collision on the topside of it and updating the
+     * ground level.
+     *
+     * @param collidingEntity the entity colliding
+     * @param platform the platform on which the entity is jumping
+     */
+     public static void stop(final Entity collidingEntity, final Entity platform) {
+        final double topSide = platform.getHitbox().getTopSide();
+        if (collidingEntity.getHitbox().getCollisionSideOnY(platform.getPosition().getY()) < 0) {
+            collidingEntity.getTransform().setGroundLevel(topSide);
+            if (collidingEntity.getTransform().isUnderGroundLevel()) {
+                collidingEntity.getTransform().moveOnGroundLevel();
+            }
+        }
+     }
 
 }

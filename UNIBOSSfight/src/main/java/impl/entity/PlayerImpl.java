@@ -105,11 +105,13 @@ public class PlayerImpl extends AbstractEntity {
         });
 
         collider.addBehaviour(Collider.Entities.WALL, e -> {
-            Wall.stop(this, (AbstractEntity) e);
+            Wall.stop(this, e);
             if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) > 0) {
                 this.ySpeed = 0;
             }
         });
+
+        collider.addBehaviour(Collider.Entities.PLATFORM, e -> Platform.stop(this, e));
 
         setCollider(collider);
     }
