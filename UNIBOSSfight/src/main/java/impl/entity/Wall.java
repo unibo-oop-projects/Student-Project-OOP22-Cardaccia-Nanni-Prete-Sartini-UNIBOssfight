@@ -2,6 +2,7 @@ package impl.entity;
 
 import core.component.Transform;
 import core.entity.AbstractEntity;
+import core.entity.Entity;
 import impl.component.SpriteRenderer;
 import javafx.scene.paint.Color;
 
@@ -40,8 +41,8 @@ public class Wall extends AbstractEntity {
      * @param collidingEntity the entity colliding
      * @param wall the wall stopping the entity
      */
-    public static void stop(final AbstractEntity collidingEntity,
-                               final AbstractEntity wall) {
+    public static void stop(final Entity collidingEntity,
+                               final Entity wall) {
         if (Math.abs(collidingEntity.getHitbox().getIntersectionOnX(wall))
                 > Math.abs(collidingEntity.getHitbox().getIntersectionOnY(wall))) {
             if (collidingEntity.getHitbox()

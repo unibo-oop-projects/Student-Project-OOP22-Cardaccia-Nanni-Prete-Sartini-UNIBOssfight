@@ -66,9 +66,7 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     * This method returns the Transform of the entity.
-     *
-     * @return the Transform of the entity
+     * {@inheritDoc}
      */
     public Transform getTransform() {
         return this.position;

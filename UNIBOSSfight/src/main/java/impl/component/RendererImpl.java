@@ -9,7 +9,7 @@ import javafx.scene.shape.Rectangle;
 /**
  * This class models the component used to render the entities of the game.
  */
-public abstract class RendererImpl implements Renderer {
+public class RendererImpl implements Renderer {
 
   private transient final int height;
   private transient final int width;
