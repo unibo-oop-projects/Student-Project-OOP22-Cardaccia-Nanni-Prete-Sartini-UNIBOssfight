@@ -5,11 +5,8 @@ import core.component.Transform;
 import core.component.Weapon;
 import core.entity.AbstractEntity;
 import core.entity.Bullet;
-import core.entity.Entity;
 import impl.component.AnimatedSpriteRenderer;
 import impl.component.ColliderImpl;
-import impl.component.SpriteRenderer;
-import impl.component.WeaponImpl;
 import impl.factory.WeaponFactory;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -23,7 +20,7 @@ import java.util.List;
 public class PlayerImpl extends AbstractEntity {
 
     private transient double ySpeed = 0;
-    private WeaponFactory weaponFactory = new WeaponFactory();
+    private final WeaponFactory weaponFactory = new WeaponFactory();
     private transient final Weapon weapon = weaponFactory.getPlayerWeapon(this.getTransform());
     private transient double rotation;
     private transient final List<Bullet> bullets = new ArrayList<>();
@@ -35,6 +32,7 @@ public class PlayerImpl extends AbstractEntity {
         super(position, height, width,
                 new AnimatedSpriteRenderer(height, width, Color.RED, filename));
     }
+
     @Override
     public boolean isDisplayed(final Point2D position) {
         return true;
@@ -84,7 +82,7 @@ public class PlayerImpl extends AbstractEntity {
                 getTransform().move(this.xSpeed, ySpeed);
                 this.xSpeed = Acceleration.accelerate(this.xSpeed, 0, 0.5);
                 this.ySpeed = this.isJumping()
-                        ? Acceleration.accelerate(this.ySpeed, 2, 1) : 0;
+                        ? Acceleration.accelerate(this.ySpeed, 20, 1) : 0;
                 this.bullets.forEach(e -> e.update(Inputs.EMPTY));
                 this.removeBullets();
             }
@@ -107,49 +105,13 @@ public class PlayerImpl extends AbstractEntity {
         });
 
         collider.addBehaviour(Collider.Entities.WALL, e -> {
-            // TODO comportamento in base alla direzione della collisione
-
-            if (Math.abs(getIntersectionOnX(e)) > Math.abs(getYIntersection(e))) {
-                if (Math.signum(getPosition().getY() - e.getPosition().getY()) > 0) {
-                    getTransform().moveTo((int) getPosition().getX(),
-                            (int) e.getPosition().getY() + getHeight() + 1);
-                    this.ySpeed = 0;
-                } else {
-                    final int topSide = (int) e.getPosition().getY() - e.getHeight();
-                    getTransform().setGroundLevel(topSide);
-                    if (getTransform().isUnderGroundLevel()) {
-                        getTransform().moveOnGroundLevel();
-                    }
-                }
-            } else {
-                getTransform().move(getIntersectionOnX(e), 0);
+            Wall.stop(this, (AbstractEntity) e);
+            if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) > 0) {
+                this.ySpeed = 0;
             }
-
         });
 
         setCollider(collider);
-    }
-
-    private double getIntersectionOnX(final Entity e) {
-        // side < 0 => left
-        // side > 0 => right
-        final int side = (int) Math.signum(getPosition().getX() - e.getPosition().getX());
-
-        final double wallSide = side > 0 ? e.getHitbox().getRightSide() : e.getHitbox().getLeftSide();
-        final double playerSide = side > 0 ? getHitbox().getLeftSide() : getHitbox().getRightSide();
-
-        return wallSide - playerSide;
-    }
-
-    private double getYIntersection(final Entity e) {
-        // side < 0 => top
-        // side > 0 => bottom
-        final int side = (int) Math.signum(getPosition().getY() - e.getPosition().getY());
-
-        final double wallSide = side > 0 ? e.getHitbox().getTopSide() : e.getPosition().getY();
-        final double playerSide = side > 0 ? getHitbox().getTopSide() : getPosition().getY();
-
-        return e.getHeight() + (wallSide - playerSide) * side;
     }
 
     public void rotateWeapon(final Point2D mousePosition) {
