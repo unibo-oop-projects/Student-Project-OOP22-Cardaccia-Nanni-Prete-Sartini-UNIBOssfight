@@ -28,4 +28,12 @@ public interface Weapon extends Component {
      */
     Bullet fire(Point2D target);
 
+    /**
+     * Used to return position from which to shoot the bullets
+     *
+     * @return the position from which the bullet is shot
+     */
+    Transform getShootingPos();
+
+    public void setYDirection(int direction);
 }

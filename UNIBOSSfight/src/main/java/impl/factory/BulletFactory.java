@@ -17,7 +17,7 @@ public class BulletFactory {
         startingPosCopy.move(0, -125);
 
         return new BulletImpl(startingPosCopy,  20, 20,
-                new SpriteRenderer(20, 20, Color.BLACK, "testImage2.png"),
+                new SpriteRenderer(20, 20, Color.BLACK, "bullet.png"),
                 100, target, 20) {
             @Override
             public void initCollider() {
@@ -32,7 +32,7 @@ public class BulletFactory {
 
     public Bullet getBigBullet(Transform startingPos, Point2D target) {
         return new BulletImpl(startingPos, 40, 40,
-                new SpriteRenderer(40, 40, Color.BLACK, "testImage2.png"), 200, target, 5);
+                new SpriteRenderer(40, 40, Color.BLACK, "bullet.png"), 200, target, 5);
     }
 
 }

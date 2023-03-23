@@ -6,6 +6,7 @@ import core.component.Transform;
 import impl.component.TransformImpl;
 import impl.component.ColliderImpl;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import util.Window;
 
 /**
@@ -45,6 +46,8 @@ public abstract class Bullet extends AbstractEntity {
         final double angle = Math.atan2(dy, dx);
         this.xShift = this.speed * Math.cos(angle);
         this.yShift = this.speed * Math.sin(angle);
+
+        this.getTransform().setRotation((float) Math.toDegrees(angle));
     }
 
     /**
@@ -68,5 +71,21 @@ public abstract class Bullet extends AbstractEntity {
         });
 
         setCollider(collider);
+    }
+
+    @Override
+    public Node render(Point2D position) {
+        return this.getRenderer().render(
+                new Point2D(
+                        this.getPosition()
+                                .subtract(position)
+                                .add(Window.getWidth() / 2, 0)
+                                .getX(),
+                        this.getPosition().getY()
+                ),
+                this.getDirection(),
+                1,
+                (int)this.getTransform().getRotation()
+        );
     }
 }
