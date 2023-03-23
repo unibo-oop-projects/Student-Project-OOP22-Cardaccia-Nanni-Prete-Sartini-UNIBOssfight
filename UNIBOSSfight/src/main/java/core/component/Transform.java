@@ -21,4 +21,6 @@ public interface Transform extends Component {
     void moveTo(double x, double y);
 
     float getRotation();
+
+    Transform copyOf();
 }

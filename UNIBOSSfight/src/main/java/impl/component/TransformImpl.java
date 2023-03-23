@@ -115,13 +115,12 @@ public class TransformImpl implements Transform {
     /**
      * Creates a copy of the Transform given as input.
      *
-     * @param input the Transform to copy
      * @return a Transform which is the exact copy of the passed one
      */
-    public static Transform copyOf(Transform input) {
+    public Transform copyOf() {
         return new TransformImpl(
-                new Point2D(input.getPosition().getX(), input.getPosition().getY()),
-                input.getRotation()
+                new Point2D(this.getPosition().getX(), this.getPosition().getY()),
+                this.getRotation()
         );
     }
 }

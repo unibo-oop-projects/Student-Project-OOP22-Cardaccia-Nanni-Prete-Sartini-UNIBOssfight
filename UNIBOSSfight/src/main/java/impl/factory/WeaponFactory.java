@@ -25,7 +25,7 @@ public class WeaponFactory {
         };
     }
 
-    public Weapon getBigBulletGun(TransformImpl userPos){
+    public Weapon getBigBulletGun(Transform userPos){
         return new WeaponImpl(userPos, 100, new SpriteRenderer(150, 180, Color.RED, "gnu.png")){
 
             @Override

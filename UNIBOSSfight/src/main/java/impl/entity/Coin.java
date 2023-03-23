@@ -1,6 +1,6 @@
 package impl.entity;
 
-import impl.component.TransformImpl;
+import core.component.Transform;
 import core.entity.AbstractEntity;
 import impl.component.SpriteRenderer;
 import javafx.geometry.Point2D;
@@ -22,7 +22,7 @@ public class Coin extends AbstractEntity {
      * @param width the width of the coin
      * @param filename the name of the file containing the sprite for the renderer
      */
-    public Coin(final TransformImpl position, final int height,
+    public Coin(final Transform position, final int height,
                 final int width, final String filename) {
         super(position, height, width,
                 new SpriteRenderer(height, width, Color.YELLOW, filename));

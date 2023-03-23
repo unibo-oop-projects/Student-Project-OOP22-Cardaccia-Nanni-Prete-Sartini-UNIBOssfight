@@ -13,7 +13,7 @@ public class BulletFactory {
 
     public Bullet getPlayerBullet(Transform playerPos, Point2D target) {
 
-        Transform startingPosCopy = TransformImpl.copyOf(playerPos);
+        Transform startingPosCopy = playerPos.copyOf();
         startingPosCopy.move(0, -125);
 
         return new BulletImpl(startingPosCopy,  20, 20,
@@ -30,8 +30,8 @@ public class BulletFactory {
         };
     }
 
-    public Bullet getBigBullet(TransformImpl starttingPos, Point2D target) {
-        return new BulletImpl(starttingPos, 40, 40,
+    public Bullet getBigBullet(Transform startingPos, Point2D target) {
+        return new BulletImpl(startingPos, 40, 40,
                 new SpriteRenderer(40, 40, Color.BLACK, "testImage2.png"), 200, target, 5);
     }
 

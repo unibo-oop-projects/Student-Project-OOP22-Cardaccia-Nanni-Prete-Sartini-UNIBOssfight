@@ -1,6 +1,7 @@
 package impl.entity;
 
 import core.component.Collider;
+import core.component.Transform;
 import impl.component.TransformImpl;
 import core.entity.Bullet;
 import core.entity.Enemy;
@@ -22,7 +23,7 @@ public class EnemyImpl extends Enemy {
      * @param filename the name of the file containing
      *                 the sprite of the enemy
      */
-    public EnemyImpl(final TransformImpl position, final int height, final int width, final String filename) {
+    public EnemyImpl(final Transform position, final int height, final int width, final String filename) {
         super(position, height, width,
                 new SpriteRenderer(height, width, Color.ALICEBLUE, filename));
     }

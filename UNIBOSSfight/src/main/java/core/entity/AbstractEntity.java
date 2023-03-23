@@ -39,7 +39,7 @@ public abstract class AbstractEntity implements Entity {
             final Renderer renderer
     ) {
         this.className = this.getClass().getName();
-        this.position = TransformImpl.copyOf(position);
+        this.position = position.copyOf();
         this.renderer = renderer;
         this.health = new HealthImpl();
         this.height = height;
