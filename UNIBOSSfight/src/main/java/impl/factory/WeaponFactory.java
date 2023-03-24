@@ -28,9 +28,21 @@ public class WeaponFactory {
     public Weapon getBigBulletGun(Transform userPos){
         return new WeaponImpl(userPos, 100, new SpriteRenderer(150, 180, Color.RED, "gnu.png")){
 
+            private final int RATE_OF_FIRE = 60;
+            private int rateOfFireCounter = 0;
+
             @Override
             public Bullet fire(final Point2D target){
-                return bulletFactory.getBigBullet(userPos, target);
+                this.rateOfFireCounter++;
+
+                if(this.rateOfFireCounter >= RATE_OF_FIRE){
+                    this.rateOfFireCounter = 0;
+                    return bulletFactory.getBigBullet(userPos, target);
+                }
+                else
+                {
+                    return null;
+                }
             }
 
         };

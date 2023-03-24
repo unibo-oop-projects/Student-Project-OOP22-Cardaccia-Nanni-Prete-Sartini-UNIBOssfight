@@ -11,7 +11,7 @@ import util.Window;
 public class TransformImpl implements Transform {
 
     private Point2D position;
-    private final float rotation;
+    private double rotation;
     private transient double yGround = Window.getHeight();
 
     /**
@@ -20,7 +20,7 @@ public class TransformImpl implements Transform {
      * @param position the starting position of the entity
      * @param rotation the rotation of the entity
      */
-    public TransformImpl(final Point2D position, final float rotation) {
+    public TransformImpl(final Point2D position, final double rotation) {
         this.position = position;
         this.rotation = rotation;
     }
@@ -108,7 +108,7 @@ public class TransformImpl implements Transform {
     }
 
     @Override
-    public float getRotation() {
+    public double getRotation() {
         return this.rotation;
     }
 
@@ -122,5 +122,10 @@ public class TransformImpl implements Transform {
                 new Point2D(this.getPosition().getX(), this.getPosition().getY()),
                 this.getRotation()
         );
+    }
+
+    @Override
+    public void setRotation(double rotation) {
+        this.rotation = rotation;
     }
 }

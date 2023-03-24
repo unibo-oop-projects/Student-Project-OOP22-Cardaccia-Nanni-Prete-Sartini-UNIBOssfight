@@ -171,6 +171,7 @@ public abstract class AbstractEntity implements Entity {
                         this.getPosition().getY()
                 ),
                 this.getDirection(),
+                1,
                 0
         );
     }

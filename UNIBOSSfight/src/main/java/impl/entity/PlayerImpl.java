@@ -5,8 +5,11 @@ import core.component.Transform;
 import core.component.Weapon;
 import core.entity.AbstractEntity;
 import core.entity.Bullet;
+import core.entity.Entity;
 import impl.component.AnimatedSpriteRenderer;
 import impl.component.ColliderImpl;
+import impl.component.SpriteRenderer;
+import impl.component.WeaponImpl;
 import impl.factory.WeaponFactory;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -43,7 +46,7 @@ public class PlayerImpl extends AbstractEntity {
     public Node render(final Point2D position) {
         try {
             return getRenderer().render(new Point2D(Window.getWidth() / 2,
-                    this.getPosition().getY()), this.getDirection(), 0);
+                    this.getPosition().getY()), this.getDirection(),1,1);
         } catch (Exception e) {
             System.out.println("ERROR cannot load resource " + e);
         }
@@ -122,9 +125,48 @@ public class PlayerImpl extends AbstractEntity {
         setCollider(collider);
     }
 
+    private double getIntersectionOnX(final Entity e) {
+        // side < 0 => left
+        // side > 0 => right
+        final int side = (int) Math.signum(getPosition().getX() - e.getPosition().getX());
+
+        final double wallSide = side > 0 ? e.getHitbox().getRightSide() : e.getHitbox().getLeftSide();
+        final double playerSide = side > 0 ? getHitbox().getLeftSide() : getHitbox().getRightSide();
+
+        return wallSide - playerSide;
+    }
+
+    private double getYIntersection(final Entity e) {
+        // side < 0 => top
+        // side > 0 => bottom
+        final int side = (int) Math.signum(getPosition().getY() - e.getPosition().getY());
+
+        final double wallSide = side > 0 ? e.getHitbox().getTopSide() : e.getPosition().getY();
+        final double playerSide = side > 0 ? getHitbox().getTopSide() : getPosition().getY();
+
+        return e.getHeight() + (wallSide - playerSide) * side;
+    }
+
     public void rotateWeapon(final Point2D mousePosition) {
-        this.rotation = getDirection()
-                * (mousePosition.getY() / Window.getHeight() * 120 - 55);
+        //this.rotation = getDirection()
+                //* (mousePosition.getY() / Window.getHeight() * 120 - 55);
+
+        final double dx = (mousePosition.getX() + getPosition().getX() - Window.getWidth() / 2)
+                - getPosition().getX();
+        final double dy = mousePosition.getY() - getPosition().getY() +30 + 75;
+        final double angle = Math.toDegrees(Math.atan2(dy, dx));
+
+        if(angle <= 90 && angle > -90){
+            this.setDirection(1);
+            this.weapon.setYDirection(1);
+        }
+        else
+        {
+            this.setDirection(-1);
+            this.weapon.setYDirection(-1);
+        }
+
+        this.rotation = angle;
     }
 
     public void shoot(final Point2D target) {

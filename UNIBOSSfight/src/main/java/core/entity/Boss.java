@@ -5,6 +5,8 @@ import core.component.Weapon;
 import impl.component.SpriteRenderer;
 import javafx.scene.paint.Color;
 
+import java.util.List;
+
 /**
  * This class models a more specific type of enemy, the boss,
  * that can cause damage by using a weapon.
