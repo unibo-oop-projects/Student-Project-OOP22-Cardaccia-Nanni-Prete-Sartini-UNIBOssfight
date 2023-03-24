@@ -19,12 +19,13 @@ import java.util.List;
 
 public class PlayerImpl extends AbstractEntity {
 
+    private transient double xSpeed = 0;
     private transient double ySpeed = 0;
     private final WeaponFactory weaponFactory = new WeaponFactory();
     private transient final Weapon weapon = weaponFactory.getPlayerWeapon(this.getTransform());
     private transient double rotation;
     private transient final List<Bullet> bullets = new ArrayList<>();
-    private transient double xSpeed = 0;
+    private transient int coinsCollected = 0;
 
 
     public PlayerImpl(final Transform position, final Integer height,
@@ -74,7 +75,7 @@ public class PlayerImpl extends AbstractEntity {
             }
             case SPACE -> {
                 if (!isJumping()) {
-                    this.ySpeed = -20;
+                    this.ySpeed = -30;
                     getTransform().move(0, -1);
                 }
             }
@@ -112,6 +113,11 @@ public class PlayerImpl extends AbstractEntity {
         });
 
         collider.addBehaviour(Collider.Entities.PLATFORM, e -> Platform.stop(this, e));
+
+        collider.addBehaviour(Collider.Entities.COIN, e -> {
+            this.coinsCollected++;
+            e.getHealth().destroy();
+        });
 
         setCollider(collider);
     }

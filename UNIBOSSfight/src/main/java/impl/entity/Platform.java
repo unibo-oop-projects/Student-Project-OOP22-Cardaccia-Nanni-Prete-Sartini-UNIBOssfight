@@ -45,7 +45,9 @@ public class Platform extends AbstractEntity {
      */
      public static void stop(final Entity collidingEntity, final Entity platform) {
         final double topSide = platform.getHitbox().getTopSide();
-        if (collidingEntity.getHitbox().getCollisionSideOnY(platform.getPosition().getY()) < 0) {
+        if (collidingEntity.getHitbox().getCollisionSideOnY(platform.getPosition().getY()) < 0
+            && Math.abs(collidingEntity.getHitbox().getIntersectionOnX(platform))
+                 > Math.abs(collidingEntity.getHitbox().getIntersectionOnY(platform))) {
             collidingEntity.getTransform().setGroundLevel(topSide);
             if (collidingEntity.getTransform().isUnderGroundLevel()) {
                 collidingEntity.getTransform().moveOnGroundLevel();
