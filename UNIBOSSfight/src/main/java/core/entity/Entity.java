@@ -3,6 +3,7 @@ package core.entity;
 import core.component.Collider;
 import core.component.Health;
 import core.component.Hitbox;
+import core.component.Transform;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import java.util.Optional;
@@ -77,6 +78,13 @@ public interface Entity {
     Health getHealth();
 
     /**
+     * This method returns the Transform of the entity.
+     *
+     * @return the Transform of the entity
+     */
+    Transform getTransform();
+
+    /**
      * This method checks if the entity is displayed in the game window.
      *
      * @param position position of the player
@@ -114,5 +122,7 @@ public interface Entity {
      * Initialise the collider of the entity.
      */
     void initCollider();
+
+
 
 }

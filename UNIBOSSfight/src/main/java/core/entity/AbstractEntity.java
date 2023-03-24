@@ -3,7 +3,6 @@ package core.entity;
 import core.component.*;
 import impl.component.HitboxImpl;
 import impl.component.HealthImpl;
-import impl.component.TransformImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import util.Window;
@@ -67,11 +66,9 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     * This method returns the Transform of the entity.
-     *
-     * @return the Transform of the entity
+     * {@inheritDoc}
      */
-    protected Transform getTransform() {
+    public Transform getTransform() {
         return this.position;
     }
 

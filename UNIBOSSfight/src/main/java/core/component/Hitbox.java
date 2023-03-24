@@ -1,5 +1,6 @@
 package core.component;
 
+import core.entity.Entity;
 import javafx.geometry.Point2D;
 
 /**
@@ -53,5 +54,31 @@ public interface Hitbox extends Component {
      * @return the bottom side of the hitbox
      */
     double getBottomSide();
+
+    /**
+     * This method returns the y-axis side in which the collision occurred.
+     *
+     * @param y the y coordinate of the collided entity
+     * @return 1 if it is on the bottom, -1 if it is on the top, 0 otherwise
+     */
+    double getCollisionSideOnY(double y);
+
+    /**
+     * This method returns the intersection on the y-axis
+     * between the two hitboxes colliding.
+     *
+     * @param e the collided entity
+     * @return the overlapping between the two hitboxes if any
+     */
+    double getIntersectionOnY(Entity e);
+
+    /**
+     * This method returns the intersection on the x-axis
+     * between the two hitboxes colliding.
+     *
+     * @param e the collided entity
+     * @return the overlapping between the two hitboxes if any
+     */
+    double getIntersectionOnX(Entity e);
 
 }

@@ -1,7 +1,15 @@
 package core.component;
 
 import core.entity.Entity;
-import impl.entity.*;
+import impl.entity.BossImpl;
+import impl.entity.BulletImpl;
+import impl.entity.Coin;
+import impl.entity.EnemyImpl;
+import impl.entity.HarmfulObstacle;
+import impl.entity.Platform;
+import impl.entity.PlayerImpl;
+import impl.entity.TmpEntityImpl;
+import impl.entity.Wall;
 
 import java.util.function.Consumer;
 
@@ -54,7 +62,12 @@ public interface Collider extends Component {
         /**
          * The bullet.
          */
-        BULLET(BulletImpl.class);
+        BULLET(BulletImpl.class),
+
+        /**
+         * The coin.
+         */
+        COIN(Coin.class);
 
         private final Class<? extends Entity> type;
 
