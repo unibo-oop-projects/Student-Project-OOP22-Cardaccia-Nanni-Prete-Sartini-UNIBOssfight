@@ -5,11 +5,8 @@ import core.component.Transform;
 import core.component.Weapon;
 import core.entity.AbstractEntity;
 import core.entity.Bullet;
-import core.entity.Entity;
 import impl.component.AnimatedSpriteRenderer;
 import impl.component.ColliderImpl;
-import impl.component.SpriteRenderer;
-import impl.component.WeaponImpl;
 import impl.factory.WeaponFactory;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -24,6 +21,7 @@ public class PlayerImpl extends AbstractEntity {
 
     private transient double xSpeed = 0;
     private transient double ySpeed = 0;
+    private static int DAMAGE_INFLICTED = 20;
     private final WeaponFactory weaponFactory = new WeaponFactory();
     private transient final Weapon weapon = weaponFactory.getPlayerWeapon(this.getTransform());
     private transient double rotation;
@@ -115,36 +113,20 @@ public class PlayerImpl extends AbstractEntity {
             }
         });
 
-        collider.addBehaviour(Collider.Entities.PLATFORM, e -> Platform.stop(this, e));
-
         collider.addBehaviour(Collider.Entities.COIN, e -> {
             this.coinsCollected++;
             e.getHealth().destroy();
         });
 
+        collider.addBehaviour(Collider.Entities.HARMFUL_OBSTACLE, e -> {
+            this.ySpeed = -20;
+            this.xSpeed = -20 * this.getDirection();
+            this.getHealth().damage(DAMAGE_INFLICTED);
+        });
+
+        collider.addBehaviour(Collider.Entities.PLATFORM, e -> Platform.stop(this, e));
+
         setCollider(collider);
-    }
-
-    private double getIntersectionOnX(final Entity e) {
-        // side < 0 => left
-        // side > 0 => right
-        final int side = (int) Math.signum(getPosition().getX() - e.getPosition().getX());
-
-        final double wallSide = side > 0 ? e.getHitbox().getRightSide() : e.getHitbox().getLeftSide();
-        final double playerSide = side > 0 ? getHitbox().getLeftSide() : getHitbox().getRightSide();
-
-        return wallSide - playerSide;
-    }
-
-    private double getYIntersection(final Entity e) {
-        // side < 0 => top
-        // side > 0 => bottom
-        final int side = (int) Math.signum(getPosition().getY() - e.getPosition().getY());
-
-        final double wallSide = side > 0 ? e.getHitbox().getTopSide() : e.getPosition().getY();
-        final double playerSide = side > 0 ? getHitbox().getTopSide() : getPosition().getY();
-
-        return e.getHeight() + (wallSide - playerSide) * side;
     }
 
     public void rotateWeapon(final Point2D mousePosition) {
