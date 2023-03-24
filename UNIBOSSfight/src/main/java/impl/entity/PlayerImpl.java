@@ -44,7 +44,7 @@ public class PlayerImpl extends AbstractEntity {
     public Node render(final Point2D position) {
         try {
             return getRenderer().render(new Point2D(Window.getWidth() / 2,
-                    this.getPosition().getY()), this.getDirection(),1,1);
+                    this.getPosition().getY()), this.getDirection(), 1, 0);
         } catch (Exception e) {
             System.out.println("ERROR cannot load resource " + e);
         }
@@ -101,10 +101,6 @@ public class PlayerImpl extends AbstractEntity {
     @Override
     public void initCollider() {
         final var collider = new ColliderImpl();
-        collider.addBehaviour(Collider.Entities.TMPENTITY, e -> {
-            this.ySpeed = -20;
-            this.xSpeed = -20 * this.getDirection();
-        });
 
         collider.addBehaviour(Collider.Entities.WALL, e -> {
             Wall.stop(this, e);
@@ -118,9 +114,9 @@ public class PlayerImpl extends AbstractEntity {
             e.getHealth().destroy();
         });
 
-        collider.addBehaviour(Collider.Entities.HARMFUL_OBSTACLE, e -> {
+        collider.addBehaviours(List.of(Collider.Entities.ENEMY, Collider.Entities.HARMFUL_OBSTACLE), e -> {
             this.ySpeed = -20;
-            this.xSpeed = -20 * this.getDirection();
+            this.xSpeed = 20 * getHitbox().getCollisionSideOnX(e.getPosition().getX());
             this.getHealth().damage(DAMAGE_INFLICTED);
         });
 

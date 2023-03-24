@@ -64,6 +64,14 @@ public interface Hitbox extends Component {
     double getCollisionSideOnY(double y);
 
     /**
+     * This method returns the y-axis side in which the collision occurred.
+     *
+     * @param x the y coordinate of the collided entity
+     * @return 1 if it is on the bottom, -1 if it is on the top, 0 otherwise
+     */
+    double getCollisionSideOnX(double x);
+
+    /**
      * This method returns the intersection on the y-axis
      * between the two hitboxes colliding.
      *

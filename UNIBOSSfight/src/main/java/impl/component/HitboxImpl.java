@@ -96,6 +96,14 @@ public class HitboxImpl implements Hitbox {
      * {@inheritDoc}
      */
     @Override
+    public double getCollisionSideOnX(double x) {
+        return Math.signum(this.position.getX() - x);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public double getIntersectionOnY(final Entity e) {
         final double side = this.getCollisionSideOnY(e.getPosition().getY());
 
@@ -111,7 +119,7 @@ public class HitboxImpl implements Hitbox {
      */
     @Override
     public double getIntersectionOnX(final Entity e) {
-        final int side = (int) Math.signum(this.position.getX() - e.getPosition().getX());
+        final double side = getCollisionSideOnX(e.getPosition().getX());
 
         final double collidedSide = side > 0 ? e.getHitbox().getRightSide() : e.getHitbox().getLeftSide();
         final double collidingSide = side > 0 ? this.leftSide : this.rightSide;

@@ -11,6 +11,7 @@ import impl.entity.PlayerImpl;
 import impl.entity.TmpEntityImpl;
 import impl.entity.Wall;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -101,4 +102,12 @@ public interface Collider extends Component {
      * @param value behaviour
      */
     void addBehaviour(Entities key, Consumer<Entity> value);
+
+    /**
+     * Associates a behaviour to a list of entities.
+     *
+     * @param keys the list of entities
+     * @param value behaviour
+     */
+    void addBehaviours(List<Entities> keys, Consumer<Entity> value);
 }
