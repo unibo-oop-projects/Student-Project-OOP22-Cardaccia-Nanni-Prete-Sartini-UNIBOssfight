@@ -1,7 +1,7 @@
 package util;
 
 import com.google.gson.*;
-import impl.component.TransformImpl;
+import core.component.Transform;
 import core.entity.AbstractEntity;
 
 import java.lang.reflect.Type;
@@ -14,12 +14,12 @@ public class AbstractEntityDeserializer implements JsonDeserializer<AbstractEnti
         try {
             return (AbstractEntity) Class.forName(jsonObject.get("className").getAsString())
                     .getConstructor(
-                            TransformImpl.class,
+                            Transform.class,
                             int.class,
                             int.class,
                             String.class
                     ).newInstance(
-                    new Gson().fromJson(jsonObject.get("position"), TransformImpl.class),
+                    new Gson().fromJson(jsonObject.get("position"), Transform.class),
                     jsonObject.get("height").getAsInt(),
                     jsonObject.get("width").getAsInt(),
                     jsonObject.getAsJsonObject("renderer").get("filename").getAsString()
