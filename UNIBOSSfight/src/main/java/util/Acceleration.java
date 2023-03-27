@@ -18,11 +18,12 @@ public final class Acceleration {
      */
     public static double accelerate(final double currentVelocity, final double targetVelocity,
                                  final double timeDelta) {
-        final double velocityDelta = targetVelocity - currentVelocity;
 
         if (currentVelocity == targetVelocity) {
             return targetVelocity;
         }
+
+        final double velocityDelta = targetVelocity - currentVelocity;
 
         if (velocityDelta > timeDelta) {
             return currentVelocity + timeDelta;

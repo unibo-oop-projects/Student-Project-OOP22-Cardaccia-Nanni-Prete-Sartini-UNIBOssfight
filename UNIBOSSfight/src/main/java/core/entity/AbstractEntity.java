@@ -18,7 +18,7 @@ public abstract class AbstractEntity implements Entity {
     private final int width;
     private transient int damage;
     private final Transform position;
-    private transient final Hitbox hitbox;
+    private final transient Hitbox hitbox;
     private final Renderer renderer;
     private final Health health;
     private transient Collider collider;
@@ -68,6 +68,7 @@ public abstract class AbstractEntity implements Entity {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Transform getTransform() {
         return this.position;
     }

@@ -5,8 +5,7 @@ import javafx.geometry.Point2D;
 import util.Window;
 
 /**
- * This class models the component representing the concept
- * of the position and the rotation of an entity.
+ * This class implements the Transform.
  */
 public class TransformImpl implements Transform {
 
@@ -26,10 +25,7 @@ public class TransformImpl implements Transform {
     }
 
     /**
-     * Translates the current position with the vector of components x and y.
-     *
-     * @param x position on x-axis
-     * @param y position on y-axis
+     * {@inheritDoc}
      */
     @Override
     public void move(final double x, final double y) {
@@ -37,7 +33,7 @@ public class TransformImpl implements Transform {
     }
 
     /**
-     * Takes the entity back on the ground level if it is under it.
+     * {@inheritDoc}
      */
     @Override
     public void moveOnGroundLevel() {
@@ -47,9 +43,7 @@ public class TransformImpl implements Transform {
     }
 
     /**
-     * This method returns the current ground level.
-     *
-     * @return the current ground level
+     * {@inheritDoc}
      */
     @Override
     public double getGroundLevel() {
@@ -57,9 +51,7 @@ public class TransformImpl implements Transform {
     }
 
     /**
-     * Changes the ground level.
-     *
-     * @param yGround the new value of the ground
+     * {@inheritDoc}
      */
     @Override
     public void setGroundLevel(final double yGround) {
@@ -67,10 +59,7 @@ public class TransformImpl implements Transform {
     }
 
     /**
-     * This method returns true if the entity is under the ground
-     * level, false otherwise.
-     *
-     * @return true is the entity is under the ground level
+     * {@inheritDoc}
      */
     @Override
     public boolean isUnderGroundLevel() {
@@ -78,7 +67,7 @@ public class TransformImpl implements Transform {
     }
 
     /**
-     * Sets the ground level to the default one, which is the height of the window.
+     * {@inheritDoc}
      */
     @Override
     public void resetGroundLevel() {
@@ -87,9 +76,7 @@ public class TransformImpl implements Transform {
     }
 
     /**
-     * This method returns a copy of the current position of the entity.
-     *
-     * @return a copy of the current position of the entity
+     * {@inheritDoc}
      */
     @Override
     public Point2D getPosition() {
@@ -97,25 +84,31 @@ public class TransformImpl implements Transform {
     }
 
     /**
-     * Moves the entity to a new position.
-     *
-     * @param x new position on x-axis
-     * @param y new position on y-axis
+     * {@inheritDoc}
      */
     @Override
     public void moveTo(final double x, final double y) {
         this.position = new Point2D(x, y);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double getRotation() {
         return this.rotation;
     }
 
     /**
-     * Creates a copy of the Transform given as input.
-     *
-     * @return a Transform which is the exact copy of the passed one
+     * {@inheritDoc}
+     */
+    @Override
+    public void setRotation(final double rotation) {
+        this.rotation = rotation;
+    }
+
+    /**
+     * {@inheritDoc}
      */
     public Transform copyOf() {
         return new TransformImpl(
@@ -124,8 +117,5 @@ public class TransformImpl implements Transform {
         );
     }
 
-    @Override
-    public void setRotation(double rotation) {
-        this.rotation = rotation;
-    }
+
 }

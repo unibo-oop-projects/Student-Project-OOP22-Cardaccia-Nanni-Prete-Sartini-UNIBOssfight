@@ -96,7 +96,7 @@ public class HitboxImpl implements Hitbox {
      * {@inheritDoc}
      */
     @Override
-    public double getCollisionSideOnX(double x) {
+    public double getCollisionSideOnX(final double x) {
         return Math.signum(this.position.getX() - x);
     }
 

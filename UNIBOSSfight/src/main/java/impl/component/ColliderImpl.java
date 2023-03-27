@@ -43,8 +43,8 @@ public class ColliderImpl implements Collider {
      * {@inheritDoc}
      */
     @Override
-    public void addBehaviours(List<Entities> keys, Consumer<Entity> value) {
-        for (var e : keys) {
+    public void addBehaviours(final List<Entities> keys, final Consumer<Entity> value) {
+        for (final Entities e : keys) {
             addBehaviour(e, value);
         }
     }

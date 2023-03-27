@@ -2,7 +2,6 @@ package impl.entity;
 
 import core.component.Collider;
 import core.component.Transform;
-import impl.component.TransformImpl;
 import core.entity.Bullet;
 import core.entity.Enemy;
 import impl.component.ColliderImpl;

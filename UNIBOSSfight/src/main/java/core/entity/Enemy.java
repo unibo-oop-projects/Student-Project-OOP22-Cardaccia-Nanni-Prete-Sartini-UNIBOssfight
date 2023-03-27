@@ -2,7 +2,6 @@ package core.entity;
 
 import core.component.Renderer;
 import core.component.Transform;
-import impl.component.TransformImpl;
 
 /**
  * This class models the enemy of the game, which causes damage

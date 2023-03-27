@@ -11,8 +11,8 @@ import javafx.scene.shape.Rectangle;
  */
 public class RendererImpl implements Renderer {
 
-  private transient final int height;
-  private transient final int width;
+  private final transient int height;
+  private final transient int width;
   private final Color color;
 
   /**
@@ -29,9 +29,7 @@ public class RendererImpl implements Renderer {
   }
 
   /**
-   * This method returns the height of the rendered object.
-   *
-   * @return the height of the rendered object
+   * {@inheritDoc}
    */
   @Override
   public int getHeight() {
@@ -39,9 +37,7 @@ public class RendererImpl implements Renderer {
   }
 
   /**
-   * This method returns the width of the rendered object.
-   *
-   * @return the width of the rendered object
+   * {@inheritDoc}
    */
   @Override
   public int getWidth() {
@@ -49,13 +45,7 @@ public class RendererImpl implements Renderer {
   }
 
   /**
-   * The method used to render the entity.
-   *
-   * @param position the position of the entity
-   * @param xDirection the direction on the x-axis the entity
-   * @param yDirection the direction on the y-axis the entity
-   * @param rotation the rotation of the entity
-   * @return a Node that will be given as input to the Scene
+   * {@inheritDoc}
    */
   @Override
   public Node render(final Point2D position, final int xDirection, final int yDirection, final double rotation) {
