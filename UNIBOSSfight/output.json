@@ -1,23 +1,23 @@
 {
   "entities": [
     {
-      "className": "impl.entity.EnemyImpl",
+      "className": "impl.entity.Wall",
       "height": 50,
       "width": 50,
       "position": {
         "position": {
-          "x": 1460.0,
+          "x": 300.0,
           "y": 790.0,
           "hash": 0
         },
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "guido/guido1.png",
+        "filename": "wall.png",
         "color": {
-          "red": 0.9411765,
-          "green": 0.972549,
-          "blue": 1.0,
+          "red": 0.64705884,
+          "green": 0.16470589,
+          "blue": 0.16470589,
           "opacity": 1.0
         }
       },
@@ -27,22 +27,47 @@
     },
     {
       "className": "impl.entity.Wall",
-      "height": 350,
+      "height": 50,
       "width": 50,
       "position": {
         "position": {
-          "x": 100.0,
-          "y": 790.0,
+          "x": 900.0,
+          "y": 395.0,
           "hash": 0
         },
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "goomba/goombaa.png",
+        "filename": "wall.png",
         "color": {
           "red": 0.64705884,
           "green": 0.16470589,
           "blue": 0.16470589,
+          "opacity": 1.0
+        }
+      },
+      "health": {
+        "hp": 100
+      }
+    },
+    {
+      "className": "impl.entity.HarmfulObstacle",
+      "height": 120,
+      "width": 120,
+      "position": {
+        "position": {
+          "x": 1400.0,
+          "y": 780.0,
+          "hash": 0
+        },
+        "rotation": 0.0
+      },
+      "renderer": {
+        "filename": "spine.png",
+        "color": {
+          "red": 1.0,
+          "green": 0.64705884,
+          "blue": 0.0,
           "opacity": 1.0
         }
       },
@@ -60,14 +85,14 @@
     "width": 250,
     "position": {
       "position": {
-        "x": 100.0,
+        "x": 300,
         "y": 0.0,
         "hash": 0
       },
       "rotation": 0.0
     },
     "renderer": {
-      "filename": "guidoo",
+      "filename": "guido",
       "color": {
         "red": 1.0,
         "green": 0.0,
