@@ -1,12 +1,9 @@
 package game;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
-import core.component.Renderer;
-import core.entity.AbstractEntity;
 import core.entity.Entity;
-import impl.entity.PlayerImpl;
+import impl.component.PatternRender;
+import impl.component.TransformImpl;
+import impl.entity.Wall;
 import impl.level.LevelImpl;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -17,6 +14,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -24,19 +22,11 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import ui.ConfirmBox;
-import util.AbstractEntityDeserializer;
-import util.PlayerImplDeserializer;
-import util.RendererDeserializer;
+import util.DataManager;
 import util.Window;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class Prova extends Application {
 
@@ -45,18 +35,12 @@ public class Prova extends Application {
     private static final int MIN_WINDOW_HEIGHT = 600;
     private static final int MIN_WINDOW_WIDTH = 800;
 
-    private final LevelImpl currentLevel = loadLevel();
+    private final LevelImpl currentLevel = new DataManager().loadLevel();
     private Group root = new Group();
     private Scene currentScene;
     private InputManager inputManager;
     private Image image;
     private Paint imagePattern;
-
-    public static String readFile(String path, Charset encoding) throws IOException
-    {
-        byte[] encoded = Files.readAllBytes(Paths.get(path));
-        return new String(encoded, encoding);
-    }
 
     @Override
     public void start(final Stage stage) {
@@ -79,8 +63,6 @@ public class Prova extends Application {
         }
 
         this.image = new Image(input);
-
-
 
         stage.setX(bounds.getMinX());
         stage.setY(bounds.getMinY());
@@ -117,48 +99,6 @@ public class Prova extends Application {
             run();
         }));
         tl.setCycleCount(Animation.INDEFINITE);
-
-
-        /*this.currentLevel.addEntity(
-            new Wall(new TransformImpl(
-                    new Point2D(this.currentLevel.getPlayerPosition().getX() + 300, Window.getHeight())
-                    , 0),
-                    50, 50, "wall.png")
-        );
-
-        this.currentLevel.addEntity(
-                new Wall(new TransformImpl(
-                        new Point2D(this.currentLevel.getPlayerPosition().getX() + 900, Window.getHeight() / 2.0)
-                        , 0),
-                        50, 50, "wall.png")
-        );
-
-        this.currentLevel.addEntity(
-                new Coin(new TransformImpl(
-                        new Point2D(this.currentLevel.getPlayerPosition().getX() + 600, Window.getHeight() - 10)
-                        , 0),
-                        120, 120, "coin.png")
-        );
-
-        this.currentLevel.addEntity(
-                new HarmfulObstacle(new TransformImpl(
-                        new Point2D(this.currentLevel.getPlayerPosition().getX() + 1400, Window.getHeight() - 10)
-                        , 0),
-                        120, 120, "spine.png")
-        );*/
-
-        try {
-            String json = readFile("output.json", StandardCharsets.UTF_8);
-            GsonBuilder gsonBuilder = new GsonBuilder();
-
-            JsonDeserializer<PlayerImpl> deserializer = new PlayerImplDeserializer(); // implementation detail
-            gsonBuilder.registerTypeAdapter(PlayerImpl.class, deserializer);
-
-            Gson customGson = gsonBuilder.create();
-            LevelImpl customObject = customGson.fromJson(json, LevelImpl.class);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
 
         tl.play();
         this.currentLevel.init();
@@ -257,65 +197,15 @@ public class Prova extends Application {
                 }
             });
         }
-
-        public boolean isAPressed() {
-            return this.isAPressed;
-        }
-
-        public boolean isDPressed() {
-            return this.isDPressed;
-        }
-
-        public boolean isSpacePressed() {
-            return this.isSpacePressed;
-        }
     }
 
     @Override
     public void stop() throws Exception {
-            try {
-                String jsonString = new GsonBuilder()
-                        //.excludeFieldsWithoutExposeAnnotation()
-                        .setPrettyPrinting()
-                        .create()
-                        .toJson(this.currentLevel);
-
-                FileWriter file = new FileWriter("output.json");
-                file.write(jsonString);
-                file.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        new DataManager().serializeLevel(this.currentLevel);
         super.stop();
     }
 
-    private LevelImpl loadLevel() {
-        try {
-            String json = readFile("output.json", StandardCharsets.UTF_8);
-
-            GsonBuilder gsonBuilder = new GsonBuilder();
-
-            JsonDeserializer<PlayerImpl> deserializer = new PlayerImplDeserializer(); // implementation detail
-            JsonDeserializer<AbstractEntity> Edeserializer = new AbstractEntityDeserializer(); // implementation detail
-            JsonDeserializer<Renderer> Rdeserializer = new RendererDeserializer(); // implementation detail
-
-
-            gsonBuilder.registerTypeAdapter(Entity.class, Edeserializer);
-            gsonBuilder.registerTypeAdapter(Renderer.class, Rdeserializer);
-            gsonBuilder.registerTypeAdapter(PlayerImpl.class, deserializer);
-
-            Gson customGson = gsonBuilder.create();
-            LevelImpl customObject = customGson.fromJson(json, LevelImpl.class);
-
-            return customObject;
-
-        } catch (Exception e) {
-            System.out.println(e);
-            return null;
-        }
-    }
-
-    private void saveState() {
+     private void saveState() {
         boolean answer = ConfirmBox.display("Do you want to save the state?");
         if (answer) {
             try {
