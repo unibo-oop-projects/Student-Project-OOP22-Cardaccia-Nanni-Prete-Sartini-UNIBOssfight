@@ -1,6 +1,7 @@
 package impl.component;
 
 import core.component.Hitbox;
+import core.entity.Entity;
 import javafx.geometry.Point2D;
 
 /**
@@ -81,6 +82,49 @@ public class HitboxImpl implements Hitbox {
         this.position = newPos;
 
         findBorders(this.position);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getCollisionSideOnY(final double y) {
+        return Math.signum(this.position.getY() - y);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getCollisionSideOnX(double x) {
+        return Math.signum(this.position.getX() - x);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getIntersectionOnY(final Entity e) {
+        final double side = this.getCollisionSideOnY(e.getPosition().getY());
+
+        final double collidedSide = side > 0 ? e.getHitbox().getTopSide()
+                : e.getPosition().getY();
+        final double collidingSide = side > 0 ? this.topSide : this.position.getY();
+
+        return e.getHeight() + (collidedSide - collidingSide) * side;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getIntersectionOnX(final Entity e) {
+        final double side = getCollisionSideOnX(e.getPosition().getX());
+
+        final double collidedSide = side > 0 ? e.getHitbox().getRightSide() : e.getHitbox().getLeftSide();
+        final double collidingSide = side > 0 ? this.leftSide : this.rightSide;
+
+        return collidedSide - collidingSide;
     }
 
     private void findBorders(final Point2D pos) {

@@ -32,7 +32,7 @@ public class SpriteRenderer extends RendererImpl {
         this.filename = filename;
 
         try {
-            this.img = new Image(new FileInputStream("assets/" + this.filename),
+            this.img = new Image(new FileInputStream("assets/" + filename),
                     getWidth(), getHeight(),
                     false,
                     true);
@@ -47,38 +47,42 @@ public class SpriteRenderer extends RendererImpl {
      * the sprite of the entity.
      *
      * @param position the position of the entity
-     * @param direction the direction of the entity
+     * @param xDirection the direction on the x-axis of the entity
+     * @param yDirection the direction on the y-axis of the entity
      * @param rotation the rotation of the entity
      * @return an ImageView if the asset given as input does exist,
      * the rectangle of the super class will be rendered otherwise
      */
     @Override
-    public Node render(final Point2D position, final int direction, final int rotation) {
+    public Node render(final Point2D position, final int xDirection, final int yDirection, final double rotation) {
 
         if (this.img != null) {
-            final ImageView renderedImage = new ImageView();
+            final ImageView iv2 = new ImageView();
 
-            renderedImage.setImage(this.img);
+            iv2.setImage(this.img);
 
-            renderedImage.setFitWidth(getWidth());
-            renderedImage.setScaleX(direction);
+            iv2.setFitWidth(getWidth());
+            iv2.setScaleX(xDirection);
+            iv2.setScaleY(yDirection);
 
-            renderedImage.setFitHeight(getHeight());
+            iv2.setFitHeight(getHeight());
 
-            renderedImage.setRotate(rotation);
+            iv2.setRotate(rotation);
 
-            renderedImage.setX(position.getX() - getWidth() / 2.0);
-            renderedImage.setY(position.getY() - getHeight());
+            iv2.setX(position.getX() - getWidth() / 2.0);
+            iv2.setY(position.getY() - getHeight());
 
-            renderedImage.setPreserveRatio(false);
-            renderedImage.setSmooth(true);
-            renderedImage.setCache(true);
+            iv2.setPreserveRatio(false);
+            iv2.setSmooth(true);
+            iv2.setCache(true);
 
-            return renderedImage;
+            return iv2;
         } else {
-            return super.render(position, direction, rotation);
+            return super.render(position, xDirection, yDirection, rotation);
         }
     }
+
+
 
     public void setImg(Image img) {
         this.img = img;

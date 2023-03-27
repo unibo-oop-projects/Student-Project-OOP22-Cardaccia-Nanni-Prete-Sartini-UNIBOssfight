@@ -2,6 +2,7 @@ package impl.entity;
 
 import core.component.Transform;
 import core.entity.AbstractEntity;
+import core.entity.Entity;
 import impl.component.SpriteRenderer;
 import javafx.scene.paint.Color;
 
@@ -29,7 +30,36 @@ public class Wall extends AbstractEntity {
      */
     @Override
     public void update(final Inputs input) {
+        
+    }
 
+    /**
+     * This static method is used to stop the entity colliding with the wall,
+     * by checking on each side of it if there has been an intersection
+     * between the hitboxes.
+     *
+     * @param collidingEntity the entity colliding
+     * @param wall the wall stopping the entity
+     */
+    public static void stop(final Entity collidingEntity,
+                               final Entity wall) {
+        if (Math.abs(collidingEntity.getHitbox().getIntersectionOnX(wall))
+                > Math.abs(collidingEntity.getHitbox().getIntersectionOnY(wall))) {
+            if (collidingEntity.getHitbox()
+                    .getCollisionSideOnY(wall.getPosition().getY()) > 0) {
+                collidingEntity.getTransform().moveTo(collidingEntity.getPosition().getX(),
+                        wall.getPosition().getY() + collidingEntity.getHeight() + 1);
+            } else {
+                final double topSide = wall.getPosition().getY() - wall.getHeight();
+                collidingEntity.getTransform().setGroundLevel(topSide);
+                if (collidingEntity.getTransform().isUnderGroundLevel()) {
+                    collidingEntity.getTransform().moveOnGroundLevel();
+                }
+            }
+        } else {
+            collidingEntity.getTransform()
+                    .move(collidingEntity.getHitbox().getIntersectionOnX(wall), 0);
+        }
     }
 
 }

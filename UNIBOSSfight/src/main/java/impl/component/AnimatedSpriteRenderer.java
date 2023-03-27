@@ -71,10 +71,10 @@ public class AnimatedSpriteRenderer extends SpriteRenderer{
     }
 
     @Override
-    public Node render(Point2D position, int direction, int rotation) {
+    public Node render(Point2D position, int xDirection, int yDirection, double rotation) {
         try {
             if (this.animationLength == 1)
-                return super.render(position, direction, rotation);
+                return super.render(position, xDirection,0 , rotation);
             else {
                 final ImageView renderedSprite = new ImageView();
 
@@ -84,7 +84,8 @@ public class AnimatedSpriteRenderer extends SpriteRenderer{
                 }
 
                 renderedSprite.setFitWidth(getWidth());
-                renderedSprite.setScaleX(direction);
+                renderedSprite.setScaleX(xDirection);
+                renderedSprite.setScaleY(yDirection);
 
                 renderedSprite.setFitHeight(getHeight());
 
@@ -99,7 +100,7 @@ public class AnimatedSpriteRenderer extends SpriteRenderer{
                 return renderedSprite;
             }
         }catch (Exception e) {
-            return super.render(position, direction, rotation);
+            return super.render(position, xDirection, 1, rotation);
         }
     }
 }

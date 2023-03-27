@@ -44,9 +44,9 @@ public class EnemyImpl extends Enemy {
     @Override
     public void initCollider() {
         final var collider = new ColliderImpl();
-        collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
-            setDirection(getDirection() * -1);
-            getTransform().move(getDirection() * 5, 0);
+        collider.addBehaviour(Collider.Entities.WALL, e -> {
+            Wall.stop(this, e);
+            setDirection((int) getHitbox().getCollisionSideOnX(e.getPosition().getX()));
         });
 
         collider.addBehaviour(Collider.Entities.BULLET, e -> {

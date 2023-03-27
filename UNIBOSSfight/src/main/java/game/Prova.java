@@ -8,8 +8,7 @@ import core.component.Transform;
 import core.entity.AbstractEntity;
 import core.entity.Entity;
 import impl.component.TransformImpl;
-import impl.entity.PlayerImpl;
-import impl.entity.Wall;
+import impl.entity.*;
 import impl.level.LevelImpl;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -128,6 +127,27 @@ public class Prova extends Application {
                     new Point2D(this.currentLevel.getPlayerPosition().getX() + 300, Window.getHeight())
                     , 0),
                     50, 50, "wall.png")
+        );
+
+        this.currentLevel.addEntity(
+                new Platform(new TransformImpl(
+                        new Point2D(this.currentLevel.getPlayerPosition().getX() + 900, Window.getHeight() / 2.0)
+                        , 0),
+                        50, 50, "wall.png")
+        );
+
+        this.currentLevel.addEntity(
+                new Coin(new TransformImpl(
+                        new Point2D(this.currentLevel.getPlayerPosition().getX() + 600, Window.getHeight() - 10)
+                        , 0),
+                        120, 120, "coin.png")
+        );
+
+        this.currentLevel.addEntity(
+                new HarmfulObstacle(new TransformImpl(
+                        new Point2D(this.currentLevel.getPlayerPosition().getX() + 1400, Window.getHeight() - 10)
+                        , 0),
+                        120, 120, "spine.png")
         );
 
         try {

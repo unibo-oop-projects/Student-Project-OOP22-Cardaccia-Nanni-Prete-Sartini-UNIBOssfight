@@ -3,7 +3,6 @@ package core.entity;
 import core.component.*;
 import impl.component.HitboxImpl;
 import impl.component.HealthImpl;
-import impl.component.TransformImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import util.Window;
@@ -67,11 +66,9 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     * This method returns the Transform of the entity.
-     *
-     * @return the Transform of the entity
+     * {@inheritDoc}
      */
-    protected Transform getTransform() {
+    public Transform getTransform() {
         return this.position;
     }
 
@@ -102,20 +99,18 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     * This method returns the damage inflicted to the entity.
-     *
-     * @return the inflicted damage to the entity
+     * {@inheritDoc}
      */
+    @Override
     public int getDamage() {
         return this.damage;
     }
 
     /**
-     * Assigns to the entity the damage that it inflicts.
-     *
-     * @param damage harm inflicted
+     * {@inheritDoc}
      */
-    protected void setDamage(final int damage) {
+    @Override
+    public void setDamage(final int damage) {
         this.damage = damage;
     }
 
@@ -174,6 +169,7 @@ public abstract class AbstractEntity implements Entity {
                         this.getPosition().getY()
                 ),
                 this.getDirection(),
+                1,
                 0
         );
     }
