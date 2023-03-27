@@ -1,6 +1,6 @@
 package impl.level;
 
-import core.component.Transform;
+import impl.component.TransformImpl;
 import core.entity.Entity;
 import core.level.Level;
 import impl.entity.PlayerImpl;
@@ -13,19 +13,14 @@ import java.util.stream.Stream;
 public class LevelImpl implements Level {
 
     private final List<Entity> entities;
-    private final PlayerImpl player;
-    private int count = 0;
-    private boolean goLeft = true;
+    private PlayerImpl player;
+    private transient int count = 0;
+    private transient boolean goLeft = true;
 
     public LevelImpl() {
 
         this.entities = new ArrayList<>();
-        this.player = new PlayerImpl(
-                new Transform(new Point2D(0, 300), 0),
-                250,
-                250,
-                "guido"
-        );
+        this.player = new PlayerImpl(new TransformImpl(new Point2D(0, 300), 0), 250, 250, "guido");
     }
 
     public void init() {
@@ -36,12 +31,16 @@ public class LevelImpl implements Level {
     @Override
     public void updateEntities() {
 
-        this.entities.forEach(e -> e.update(Entity.Inputs.EMPTY));
-        if (this.goLeft) {
-            this.entities.forEach(e -> e.update(Entity.Inputs.RIGHT));
-        } else {
-            this.entities.forEach(e -> e.update(Entity.Inputs.LEFT));
-        }
+        this.entities.stream()
+                .filter(e -> e.isUpdated(this.getPlayerPosition()))
+                .forEach(e -> {
+                    e.update(Entity.Inputs.EMPTY);
+                    if (this.goLeft) {
+                        e.update(Entity.Inputs.RIGHT);
+                    } else {
+                        e.update(Entity.Inputs.LEFT);
+                    }
+                });
 
         this.count++;
         if (this.count % 100 == 0) {
@@ -81,6 +80,7 @@ public class LevelImpl implements Level {
     public void collision() {
         // Player collisions
         this.entities.stream()
+                .filter(e -> e.isUpdated(this.getPlayerPosition()))
                 .filter(e -> this.player.getHitbox().collide(e.getHitbox()))
                 .forEach(this.player::manageCollision);
 

@@ -4,6 +4,7 @@ import core.component.Collider;
 import core.entity.Entity;
 
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -36,5 +37,15 @@ public class ColliderImpl implements Collider {
     @Override
     public void addBehaviour(final Entities key, final Consumer<Entity> value) {
         this.behaviours.putIfAbsent(key, value);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addBehaviours(List<Entities> keys, Consumer<Entity> value) {
+        for (var e : keys) {
+            addBehaviour(e, value);
+        }
     }
 }

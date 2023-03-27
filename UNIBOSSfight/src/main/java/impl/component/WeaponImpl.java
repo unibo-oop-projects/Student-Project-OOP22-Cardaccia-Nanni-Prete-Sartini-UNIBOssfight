@@ -4,10 +4,9 @@ import core.component.Renderer;
 import core.component.Transform;
 import core.component.Weapon;
 import core.entity.Bullet;
-import impl.entity.BulletImpl;
+import impl.factory.BulletFactory;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
 import util.Window;
 
 /**
@@ -17,10 +16,14 @@ public class WeaponImpl implements Weapon {
 
     private final int damage;
     private final Transform userPos;
+    private final Transform shootingPos;
     private final Renderer renderer;
+    private final BulletFactory bulletFactory = new BulletFactory();
+    private int yDirection = 1;
 
     /**
      * Creates a new instance of the class Weapon.
+     *
      * @param userPos the position of the entity
      *                which the weapon will be given to
      * @param damage the damage that the weapon can cause
@@ -31,6 +34,7 @@ public class WeaponImpl implements Weapon {
         this.userPos = userPos;
         this.damage = damage;
         this.renderer = renderer;
+        this.shootingPos = userPos;
     }
 
     /**
@@ -38,8 +42,8 @@ public class WeaponImpl implements Weapon {
      */
     @Override
     public Node render(final int direction, final int rotation) {
-        return this.renderer.render(new Point2D(Window.getWidth() / 2 + 10 * direction,
-                this.userPos.getPosition().getY() + 80 - 110), direction, rotation);
+        return this.renderer.render(new Point2D(Window.getWidth() / 2 + 10,
+                this.userPos.getPosition().getY() -30), 1, this.yDirection, rotation);
     }
 
     /**
@@ -47,13 +51,16 @@ public class WeaponImpl implements Weapon {
      */
     @Override
     public Bullet fire(final Point2D target) {
+        Bullet tempBullet = this.bulletFactory.getPlayerBullet(this.userPos, target);
+        return tempBullet;
+    }
 
-        Transform shootingPosition = Transform.copyOf(this.userPos);
-        shootingPosition.move(0, -125);
+    @Override
+    public Transform getShootingPos(){ return this.shootingPos; }
 
-        return new BulletImpl(shootingPosition, 20, 20,
-                new SpriteRenderer(20, 20, Color.BLACK, "testImage2.png"),
-                1, target, 20);
+    @Override
+    public void setYDirection(int yDirection) {
+        this.yDirection = yDirection;
     }
 }
 

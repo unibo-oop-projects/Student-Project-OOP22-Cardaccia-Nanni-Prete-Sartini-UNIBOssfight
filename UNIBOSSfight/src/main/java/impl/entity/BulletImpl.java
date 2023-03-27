@@ -2,6 +2,7 @@ package impl.entity;
 
 import core.component.Renderer;
 import core.component.Transform;
+import impl.component.TransformImpl;
 import core.entity.Bullet;
 import javafx.geometry.Point2D;
 

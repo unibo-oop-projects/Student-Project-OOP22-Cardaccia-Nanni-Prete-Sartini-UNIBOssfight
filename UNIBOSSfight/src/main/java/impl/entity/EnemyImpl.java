@@ -2,6 +2,7 @@ package impl.entity;
 
 import core.component.Collider;
 import core.component.Transform;
+import impl.component.TransformImpl;
 import core.entity.Bullet;
 import core.entity.Enemy;
 import impl.component.ColliderImpl;
@@ -13,10 +14,9 @@ import javafx.scene.paint.Color;
  */
 public class EnemyImpl extends Enemy {
 
-    private static final int COLLISION_DAMAGE = 5;
-
     /**
      * Creates a new instance of the class EnemyImpl.
+     *
      * @param position the position of the enemy
      * @param height the height of the enemy
      * @param width the width of the enemy
@@ -34,6 +34,7 @@ public class EnemyImpl extends Enemy {
     @Override
     public void update(final Inputs input) {
         getTransform().move(getDirection(), 0);
+        getTransform().resetGroundLevel();
         getHitbox().update(getPosition());
     }
 
@@ -43,15 +44,14 @@ public class EnemyImpl extends Enemy {
     @Override
     public void initCollider() {
         final var collider = new ColliderImpl();
-        collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
-            setDirection(getDirection() * -1);
-            getTransform().move(getDirection() * 5, 0);
+        collider.addBehaviour(Collider.Entities.WALL, e -> {
+            Wall.stop(this, e);
+            setDirection((int) getHitbox().getCollisionSideOnX(e.getPosition().getX()));
         });
 
         collider.addBehaviour(Collider.Entities.BULLET, e -> {
             final Bullet b = (Bullet) e;
             getHealth().damage(b.getDamage());
-            b.getHealth().damage(b.getHealth().getValue());
         });
 
         setCollider(collider);
