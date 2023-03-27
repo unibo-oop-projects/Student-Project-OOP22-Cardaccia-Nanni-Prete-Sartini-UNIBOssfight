@@ -1,6 +1,7 @@
 package impl.entity;
 
 import core.component.Collider;
+import core.component.Renderer;
 import core.component.Transform;
 import core.component.Weapon;
 import core.entity.AbstractEntity;
@@ -31,6 +32,11 @@ public class PlayerImpl extends AbstractEntity {
                       final Integer width, final String filename) {
         super(position, height, width,
                 new AnimatedSpriteRenderer(height, width, Color.RED, filename));
+    }
+
+    public PlayerImpl(final Transform position, final Integer height,
+                      final Integer width, final Renderer renderer) {
+        super(position, height, width, renderer);
     }
 
     @Override
