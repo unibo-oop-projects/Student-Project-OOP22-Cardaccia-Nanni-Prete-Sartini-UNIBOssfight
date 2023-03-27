@@ -177,7 +177,7 @@ public abstract class AbstractEntity implements Entity {
                 ),
                 this.getDirection(),
                 1,
-                0
+                this.getTransform().getRotation()
         );
     }
 
@@ -186,7 +186,7 @@ public abstract class AbstractEntity implements Entity {
      */
     @Override
     public boolean isDisplayed(final Point2D playerPosition) {
-        return Math.abs(this.getPosition().subtract(playerPosition).getX()) < Window.getWidth() / 2
+        return Math.abs(this.getPosition().subtract(playerPosition).getX()) - this.width / 2 < Window.getWidth() / 2
                 && this.getPosition().getY() <= Window.getHeight()
                 && this.getPosition().getY() > 0;
     }
