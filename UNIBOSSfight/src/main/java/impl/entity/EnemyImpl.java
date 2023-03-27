@@ -80,10 +80,7 @@ public class EnemyImpl extends Enemy {
                 this.ySpeed = 0;
             }
             this.update(Inputs.SPACE);
-            //setDirection((int) getHitbox().getCollisionSideOnX(e.getPosition().getX()));
         });
-
-        collider.addBehaviour(Collider.Entities.PLAYER, e -> {
 
         collider.addBehaviour(Collider.Entities.BULLET, e -> {
             final Bullet b = (Bullet) e;
