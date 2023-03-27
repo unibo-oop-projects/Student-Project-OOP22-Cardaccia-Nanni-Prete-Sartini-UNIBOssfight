@@ -72,20 +72,4 @@ public abstract class Bullet extends AbstractEntity {
 
         setCollider(collider);
     }
-
-    @Override
-    public Node render(Point2D position) {
-        return this.getRenderer().render(
-                new Point2D(
-                        this.getPosition()
-                                .subtract(position)
-                                .add(Window.getWidth() / 2, 0)
-                                .getX(),
-                        this.getPosition().getY()
-                ),
-                this.getDirection(),
-                1,
-                (int)this.getTransform().getRotation()
-        );
-    }
 }
