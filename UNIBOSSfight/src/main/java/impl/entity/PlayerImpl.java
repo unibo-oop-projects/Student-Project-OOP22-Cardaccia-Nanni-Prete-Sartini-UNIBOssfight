@@ -102,7 +102,8 @@ public class PlayerImpl extends AbstractEntity {
 
         collider.addBehaviour(Collider.Entities.WALL, e -> {
             Wall.stop(this, e);
-            if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) > 0) {
+            if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) > 0
+            && Math.abs(e.getPosition().getX() - this.getPosition().getX()) < e.getWidth() / 2 + this.getWidth() / 2) {
                 this.ySpeed = 0;
             }
         });
