@@ -4,11 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import core.component.Renderer;
-import core.component.Transform;
 import core.entity.AbstractEntity;
 import core.entity.Entity;
-import impl.component.TransformImpl;
-import impl.entity.*;
+import impl.entity.PlayerImpl;
 import impl.level.LevelImpl;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -22,7 +20,6 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -48,7 +45,7 @@ public class Prova extends Application {
     private static final int MIN_WINDOW_HEIGHT = 600;
     private static final int MIN_WINDOW_WIDTH = 800;
 
-    private final LevelImpl currentLevel = new LevelImpl();//loadLevel();
+    private final LevelImpl currentLevel = loadLevel();
     private Group root = new Group();
     private Scene currentScene;
     private InputManager inputManager;
@@ -122,7 +119,7 @@ public class Prova extends Application {
         tl.setCycleCount(Animation.INDEFINITE);
 
 
-        this.currentLevel.addEntity(
+        /*this.currentLevel.addEntity(
             new Wall(new TransformImpl(
                     new Point2D(this.currentLevel.getPlayerPosition().getX() + 300, Window.getHeight())
                     , 0),
@@ -130,7 +127,7 @@ public class Prova extends Application {
         );
 
         this.currentLevel.addEntity(
-                new Platform(new TransformImpl(
+                new Wall(new TransformImpl(
                         new Point2D(this.currentLevel.getPlayerPosition().getX() + 900, Window.getHeight() / 2.0)
                         , 0),
                         50, 50, "wall.png")
@@ -148,7 +145,7 @@ public class Prova extends Application {
                         new Point2D(this.currentLevel.getPlayerPosition().getX() + 1400, Window.getHeight() - 10)
                         , 0),
                         120, 120, "spine.png")
-        );
+        );*/
 
         try {
             String json = readFile("output.json", StandardCharsets.UTF_8);
@@ -207,12 +204,6 @@ public class Prova extends Application {
         rect.setFill(this.imagePattern);
 
         root.getChildren().add(rect);
-
-        Text text = new Text(Double.toString(currentLevel.getRotation()));
-        text.setX(100);
-        text.setY(100);
-
-        root.getChildren().add(text);
     }
 
     // TODO creare copyOf del level
