@@ -12,16 +12,14 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import util.Acceleration;
-import util.Window;
-
 import java.util.ArrayList;
+import util.Window;
 import java.util.List;
 
 public class PlayerImpl extends AbstractEntity {
 
     private transient double xSpeed = 0;
     private transient double ySpeed = 0;
-    private static int DAMAGE_INFLICTED = 20;
     private final WeaponFactory weaponFactory = new WeaponFactory();
     private transient final Weapon weapon = weaponFactory.getPlayerWeapon(this.getTransform());
     private transient double rotation;
@@ -114,10 +112,11 @@ public class PlayerImpl extends AbstractEntity {
             e.getHealth().destroy();
         });
 
-        collider.addBehaviours(List.of(Collider.Entities.ENEMY, Collider.Entities.HARMFUL_OBSTACLE), e -> {
+        collider.addBehaviours(List.of(Collider.Entities.ENEMY,
+                Collider.Entities.HARMFUL_OBSTACLE), e -> {
             this.ySpeed = -20;
             this.xSpeed = 20 * getHitbox().getCollisionSideOnX(e.getPosition().getX());
-            this.getHealth().damage(DAMAGE_INFLICTED);
+            this.getHealth().damage(e.getDamage());
         });
 
         collider.addBehaviour(Collider.Entities.PLATFORM, e -> Platform.stop(this, e));

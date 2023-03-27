@@ -85,6 +85,20 @@ public interface Entity {
     Transform getTransform();
 
     /**
+     * This method returns the damage inflicted to the entity.
+     *
+     * @return the inflicted damage to the entity
+     */
+    int getDamage();
+
+    /**
+     * Assigns to the entity the damage that it inflicts.
+     *
+     * @param damage harm inflicted
+     */
+    void setDamage(int damage);
+
+    /**
      * This method checks if the entity is displayed in the game window.
      *
      * @param position position of the player

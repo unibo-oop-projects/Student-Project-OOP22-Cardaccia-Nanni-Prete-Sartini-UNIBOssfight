@@ -99,20 +99,18 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     * This method returns the damage inflicted to the entity.
-     *
-     * @return the inflicted damage to the entity
+     * {@inheritDoc}
      */
+    @Override
     public int getDamage() {
         return this.damage;
     }
 
     /**
-     * Assigns to the entity the damage that it inflicts.
-     *
-     * @param damage harm inflicted
+     * {@inheritDoc}
      */
-    protected void setDamage(final int damage) {
+    @Override
+    public void setDamage(final int damage) {
         this.damage = damage;
     }
 
