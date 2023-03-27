@@ -4,6 +4,7 @@ import core.component.Collider;
 import core.component.Health;
 import core.component.Hitbox;
 import core.component.Transform;
+import core.component.Behaviour;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import java.util.Optional;
@@ -91,6 +92,8 @@ public interface Entity {
      */
     int getDamage();
 
+    Behaviour getBehaviour();
+
     /**
      * Assigns to the entity the damage that it inflicts.
      *
@@ -136,7 +139,5 @@ public interface Entity {
      * Initialise the collider of the entity.
      */
     void initCollider();
-
-
 
 }
