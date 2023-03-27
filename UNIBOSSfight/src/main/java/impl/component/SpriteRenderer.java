@@ -37,7 +37,8 @@ public class SpriteRenderer extends RendererImpl {
                     false,
                     true);
         } catch (Exception e) {
-            System.out.println("ERRORE: risorsa non trovata");
+            System.out.println("ERRORE: risorsa non trovata " + filename + " " + this.getClass().getName());
+            System.out.println(e);
         }
 
     }
@@ -82,7 +83,9 @@ public class SpriteRenderer extends RendererImpl {
         }
     }
 
-
+    protected Image getImg() {
+        return this.img;
+    }
 
     public void setImg(Image img) {
         this.img = img;
