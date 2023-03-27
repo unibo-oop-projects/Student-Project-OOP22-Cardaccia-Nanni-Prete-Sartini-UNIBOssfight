@@ -1,6 +1,7 @@
 package core.entity;
 
 import core.component.*;
+import impl.component.BehaviourImpl;
 import impl.component.HitboxImpl;
 import impl.component.HealthImpl;
 import javafx.geometry.Point2D;
@@ -22,6 +23,7 @@ public abstract class AbstractEntity implements Entity {
     private final Renderer renderer;
     private final Health health;
     private transient Collider collider;
+    private transient final Behaviour behaviour;
     private transient int direction;
 
     /**
@@ -46,6 +48,7 @@ public abstract class AbstractEntity implements Entity {
         this.direction = 1;
         this.hitbox = new HitboxImpl(width / 2.0, height, this.position.getPosition());
         this.collider = null;
+        this.behaviour = new BehaviourImpl();
     }
 
     /**
@@ -77,7 +80,7 @@ public abstract class AbstractEntity implements Entity {
      */
     @Override
     public Hitbox getHitbox() {
-        return hitbox;
+        return this.hitbox;
     }
 
     /**
@@ -87,6 +90,10 @@ public abstract class AbstractEntity implements Entity {
      */
     protected int getDirection() {
         return this.direction;
+    }
+
+    public Behaviour getBehaviour() {
+        return this.behaviour;
     }
 
     /**

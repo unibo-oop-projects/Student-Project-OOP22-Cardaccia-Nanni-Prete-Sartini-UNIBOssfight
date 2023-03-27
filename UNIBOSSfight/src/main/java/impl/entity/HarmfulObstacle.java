@@ -30,7 +30,6 @@ public class HarmfulObstacle extends AbstractEntity {
      */
     @Override
     public void update(final Inputs input) {
-
     }
 
 }
