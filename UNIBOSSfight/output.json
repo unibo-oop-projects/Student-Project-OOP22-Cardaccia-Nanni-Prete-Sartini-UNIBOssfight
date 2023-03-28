@@ -1,7 +1,7 @@
 {
   "entities": [
     {
-      "className": "impl.entity.Wall",
+      "className": "app.impl.entity.Wall",
       "height": 50,
       "width": 50,
       "position": {
@@ -26,7 +26,7 @@
       }
     },
     {
-      "className": "impl.entity.Wall",
+      "className": "app.impl.entity.Wall",
       "height": 50,
       "width": 50,
       "position": {
@@ -51,7 +51,7 @@
       }
     },
     {
-      "className": "impl.entity.HarmfulObstacle",
+      "className": "app.impl.entity.HarmfulObstacle",
       "height": 120,
       "width": 120,
       "position": {
@@ -80,7 +80,7 @@
     "weaponFactory": {
       "bulletFactory": {}
     },
-    "className": "impl.entity.PlayerImpl",
+    "className": "app.impl.entity.PlayerImpl",
     "height": 250,
     "width": 250,
     "position": {
