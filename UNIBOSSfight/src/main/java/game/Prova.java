@@ -89,6 +89,9 @@ public class Prova extends Application {
 
         currentScene.setOnMouseClicked(e -> this.currentLevel.playerShoot(new Point2D(e.getX(), e.getY())));
 
+        //FIXME prova per fire automatico (non funziona)
+        //this.currentLevel.playerShoot(new Point2D(0,0));
+
         //Adding scene to the stage
         stage.setScene(currentScene);
 

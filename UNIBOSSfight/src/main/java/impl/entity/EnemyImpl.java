@@ -43,7 +43,7 @@ public class EnemyImpl extends Enemy {
                 setDirection(-1);
             }
             case RIGHT -> {
-                this.xSpeed = Acceleration.accelerate(this.xSpeed, 3, 1);
+                this.xSpeed = Acceleration.accelerate(this.xSpeed, -3, 1);
                 setDirection(1);
             }
             case SPACE -> {
@@ -53,7 +53,7 @@ public class EnemyImpl extends Enemy {
                 }
             }
             case EMPTY -> {
-                getTransform().move(this.xSpeed, ySpeed);
+                getTransform().move(this.xSpeed, this.ySpeed);
                 this.xSpeed = Acceleration.accelerate(this.xSpeed, 0, 0.5);
                 this.ySpeed = this.isJumping()
                         ? Acceleration.accelerate(this.ySpeed, 20, 1) : 0;

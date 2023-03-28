@@ -11,7 +11,7 @@ public class BossFactory {
 
     public Boss firstBoss(Transform startingPos){
         Transform posCopy = startingPos.copyOf();
-        posCopy.move(0, 250);
+        posCopy.move(0, -250);
         return new BossImpl(startingPos, 500, 500, 1000, weaponFactory.getBigBulletGun(posCopy), "goomba.png");
     }
 
