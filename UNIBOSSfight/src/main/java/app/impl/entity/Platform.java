@@ -1,5 +1,6 @@
 package app.impl.entity;
 
+import app.core.component.Renderer;
 import app.core.component.Transform;
 import app.core.entity.Entity;
 import app.core.entity.AbstractEntity;
@@ -16,6 +17,7 @@ public class Platform extends AbstractEntity {
 
     /**
      * Creates a new instance of the class Platform.
+     *
      * @param position the position of the platform
      * @param height the height of the platform
      * @param width the width of the platform
@@ -25,6 +27,19 @@ public class Platform extends AbstractEntity {
                     final int width, final String filename) {
         super(position, height, width,
                 new SpriteRenderer(height, width, Color.GREEN, filename));
+    }
+
+    /**
+     * Creates a new instance of the class Platform.
+     *
+     * @param position the position of the platform
+     * @param height the height of the platform
+     * @param width the width of the platform
+     * @param renderer the renderer
+     */
+    public Platform(final Transform position, final int height,
+                    final int width, final Renderer renderer) {
+        super(position, height, width, renderer);
     }
 
     /**

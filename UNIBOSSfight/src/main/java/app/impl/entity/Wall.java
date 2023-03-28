@@ -1,5 +1,6 @@
 package app.impl.entity;
 
+import app.core.component.Renderer;
 import app.core.component.Transform;
 import app.core.entity.AbstractEntity;
 import app.core.entity.Entity;
@@ -13,7 +14,8 @@ import javafx.scene.paint.Color;
 public class Wall extends AbstractEntity {
 
     /**
-     * The constructor of the class which creates a new instance of Wall.
+     * Creates a new instance of the class Wall.
+     *
      * @param position the position of the wall
      * @param height the height of the wall
      * @param width the width of the wall
@@ -23,6 +25,19 @@ public class Wall extends AbstractEntity {
                 final int width, final String filename) {
         super(position, height, width,
                 new SpriteRenderer(height, width, Color.BROWN, filename));
+    }
+
+    /**
+     * Creates a new instance of the class Wall.
+     *
+     * @param position the position of the wall
+     * @param height the height of the wall
+     * @param width the width of the wall
+     * @param renderer the renderer
+     */
+    public Wall(final Transform position, final int height,
+                final int width, final Renderer renderer) {
+        super(position, height, width, renderer);
     }
 
     /**
