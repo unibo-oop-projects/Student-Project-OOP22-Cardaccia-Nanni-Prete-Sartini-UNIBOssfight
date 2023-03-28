@@ -63,7 +63,7 @@ public class TransformImpl implements Transform {
      */
     @Override
     public boolean isUnderGroundLevel() {
-        return this.position.getY() > yGround;
+        return this.position.getY() < yGround;
     }
 
     /**
@@ -71,7 +71,7 @@ public class TransformImpl implements Transform {
      */
     @Override
     public void resetGroundLevel() {
-        setGroundLevel(Window.getHeight());
+        setGroundLevel(0);
         moveOnGroundLevel();
     }
 

@@ -61,11 +61,11 @@ public class Wall extends AbstractEntity {
         if (Math.abs(collidingEntity.getHitbox().getIntersectionOnX(wall))
                 > Math.abs(collidingEntity.getHitbox().getIntersectionOnY(wall))) {
             if (collidingEntity.getHitbox()
-                    .getCollisionSideOnY(wall.getPosition().getY()) > 0) {
+                    .getCollisionSideOnY(wall.getPosition().getY()) < 0) {
                 collidingEntity.getTransform().moveTo(collidingEntity.getPosition().getX(),
-                        wall.getPosition().getY() + collidingEntity.getHeight() + 1);
+                        wall.getPosition().getY() - collidingEntity.getHeight() - 1);
             } else {
-                final double topSide = wall.getPosition().getY() - wall.getHeight();
+                final double topSide = wall.getHitbox().getTopSide();
                 collidingEntity.getTransform().setGroundLevel(topSide);
                 if (collidingEntity.getTransform().isUnderGroundLevel()) {
                     collidingEntity.getTransform().moveOnGroundLevel();

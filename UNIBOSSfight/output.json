@@ -1,13 +1,113 @@
 {
   "entities": [
     {
+      "className": "app.impl.entity.EnemyImpl",
+      "height": 50,
+      "width": 50,
+      "position": {
+        "position": {
+          "x": 923.0,
+          "y": 100.0,
+          "hash": 0
+        },
+        "rotation": 0.0
+      },
+      "renderer": {
+        "filename": "goomba/goomba.png",
+        "color": {
+          "red": 0.64705884,
+          "green": 0.16470589,
+          "blue": 0.16470589,
+          "opacity": 1.0
+        }
+      },
+      "health": {
+        "hp": 100
+      }
+    },
+    {
+      "className": "app.impl.entity.EnemyImpl",
+      "height": 50,
+      "width": 50,
+      "position": {
+        "position": {
+          "x": 892.0,
+          "y": 100.0,
+          "hash": 0
+        },
+        "rotation": 0.0
+      },
+      "renderer": {
+        "filename": "goomba/goomba.png",
+        "color": {
+          "red": 0.64705884,
+          "green": 0.16470589,
+          "blue": 0.16470589,
+          "opacity": 1.0
+        }
+      },
+      "health": {
+        "hp": 100
+      }
+    },
+    {
+      "className": "app.impl.entity.EnemyImpl",
+      "height": 50,
+      "width": 50,
+      "position": {
+        "position": {
+          "x": 851.0,
+          "y": 100.0,
+          "hash": 0
+        },
+        "rotation": 0.0
+      },
+      "renderer": {
+        "filename": "goomba/goomba.png",
+        "color": {
+          "red": 0.64705884,
+          "green": 0.16470589,
+          "blue": 0.16470589,
+          "opacity": 1.0
+        }
+      },
+      "health": {
+        "hp": 100
+      }
+    },
+    {
+      "className": "app.impl.entity.EnemyImpl",
+      "height": 50,
+      "width": 50,
+      "position": {
+        "position": {
+          "x": 900.0,
+          "y": 100.0,
+          "hash": 0
+        },
+        "rotation": 0.0
+      },
+      "renderer": {
+        "filename": "goomba/goomba.png",
+        "color": {
+          "red": 0.64705884,
+          "green": 0.16470589,
+          "blue": 0.16470589,
+          "opacity": 1.0
+        }
+      },
+      "health": {
+        "hp": 100
+      }
+    },
+    {
       "className": "app.impl.entity.Wall",
       "height": 50,
       "width": 50,
       "position": {
         "position": {
           "x": 300.0,
-          "y": 790.0,
+          "y": 0.0,
           "hash": 0
         },
         "rotation": 0.0
@@ -57,7 +157,7 @@
       "position": {
         "position": {
           "x": 1400.0,
-          "y": 780.0,
+          "y": 0.0,
           "hash": 0
         },
         "rotation": 0.0

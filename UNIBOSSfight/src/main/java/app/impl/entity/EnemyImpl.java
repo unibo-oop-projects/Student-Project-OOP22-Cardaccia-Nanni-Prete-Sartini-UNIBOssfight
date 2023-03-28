@@ -48,15 +48,15 @@ public class EnemyImpl extends Enemy {
             }
             case SPACE -> {
                 if (!isJumping()) {
-                    this.ySpeed = -30;
-                    getTransform().move(0, -1);
+                    this.ySpeed = 30;
+                    getTransform().move(0, 1);
                 }
             }
             case EMPTY -> {
                 getTransform().move(this.xSpeed, ySpeed);
                 this.xSpeed = Acceleration.accelerate(this.xSpeed, 0, 0.5);
                 this.ySpeed = this.isJumping()
-                        ? Acceleration.accelerate(this.ySpeed, 20, 1) : 0;
+                        ? Acceleration.accelerate(this.ySpeed, -20, 1) : 0;
             }
         }
 
@@ -65,7 +65,7 @@ public class EnemyImpl extends Enemy {
     }
 
     private boolean isJumping() {
-        return this.getPosition().getY() < getTransform().getGroundLevel();
+        return this.getPosition().getY() > getTransform().getGroundLevel();
     }
 
     /**
@@ -76,7 +76,7 @@ public class EnemyImpl extends Enemy {
         final var collider = new ColliderImpl();
         collider.addBehaviour(Collider.Entities.WALL, e -> {
             Wall.stop(this, e);
-            if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) > 0) {
+            if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) < 0) {
                 this.ySpeed = 0;
             }
             this.update(Inputs.SPACE);

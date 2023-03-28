@@ -43,7 +43,7 @@ public abstract class Bullet extends AbstractEntity {
         final double dy = target.getY() - getPosition().getY();
         final double angle = Math.atan2(dy, dx);
         this.xShift = this.speed * Math.cos(angle);
-        this.yShift = this.speed * Math.sin(angle);
+        this.yShift = -this.speed * Math.sin(angle);
 
         this.getTransform().setRotation((float) Math.toDegrees(angle));
     }
