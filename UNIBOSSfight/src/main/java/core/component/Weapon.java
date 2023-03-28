@@ -35,5 +35,7 @@ public interface Weapon extends Component {
      */
     Transform getShootingPos();
 
-    public void setYDirection(int direction);
+    void setYDirection(int direction);
+
+    void updatePosition(Point2D newPos);
 }

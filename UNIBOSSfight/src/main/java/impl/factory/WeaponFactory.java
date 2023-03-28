@@ -15,18 +15,25 @@ public class WeaponFactory {
 
     public Weapon getPlayerWeapon(Transform playerPos){
 
-        return new WeaponImpl(playerPos, 50, new SpriteRenderer(150, 180, Color.RED, "gnu.png")){
+        final Transform posCopy = playerPos.copyOf();
+        //posCopy.move(90, -200);
+
+        return new WeaponImpl(playerPos, posCopy, 50, new SpriteRenderer(150, 180, Color.RED, "gnu.png")){
 
             @Override
             public Bullet fire(final Point2D target){
-                return bulletFactory.getPlayerBullet(playerPos, target);
+                return bulletFactory.getPlayerBullet(this.getShootingPos(), target);
             }
 
         };
     }
 
     public Weapon getBigBulletGun(Transform userPos){
-        return new WeaponImpl(userPos, 100, new SpriteRenderer(150, 180, Color.RED, "gnu.png")){
+
+        final Transform posCopy = userPos.copyOf();
+        posCopy.move(90, -200);
+
+        return new WeaponImpl(userPos, posCopy, 100, new SpriteRenderer(150, 180, Color.RED, "gnu.png")){
 
             private final int RATE_OF_FIRE = 60;
             private int rateOfFireCounter = 0;

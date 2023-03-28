@@ -94,6 +94,8 @@ public class PlayerImpl extends AbstractEntity {
             }
         }
 
+        this.weapon.updatePosition(this.getPosition());
+
         getTransform().resetGroundLevel();
         getHitbox().update(this.getPosition());
     }
@@ -120,7 +122,7 @@ public class PlayerImpl extends AbstractEntity {
         });
 
         collider.addBehaviours(List.of(Collider.Entities.ENEMY,
-                Collider.Entities.HARMFUL_OBSTACLE), e -> {
+                Collider.Entities.HARMFUL_OBSTACLE, Collider.Entities.BOSS), e -> {
             this.ySpeed = -20;
             this.xSpeed = 20 * getHitbox().getCollisionSideOnX(e.getPosition().getX());
             this.getHealth().damage(e.getDamage());

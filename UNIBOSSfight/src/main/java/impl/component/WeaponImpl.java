@@ -16,7 +16,7 @@ public class WeaponImpl implements Weapon {
 
     private final int damage;
     private final Transform userPos;
-    private final Transform shootingPos;
+    private Transform shootingPos;
     private final Renderer renderer;
     private final BulletFactory bulletFactory = new BulletFactory();
     private int yDirection = 1;
@@ -29,12 +29,13 @@ public class WeaponImpl implements Weapon {
      * @param damage the damage that the weapon can cause
      * @param renderer the renderer of the weapon
      */
-    public WeaponImpl(final Transform userPos,
+    public WeaponImpl(final Transform userPos, final Transform shootingPos,
                       final int damage, final Renderer renderer) {
         this.userPos = userPos;
         this.damage = damage;
         this.renderer = renderer;
-        this.shootingPos = userPos;
+        this.shootingPos = shootingPos;
+
     }
 
     /**
@@ -51,7 +52,7 @@ public class WeaponImpl implements Weapon {
      */
     @Override
     public Bullet fire(final Point2D target) {
-        Bullet tempBullet = this.bulletFactory.getPlayerBullet(this.userPos, target);
+        Bullet tempBullet = this.bulletFactory.getPlayerBullet(this.getShootingPos(), target);
         return tempBullet;
     }
 
@@ -61,6 +62,12 @@ public class WeaponImpl implements Weapon {
     @Override
     public void setYDirection(int yDirection) {
         this.yDirection = yDirection;
+    }
+
+    @Override
+    public void updatePosition(Point2D newPos) {
+        this.userPos.moveTo(newPos.getX(), newPos.getY());
+        this.shootingPos.moveTo(this.userPos.getPosition().getX() + 90, this.userPos.getPosition().getY() - 125);
     }
 }
 
