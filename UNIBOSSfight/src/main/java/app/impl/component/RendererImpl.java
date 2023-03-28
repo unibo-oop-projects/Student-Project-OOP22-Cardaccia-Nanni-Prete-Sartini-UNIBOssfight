@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**
- * This class models the component used to render the entities of the game.
+ * This class implements the renderer.
  */
 public class RendererImpl implements Renderer {
 

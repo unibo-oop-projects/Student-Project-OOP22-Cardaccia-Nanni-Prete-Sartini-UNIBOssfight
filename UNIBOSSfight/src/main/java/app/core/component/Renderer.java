@@ -3,6 +3,9 @@ package app.core.component;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 
+/**
+ * This class models the component used to render the entities of the game.
+ */
 public interface Renderer extends Component {
 
     /**

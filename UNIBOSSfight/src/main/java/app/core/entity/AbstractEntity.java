@@ -98,6 +98,10 @@ public abstract class AbstractEntity implements Entity {
         return this.direction;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Behaviour getBehaviour() {
         return this.behaviour;
     }
@@ -197,8 +201,11 @@ public abstract class AbstractEntity implements Entity {
                 && this.getPosition().getY() > 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean isUpdated(Point2D position) {
+    public boolean isUpdated(final Point2D position) {
         return Math.abs(this.getPosition().subtract(position).getX()) < Window.getWidth();
     }
 

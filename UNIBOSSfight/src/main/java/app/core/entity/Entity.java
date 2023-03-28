@@ -92,6 +92,11 @@ public interface Entity {
      */
     int getDamage();
 
+    /**
+     * This method returns the behaviour of the entity.
+     *
+     * @return the component Behaviour
+     */
     Behaviour getBehaviour();
 
     /**
@@ -110,6 +115,14 @@ public interface Entity {
      */
     boolean isDisplayed(Point2D position);
 
+    /**
+     * This method checks if the entity should be updated based on
+     * its position and the distance from the position of the player.
+     *
+     * @param position the position of the player
+     * @return true if the entity should be updated,
+     *         false otherwise
+     */
     boolean isUpdated(Point2D position);
 
     /**

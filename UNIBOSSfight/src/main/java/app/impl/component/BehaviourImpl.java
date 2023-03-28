@@ -10,7 +10,8 @@ public class BehaviourImpl implements Behaviour {
 
     }
     @Override
-    public Entity.Inputs behave(Transform playerPosition, Transform entityPosition) {
+    public Entity.Inputs behave(final Transform playerPosition,
+                                final Transform entityPosition) {
         if (playerPosition.getPosition().getX() < entityPosition.getPosition().getX()) {
             return Entity.Inputs.LEFT;
         }
