@@ -7,15 +7,11 @@ import app.core.entity.Enemy;
 import app.impl.component.ColliderImpl;
 import app.impl.component.SpriteRenderer;
 import javafx.scene.paint.Color;
-import app.util.Acceleration;
 
 /**
  * This class implements the enemy.
  */
 public class EnemyImpl extends Enemy {
-
-    private transient double xSpeed = 0;
-    private transient double ySpeed = 0;
 
     /**
      * Creates a new instance of the class EnemyImpl.
@@ -29,43 +25,8 @@ public class EnemyImpl extends Enemy {
     public EnemyImpl(final Transform position, final int height, final int width, final String filename) {
         super(position, height, width,
                 new SpriteRenderer(height, width, Color.ALICEBLUE, filename));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update(final Inputs input) {
-
-        switch (input) {
-            case LEFT -> {
-                this.xSpeed =  Acceleration.accelerate(this.xSpeed, -3, 1);
-                setDirection(-1);
-            }
-            case RIGHT -> {
-                this.xSpeed = Acceleration.accelerate(this.xSpeed, 3, 1);
-                setDirection(1);
-            }
-            case SPACE -> {
-                if (!isJumping()) {
-                    this.ySpeed = 30;
-                    getTransform().move(0, 1);
-                }
-            }
-            case EMPTY -> {
-                getTransform().move(this.xSpeed, ySpeed);
-                this.xSpeed = Acceleration.accelerate(this.xSpeed, 0, 0.5);
-                this.ySpeed = this.isJumping()
-                        ? Acceleration.accelerate(this.ySpeed, -20, 1) : 0;
-            }
-        }
-
-        getTransform().resetGroundLevel();
-        getHitbox().update(this.getPosition());
-    }
-
-    private boolean isJumping() {
-        return this.getPosition().getY() > getTransform().getGroundLevel();
+        maxXSpeed = 5;
+        maxYSpeed = 20;
     }
 
     /**
@@ -77,7 +38,7 @@ public class EnemyImpl extends Enemy {
         collider.addBehaviour(Collider.Entities.WALL, e -> {
             Wall.stop(this, e);
             if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) < 0) {
-                this.ySpeed = 0;
+                setYSpeed(0);
             }
             this.update(Inputs.SPACE);
         });

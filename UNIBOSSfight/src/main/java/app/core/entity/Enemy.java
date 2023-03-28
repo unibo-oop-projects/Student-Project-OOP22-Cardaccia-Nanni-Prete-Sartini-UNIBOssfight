@@ -7,7 +7,7 @@ import app.core.component.Transform;
  * This class models the enemy of the game, which causes damage
  * to the player and can be killed by him.
  */
-public abstract class Enemy extends AbstractEntity {
+public abstract class Enemy extends ActiveEntity {
 
     /**
      * The constructor of the class.

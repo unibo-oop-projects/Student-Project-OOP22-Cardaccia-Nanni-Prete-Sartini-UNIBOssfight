@@ -3,7 +3,7 @@ package app.impl.entity;
 import app.core.component.Collider;
 import app.core.component.Transform;
 import app.core.component.Weapon;
-import app.core.entity.AbstractEntity;
+import app.core.entity.ActiveEntity;
 import app.core.entity.Bullet;
 import app.impl.component.AnimatedSpriteRenderer;
 import app.impl.component.ColliderImpl;
@@ -11,26 +11,23 @@ import app.impl.factory.WeaponFactory;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
-import app.util.Acceleration;
-import java.util.ArrayList;
 import app.util.Window;
 import java.util.List;
 
-public class PlayerImpl extends AbstractEntity {
+public class PlayerImpl extends ActiveEntity {
 
-    private transient double xSpeed = 0;
-    private transient double ySpeed = 0;
     private final WeaponFactory weaponFactory = new WeaponFactory();
     private transient final Weapon weapon = weaponFactory.getPlayerWeapon(this.getTransform());
     private transient double rotation;
-    private transient final List<Bullet> bullets = new ArrayList<>();
     private transient int coinsCollected = 0;
-
 
     public PlayerImpl(final Transform position, final Integer height,
                       final Integer width, final String filename) {
         super(position, height, width,
                 new AnimatedSpriteRenderer(height, width, Color.RED, filename));
+
+        maxXSpeed = 10;
+        maxYSpeed = 20;
     }
 
     @Override
@@ -61,50 +58,14 @@ public class PlayerImpl extends AbstractEntity {
     }
 
     @Override
-    public void update(final Inputs input) {
-
-        switch (input) {
-            case LEFT -> {
-                this.xSpeed =  Acceleration.accelerate(this.xSpeed, -10, 1);
-                setDirection(-1);
-            }
-            case RIGHT -> {
-                this.xSpeed = Acceleration.accelerate(this.xSpeed, 10, 1);
-                setDirection(1);
-            }
-            case SPACE -> {
-                if (!isJumping()) {
-                    this.ySpeed = 30;
-                    getTransform().move(0, 1);
-                }
-            }
-            case EMPTY -> {
-                getTransform().move(this.xSpeed, ySpeed);
-                this.xSpeed = Acceleration.accelerate(this.xSpeed, 0, 0.5);
-                this.ySpeed = this.isJumping()
-                        ? Acceleration.accelerate(this.ySpeed, -20, 1) : 0;
-                this.bullets.forEach(e -> e.update(Inputs.EMPTY));
-                this.removeBullets();
-            }
-        }
-
-        getTransform().resetGroundLevel();
-        getHitbox().update(this.getPosition());
-    }
-
-    private boolean isJumping() {
-        return this.getPosition().getY() > getTransform().getGroundLevel();
-    }
-
-    @Override
     public void initCollider() {
         final var collider = new ColliderImpl();
 
         collider.addBehaviour(Collider.Entities.WALL, e -> {
             Wall.stop(this, e);
             if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) < 0
-            && Math.abs(e.getPosition().getX() - this.getPosition().getX()) < e.getWidth() / 2 + this.getWidth() / 2) {
-                this.ySpeed = 0;
+            && Math.abs(e.getPosition().getX() - this.getPosition().getX()) < e.getWidth() / 2.0 + this.getWidth() / 2.0) {
+                setYSpeed(0);
             }
         });
 
@@ -115,8 +76,8 @@ public class PlayerImpl extends AbstractEntity {
 
         collider.addBehaviours(List.of(Collider.Entities.ENEMY,
                 Collider.Entities.HARMFUL_OBSTACLE), e -> {
-            this.ySpeed = 20;
-            this.xSpeed = 20 * getHitbox().getCollisionSideOnX(e.getPosition().getX());
+            setYSpeed(20);
+            setXSpeed(20 * getHitbox().getCollisionSideOnX(e.getPosition().getX()));
             this.getHealth().damage(e.getDamage());
         });
 
@@ -126,8 +87,6 @@ public class PlayerImpl extends AbstractEntity {
     }
 
     public void rotateWeapon(final Point2D mousePosition) {
-        //this.rotation = getDirection()
-                //* (mousePosition.getY() / Window.getHeight() * 120 - 55);
 
         final double dx = (mousePosition.getX() + getPosition().getX() - Window.getWidth() / 2)
                 - getPosition().getX();
@@ -150,20 +109,11 @@ public class PlayerImpl extends AbstractEntity {
     public void shoot(final Point2D target) {
         final Bullet newBullet = this.weapon.fire(target);
         newBullet.initCollider();
-        this.bullets.add(newBullet);
-    }
-
-    private void removeBullets() {
-        this.bullets.removeIf(e -> !e.isDisplayed(this.getPosition())
-                || e.getHealth().isDead());
+        addBullet(newBullet);
     }
 
     public List<Node> getBulletsNodes() {
-        return this.bullets.stream().map(e -> e.render(getPosition())).toList();
-    }
-
-    public List<Bullet> getBullets() {
-        return new ArrayList<>(this.bullets);
+        return getBullets().stream().map(e -> e.render(getPosition())).toList();
     }
 
     public double getRotation() {
