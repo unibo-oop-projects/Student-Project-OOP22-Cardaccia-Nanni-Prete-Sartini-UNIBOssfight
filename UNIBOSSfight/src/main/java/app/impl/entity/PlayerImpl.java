@@ -74,15 +74,15 @@ public class PlayerImpl extends AbstractEntity {
             }
             case SPACE -> {
                 if (!isJumping()) {
-                    this.ySpeed = -30;
-                    getTransform().move(0, -1);
+                    this.ySpeed = 30;
+                    getTransform().move(0, 1);
                 }
             }
             case EMPTY -> {
                 getTransform().move(this.xSpeed, ySpeed);
                 this.xSpeed = Acceleration.accelerate(this.xSpeed, 0, 0.5);
                 this.ySpeed = this.isJumping()
-                        ? Acceleration.accelerate(this.ySpeed, 20, 1) : 0;
+                        ? Acceleration.accelerate(this.ySpeed, -20, 1) : 0;
                 this.bullets.forEach(e -> e.update(Inputs.EMPTY));
                 this.removeBullets();
             }
@@ -93,7 +93,7 @@ public class PlayerImpl extends AbstractEntity {
     }
 
     private boolean isJumping() {
-        return this.getPosition().getY() < getTransform().getGroundLevel();
+        return this.getPosition().getY() > getTransform().getGroundLevel();
     }
 
     @Override
@@ -102,7 +102,7 @@ public class PlayerImpl extends AbstractEntity {
 
         collider.addBehaviour(Collider.Entities.WALL, e -> {
             Wall.stop(this, e);
-            if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) > 0
+            if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) < 0
             && Math.abs(e.getPosition().getX() - this.getPosition().getX()) < e.getWidth() / 2 + this.getWidth() / 2) {
                 this.ySpeed = 0;
             }
@@ -115,7 +115,7 @@ public class PlayerImpl extends AbstractEntity {
 
         collider.addBehaviours(List.of(Collider.Entities.ENEMY,
                 Collider.Entities.HARMFUL_OBSTACLE), e -> {
-            this.ySpeed = -20;
+            this.ySpeed = 20;
             this.xSpeed = 20 * getHitbox().getCollisionSideOnX(e.getPosition().getX());
             this.getHealth().damage(e.getDamage());
         });

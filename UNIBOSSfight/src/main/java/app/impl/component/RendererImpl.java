@@ -1,6 +1,7 @@
 package app.impl.component;
 
 import app.core.component.Renderer;
+import app.util.Window;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -33,7 +34,7 @@ public class RendererImpl implements Renderer {
    */
   @Override
   public int getHeight() {
-    return height;
+    return this.height;
   }
 
   /**
@@ -41,7 +42,7 @@ public class RendererImpl implements Renderer {
    */
   @Override
   public int getWidth() {
-    return width;
+    return this.width;
   }
 
   /**
@@ -50,10 +51,10 @@ public class RendererImpl implements Renderer {
   @Override
   public Node render(final Point2D position, final int xDirection, final int yDirection, final double rotation) {
     final Rectangle rectangle = new Rectangle(
-            position.getX() - width / 2.0,
-            position.getY() - height,
-            width,
-            height
+            position.getX() - this.width / 2.0,
+            Window.getHeight() - position.getY() - this.height,
+            this.width,
+            this.height
     );
     rectangle.setFill(this.color);
     rectangle.setRotate(rotation);

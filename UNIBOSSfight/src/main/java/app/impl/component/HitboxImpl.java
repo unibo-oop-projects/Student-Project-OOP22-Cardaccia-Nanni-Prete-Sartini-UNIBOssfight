@@ -70,8 +70,8 @@ public class HitboxImpl implements Hitbox {
         //X an Y axis collisions
         return this.rightSide >= target.getLeftSide()
                 && this.leftSide <= target.getRightSide()
-                && this.bottomSide >= target.getTopSide()
-                && this.topSide <= target.getBottomSide();
+                && this.bottomSide <= target.getTopSide()
+                && this.topSide >= target.getBottomSide();
     }
 
     /**
@@ -107,9 +107,9 @@ public class HitboxImpl implements Hitbox {
     public double getIntersectionOnY(final Entity e) {
         final double side = this.getCollisionSideOnY(e.getPosition().getY());
 
-        final double collidedSide = side > 0 ? e.getHitbox().getTopSide()
+        final double collidedSide = side < 0 ? e.getHitbox().getTopSide()
                 : e.getPosition().getY();
-        final double collidingSide = side > 0 ? this.topSide : this.position.getY();
+        final double collidingSide = side < 0 ? this.topSide : this.position.getY();
 
         return e.getHeight() + (collidedSide - collidingSide) * side;
     }
@@ -130,7 +130,7 @@ public class HitboxImpl implements Hitbox {
     private void findBorders(final Point2D pos) {
         this.leftSide = pos.getX() - this.lateralOffset;
         this.rightSide = pos.getX() + this.lateralOffset;
-        this.topSide = pos.getY() - this.height;
+        this.topSide = pos.getY() + this.height;
         this.bottomSide = pos.getY();
    }
 }

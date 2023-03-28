@@ -1,10 +1,13 @@
 package app.impl.component;
 
+import app.util.Window;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+
+import java.awt.*;
 import java.io.FileInputStream;
 
 /**
@@ -68,7 +71,7 @@ public class SpriteRenderer extends RendererImpl {
             iv2.setRotate(rotation);
 
             iv2.setX(position.getX() - getWidth() / 2.0);
-            iv2.setY(position.getY() - getHeight());
+            iv2.setY(Window.getHeight() - position.getY() - getHeight());
 
             iv2.setPreserveRatio(false);
             iv2.setSmooth(true);

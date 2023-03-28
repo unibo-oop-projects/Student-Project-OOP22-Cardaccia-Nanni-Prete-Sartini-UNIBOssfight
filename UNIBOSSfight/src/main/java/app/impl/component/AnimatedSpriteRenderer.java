@@ -1,5 +1,6 @@
 package app.impl.component;
 
+import app.util.Window;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -92,7 +93,7 @@ public class AnimatedSpriteRenderer extends SpriteRenderer{
                 renderedSprite.setRotate(rotation);
 
                 renderedSprite.setX(position.getX() - getWidth() / 2.0);
-                renderedSprite.setY(position.getY() - getHeight());
+                renderedSprite.setY(Window.getHeight() - position.getY() - getHeight());
 
                 renderedSprite.setPreserveRatio(false);
                 renderedSprite.setSmooth(true);
