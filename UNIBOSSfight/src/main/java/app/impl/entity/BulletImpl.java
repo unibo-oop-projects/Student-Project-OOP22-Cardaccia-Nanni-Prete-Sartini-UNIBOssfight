@@ -12,4 +12,5 @@ public class BulletImpl extends Bullet {
                       final int speed) {
         super(startingPos, height, width, renderer, damage, target, speed);
     }
+
 }

@@ -1,5 +1,6 @@
 package app.impl.level;
 
+import app.core.entity.ActiveEntity;
 import app.impl.component.TransformImpl;
 import app.core.entity.Entity;
 import app.core.level.Level;
@@ -32,11 +33,13 @@ public class LevelImpl implements Level {
     public void updateEntities() {
 
         this.entities.stream()
+                .filter(e -> e instanceof ActiveEntity)
+                .map(e -> (ActiveEntity) e)
                 .filter(e -> e.isUpdated(this.getPlayerPosition()))
                 .forEach(e -> {
                     e.update(Entity.Inputs.EMPTY);
-                    e.update(e.getBehaviour().behave(this.getPlayer().getTransform(),
-                            e.getTransform()));
+                    e.update(e.getBehaviour()
+                            .behave(this.getPlayer().getTransform(), e.getTransform()));
                 });
 
         this.count++;
@@ -77,7 +80,6 @@ public class LevelImpl implements Level {
     public void collision() {
         // Player collisions
         this.entities.stream()
-                .filter(e -> e.isUpdated(this.getPlayerPosition()))
                 .filter(e -> this.player.getHitbox().collide(e.getHitbox()))
                 .forEach(this.player::manageCollision);
 

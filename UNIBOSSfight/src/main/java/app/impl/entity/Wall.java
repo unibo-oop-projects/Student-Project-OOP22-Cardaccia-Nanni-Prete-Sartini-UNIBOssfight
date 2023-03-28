@@ -41,14 +41,6 @@ public class Wall extends AbstractEntity {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update(final Inputs input) {
-        
-    }
-
-    /**
      * This static method is used to stop the entity colliding with the wall,
      * by checking on each side of it if there has been an intersection
      * between the hitboxes.

@@ -43,14 +43,6 @@ public class Platform extends AbstractEntity {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update(final Inputs input) {
-
-    }
-
-    /**
      * This method is used to let the entity jump on the platform by
      * checking the collision on the topside of it and updating the
      * ground level.

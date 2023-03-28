@@ -51,10 +51,8 @@ public abstract class Bullet extends AbstractEntity {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void update(final Inputs input) {
         getTransform().move((int) xShift, (int) yShift);
-
         this.getHitbox().update(this.getPosition());
     }
 
@@ -64,9 +62,7 @@ public abstract class Bullet extends AbstractEntity {
     @Override
     public void initCollider() {
         final var collider = new ColliderImpl();
-        collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
-            this.getHealth().destroy();
-        });
+        collider.addBehaviour(Collider.Entities.PLATFORM, e -> this.getHealth().destroy());
 
         setCollider(collider);
     }

@@ -70,12 +70,4 @@ public class Coin extends AbstractEntity {
         return super.isDisplayed(position);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update(final Inputs input) {
-
-    }
-
 }

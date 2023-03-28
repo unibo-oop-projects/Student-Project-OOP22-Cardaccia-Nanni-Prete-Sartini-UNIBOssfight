@@ -1,12 +1,10 @@
 package app.core.entity;
 
-import app.core.component.Behaviour;
 import app.core.component.Collider;
 import app.core.component.Health;
 import app.core.component.Hitbox;
 import app.core.component.Renderer;
 import app.core.component.Transform;
-import app.impl.component.BehaviourImpl;
 import app.impl.component.HitboxImpl;
 import app.impl.component.HealthImpl;
 import javafx.geometry.Point2D;
@@ -28,7 +26,6 @@ public abstract class AbstractEntity implements Entity {
     private final Renderer renderer;
     private final Health health;
     private transient Collider collider;
-    private transient final Behaviour behaviour;
     private transient int direction;
 
     /**
@@ -53,7 +50,6 @@ public abstract class AbstractEntity implements Entity {
         this.direction = 1;
         this.hitbox = new HitboxImpl(width / 2.0, height, this.position.getPosition());
         this.collider = null;
-        this.behaviour = new BehaviourImpl();
     }
 
     /**
@@ -96,14 +92,6 @@ public abstract class AbstractEntity implements Entity {
      */
     protected int getDirection() {
         return this.direction;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Behaviour getBehaviour() {
-        return this.behaviour;
     }
 
     /**
@@ -205,14 +193,6 @@ public abstract class AbstractEntity implements Entity {
      * {@inheritDoc}
      */
     @Override
-    public boolean isUpdated(final Point2D position) {
-        return Math.abs(this.getPosition().subtract(position).getX()) < Window.getWidth();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void initCollider() {
         this.collider = null;
     }
@@ -224,11 +204,5 @@ public abstract class AbstractEntity implements Entity {
     public void manageCollision(final Entity e) {
         this.getCollider().ifPresent(x -> x.manageCollision(e));
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public abstract void update(Inputs input);
 
 }

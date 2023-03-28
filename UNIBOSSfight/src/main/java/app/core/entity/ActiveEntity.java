@@ -1,14 +1,19 @@
 package app.core.entity;
 
+import app.core.component.Behaviour;
 import app.core.component.Renderer;
 import app.core.component.Transform;
+import app.impl.component.BehaviourImpl;
 import app.util.Acceleration;
+import app.util.Window;
+import javafx.geometry.Point2D;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ActiveEntity extends AbstractEntity {
 
+    private transient final Behaviour behaviour;
     private transient double xSpeed = 0;
     private transient double ySpeed = 0;
     protected double maxXSpeed = 0;
@@ -25,6 +30,7 @@ public abstract class ActiveEntity extends AbstractEntity {
      */
     public ActiveEntity(final Transform position, final int height, final int width, final Renderer renderer) {
         super(position, height, width, renderer);
+        this.behaviour = new BehaviourImpl();
     }
 
     /**
@@ -34,6 +40,25 @@ public abstract class ActiveEntity extends AbstractEntity {
      */
     public void setXSpeed(final double xSpeed) {
         this.xSpeed = xSpeed;
+    }
+
+
+    /**
+     * This method returns the behaviour of the entity.
+     *
+     * @return the component Behaviour
+     */
+    public Behaviour getBehaviour() {
+        return this.behaviour;
+    }
+
+    /**
+     * This method returns the list of bullets shot by the entity.
+     *
+     * @return the list of bullet
+     */
+    public List<Bullet> getBullets() {
+        return new ArrayList<>(this.bullets);
     }
 
     /**
@@ -46,10 +71,12 @@ public abstract class ActiveEntity extends AbstractEntity {
     }
 
     /**
-     * {@inheritDoc}
+     * Takes as input an element of Inputs enum and,
+     * from that, the class will do the update.
+     *
+     * @param input an element of the enum
      */
-    @Override
-    public void update(Inputs input) {
+    public void update(final Inputs input) {
         switch (input) {
             case LEFT -> {
                 this.xSpeed =  Acceleration.accelerate(this.xSpeed, -maxXSpeed, 1);
@@ -79,19 +106,6 @@ public abstract class ActiveEntity extends AbstractEntity {
         getHitbox().update(this.getPosition());
     }
 
-    private boolean isJumping() {
-        return this.getPosition().getY() > getTransform().getGroundLevel();
-    }
-
-    /**
-     * This method returns the list of bullets shot by the entity.
-     *
-     * @return the list of bullet
-     */
-    public List<Bullet> getBullets() {
-        return new ArrayList<>(this.bullets);
-    }
-
     /**
      * Adds a new bullet to the shot ones.
      *
@@ -107,5 +121,21 @@ public abstract class ActiveEntity extends AbstractEntity {
     protected void removeBullets() {
         this.bullets.removeIf(e -> !e.isDisplayed(this.getPosition())
                 || e.getHealth().isDead());
+    }
+
+    /**
+     * This method checks if the entity should be updated based on
+     * its position and the distance from the position of the player.
+     *
+     * @param position the position of the player
+     * @return true if the entity should be updated,
+     *         false otherwise
+     */
+    public boolean isUpdated(final Point2D position) {
+        return Math.abs(this.getPosition().subtract(position).getX()) < Window.getWidth();
+    }
+
+    private boolean isJumping() {
+        return this.getPosition().getY() > getTransform().getGroundLevel();
     }
 }

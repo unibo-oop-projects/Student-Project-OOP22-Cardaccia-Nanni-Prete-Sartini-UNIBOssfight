@@ -39,11 +39,4 @@ public class HarmfulObstacle extends AbstractEntity {
         super(position, height, width, renderer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update(final Inputs input) {
-    }
-
 }
