@@ -65,6 +65,12 @@ public abstract class Bullet extends AbstractEntity {
 
         collider.addBehaviour(Collider.Entities.WALL, e -> this.getHealth().destroy());
 
+        collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
+            if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) > 0) {
+                this.getHealth().destroy();
+            }
+        });
+
         setCollider(collider);
     }
 }

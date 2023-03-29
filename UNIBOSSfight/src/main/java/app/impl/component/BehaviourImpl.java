@@ -26,4 +26,9 @@ public class BehaviourImpl implements Behaviour {
         }
         return Entity.Inputs.EMPTY;
     }
+
+    public void jumpOnTop(final Entity jumpingEntity, final Entity entity) {
+        jumpingEntity.getTransform().setGroundLevel(entity.getHitbox().getTopSide());
+    }
+
 }

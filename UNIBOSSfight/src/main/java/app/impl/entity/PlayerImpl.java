@@ -69,7 +69,8 @@ public class PlayerImpl extends ActiveEntity {
         collider.addBehaviour(Collider.Entities.WALL, e -> {
             Wall.stop(this, e);
             if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) < 0
-            && Math.abs(e.getPosition().getX() - this.getPosition().getX()) < e.getWidth() / 2.0 + this.getWidth() / 2.0) {
+            && Math.abs(e.getPosition().getX() - this.getPosition().getX())
+                    < e.getWidth() / 2.0 + this.getWidth() / 2.0) {
                 setYSpeed(0);
             }
         });
@@ -86,7 +87,7 @@ public class PlayerImpl extends ActiveEntity {
             this.getHealth().damage(e.getDamage());
         });
 
-        collider.addBehaviour(Collider.Entities.PLATFORM, e -> Platform.stop(this, e));
+        collider.addBehaviour(Collider.Entities.PLATFORM, e -> Platform.jump(this, e));
 
         setCollider(collider);
     }
@@ -99,7 +100,7 @@ public class PlayerImpl extends ActiveEntity {
         final double dy = Window.getHeight() - mousePosition.getY() - weapon.getWeaponPosition().getPosition().getY();
         final double angle = -Math.toDegrees(Math.atan2(dy, dx));
 
-        if(angle <= 90 && angle > -90){
+        if (angle <= 90 && angle > -90) {
             this.setDirection(1);
             this.weapon.setYDirection(1);
         }

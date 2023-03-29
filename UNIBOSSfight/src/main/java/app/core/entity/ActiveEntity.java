@@ -147,14 +147,6 @@ public abstract class ActiveEntity extends AbstractEntity {
     }
 
     /**
-     * Removes from the list the bullets that should not be displayed anymore.
-     */
-    protected void removeBullets() {
-        this.bullets.removeIf(e -> !e.isDisplayed(this.getPosition())
-                || e.getHealth().isDead());
-    }
-
-    /**
      * This method checks if the entity should be updated based on
      * its position and the distance from the position of the player.
      *
@@ -168,5 +160,10 @@ public abstract class ActiveEntity extends AbstractEntity {
 
     private boolean isJumping() {
         return this.getPosition().getY() > getTransform().getGroundLevel();
+    }
+
+    private void removeBullets() {
+        this.bullets.removeIf(e -> !e.isDisplayed(this.getPosition())
+                || e.getHealth().isDead());
     }
 }
