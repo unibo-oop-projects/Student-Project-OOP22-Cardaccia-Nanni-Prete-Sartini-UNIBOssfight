@@ -40,19 +40,19 @@ public abstract class Bullet extends AbstractEntity {
         // Finding vector angle
         final double dx = (target.getX() + getPosition().getX() - Window.getWidth() / 2)
                 - getPosition().getX();
-        final double dy = Window.getHeight() - target.getY() - getPosition().getY();
+        final double dy = Window.getHeight() - target.getY() - getPosition().getY()  ;
         final double angle = -Math.atan2(dy, dx);
         this.xShift = this.speed * Math.cos(angle);
         this.yShift = -this.speed * Math.sin(angle);
 
-        this.getTransform().setRotation((float) Math.toDegrees(angle));
+        this.getTransform().setRotation(Math.toDegrees(angle));
     }
 
     /**
      * Updates Bullet position and hitbox.
      */
     public void update() {
-        getTransform().move((int) xShift, (int) yShift);
+        getTransform().move(xShift, yShift);
         this.getHitbox().update(this.getPosition());
     }
 

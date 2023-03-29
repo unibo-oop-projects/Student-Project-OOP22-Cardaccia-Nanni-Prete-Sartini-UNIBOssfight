@@ -29,14 +29,6 @@ public interface Weapon {
     Bullet fire(Point2D target);
 
     /**
-     * Used to return position from which to shoot the bullets.
-     *
-     * @return the position from which the bullet is shot
-     */
-    Transform getShootingPos();
-
-
-    /**
      * Method used to modify the direction on the Y-axis of the weapon.
      *
      * @param direction new direction on Y-axis
@@ -46,6 +38,8 @@ public interface Weapon {
     void updatePosition(Transform newPos);
 
     Transform getWeaponPosition();
+
+    Transform getRenderPosition();
 
     Transform getUserPosition();
 

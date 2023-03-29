@@ -5,6 +5,7 @@ import app.core.component.Weapon;
 import app.core.entity.Bullet;
 import app.impl.component.SpriteRenderer;
 import app.impl.component.WeaponImpl;
+import app.util.Window;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
@@ -14,26 +15,18 @@ public class WeaponFactory {
 
     public Weapon getPlayerWeapon(final Transform playerPos){
 
-        return new WeaponImpl(playerPos, 50, new SpriteRenderer(150, 180, Color.RED, "gnu.png")){
-
-            private final int positionOffset = 125;
+        return new WeaponImpl(playerPos, 50, new SpriteRenderer(50, 170, Color.RED, "gun.png"), 55){
 
             @Override
             public Bullet fire(final Point2D target){
                 return bulletFactory.getPlayerBullet(this.getShootingPosition(), target);
             }
 
-            @Override
-            public Transform getWeaponPosition() {
-                Transform posCopy = getUserPosition().copyOf();
-                posCopy.move(0, positionOffset);
-                return posCopy;
-            }
         };
     }
 
     public Weapon getBigBulletGun(final Transform userPos){
-        return new WeaponImpl(userPos, 100, new SpriteRenderer(150, 180, Color.RED, "gnu.png")){
+        return new WeaponImpl(userPos, 100, new SpriteRenderer(210, 660, Color.RED, "gun.png"), 125){
 
             private final int RATE_OF_FIRE = 60;
             private int rateOfFireCounter = 0;
