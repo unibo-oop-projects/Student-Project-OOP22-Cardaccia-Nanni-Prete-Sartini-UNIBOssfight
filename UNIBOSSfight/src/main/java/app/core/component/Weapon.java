@@ -8,7 +8,7 @@ import javafx.scene.Node;
  * This class models the weapon component, which is used by an entity
  * to inflict damage towards other entities by firing bullets.
  */
-public interface Weapon extends Component {
+public interface Weapon {
 
     /**
      * Renders the weapon.

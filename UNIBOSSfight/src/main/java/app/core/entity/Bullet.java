@@ -60,9 +60,12 @@ public abstract class Bullet extends AbstractEntity {
      * {@inheritDoc}
      */
     @Override
-    public void initCollider() {
+    public void init() {
+        super.init();
+
         final var collider = new ColliderImpl();
-        collider.addBehaviour(Collider.Entities.PLATFORM, e -> this.getHealth().destroy());
+
+        collider.addBehaviour(Collider.Entities.WALL, e -> this.getHealth().destroy());
 
         setCollider(collider);
     }

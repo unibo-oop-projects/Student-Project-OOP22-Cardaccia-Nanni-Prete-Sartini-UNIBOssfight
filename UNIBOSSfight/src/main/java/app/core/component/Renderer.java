@@ -6,7 +6,7 @@ import javafx.scene.Node;
 /**
  * This class models the component used to render the entities of the game.
  */
-public interface Renderer extends Component {
+public interface Renderer {
 
     /**
      * This method returns the height of the rendered object.

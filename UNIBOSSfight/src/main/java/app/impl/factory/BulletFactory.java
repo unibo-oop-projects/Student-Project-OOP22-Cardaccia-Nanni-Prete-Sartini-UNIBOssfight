@@ -19,8 +19,8 @@ public class BulletFactory {
                 new SpriteRenderer(20, 20, Color.BLACK, "bullet.png"),
                 100, target, 20) {
             @Override
-            public void initCollider() {
-                super.initCollider();
+            public void init() {
+                super.init();
 
                 getCollider().get().addBehaviour(Collider.Entities.ENEMY, e -> {
                     this.getHealth().destroy();

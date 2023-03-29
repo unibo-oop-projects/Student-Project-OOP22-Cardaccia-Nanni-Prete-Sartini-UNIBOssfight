@@ -20,9 +20,9 @@ public abstract class AbstractEntity implements Entity {
     private final String className;
     private final int height;
     private final int width;
-    private transient int damage;
+    private int damage;
     private final Transform position;
-    private final transient Hitbox hitbox;
+    private transient Hitbox hitbox;
     private final Renderer renderer;
     private final Health health;
     private transient Collider collider;
@@ -48,8 +48,7 @@ public abstract class AbstractEntity implements Entity {
         this.height = height;
         this.width = width;
         this.direction = 1;
-        this.hitbox = new HitboxImpl(width / 2.0, height, this.position.getPosition());
-        this.collider = null;
+
     }
 
     /**
@@ -184,7 +183,7 @@ public abstract class AbstractEntity implements Entity {
      */
     @Override
     public boolean isDisplayed(final Point2D playerPosition) {
-        return Math.abs(this.getPosition().subtract(playerPosition).getX()) - this.width / 2 < Window.getWidth() / 2
+        return Math.abs(this.getPosition().subtract(playerPosition).getX()) - this.width / 2.0 < Window.getWidth() / 2
                 && this.getPosition().getY() < Window.getHeight()
                 && this.getPosition().getY() >= 0;
     }
@@ -193,7 +192,8 @@ public abstract class AbstractEntity implements Entity {
      * {@inheritDoc}
      */
     @Override
-    public void initCollider() {
+    public void init() {
+        this.hitbox = new HitboxImpl(width / 2.0, height, this.position.getPosition());
         this.collider = null;
     }
 
