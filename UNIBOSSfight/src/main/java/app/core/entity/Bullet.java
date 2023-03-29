@@ -49,9 +49,9 @@ public abstract class Bullet extends AbstractEntity {
     }
 
     /**
-     * {@inheritDoc}
+     * Updates Bullet position and hitbox.
      */
-    public void update(final Inputs input) {
+    public void update() {
         getTransform().move((int) xShift, (int) yShift);
         this.getHitbox().update(this.getPosition());
     }
