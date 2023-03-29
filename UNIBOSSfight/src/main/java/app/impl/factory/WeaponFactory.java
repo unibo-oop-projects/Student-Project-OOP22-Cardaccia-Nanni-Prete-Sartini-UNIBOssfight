@@ -12,19 +12,27 @@ public class WeaponFactory {
 
     private final BulletFactory bulletFactory = new BulletFactory();
 
-    public Weapon getPlayerWeapon(Transform playerPos){
+    public Weapon getPlayerWeapon(final Transform playerPos){
 
         return new WeaponImpl(playerPos, 50, new SpriteRenderer(150, 180, Color.RED, "gnu.png")){
 
+            private final int positionOffset = 125;
+
             @Override
             public Bullet fire(final Point2D target){
-                return bulletFactory.getPlayerBullet(playerPos, target);
+                return bulletFactory.getPlayerBullet(this.getShootingPosition(), target);
             }
 
+            @Override
+            public Transform getWeaponPosition() {
+                Transform posCopy = getUserPosition().copyOf();
+                posCopy.move(0, positionOffset);
+                return posCopy;
+            }
         };
     }
 
-    public Weapon getBigBulletGun(Transform userPos){
+    public Weapon getBigBulletGun(final Transform userPos){
         return new WeaponImpl(userPos, 100, new SpriteRenderer(150, 180, Color.RED, "gnu.png")){
 
             private final int RATE_OF_FIRE = 60;

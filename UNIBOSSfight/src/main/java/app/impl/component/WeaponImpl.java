@@ -14,6 +14,7 @@ import app.util.Window;
  */
 public class WeaponImpl implements Weapon {
 
+    private final int positionOffset = 0;
     private final int damage;
     private final Transform userPos;
     private final Transform shootingPos;
@@ -31,10 +32,10 @@ public class WeaponImpl implements Weapon {
      */
     public WeaponImpl(final Transform userPos,
                       final int damage, final Renderer renderer) {
-        this.userPos = userPos;
+        this.userPos = new TransformImpl(userPos.getPosition(), 0);
         this.damage = damage;
         this.renderer = renderer;
-        this.shootingPos = userPos;
+        this.shootingPos = getWeaponPosition();
     }
 
     /**
@@ -42,8 +43,8 @@ public class WeaponImpl implements Weapon {
      */
     @Override
     public Node render(final int direction, final int rotation) {
-        return this.renderer.render(new Point2D(Window.getWidth() / 2 + 10,
-                this.userPos.getPosition().getY() -30), 1, this.yDirection, rotation);
+        return this.renderer.render(new Point2D(Window.getWidth() / 2,
+                this.getUserPosition().getPosition().getY()), 1, this.yDirection, rotation);
     }
 
     /**
@@ -51,7 +52,7 @@ public class WeaponImpl implements Weapon {
      */
     @Override
     public Bullet fire(final Point2D target) {
-        Bullet tempBullet = this.bulletFactory.getPlayerBullet(this.userPos, target);
+        Bullet tempBullet = this.bulletFactory.getPlayerBullet(this.getWeaponPosition(), target);
         return tempBullet;
     }
 
@@ -59,8 +60,33 @@ public class WeaponImpl implements Weapon {
     public Transform getShootingPos(){ return this.shootingPos; }
 
     @Override
-    public void setYDirection(int yDirection) {
+    public void setYDirection(final int yDirection) {
         this.yDirection = yDirection;
+    }
+
+    @Override
+    public void updatePosition(final Transform newPos) {
+        Transform posCopy = newPos.copyOf();
+
+        this.userPos.moveTo(posCopy.getPosition().getX(), posCopy.getPosition().getY());
+        this.shootingPos.moveTo(this.getWeaponPosition().getPosition().getX(), this.getWeaponPosition().getPosition().getY());
+    }
+
+    @Override
+    public Transform getWeaponPosition() {
+        Transform posCopy = this.userPos.copyOf();
+        posCopy.move(0, positionOffset);
+        return posCopy;
+    }
+
+    @Override
+    public Transform getUserPosition() {
+        return this.userPos;
+    }
+
+    @Override
+    public Transform getShootingPosition() {
+        return this.shootingPos;
     }
 }
 

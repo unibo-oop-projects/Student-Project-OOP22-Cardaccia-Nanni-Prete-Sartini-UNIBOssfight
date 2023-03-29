@@ -40,8 +40,8 @@ public abstract class Bullet extends AbstractEntity {
         // Finding vector angle
         final double dx = (target.getX() + getPosition().getX() - Window.getWidth() / 2)
                 - getPosition().getX();
-        final double dy = target.getY() - getPosition().getY();
-        final double angle = Math.atan2(dy, dx);
+        final double dy = Window.getHeight() - target.getY() - getPosition().getY();
+        final double angle = -Math.atan2(dy, dx);
         this.xShift = this.speed * Math.cos(angle);
         this.yShift = -this.speed * Math.sin(angle);
 

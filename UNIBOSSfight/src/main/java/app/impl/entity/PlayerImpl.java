@@ -17,7 +17,7 @@ import java.util.List;
 public class PlayerImpl extends ActiveEntity {
 
     private final WeaponFactory weaponFactory = new WeaponFactory();
-    private transient final Weapon weapon = weaponFactory.getPlayerWeapon(this.getTransform());
+    private transient final Weapon weapon = weaponFactory.getPlayerWeapon(this.getTransform());;
     private transient double rotation;
     private transient int coinsCollected = 0;
 
@@ -88,10 +88,10 @@ public class PlayerImpl extends ActiveEntity {
 
     public void rotateWeapon(final Point2D mousePosition) {
 
-        final double dx = (mousePosition.getX() + getPosition().getX() - Window.getWidth() / 2)
-                - getPosition().getX();
-        final double dy = mousePosition.getY() - getPosition().getY() +30 + 75;
-        final double angle = Math.toDegrees(Math.atan2(dy, dx));
+        System.out.println(mousePosition);
+        final double dx = (mousePosition.getX() - Window.getWidth() / 2);
+        final double dy = Window.getHeight() - mousePosition.getY() - weapon.getWeaponPosition().getPosition().getY();
+        final double angle = -Math.toDegrees(Math.atan2(dy, dx));
 
         if(angle <= 90 && angle > -90){
             this.setDirection(1);
