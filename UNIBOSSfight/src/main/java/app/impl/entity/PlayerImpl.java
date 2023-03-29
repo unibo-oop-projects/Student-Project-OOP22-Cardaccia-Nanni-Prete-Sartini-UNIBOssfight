@@ -88,6 +88,7 @@ public class PlayerImpl extends ActiveEntity {
 
     public void rotateWeapon(final Point2D mousePosition) {
 
+        //TODO PORTARE ROTATE IN WEAPON
         System.out.println(mousePosition);
         final double dx = (mousePosition.getX() - Window.getWidth() / 2);
         final double dy = Window.getHeight() - mousePosition.getY() - weapon.getWeaponPosition().getPosition().getY();
@@ -118,5 +119,12 @@ public class PlayerImpl extends ActiveEntity {
 
     public double getRotation() {
         return this.rotation;
+    }
+
+    @Override
+    public void update(Inputs input) {
+        super.update(input);
+
+        this.weapon.updatePosition(this.getTransform());
     }
 }
