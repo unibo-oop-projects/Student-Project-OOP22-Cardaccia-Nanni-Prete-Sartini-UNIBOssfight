@@ -25,6 +25,7 @@ public class EnemyImpl extends Enemy {
     public EnemyImpl(final Transform position, final int height, final int width, final String filename) {
         super(position, height, width,
                 new SpriteRenderer(height, width, Color.ALICEBLUE, filename));
+        // TODO da togliere, compito della serializzazione
         maxXSpeed = 5;
         maxYSpeed = 20;
     }
@@ -33,8 +34,11 @@ public class EnemyImpl extends Enemy {
      * {@inheritDoc}
      */
     @Override
-    public void initCollider() {
+    public void init() {
+        super.init();
+
         final var collider = new ColliderImpl();
+
         collider.addBehaviour(Collider.Entities.WALL, e -> {
             Wall.stop(this, e);
             if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) < 0) {

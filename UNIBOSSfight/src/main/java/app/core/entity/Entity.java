@@ -123,8 +123,8 @@ public interface Entity {
     void manageCollision(Entity e);
 
     /**
-     * Initialise the collider of the entity.
+     * Initialise the components of the entity.
      */
-    void initCollider();
+    void init();
 
 }
