@@ -48,7 +48,7 @@ public class Prova extends Application {
     private static final int MIN_WINDOW_HEIGHT = 600;
     private static final int MIN_WINDOW_WIDTH = 800;
 
-    private final LevelImpl currentLevel = loadLevel();//new LevelImpl();
+    private final LevelImpl currentLevel = new DataManager().loadLevel();//new LevelImpl();
     private Group root = new Group();
     private Scene currentScene;
     private InputManager inputManager;
@@ -149,19 +149,6 @@ public class Prova extends Application {
                         , 0),
                         120, 120, "spine.png")
         );*/
-
-        try {
-            String json = readFile("output.json", StandardCharsets.UTF_8);
-            GsonBuilder gsonBuilder = new GsonBuilder();
-
-            JsonDeserializer<PlayerImpl> deserializer = new PlayerImplDeserializer(); // implementation detail
-            gsonBuilder.registerTypeAdapter(PlayerImpl.class, deserializer);
-
-            Gson customGson = gsonBuilder.create();
-            LevelImpl customObject = customGson.fromJson(json, LevelImpl.class);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
 
         tl.play();
         this.currentLevel.init();
@@ -277,45 +264,11 @@ public class Prova extends Application {
     @Override
     public void stop() throws Exception {
             try {
-                String jsonString = new GsonBuilder()
-                        //.excludeFieldsWithoutExposeAnnotation()
-                        .setPrettyPrinting()
-                        .create()
-                        .toJson(this.currentLevel);
-
-                FileWriter file = new FileWriter("output.json");
-                file.write(jsonString);
-                file.close();
+                new DataManager().serializeLevel(this.currentLevel);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         super.stop();
-    }
-
-    private LevelImpl loadLevel() {
-        try {
-            String json = readFile("output.json", StandardCharsets.UTF_8);
-
-            GsonBuilder gsonBuilder = new GsonBuilder();
-
-            JsonDeserializer<PlayerImpl> deserializer = new PlayerImplDeserializer(); // implementation detail
-            JsonDeserializer<AbstractEntity> Edeserializer = new AbstractEntityDeserializer(); // implementation detail
-            JsonDeserializer<Renderer> Rdeserializer = new RendererDeserializer(); // implementation detail
-
-
-            gsonBuilder.registerTypeAdapter(Entity.class, Edeserializer);
-            gsonBuilder.registerTypeAdapter(Renderer.class, Rdeserializer);
-            gsonBuilder.registerTypeAdapter(PlayerImpl.class, deserializer);
-
-            Gson customGson = gsonBuilder.create();
-            LevelImpl customObject = customGson.fromJson(json, LevelImpl.class);
-
-            return customObject;
-
-        } catch (Exception e) {
-            System.out.println(e);
-            return null;
-        }
     }
 
     private void saveState() {
