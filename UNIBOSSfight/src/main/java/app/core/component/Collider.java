@@ -8,26 +8,21 @@ import app.impl.entity.EnemyImpl;
 import app.impl.entity.HarmfulObstacle;
 import app.impl.entity.Platform;
 import app.impl.entity.PlayerImpl;
-import app.impl.entity.TmpEntityImpl;
 import app.impl.entity.Wall;
 import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * An interface modelling the behaviours of the entities on collisions.
+ * This class models the collider component
+ * which manages the behaviours of the entities
+ * on collisions.
  */
-public interface Collider extends Component {
+public interface Collider {
 
     /**
      * Enum with all the possible entities.
      */
     enum Entities {
-        // TODO valutare se mettere questa enum in un file a parte
-
-        /**
-         * The temporary entity (will be removed).
-         */
-        TMPENTITY(TmpEntityImpl.class),
 
         /**
          * The player.
@@ -55,7 +50,7 @@ public interface Collider extends Component {
         WALL(Wall.class),
 
         /**
-         * The flame.
+         * The harmful obstacle.
          */
         HARMFUL_OBSTACLE(HarmfulObstacle.class),
 
@@ -78,6 +73,7 @@ public interface Collider extends Component {
         /**
          * Verifies if the parameter is the same runtime type of the one associated
          * to the value of the enumeration.
+         *
          * @param e comparing entity
          * @param <T> subtype of Entity
          * @return true if the type is the same, false if it's not

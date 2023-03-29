@@ -1,9 +1,10 @@
 package app.core.component;
 
 /**
- * This class models the health component which determines if an entity is dead or not.
+ * This class models the health component
+ * which determines if an entity is dead or not.
  */
-public interface Health extends Component {
+public interface Health {
 
     /**
      * This method returns the current health value.

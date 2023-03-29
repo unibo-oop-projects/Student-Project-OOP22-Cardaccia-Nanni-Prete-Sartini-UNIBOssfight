@@ -6,20 +6,7 @@ import javafx.geometry.Point2D;
  * This class models the component representing the concept
  * of the position and the rotation of an entity.
  */
-public interface Transform extends Component {
-
-    /**
-     * Translates the current position with the vector of components x and y.
-     *
-     * @param x position on x-axis
-     * @param y position on y-axis
-     */
-    void move(double x, double y);
-
-    /**
-     * Takes the entity back on the ground level if it is under it.
-     */
-    void moveOnGroundLevel();
+public interface Transform {
 
     /**
      * This method returns the current ground level.
@@ -36,32 +23,11 @@ public interface Transform extends Component {
     void setGroundLevel(double yGround);
 
     /**
-     * This method returns true if the entity is under the ground
-     * level, false otherwise.
-     *
-     * @return true is the entity is under the ground level
-     */
-    boolean isUnderGroundLevel();
-
-    /**
-     * Sets the ground level to the default one, which is the height of the window.
-     */
-    void resetGroundLevel();
-
-    /**
      * This method returns a copy of the current position of the entity.
      *
      * @return a copy of the current position of the entity
      */
     Point2D getPosition();
-
-    /**
-     * Moves the entity to a new position.
-     *
-     * @param x new position on x-axis
-     * @param y new position on y-axis
-     */
-    void moveTo(double x, double y);
 
     /**
      * Returns the rotation.
@@ -75,6 +41,40 @@ public interface Transform extends Component {
      * @param rotation the value of the rotation
      */
     void setRotation(double rotation);
+
+    /**
+     * Translates the current position with the vector of components x and y.
+     *
+     * @param x position on x-axis
+     * @param y position on y-axis
+     */
+    void move(double x, double y);
+
+    /**
+     * Takes the entity back on the ground level if it is under it.
+     */
+    void moveOnGroundLevel();
+
+    /**
+     * This method returns true if the entity is under the ground
+     * level, false otherwise.
+     *
+     * @return true is the entity is under the ground level
+     */
+    boolean isUnderGroundLevel();
+
+    /**
+     * Sets the ground level to the default one, which is the height of the window.
+     */
+    void resetGroundLevel();
+
+    /**
+     * Moves the entity to a new position.
+     *
+     * @param x new position on x-axis
+     * @param y new position on y-axis
+     */
+    void moveTo(double x, double y);
 
     /**
      * Creates a copy of the Transform given as input.
