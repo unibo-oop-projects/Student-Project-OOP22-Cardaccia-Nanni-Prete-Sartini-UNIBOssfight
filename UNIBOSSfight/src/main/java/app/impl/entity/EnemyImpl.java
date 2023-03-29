@@ -26,8 +26,8 @@ public class EnemyImpl extends Enemy {
         super(position, height, width,
                 new SpriteRenderer(height, width, Color.ALICEBLUE, filename));
         // TODO da togliere, compito della serializzazione
-        maxXSpeed = 5;
-        maxYSpeed = 20;
+        setMaxXSpeed(5);
+        setMaxYSpeed(20);
     }
 
     /**

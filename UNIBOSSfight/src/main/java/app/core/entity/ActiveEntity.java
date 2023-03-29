@@ -16,8 +16,8 @@ public abstract class ActiveEntity extends AbstractEntity {
     private transient final Behaviour behaviour;
     private transient double xSpeed = 0;
     private transient double ySpeed = 0;
-    protected double maxXSpeed = 0;
-    protected double maxYSpeed = 0;
+    private double maxXSpeed = 0;
+    private double maxYSpeed = 0;
     private transient final List<Bullet> bullets = new ArrayList<>();
 
     /**
@@ -34,6 +34,38 @@ public abstract class ActiveEntity extends AbstractEntity {
     }
 
     /**
+     * Gets the maximum movement speed on x-axis.
+     */
+    public double getMaxXSpeed() {
+        return this.maxXSpeed;
+    }
+
+    /**
+     * Gets the maximum movement speed on x-axis reachable from the entity.
+     *
+     * @param maxXSpeed the maximum speed
+     */
+    public void setMaxXSpeed(final double maxXSpeed) {
+        this.maxXSpeed = maxXSpeed;
+    }
+
+    /**
+     * Gets the maximum movement speed on y-axis.
+     */
+    public double getMaxYSpeed() {
+        return this.maxYSpeed;
+    }
+
+    /**
+     * Gets the maximum movement speed on y-axis reachable from the entity.
+     *
+     * @param maxYSpeed the maximum speed
+     */
+    public void setMaxYSpeed(final double maxYSpeed) {
+        this.maxYSpeed = maxYSpeed;
+    }
+
+    /**
      * Sets the movement speed on x-axis.
      *
      * @param xSpeed the new value of the speed
@@ -42,6 +74,14 @@ public abstract class ActiveEntity extends AbstractEntity {
         this.xSpeed = xSpeed;
     }
 
+    /**
+     * Sets the movement speed on y-axis.
+     *
+     * @param ySpeed the new value of the speed
+     */
+    public void setYSpeed(final double ySpeed) {
+        this.ySpeed = ySpeed;
+    }
 
     /**
      * This method returns the behaviour of the entity.
@@ -59,15 +99,6 @@ public abstract class ActiveEntity extends AbstractEntity {
      */
     public List<Bullet> getBullets() {
         return new ArrayList<>(this.bullets);
-    }
-
-    /**
-     * Sets the movement speed on y-axis.
-     *
-     * @param ySpeed the new value of the speed
-     */
-    public void setYSpeed(final double ySpeed) {
-        this.ySpeed = ySpeed;
     }
 
     /**
@@ -97,7 +128,7 @@ public abstract class ActiveEntity extends AbstractEntity {
                 this.xSpeed = Acceleration.accelerate(this.xSpeed, 0, 0.5);
                 this.ySpeed = this.isJumping()
                         ? Acceleration.accelerate(this.ySpeed, -maxYSpeed, 1) : 0;
-                this.bullets.forEach(e -> e.update(Inputs.EMPTY));
+                this.bullets.forEach(Bullet::update);
                 removeBullets();
             }
         }

@@ -27,8 +27,8 @@ public class PlayerImpl extends ActiveEntity {
                 new AnimatedSpriteRenderer(height, width, Color.RED, filename));
 
         // TODO da togliere, compito della serializzazione
-        maxXSpeed = 10;
-        maxYSpeed = 20;
+        setMaxXSpeed(10);
+        setMaxYSpeed(20);
     }
 
     @Override
