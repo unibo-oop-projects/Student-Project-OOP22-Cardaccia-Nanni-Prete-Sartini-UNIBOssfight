@@ -13,8 +13,6 @@ import javafx.scene.paint.Color;
  */
 public class Platform extends AbstractEntity {
 
-    //platform will eventually move
-
     /**
      * Creates a new instance of the class Platform.
      *

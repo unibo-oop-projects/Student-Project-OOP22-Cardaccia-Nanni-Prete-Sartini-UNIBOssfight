@@ -49,7 +49,7 @@ public abstract class Bullet extends AbstractEntity {
     }
 
     /**
-     * Updates Bullet position and hitbox
+     * Updates Bullet position and hitbox.
      */
     public void update() {
         getTransform().move((int) xShift, (int) yShift);
