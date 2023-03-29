@@ -28,6 +28,46 @@ public class TransformImpl implements Transform {
      * {@inheritDoc}
      */
     @Override
+    public double getGroundLevel() {
+        return this.yGround;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setGroundLevel(final double yGround) {
+        this.yGround = yGround;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Point2D getPosition() {
+        return new Point2D(this.position.getX(), this.position.getY());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getRotation() {
+        return this.rotation;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setRotation(final double rotation) {
+        this.rotation = rotation;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void move(final double x, final double y) {
         this.position = this.position.add(x, y);
     }
@@ -40,22 +80,6 @@ public class TransformImpl implements Transform {
         if (this.isUnderGroundLevel()) {
             this.position = new Point2D(this.position.getX(), yGround);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public double getGroundLevel() {
-        return this.yGround;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setGroundLevel(final double yGround) {
-        this.yGround = yGround;
     }
 
     /**
@@ -79,32 +103,8 @@ public class TransformImpl implements Transform {
      * {@inheritDoc}
      */
     @Override
-    public Point2D getPosition() {
-        return new Point2D(this.position.getX(), this.position.getY());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void moveTo(final double x, final double y) {
         this.position = new Point2D(x, y);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public double getRotation() {
-        return this.rotation;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setRotation(final double rotation) {
-        this.rotation = rotation;
     }
 
     /**
