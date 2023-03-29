@@ -15,7 +15,6 @@ import app.util.Window;
 public class WeaponImpl implements Weapon {
 
     private final int positionOffset;
-    private final int damage;
     private final Transform userPos;
     private final Transform shootingPos;
     private final Renderer renderer;
@@ -34,7 +33,6 @@ public class WeaponImpl implements Weapon {
     public WeaponImpl(final Transform userPos,
                       final int damage, final Renderer renderer, int positionOffset) {
         this.userPos = new TransformImpl(userPos.getPosition(), 0);
-        this.damage = damage;
         this.renderer = renderer;
         this.shootingPos = getWeaponPosition();
         this.positionOffset = positionOffset;

@@ -28,8 +28,8 @@ public class WeaponFactory {
     public Weapon getBigBulletGun(final Transform userPos){
         return new WeaponImpl(userPos, 100, new SpriteRenderer(210, 660, Color.RED, "gun.png"), 125){
 
-            private final int RATE_OF_FIRE = 60;
-            private int rateOfFireCounter = 0;
+            private static final int RATE_OF_FIRE = 60;
+            private int rateOfFireCounter;
 
             @Override
             public Bullet fire(final Point2D target){

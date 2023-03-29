@@ -26,7 +26,7 @@ public class ColliderImpl implements Collider {
      */
     @Override
     public void manageCollision(final Entity e) {
-        this.behaviours.entrySet().stream().filter(b -> b.getKey().equals(e))
+        this.behaviours.entrySet().stream().filter(b -> b.getKey().isEquals(e))
                 .findFirst().ifPresent(b -> b.getValue().accept(e));
     }
 

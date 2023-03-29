@@ -14,7 +14,6 @@ import app.util.Window;
  */
 public abstract class Bullet extends AbstractEntity {
 
-    private final int speed;
     private final double xShift;
     private final double yShift;
 
@@ -35,15 +34,14 @@ public abstract class Bullet extends AbstractEntity {
 
         super(startingPos, height, width, renderer);
         this.setDamage(damage);
-        this.speed = speed;
 
         // Finding vector angle
         final double dx = (target.getX() + getPosition().getX() - Window.getWidth() / 2)
                 - getPosition().getX();
         final double dy = Window.getHeight() - target.getY() - getPosition().getY()  ;
         final double angle = -Math.atan2(dy, dx);
-        this.xShift = this.speed * Math.cos(angle);
-        this.yShift = -this.speed * Math.sin(angle);
+        this.xShift = speed * Math.cos(angle);
+        this.yShift = -speed * Math.sin(angle);
 
         this.getTransform().setRotation(Math.toDegrees(angle));
     }

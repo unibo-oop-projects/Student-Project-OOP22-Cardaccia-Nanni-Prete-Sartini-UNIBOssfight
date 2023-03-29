@@ -17,6 +17,13 @@ public class HealthImpl implements Health {
     }
 
     /**
+     * Creates a new instance of the class HealthImpl with an initial hp value.
+     */
+    public HealthImpl(final int hp) {
+        this.hp = hp;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

@@ -17,9 +17,9 @@ import java.util.List;
 public class PlayerImpl extends ActiveEntity {
 
     private transient final WeaponFactory weaponFactory = new WeaponFactory();
-    private transient final Weapon weapon = weaponFactory.getPlayerWeapon(this.getTransform());;
+    private transient final Weapon weapon = weaponFactory.getPlayerWeapon(this.getTransform());
     private transient double rotation;
-    private transient int coinsCollected = 0;
+    private transient int coinsCollected;
 
     public PlayerImpl(final Transform position, final Integer height,
                       final Integer width, final String filename) {
@@ -38,6 +38,7 @@ public class PlayerImpl extends ActiveEntity {
 
     @Override
     public Node render(final Point2D position) {
+        // TODO togliere exception generica e print
         try {
             return getRenderer().render(new Point2D(Window.getWidth() / 2,
                     this.getPosition().getY()), this.getDirection(), 1, 0);
@@ -49,6 +50,7 @@ public class PlayerImpl extends ActiveEntity {
     }
 
     public Node renderWeapon() {
+        // TODO togliere exception generica e print
         try {
             return this.weapon.render(this.getDirection(), (int) this.rotation);
         } catch (Exception e) {
@@ -93,7 +95,7 @@ public class PlayerImpl extends ActiveEntity {
 
         //TODO PORTARE ROTATE IN WEAPON
         //System.out.println(mousePosition);
-        final double dx = (mousePosition.getX() - Window.getWidth() / 2);
+        final double dx = mousePosition.getX() - Window.getWidth() / 2;
         final double dy = Window.getHeight() - mousePosition.getY() - weapon.getWeaponPosition().getPosition().getY();
         final double angle = -Math.toDegrees(Math.atan2(dy, dx));
 
@@ -125,7 +127,7 @@ public class PlayerImpl extends ActiveEntity {
     }
 
     @Override
-    public void update(Inputs input) {
+    public void update(final Inputs input) {
         super.update(input);
 
         this.weapon.updatePosition(this.getTransform());

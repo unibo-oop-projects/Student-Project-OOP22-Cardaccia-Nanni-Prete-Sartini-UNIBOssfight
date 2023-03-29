@@ -17,7 +17,7 @@ import java.util.Optional;
  */
 public abstract class AbstractEntity implements Entity {
 
-    private final String className;
+    private final String className; // NOPMD è un campo utilizzato per la deserializzazione
     private final int height;
     private final int width;
     private int damage;
@@ -25,7 +25,7 @@ public abstract class AbstractEntity implements Entity {
     private final Transform position;
     private transient Hitbox hitbox;
     private final Renderer renderer;
-    private final Health health;
+    private Health health;
     private transient Collider collider;
 
     /**
@@ -44,11 +44,9 @@ public abstract class AbstractEntity implements Entity {
         this.className = this.getClass().getName();
         this.position = position.copyOf();
         this.renderer = renderer;
-        this.health = new HealthImpl();
         this.height = height;
         this.width = width;
         this.direction = 1;
-
     }
 
     /**
@@ -202,6 +200,7 @@ public abstract class AbstractEntity implements Entity {
      */
     @Override
     public void init() {
+        this.health = new HealthImpl(100);
         this.hitbox = new HitboxImpl(width / 2.0, height, this.position.getPosition());
         this.collider = null;
     }

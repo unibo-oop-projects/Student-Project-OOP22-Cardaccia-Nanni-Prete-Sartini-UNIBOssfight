@@ -14,10 +14,10 @@ import java.util.List;
 public abstract class ActiveEntity extends AbstractEntity {
 
     private transient final Behaviour behaviour;
-    private transient double xSpeed = 0;
-    private transient double ySpeed = 0;
-    private double maxXSpeed = 0;
-    private double maxYSpeed = 0;
+    private transient double xSpeed;
+    private transient double ySpeed;
+    private double maxXSpeed;
+    private double maxYSpeed;
     private transient final List<Bullet> bullets = new ArrayList<>();
 
     /**
