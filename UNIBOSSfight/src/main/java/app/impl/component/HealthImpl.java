@@ -40,7 +40,6 @@ public class HealthImpl implements Health {
         return this.hp <= 0;
     }
 
-
     /**
      * {@inheritDoc}
      */

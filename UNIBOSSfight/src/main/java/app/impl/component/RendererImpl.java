@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**
- * This class implements the renderer.
+ * This class implements the Renderer.
  */
 public class RendererImpl implements Renderer {
 

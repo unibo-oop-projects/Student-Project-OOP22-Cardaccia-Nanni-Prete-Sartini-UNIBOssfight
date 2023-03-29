@@ -4,11 +4,14 @@ import app.core.component.Behaviour;
 import app.core.component.Transform;
 import app.core.entity.Entity;
 
+/**
+ * This class implements the Behaviour.
+ */
 public class BehaviourImpl implements Behaviour {
 
-    public BehaviourImpl() {
-
-    }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Entity.Inputs behave(final Transform playerPosition,
                                 final Transform entityPosition) {

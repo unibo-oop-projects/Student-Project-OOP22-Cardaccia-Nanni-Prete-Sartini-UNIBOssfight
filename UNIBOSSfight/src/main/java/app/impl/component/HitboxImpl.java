@@ -16,6 +16,7 @@ public class HitboxImpl implements Hitbox {
 
     /**
      * Creates a new instance of the class Hitbox.
+     *
      * @param latOffset the offset used to build the rectangle
      *                  which represents the hitbox
      * @param height the height of the entity
@@ -66,22 +67,8 @@ public class HitboxImpl implements Hitbox {
      * {@inheritDoc}
      */
     @Override
-    public boolean collide(final Hitbox target) {
-        //X an Y axis collisions
-        return this.rightSide >= target.getLeftSide()
-                && this.leftSide <= target.getRightSide()
-                && this.bottomSide <= target.getTopSide()
-                && this.topSide >= target.getBottomSide();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update(final Point2D newPos) {
-        this.position = newPos;
-
-        findBorders(this.position);
+    public double getCollisionSideOnX(final double x) {
+        return Math.signum(this.position.getX() - x);
     }
 
     /**
@@ -96,8 +83,13 @@ public class HitboxImpl implements Hitbox {
      * {@inheritDoc}
      */
     @Override
-    public double getCollisionSideOnX(final double x) {
-        return Math.signum(this.position.getX() - x);
+    public double getIntersectionOnX(final Entity e) {
+        final double side = getCollisionSideOnX(e.getPosition().getX());
+
+        final double collidedSide = side > 0 ? e.getHitbox().getRightSide() : e.getHitbox().getLeftSide();
+        final double collidingSide = side > 0 ? this.leftSide : this.rightSide;
+
+        return collidedSide - collidingSide;
     }
 
     /**
@@ -118,13 +110,22 @@ public class HitboxImpl implements Hitbox {
      * {@inheritDoc}
      */
     @Override
-    public double getIntersectionOnX(final Entity e) {
-        final double side = getCollisionSideOnX(e.getPosition().getX());
+    public boolean collide(final Hitbox target) {
+        //X an Y axis collisions
+        return this.rightSide >= target.getLeftSide()
+                && this.leftSide <= target.getRightSide()
+                && this.bottomSide <= target.getTopSide()
+                && this.topSide >= target.getBottomSide();
+    }
 
-        final double collidedSide = side > 0 ? e.getHitbox().getRightSide() : e.getHitbox().getLeftSide();
-        final double collidingSide = side > 0 ? this.leftSide : this.rightSide;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(final Point2D newPos) {
+        this.position = newPos;
 
-        return collidedSide - collidingSide;
+        findBorders(this.position);
     }
 
     private void findBorders(final Point2D pos) {

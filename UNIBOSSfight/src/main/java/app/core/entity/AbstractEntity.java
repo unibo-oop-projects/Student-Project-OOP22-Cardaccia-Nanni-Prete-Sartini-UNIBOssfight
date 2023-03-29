@@ -21,12 +21,12 @@ public abstract class AbstractEntity implements Entity {
     private final int height;
     private final int width;
     private int damage;
+    private transient int direction;
     private final Transform position;
     private transient Hitbox hitbox;
     private final Renderer renderer;
     private final Health health;
     private transient Collider collider;
-    private transient int direction;
 
     /**
      * Creates a new instance of the abstract class AbstractEntity.
@@ -60,15 +60,6 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
-     * This method returns the Renderer of the entity.
-     *
-     * @return the Renderer of the entity
-     */
-    protected Renderer getRenderer() {
-        return this.renderer;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -82,6 +73,39 @@ public abstract class AbstractEntity implements Entity {
     @Override
     public Hitbox getHitbox() {
         return this.hitbox;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Health getHealth() {
+        return this.health;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getHeight() {
+        return this.height;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getWidth() {
+        return this.width;
+    }
+
+    /**
+     * This method returns the Renderer of the entity.
+     *
+     * @return the Renderer of the entity
+     */
+    protected Renderer getRenderer() {
+        return this.renderer;
     }
 
     /**
@@ -113,6 +137,7 @@ public abstract class AbstractEntity implements Entity {
     /**
      * {@inheritDoc}
      */
+    //TODO valutare se eliminare questo metodo
     @Override
     public void setDamage(final int damage) {
         this.damage = damage;
@@ -133,30 +158,6 @@ public abstract class AbstractEntity implements Entity {
      */
     protected void setCollider(final Collider collider) {
         this.collider = collider;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Health getHealth() {
-        return this.health;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getHeight() {
-        return this.height;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getWidth() {
-        return this.width;
     }
 
     /**
@@ -192,17 +193,17 @@ public abstract class AbstractEntity implements Entity {
      * {@inheritDoc}
      */
     @Override
-    public void init() {
-        this.hitbox = new HitboxImpl(width / 2.0, height, this.position.getPosition());
-        this.collider = null;
+    public void manageCollision(final Entity e) {
+        this.getCollider().ifPresent(x -> x.manageCollision(e));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void manageCollision(final Entity e) {
-        this.getCollider().ifPresent(x -> x.manageCollision(e));
+    public void init() {
+        this.hitbox = new HitboxImpl(width / 2.0, height, this.position.getPosition());
+        this.collider = null;
     }
 
 }
