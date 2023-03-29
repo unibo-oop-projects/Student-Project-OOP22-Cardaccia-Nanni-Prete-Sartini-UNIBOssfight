@@ -35,7 +35,6 @@ public interface Weapon {
      */
     Transform getShootingPos();
 
-
     /**
      * Method used to modify the direction on the Y-axis of the weapon.
      *
@@ -43,8 +42,18 @@ public interface Weapon {
      */
     void setYDirection(int direction);
 
+    /**
+     * Updates the position of the weapon with the given one.
+     *
+     * @param newPos the new position of the weapon
+     */
     void updatePosition(Transform newPos);
 
+    /**
+     * Returns the position of the weapon.
+     *
+     * @return the position of the weapon
+     */
     Transform getWeaponPosition();
 
     Transform getUserPosition();

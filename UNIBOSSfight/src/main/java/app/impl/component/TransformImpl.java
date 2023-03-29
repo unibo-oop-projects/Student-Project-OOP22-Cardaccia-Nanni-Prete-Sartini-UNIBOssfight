@@ -110,6 +110,7 @@ public class TransformImpl implements Transform {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Transform copyOf() {
         return new TransformImpl(
                 new Point2D(this.getPosition().getX(), this.getPosition().getY()),

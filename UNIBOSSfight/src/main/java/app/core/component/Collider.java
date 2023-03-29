@@ -78,7 +78,7 @@ public interface Collider {
          * @param <T> subtype of Entity
          * @return true if the type is the same, false if it's not
          */
-        public <T extends Entity> boolean equals(final T e) {
+        public <T extends Entity> boolean isEquals(final T e) {
             return type.isInstance(e);
         }
     }

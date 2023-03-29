@@ -14,8 +14,8 @@ import java.util.stream.Stream;
 public class LevelImpl implements Level {
 
     private final List<Entity> entities;
-    private PlayerImpl player;
-    private transient int count = 0;
+    private final PlayerImpl player;
+    private transient int count;
     private transient boolean goLeft = true;
 
     public LevelImpl() {
