@@ -18,7 +18,7 @@ public interface Weapon {
      * @return the Node that will be given as input to the Scene,
      *         representing the rendered weapon
      */
-    Node render(int direction, int rotation);
+    Node render(Point2D playerPosition, int direction, int rotation);
 
     /**
      * Used to create new bullets shot by the weapon towards a certain target.

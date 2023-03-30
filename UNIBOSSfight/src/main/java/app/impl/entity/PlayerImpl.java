@@ -3,11 +3,12 @@ package app.impl.entity;
 import app.core.component.Collider;
 import app.core.component.Transform;
 import app.core.component.Weapon;
+import app.core.component.WeaponFactory;
 import app.core.entity.ActiveEntity;
 import app.core.entity.Bullet;
 import app.impl.component.AnimatedSpriteRenderer;
 import app.impl.component.ColliderImpl;
-import app.impl.factory.WeaponFactory;
+import app.impl.factory.WeaponFactoryImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class PlayerImpl extends ActiveEntity {
 
-    private transient final WeaponFactory weaponFactory = new WeaponFactory();
+    private transient final WeaponFactory weaponFactory = new WeaponFactoryImpl();
     private transient final Weapon weapon = weaponFactory.getPlayerWeapon(this.getTransform());
     private transient double rotation;
     private transient int coinsCollected;
@@ -52,7 +53,7 @@ public class PlayerImpl extends ActiveEntity {
     public Node renderWeapon() {
         // TODO togliere exception generica e print
         try {
-            return this.weapon.render(this.getDirection(), (int) this.rotation);
+            return this.weapon.render(this.getPosition() ,this.getDirection(), (int) this.rotation);
         } catch (Exception e) {
             System.out.println("ERROR cannot load resource " + e);
         }
@@ -80,7 +81,7 @@ public class PlayerImpl extends ActiveEntity {
             e.getHealth().destroy();
         });
 
-        collider.addBehaviours(List.of(Collider.Entities.ENEMY,
+        collider.addBehaviours(List.of(Collider.Entities.ENEMY, Collider.Entities.BOSS,
                 Collider.Entities.HARMFUL_OBSTACLE), e -> {
             setYSpeed(20);
             setXSpeed(20 * getHitbox().getCollisionSideOnX(e.getPosition().getX()));

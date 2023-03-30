@@ -1,16 +1,8 @@
 package app.game;
 
-import app.impl.component.TransformImpl;
-import app.impl.entity.Coin;
-import app.impl.entity.HarmfulObstacle;
-import app.impl.entity.Wall;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
-import app.core.component.Renderer;
-import app.core.entity.AbstractEntity;
+import app.core.component.BossFactory;
+import app.impl.factory.BossFactoryImpl;
 import app.core.entity.Entity;
-import app.impl.entity.PlayerImpl;
 import app.impl.level.LevelImpl;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -28,16 +20,11 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import app.ui.ConfirmBox;
-import app.util.AbstractEntityDeserializer;
-import app.util.PlayerImplDeserializer;
-import app.util.RendererDeserializer;
 import app.util.Window;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import app.util.DataManager;
@@ -122,6 +109,9 @@ public class Prova extends Application {
         }));
         tl.setCycleCount(Animation.INDEFINITE);
 
+
+        BossFactory bossFactory = new BossFactoryImpl();
+        this.currentLevel.addEntity(bossFactory.firstBoss(this.currentLevel.getPlayer().getTransform()));
 
         /*this.currentLevel.addEntity(
             new Wall(new TransformImpl(

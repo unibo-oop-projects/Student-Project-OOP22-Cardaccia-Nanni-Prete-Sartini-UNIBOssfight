@@ -1,10 +1,11 @@
 package app.impl.component;
 
+import app.core.component.BulletFactory;
 import app.core.component.Renderer;
 import app.core.component.Transform;
 import app.core.component.Weapon;
 import app.core.entity.Bullet;
-import app.impl.factory.BulletFactory;
+import app.impl.factory.BulletFactoryImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import app.util.Window;
@@ -18,7 +19,7 @@ public class WeaponImpl implements Weapon {
     private final Transform userPos;
     private final Transform shootingPos;
     private final Renderer renderer;
-    private final BulletFactory bulletFactory = new BulletFactory();
+    private final BulletFactory bulletFactory = new BulletFactoryImpl();
     private int yDirection = 1;
     private int rotation = 0;
 
@@ -42,9 +43,13 @@ public class WeaponImpl implements Weapon {
      * {@inheritDoc}
      */
     @Override
-    public Node render(final int direction, final int rotation) {
+    public Node render(final Point2D playerPosition, final int direction, final int rotation) {
         this.rotation = rotation;
-        return this.renderer.render(new Point2D(Window.getWidth() / 2,
+        return this.renderer.render(new Point2D(
+                this.getRenderPosition().getPosition()
+                        .subtract(playerPosition)
+                        .add(Window.getWidth() / 2, 0)
+                        .getX(),
                 this.getRenderPosition().getPosition().getY()), 1, this.yDirection, rotation);
     }
 
@@ -73,7 +78,8 @@ public class WeaponImpl implements Weapon {
 
 
 
-        System.out.println(Math.toRadians(this.rotation));
+
+        //System.out.println(Math.toRadians(this.rotation));
         //this.shootingPos.move(-1 * Math.sin(Math.toRadians(rotation - 90)) * (this.renderer.getWidth()/2), -1 * Math.sin(Math.toRadians(rotation) * (this.renderer.getWidth()/2)) );
         //this.shootingPos.move(, );
     }
