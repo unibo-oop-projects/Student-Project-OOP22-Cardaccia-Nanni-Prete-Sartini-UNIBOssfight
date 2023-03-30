@@ -13,12 +13,12 @@ import java.util.List;
 
 public abstract class ActiveEntity extends AbstractEntity {
 
-    private transient final Behaviour behaviour;
+    private transient Behaviour behaviour;
     private transient double xSpeed;
     private transient double ySpeed;
     private double maxXSpeed;
     private double maxYSpeed;
-    private transient final List<Bullet> bullets = new ArrayList<>();
+    private transient List<Bullet> bullets = new ArrayList<>();
 
     /**
      * Creates a new instance of the abstract class AbstractEntity.
@@ -164,6 +164,13 @@ public abstract class ActiveEntity extends AbstractEntity {
      */
     public boolean isUpdated(final Point2D position) {
         return Math.abs(this.getPosition().subtract(position).getX()) < Window.getWidth();
+    }
+
+    @Override
+    public void init() {
+        super.init();
+        this.bullets = new ArrayList<>();
+        this.behaviour = new BehaviourImpl();
     }
 
     private boolean isJumping() {

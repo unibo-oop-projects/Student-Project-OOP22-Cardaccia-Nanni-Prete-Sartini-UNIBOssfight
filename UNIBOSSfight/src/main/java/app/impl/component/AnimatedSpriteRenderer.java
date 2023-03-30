@@ -40,15 +40,7 @@ public class AnimatedSpriteRenderer extends SpriteRenderer{
             if(this.animationLength > 1) {
                 this.sprites = new ArrayList<>();
                 //TODO toglimi
-                IntStream.iterate(1, e -> e +/*
-                l a
-                d e n
-                n o n
-                a p p r e z z a
-                l a
-                m i a
-                a r t e
-                */1)
+                IntStream.iterate(1, e -> e + 1)
                         .limit(this.animationLength)
                         .forEach(e -> {
                             try {
@@ -77,31 +69,46 @@ public class AnimatedSpriteRenderer extends SpriteRenderer{
             if (this.animationLength == 1)
                 return super.render(position, xDirection,0 , rotation);
             else {
-                final ImageView renderedSprite = new ImageView();
 
-                renderedSprite.setImage(this.sprites.get(cont % this.animationLength));
+                this.setImg(this.sprites.get(cont % this.animationLength));
                 if(contDelay++ % 4 == 0){
                     this.cont++;
                 }
-
-                renderedSprite.setFitWidth(getWidth());
-                renderedSprite.setScaleX(xDirection);
-                renderedSprite.setScaleY(yDirection);
-
-                renderedSprite.setFitHeight(getHeight());
-
-                renderedSprite.setRotate(rotation);
-
-                renderedSprite.setX(position.getX() - getWidth() / 2.0);
-                renderedSprite.setY(Window.getHeight() - position.getY() - getHeight());
-
-                renderedSprite.setPreserveRatio(false);
-                renderedSprite.setSmooth(true);
-                renderedSprite.setCache(true);
-                return renderedSprite;
+                return super.render(position, xDirection, yDirection, rotation);
             }
         }catch (Exception e) {
             return super.render(position, xDirection, 1, rotation);
+        }
+    }
+
+    @Override
+    public void init() {
+        try {
+            File directory=new File("assets/" + this.getFilename());
+            this.animationLength = Objects.requireNonNull(directory.list()).length;
+            if(this.animationLength > 1) {
+                this.sprites = new ArrayList<>();
+                //TODO toglimi
+                IntStream.iterate(1, e -> e + 1)
+                        .limit(this.animationLength)
+                        .forEach(e -> {
+                            try {
+                                this.sprites.add(new Image(new FileInputStream("assets/" + this.getFilename() + "/" + this.getFilename() + e + ".png"),
+                                        getWidth(), getHeight(),
+                                        false,
+                                        true));
+                            } catch (FileNotFoundException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        });
+            } else {
+                this.setImg(new Image(new FileInputStream("assets/" + this.getFilename() + ".png"),
+                        getWidth(), getHeight(),
+                        false,
+                        true));
+            }
+        } catch (Exception e){
+            System.out.println(e);
         }
     }
 }

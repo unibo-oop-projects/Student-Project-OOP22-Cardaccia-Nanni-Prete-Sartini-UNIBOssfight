@@ -25,7 +25,7 @@ public abstract class AbstractEntity implements Entity {
     private final Transform position;
     private transient Hitbox hitbox;
     private final Renderer renderer;
-    private Health health;
+    private transient Health health;
     private transient Collider collider;
 
     /**
@@ -200,9 +200,11 @@ public abstract class AbstractEntity implements Entity {
      */
     @Override
     public void init() {
-        this.health = new HealthImpl(100);
+        this.direction = 1;
+        this.health = new HealthImpl();
         this.hitbox = new HitboxImpl(width / 2.0, height, this.position.getPosition());
         this.collider = null;
+        this.renderer.init();
     }
 
 }

@@ -7,8 +7,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
-import java.awt.*;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 /**
  * This class is used to generate the sprites representing the entities of the game.
@@ -89,5 +89,21 @@ public class SpriteRenderer extends RendererImpl {
 
     public void setImg(Image img) {
         this.img = img;
+    }
+
+    @Override
+    public void init() {
+        try {
+            this.img = new Image(new FileInputStream("assets/" + filename),
+                    getWidth(), getHeight(),
+                    false,
+                    true);
+        } catch (FileNotFoundException e) {
+            System.out.println(e);
+        }
+    }
+
+    protected String getFilename() {
+        return this.filename;
     }
 }

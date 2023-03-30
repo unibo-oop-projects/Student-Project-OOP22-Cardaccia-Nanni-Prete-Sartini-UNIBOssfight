@@ -12,9 +12,10 @@ import javafx.scene.shape.Rectangle;
  */
 public class RendererImpl implements Renderer {
 
-  private final transient int height;
-  private final transient int width;
+  private final int height;
+  private final int width;
   private final Color color;
+  private final String className;
 
   /**
    * Creates a new instance of the class Renderer.
@@ -27,6 +28,7 @@ public class RendererImpl implements Renderer {
     this.height = height;
     this.width = width;
     this.color = color;
+    this.className = this.getClass().getName();
   }
 
   /**
@@ -60,6 +62,10 @@ public class RendererImpl implements Renderer {
     rectangle.setRotate(rotation);
 
     return rectangle;
+  }
+
+  public void init() {
+
   }
 
 }
