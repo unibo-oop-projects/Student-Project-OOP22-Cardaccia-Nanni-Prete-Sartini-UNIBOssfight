@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+
+/**
+ * This class implements the level.
+ */
 public class LevelImpl implements Level {
 
     private final List<Entity> entities;
@@ -18,17 +22,18 @@ public class LevelImpl implements Level {
     private transient int count;
     private transient boolean goLeft = true;
 
+    /**
+     * Creates a new instance of the level.
+     */
     public LevelImpl() {
 
         this.entities = new ArrayList<>();
         this.player = new PlayerImpl(new TransformImpl(new Point2D(0, 300), 0), 250, 250, "guido");
     }
 
-    public void init() {
-        this.player.init();
-        this.entities.forEach(Entity::init);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateEntities() {
 
@@ -50,11 +55,17 @@ public class LevelImpl implements Level {
         this.entities.removeIf(e -> e.getHealth().isDead());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updatePlayer(final Entity.Inputs input) {
         this.player.update(input);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Node> renderEntities() {
         return Stream.concat(this.entities.stream()
@@ -63,19 +74,33 @@ public class LevelImpl implements Level {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Node renderPlayer() {
         return this.player.render(this.player.getPosition());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Node renderWeapon() {
         return this.player.renderWeapon();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void rotatePlayerWeapon(final Point2D point2D) {
         this.player.rotateWeapon(point2D);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void collision() {
         // Player collisions
@@ -88,7 +113,7 @@ public class LevelImpl implements Level {
 
         // Entity collisions
         final List<Entity> collidingEntities = allEntities.stream()
-                .filter(e -> e.getCollider().isPresent())
+                .filter(e -> e instanceof ActiveEntity)
                 .toList();
 
         collidingEntities.forEach(ce -> allEntities.stream()
@@ -96,30 +121,52 @@ public class LevelImpl implements Level {
                 .forEach(ce::manageCollision));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Entity> getEntities() {
         return List.copyOf(this.entities);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addEntity(final Entity e) {
         this.entities.add(e);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Point2D getPlayerPosition() {
         return this.player.getPosition();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void playerShoot(final Point2D target) {
         this.player.shoot(target);
     }
 
-    public double getRotation() {
-        return this.player.getRotation();
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PlayerImpl getPlayer() {
         return player;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void init() {
+        this.player.init();
+        this.entities.forEach(Entity::init);
     }
 }

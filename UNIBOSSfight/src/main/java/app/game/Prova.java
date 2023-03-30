@@ -2,8 +2,8 @@ package app.game;
 
 import app.core.component.BossFactory;
 import app.core.entity.Entity;
+import app.core.level.Level;
 import app.impl.factory.BossFactoryImpl;
-import app.impl.level.LevelImpl;
 import app.ui.ConfirmBox;
 import app.util.DataManager;
 import app.util.Window;
@@ -37,7 +37,7 @@ public class Prova extends Application {
     private static final int MIN_WINDOW_HEIGHT = 600;
     private static final int MIN_WINDOW_WIDTH = 800;
 
-    private final LevelImpl currentLevel;//new LevelImpl();
+    private final Level currentLevel;//new LevelImpl();
     private Group root = new Group();
     private Scene currentScene;
     private InputManager inputManager;
@@ -193,7 +193,7 @@ public class Prova extends Application {
     }
 
     // TODO creare copyOf del level
-    public LevelImpl getCurrentLevel() {
+    public Level getCurrentLevel() {
         return this.currentLevel;
     }
 
