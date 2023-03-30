@@ -17,6 +17,8 @@ public class SpriteRenderer extends RendererImpl {
     private final String filename;
     private transient Image img;
 
+    private transient ImageView prerendered;
+
     /**
      * Creates a new instance of the class SpriteRenderer.
      *
@@ -57,27 +59,16 @@ public class SpriteRenderer extends RendererImpl {
     @Override
     public Node render(final Point2D position, final int xDirection, final int yDirection, final double rotation) {
 
-        if (this.img != null) {
-            final ImageView iv2 = new ImageView();
+        if (this.prerendered != null) {
 
-            iv2.setImage(this.img);
+            this.prerendered.setScaleX(xDirection);
+            prerendered.setScaleY(yDirection);
+            prerendered.setRotate(rotation);
 
-            iv2.setFitWidth(getWidth());
-            iv2.setScaleX(xDirection);
-            iv2.setScaleY(yDirection);
+            prerendered.setX(position.getX() - getWidth() / 2.0);
+            prerendered.setY(Window.getHeight() - position.getY() - getHeight());
 
-            iv2.setFitHeight(getHeight());
-
-            iv2.setRotate(rotation);
-
-            iv2.setX(position.getX() - getWidth() / 2.0);
-            iv2.setY(Window.getHeight() - position.getY() - getHeight());
-
-            iv2.setPreserveRatio(false);
-            iv2.setSmooth(true);
-            iv2.setCache(true);
-
-            return iv2;
+            return prerendered;
         } else {
             return super.render(position, xDirection, yDirection, rotation);
         }
@@ -91,6 +82,25 @@ public class SpriteRenderer extends RendererImpl {
         this.img = img;
     }
 
+    public void setPrerendered(ImageView prerendered) {
+        this.prerendered = prerendered;
+    }
+
+    protected ImageView createImageView(final Image img) {
+        ImageView prerenderedImage = new ImageView();
+
+        prerenderedImage.setImage(img);
+
+        prerenderedImage.setFitWidth(getWidth());
+
+        prerenderedImage.setFitHeight(getHeight());
+
+        prerenderedImage.setPreserveRatio(false);
+        prerenderedImage.setSmooth(true);
+        prerenderedImage.setCache(true);
+        return prerenderedImage;
+    }
+
     @Override
     public void init() {
         try {
@@ -98,6 +108,8 @@ public class SpriteRenderer extends RendererImpl {
                     getWidth(), getHeight(),
                     false,
                     true);
+
+            this.prerendered = createImageView(this.img);
         } catch (FileNotFoundException e) {
             System.out.println(e);
         }

@@ -27,40 +27,13 @@ public class AnimatedSpriteRenderer extends SpriteRenderer{
      */
 
     private transient List<Image> sprites;
+    private transient List<ImageView> preRenderedSprites;
     private transient int animationLength;
     private transient int cont = 0;
     private transient int contDelay = 0;
 
     public AnimatedSpriteRenderer(int height, int width, Color color, String filename) {
         super(height, width, color, filename);
-
-        try {
-            File directory=new File("assets/" + filename);
-            this.animationLength = Objects.requireNonNull(directory.list()).length;
-            if(this.animationLength > 1) {
-                this.sprites = new ArrayList<>();
-                //TODO toglimi
-                IntStream.iterate(1, e -> e + 1)
-                        .limit(this.animationLength)
-                        .forEach(e -> {
-                            try {
-                                this.sprites.add(new Image(new FileInputStream("assets/" + filename + "/" + filename + e + ".png"),
-                                        getWidth(), getHeight(),
-                                        false,
-                                        true));
-                            } catch (FileNotFoundException ex) {
-                                throw new RuntimeException(ex);
-                            }
-                        });
-            } else {
-                this.setImg(new Image(new FileInputStream("assets/" + filename + ".png"),
-                        getWidth(), getHeight(),
-                        false,
-                        true));
-            }
-        } catch (Exception e){
-            System.out.println(e);
-        }
     }
 
     @Override
@@ -70,7 +43,7 @@ public class AnimatedSpriteRenderer extends SpriteRenderer{
                 return super.render(position, xDirection,0 , rotation);
             else {
 
-                this.setImg(this.sprites.get(cont % this.animationLength));
+                this.setPrerendered(this.preRenderedSprites.get(cont % this.animationLength));
                 if(contDelay++ % 4 == 0){
                     this.cont++;
                 }
@@ -88,7 +61,7 @@ public class AnimatedSpriteRenderer extends SpriteRenderer{
             this.animationLength = Objects.requireNonNull(directory.list()).length;
             if(this.animationLength > 1) {
                 this.sprites = new ArrayList<>();
-                //TODO toglimi
+                this.preRenderedSprites = new ArrayList<>();
                 IntStream.iterate(1, e -> e + 1)
                         .limit(this.animationLength)
                         .forEach(e -> {
@@ -97,6 +70,7 @@ public class AnimatedSpriteRenderer extends SpriteRenderer{
                                         getWidth(), getHeight(),
                                         false,
                                         true));
+                                this.preRenderedSprites.add(this.createImageView(this.sprites.get(this.sprites.size() - 1)));
                             } catch (FileNotFoundException ex) {
                                 throw new RuntimeException(ex);
                             }

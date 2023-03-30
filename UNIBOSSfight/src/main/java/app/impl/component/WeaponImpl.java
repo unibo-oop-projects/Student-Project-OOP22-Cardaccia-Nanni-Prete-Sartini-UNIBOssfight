@@ -35,6 +35,7 @@ public class WeaponImpl implements Weapon {
                       final int damage, final Renderer renderer, int positionOffset) {
         this.userPos = new TransformImpl(userPos.getPosition(), 0);
         this.renderer = renderer;
+        this.renderer.init();
         this.shootingPos = getWeaponPosition();
         this.positionOffset = positionOffset;
     }

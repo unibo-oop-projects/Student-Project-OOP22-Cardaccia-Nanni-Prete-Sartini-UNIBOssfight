@@ -177,7 +177,9 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "wallL.png",
+        "height": 50,
+        "width": 50,
+        "filename": "wall.png",
         "color": {
           "red": 0.64705884,
           "green": 0.16470589,
