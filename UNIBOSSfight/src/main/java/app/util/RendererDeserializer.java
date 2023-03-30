@@ -1,6 +1,7 @@
 package app.util;
 
 import app.impl.component.RendererImpl;
+import app.impl.component.SpriteRenderer;
 import com.google.gson.*;
 import app.core.component.Renderer;
 
@@ -14,8 +15,8 @@ public class RendererDeserializer implements JsonDeserializer<Renderer> {
             return (RendererImpl) new GsonBuilder()
                     .create()
                     .fromJson(jsonObject, Class.forName(jsonObject.get("className").getAsString()));
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            return new GsonBuilder().create().fromJson(jsonObject, SpriteRenderer.class);
         }
     }
 }
