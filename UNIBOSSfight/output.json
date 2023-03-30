@@ -177,7 +177,7 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "wall.png",
+        "filename": "wallL.png",
         "color": {
           "red": 0.64705884,
           "green": 0.16470589,
@@ -202,6 +202,8 @@
         "rotation": 0.0
       },
       "renderer": {
+        "height": 50,
+        "width": 50,
         "filename": "wall.png",
         "color": {
           "red": 0.64705884,
@@ -227,6 +229,8 @@
         "rotation": 0.0
       },
       "renderer": {
+        "height": 50,
+        "width": 50,
         "filename": "wall.png",
         "color": {
           "red": 0.64705884,
@@ -252,6 +256,8 @@
         "rotation": 0.0
       },
       "renderer": {
+        "height": 50,
+        "width": 50,
         "filename": "wall.png",
         "color": {
           "red": 0.64705884,
@@ -277,6 +283,8 @@
         "rotation": 0.0
       },
       "renderer": {
+        "height": 50,
+        "width": 50,
         "filename": "wall.png",
         "color": {
           "red": 0.64705884,
