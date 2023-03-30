@@ -2,8 +2,8 @@ package app.impl.entity;
 
 import app.core.component.Collider;
 import app.core.component.Transform;
-import app.core.entity.Bullet;
 import app.core.entity.Enemy;
+import app.impl.builder.BehaviourBuilderImpl;
 import app.impl.component.ColliderImpl;
 import app.impl.component.SpriteRenderer;
 import javafx.scene.paint.Color;
@@ -37,13 +37,17 @@ public class EnemyImpl extends Enemy {
     public void init() {
         super.init();
 
+        setBehaviour(new BehaviourBuilderImpl()
+                .addJumpOnTop()
+                .addStopFromBottom()
+                .addStopFromSide()
+                .addFollow()
+                .build());
+
         final var collider = new ColliderImpl();
 
         collider.addBehaviour(Collider.Entities.WALL, e -> {
             Wall.stop(this, e);
-            if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) < 0) {
-                setYSpeed(0);
-            }
             this.update(Inputs.SPACE);
         });
 

@@ -6,6 +6,7 @@ import app.core.component.Weapon;
 import app.core.component.WeaponFactory;
 import app.core.entity.ActiveEntity;
 import app.core.entity.Bullet;
+import app.impl.builder.BehaviourBuilderImpl;
 import app.impl.component.AnimatedSpriteRenderer;
 import app.impl.component.ColliderImpl;
 import app.impl.factory.WeaponFactoryImpl;
@@ -67,6 +68,12 @@ public class PlayerImpl extends ActiveEntity {
         super.init();
         this.weaponFactory = new WeaponFactoryImpl();
         this.weapon = this.weaponFactory.getPlayerWeapon(this.getTransform());
+
+        setBehaviour(new BehaviourBuilderImpl()
+                .addJumpOnTop()
+                .addStopFromBottom()
+                .addStopFromSide()
+                .build());
 
         final var collider = new ColliderImpl();
 

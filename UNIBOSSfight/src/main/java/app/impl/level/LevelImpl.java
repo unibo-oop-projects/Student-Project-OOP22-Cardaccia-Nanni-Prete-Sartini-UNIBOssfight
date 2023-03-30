@@ -38,8 +38,8 @@ public class LevelImpl implements Level {
                 .filter(e -> e.isUpdated(this.getPlayerPosition()))
                 .forEach(e -> {
                     e.update(Entity.Inputs.EMPTY);
-                    e.update(e.getBehaviour()
-                            .behave(this.getPlayer().getTransform(), e.getTransform()));
+                    var behaviour = e.getBehaviour().getFollowingBehaviour();
+                    behaviour.ifPresent(b -> e.update(b.apply(getPlayer(), e)));
                 });
 
         this.count++;

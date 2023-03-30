@@ -3,11 +3,10 @@ package app.core.entity;
 import app.core.component.Behaviour;
 import app.core.component.Renderer;
 import app.core.component.Transform;
-import app.impl.component.BehaviourImpl;
+import app.impl.builder.BehaviourBuilderImpl;
 import app.util.Acceleration;
 import app.util.Window;
 import javafx.geometry.Point2D;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +29,7 @@ public abstract class ActiveEntity extends AbstractEntity {
      */
     public ActiveEntity(final Transform position, final int height, final int width, final Renderer renderer) {
         super(position, height, width, renderer);
-        this.behaviour = new BehaviourImpl();
+        this.behaviour = new BehaviourBuilderImpl().build();
     }
 
     /**
@@ -90,6 +89,10 @@ public abstract class ActiveEntity extends AbstractEntity {
      */
     public Behaviour getBehaviour() {
         return this.behaviour;
+    }
+
+    public void setBehaviour(final Behaviour behaviour) {
+        this.behaviour = behaviour;
     }
 
     /**
@@ -162,7 +165,6 @@ public abstract class ActiveEntity extends AbstractEntity {
     public void init() {
         super.init();
         this.bullets = new ArrayList<>();
-        this.behaviour = new BehaviourImpl();
     }
 
     private boolean isJumping() {

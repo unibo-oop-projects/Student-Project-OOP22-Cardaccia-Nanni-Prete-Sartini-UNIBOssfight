@@ -1,6 +1,10 @@
 package app.core.component;
 
+import app.core.entity.ActiveEntity;
 import app.core.entity.Entity;
+import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 
 /**
  * This class models the behaviour component
@@ -8,18 +12,20 @@ import app.core.entity.Entity;
  */
 public interface Behaviour {
 
-    /**
-     * This method takes as input the position of two entities
-     * and determines their actions by returning an input that
-     * will be used to update them.
-     *
-     * @param playerPosition the position of the player
-     * @param entityPosition the position of the entity
-     * @return an Input used by the method that updates
-     *         the entities
-     */
-    Entity.Inputs behave(Transform playerPosition, Transform entityPosition);
+    Optional<BiConsumer<ActiveEntity, Entity>> getJumpingBehaviour();
 
-    void jumpOnTop(Entity collidingEntity, Entity platform);
+    void setJumpingBehaviour(BiConsumer<ActiveEntity, Entity> consumer);
+
+    Optional<BiConsumer<ActiveEntity, Entity>> getBottomStoppingBehaviour();
+
+    void setBottomStoppingBehaviour(BiConsumer<ActiveEntity, Entity> consumer);
+
+    Optional<BiConsumer<ActiveEntity, Entity>> getSideStoppingBehaviour();
+
+    void setSideStoppingBehaviour(BiConsumer<ActiveEntity, Entity> consumer);
+
+    Optional<BiFunction<ActiveEntity, ActiveEntity, Entity.Inputs>> getFollowingBehaviour();
+
+    void setFollowingBehaviour(BiFunction<ActiveEntity, ActiveEntity, Entity.Inputs> consumer);
 
 }

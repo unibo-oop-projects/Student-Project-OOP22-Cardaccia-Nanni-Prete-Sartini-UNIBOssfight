@@ -50,14 +50,13 @@ public class Platform extends AbstractEntity {
      * @param platform the platform on which the entity is jumping
      */
      public static void jump(final ActiveEntity collidingEntity, final Entity platform) {
-        if (collidingEntity.getHitbox().getCollisionSideOnY(platform.getPosition().getY()) > 0
-            && Math.abs(collidingEntity.getHitbox().getIntersectionOnX(platform))
+         if (collidingEntity.getHitbox().getCollisionSideOnY(platform.getPosition().getY()) > 0
+                 && Math.abs(collidingEntity.getHitbox().getIntersectionOnX(platform))
                  > Math.abs(collidingEntity.getHitbox().getIntersectionOnY(platform))) {
-            collidingEntity.getBehaviour().jumpOnTop(collidingEntity, platform);
-            if (collidingEntity.getTransform().isUnderGroundLevel()) {
-                collidingEntity.getTransform().moveOnGroundLevel();
-            }
-        }
+             collidingEntity.getBehaviour()
+                            .getJumpingBehaviour()
+                            .ifPresent(e -> e.accept(collidingEntity, platform));
+         }
      }
 
 }
