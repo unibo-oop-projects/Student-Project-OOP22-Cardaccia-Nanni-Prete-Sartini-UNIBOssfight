@@ -32,4 +32,6 @@ public interface Renderer {
      * @return a Node that will be given as input to the Scene
      */
     Node render(Point2D position, int xDirection, int yDirection, double rotation);
+
+    void init();
 }
