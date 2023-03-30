@@ -20,4 +20,6 @@ public interface Behaviour {
      */
     Entity.Inputs behave(Transform playerPosition, Transform entityPosition);
 
+    void jumpOnTop(Entity collidingEntity, Entity platform);
+
 }

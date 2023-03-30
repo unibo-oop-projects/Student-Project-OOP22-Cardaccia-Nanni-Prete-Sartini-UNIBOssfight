@@ -1,10 +1,11 @@
 package app.impl.component;
 
+import app.core.component.BulletFactory;
 import app.core.component.Renderer;
 import app.core.component.Transform;
 import app.core.component.Weapon;
 import app.core.entity.Bullet;
-import app.impl.factory.BulletFactory;
+import app.impl.factory.BulletFactoryImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import app.util.Window;
@@ -14,12 +15,13 @@ import app.util.Window;
  */
 public class WeaponImpl implements Weapon {
 
-    private final int positionOffset = 0;
+    private final int positionOffset;
     private final Transform userPos;
     private final Transform shootingPos;
     private final Renderer renderer;
-    private final BulletFactory bulletFactory = new BulletFactory();
+    private final BulletFactory bulletFactory = new BulletFactoryImpl();
     private int yDirection = 1;
+    private int rotation = 0;
 
     /**
      * Creates a new instance of the class Weapon.
@@ -30,19 +32,25 @@ public class WeaponImpl implements Weapon {
      * @param renderer the renderer of the weapon
      */
     public WeaponImpl(final Transform userPos,
-                      final int damage, final Renderer renderer) {
+                      final int damage, final Renderer renderer, int positionOffset) {
         this.userPos = new TransformImpl(userPos.getPosition(), 0);
         this.renderer = renderer;
         this.shootingPos = getWeaponPosition();
+        this.positionOffset = positionOffset;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Node render(final int direction, final int rotation) {
-        return this.renderer.render(new Point2D(Window.getWidth() / 2,
-                this.getUserPosition().getPosition().getY()), 1, this.yDirection, rotation);
+    public Node render(final Point2D playerPosition, final int direction, final int rotation) {
+        this.rotation = rotation;
+        return this.renderer.render(new Point2D(
+                this.getRenderPosition().getPosition()
+                        .subtract(playerPosition)
+                        .add(Window.getWidth() / 2, 0)
+                        .getX(),
+                this.getRenderPosition().getPosition().getY()), 1, this.yDirection, rotation);
     }
 
     /**
@@ -55,9 +63,6 @@ public class WeaponImpl implements Weapon {
     }
 
     @Override
-    public Transform getShootingPos(){ return this.shootingPos; }
-
-    @Override
     public void setYDirection(final int yDirection) {
         this.yDirection = yDirection;
     }
@@ -66,14 +71,23 @@ public class WeaponImpl implements Weapon {
     public void updatePosition(final Transform newPos) {
         Transform posCopy = newPos.copyOf();
 
+        //TODO PULIRE CODICE
         this.userPos.moveTo(posCopy.getPosition().getX(), posCopy.getPosition().getY());
-        this.shootingPos.moveTo(this.getWeaponPosition().getPosition().getX(), this.getWeaponPosition().getPosition().getY());
+        //this.shootingPos.moveTo();
+        this.shootingPos.moveTo(getWeaponPosition().getPosition().getX(), getWeaponPosition().getPosition().getY());
+
+
+
+
+        //System.out.println(Math.toRadians(this.rotation));
+        //this.shootingPos.move(-1 * Math.sin(Math.toRadians(rotation - 90)) * (this.renderer.getWidth()/2), -1 * Math.sin(Math.toRadians(rotation) * (this.renderer.getWidth()/2)) );
+        //this.shootingPos.move(, );
     }
 
     @Override
     public Transform getWeaponPosition() {
-        Transform posCopy = this.userPos.copyOf();
-        posCopy.move(0, positionOffset);
+        Transform posCopy = getRenderPosition().copyOf();
+        posCopy.move(0, renderer.getHeight() / 2);
         return posCopy;
     }
 
@@ -83,8 +97,13 @@ public class WeaponImpl implements Weapon {
     }
 
     @Override
-    public Transform getShootingPosition() {
-        return this.shootingPos;
+    public Transform getShootingPosition() { return this.shootingPos; }
+
+    @Override
+    public Transform getRenderPosition() {
+        Transform posCopy = this.userPos.copyOf();
+        posCopy.move(0, positionOffset);
+        return posCopy;
     }
 }
 

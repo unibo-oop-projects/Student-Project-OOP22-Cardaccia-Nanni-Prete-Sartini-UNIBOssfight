@@ -139,7 +139,7 @@
       }
     },
     {
-      "className": "app.impl.entity.Wall",
+      "className": "app.impl.entity.Platform",
       "height": 50,
       "width": 50,
       "damage": 0,
@@ -162,6 +162,131 @@
           "opacity": 1.0
         },
         "className": "app.impl.component.SpriteRenderer"
+      }
+    },
+    {
+      "className": "app.impl.entity.Platform",
+      "height": 50,
+      "width": 50,
+      "position": {
+        "position": {
+          "x": 950.0,
+          "y": 395.0,
+          "hash": 0
+        },
+        "rotation": 0.0
+      },
+      "renderer": {
+        "filename": "wall.png",
+        "color": {
+          "red": 0.64705884,
+          "green": 0.16470589,
+          "blue": 0.16470589,
+          "opacity": 1.0
+        }
+      },
+      "health": {
+        "hp": 100
+      }
+    },
+    {
+      "className": "app.impl.entity.Platform",
+      "height": 50,
+      "width": 50,
+      "position": {
+        "position": {
+          "x": 1000.0,
+          "y": 395.0,
+          "hash": 0
+        },
+        "rotation": 0.0
+      },
+      "renderer": {
+        "filename": "wall.png",
+        "color": {
+          "red": 0.64705884,
+          "green": 0.16470589,
+          "blue": 0.16470589,
+          "opacity": 1.0
+        }
+      },
+      "health": {
+        "hp": 100
+      }
+    },
+    {
+      "className": "app.impl.entity.Platform",
+      "height": 50,
+      "width": 50,
+      "position": {
+        "position": {
+          "x": 1050.0,
+          "y": 395.0,
+          "hash": 0
+        },
+        "rotation": 0.0
+      },
+      "renderer": {
+        "filename": "wall.png",
+        "color": {
+          "red": 0.64705884,
+          "green": 0.16470589,
+          "blue": 0.16470589,
+          "opacity": 1.0
+        }
+      },
+      "health": {
+        "hp": 100
+      }
+    },
+    {
+      "className": "app.impl.entity.Platform",
+      "height": 50,
+      "width": 50,
+      "position": {
+        "position": {
+          "x": 1100.0,
+          "y": 395.0,
+          "hash": 0
+        },
+        "rotation": 0.0
+      },
+      "renderer": {
+        "filename": "wall.png",
+        "color": {
+          "red": 0.64705884,
+          "green": 0.16470589,
+          "blue": 0.16470589,
+          "opacity": 1.0
+        }
+      },
+      "health": {
+        "hp": 100
+      }
+    },
+    {
+      "className": "app.impl.entity.Platform",
+      "height": 50,
+      "width": 50,
+      "position": {
+        "position": {
+          "x": 1150.0,
+          "y": 395.0,
+          "hash": 0
+        },
+        "rotation": 0.0
+      },
+      "renderer": {
+        "filename": "wall.png",
+        "color": {
+          "red": 0.64705884,
+          "green": 0.16470589,
+          "blue": 0.16470589,
+          "opacity": 1.0
+        }
+      },
+      "health": {
+        "hp": 100
       }
     },
     {

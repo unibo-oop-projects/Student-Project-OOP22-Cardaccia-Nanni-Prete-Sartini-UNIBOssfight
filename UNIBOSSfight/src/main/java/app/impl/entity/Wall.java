@@ -3,6 +3,7 @@ package app.impl.entity;
 import app.core.component.Renderer;
 import app.core.component.Transform;
 import app.core.entity.AbstractEntity;
+import app.core.entity.ActiveEntity;
 import app.core.entity.Entity;
 import app.impl.component.SpriteRenderer;
 import javafx.scene.paint.Color;
@@ -48,24 +49,27 @@ public class Wall extends AbstractEntity {
      * @param collidingEntity the entity colliding
      * @param wall the wall stopping the entity
      */
-    public static void stop(final Entity collidingEntity,
+    public static void stop(final ActiveEntity collidingEntity,
                                final Entity wall) {
         if (Math.abs(collidingEntity.getHitbox().getIntersectionOnX(wall))
                 > Math.abs(collidingEntity.getHitbox().getIntersectionOnY(wall))) {
             if (collidingEntity.getHitbox()
                     .getCollisionSideOnY(wall.getPosition().getY()) < 0) {
-                collidingEntity.getTransform().moveTo(collidingEntity.getPosition().getX(),
-                        wall.getPosition().getY() - collidingEntity.getHeight() - 1);
+                collidingEntity.getTransform()
+                        .moveTo(collidingEntity.getPosition().getX(),
+                                wall.getPosition().getY()
+                                        - collidingEntity.getHeight() - 1);
             } else {
-                final double topSide = wall.getHitbox().getTopSide();
-                collidingEntity.getTransform().setGroundLevel(topSide);
+                collidingEntity.getBehaviour().jumpOnTop(collidingEntity, wall);
                 if (collidingEntity.getTransform().isUnderGroundLevel()) {
                     collidingEntity.getTransform().moveOnGroundLevel();
                 }
             }
         } else {
             collidingEntity.getTransform()
-                    .move(collidingEntity.getHitbox().getIntersectionOnX(wall), 0);
+                    .move(collidingEntity
+                            .getHitbox()
+                            .getIntersectionOnX(wall), 0);
         }
     }
 

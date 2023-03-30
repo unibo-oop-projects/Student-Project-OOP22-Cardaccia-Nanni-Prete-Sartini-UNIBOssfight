@@ -18,7 +18,7 @@ public interface Weapon {
      * @return the Node that will be given as input to the Scene,
      *         representing the rendered weapon
      */
-    Node render(int direction, int rotation);
+    Node render(Point2D playerPosition, int direction, int rotation);
 
     /**
      * Used to create new bullets shot by the weapon towards a certain target.
@@ -27,13 +27,6 @@ public interface Weapon {
      * @return the bullet fired
      */
     Bullet fire(Point2D target);
-
-    /**
-     * Used to return position from which to shoot the bullets.
-     *
-     * @return the position from which the bullet is shot
-     */
-    Transform getShootingPos();
 
     /**
      * Method used to modify the direction on the Y-axis of the weapon.
@@ -56,7 +49,24 @@ public interface Weapon {
      */
     Transform getWeaponPosition();
 
+    /**
+     * Returns the rendering position of the weapon.
+     *
+     * @return the position in which to render the weapon
+     */
+    Transform getRenderPosition();
+
+    /**
+     * Returns the position of the weapon user.
+     *
+     * @return the position in which to render the weapon
+     */
     Transform getUserPosition();
 
+    /**
+     * Used to return position from which to shoot the bullets.
+     *
+     * @return the position from which the bullet is shot
+     */
     Transform getShootingPosition();
 }

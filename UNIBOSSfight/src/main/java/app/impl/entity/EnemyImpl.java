@@ -47,9 +47,13 @@ public class EnemyImpl extends Enemy {
             this.update(Inputs.SPACE);
         });
 
+        collider.addBehaviour(Collider.Entities.PLATFORM, e -> Platform.jump(this, e));
+
         collider.addBehaviour(Collider.Entities.BULLET, e -> {
-            final Bullet b = (Bullet) e;
-            getHealth().damage(b.getDamage());
+            if (!e.getHealth().isDead()) {
+                getHealth().damage(e.getDamage());
+            }
+            e.getHealth().destroy();
         });
 
         setCollider(collider);

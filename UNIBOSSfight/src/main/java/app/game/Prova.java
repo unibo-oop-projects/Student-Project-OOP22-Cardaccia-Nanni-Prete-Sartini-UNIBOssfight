@@ -1,5 +1,7 @@
 package app.game;
 
+import app.core.component.BossFactory;
+import app.impl.factory.BossFactoryImpl;
 import app.core.entity.Entity;
 import app.impl.level.LevelImpl;
 import app.ui.ConfirmBox;
@@ -20,13 +22,18 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import app.ui.ConfirmBox;
+import app.util.Window;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import app.util.DataManager;
 
 public class Prova extends Application {
 
@@ -112,6 +119,9 @@ public class Prova extends Application {
         }));
         tl.setCycleCount(Animation.INDEFINITE);
 
+
+        BossFactory bossFactory = new BossFactoryImpl();
+        this.currentLevel.addEntity(bossFactory.firstBoss(this.currentLevel.getPlayer().getTransform()));
 
         /*this.currentLevel.addEntity(
             new Wall(new TransformImpl(

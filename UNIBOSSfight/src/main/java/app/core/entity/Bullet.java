@@ -43,14 +43,14 @@ public abstract class Bullet extends AbstractEntity {
         this.xShift = speed * Math.cos(angle);
         this.yShift = -speed * Math.sin(angle);
 
-        this.getTransform().setRotation((float) Math.toDegrees(angle));
+        this.getTransform().setRotation(Math.toDegrees(angle));
     }
 
     /**
      * Updates Bullet position and hitbox.
      */
     public void update() {
-        getTransform().move((int) xShift, (int) yShift);
+        getTransform().move(xShift, yShift);
         this.getHitbox().update(this.getPosition());
     }
 
@@ -64,6 +64,12 @@ public abstract class Bullet extends AbstractEntity {
         final var collider = new ColliderImpl();
 
         collider.addBehaviour(Collider.Entities.WALL, e -> this.getHealth().destroy());
+
+        collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
+            if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) > 0) {
+                this.getHealth().destroy();
+            }
+        });
 
         setCollider(collider);
     }

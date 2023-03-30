@@ -2,6 +2,7 @@ package app.impl.entity;
 
 import app.core.component.Renderer;
 import app.core.component.Transform;
+import app.core.entity.ActiveEntity;
 import app.core.entity.Entity;
 import app.core.entity.AbstractEntity;
 import app.impl.component.SpriteRenderer;
@@ -48,12 +49,11 @@ public class Platform extends AbstractEntity {
      * @param collidingEntity the entity colliding
      * @param platform the platform on which the entity is jumping
      */
-     public static void stop(final Entity collidingEntity, final Entity platform) {
-        final double topSide = platform.getHitbox().getTopSide();
-        if (collidingEntity.getHitbox().getCollisionSideOnY(platform.getPosition().getY()) < 0
+     public static void jump(final ActiveEntity collidingEntity, final Entity platform) {
+        if (collidingEntity.getHitbox().getCollisionSideOnY(platform.getPosition().getY()) > 0
             && Math.abs(collidingEntity.getHitbox().getIntersectionOnX(platform))
                  > Math.abs(collidingEntity.getHitbox().getIntersectionOnY(platform))) {
-            collidingEntity.getTransform().setGroundLevel(topSide);
+            collidingEntity.getBehaviour().jumpOnTop(collidingEntity, platform);
             if (collidingEntity.getTransform().isUnderGroundLevel()) {
                 collidingEntity.getTransform().moveOnGroundLevel();
             }
