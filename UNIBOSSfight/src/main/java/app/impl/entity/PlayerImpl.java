@@ -10,14 +10,15 @@ import app.impl.component.ColliderImpl;
 import app.impl.factory.WeaponFactory;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
 import app.util.Window;
+import javafx.scene.paint.Color;
+
 import java.util.List;
 
 public class PlayerImpl extends ActiveEntity {
 
-    private transient final WeaponFactory weaponFactory = new WeaponFactory();
-    private transient final Weapon weapon = weaponFactory.getPlayerWeapon(this.getTransform());
+    private transient WeaponFactory weaponFactory = new WeaponFactory();
+    private transient Weapon weapon = weaponFactory.getPlayerWeapon(this.getTransform());
     private transient double rotation;
     private transient int coinsCollected;
 
@@ -63,6 +64,8 @@ public class PlayerImpl extends ActiveEntity {
     @Override
     public void init() {
         super.init();
+        this.weaponFactory = new WeaponFactory();
+        this.weapon = this.weaponFactory.getPlayerWeapon(this.getTransform());
 
         final var collider = new ColliderImpl();
 
