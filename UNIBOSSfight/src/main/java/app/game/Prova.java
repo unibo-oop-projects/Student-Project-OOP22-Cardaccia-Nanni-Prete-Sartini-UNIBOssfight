@@ -1,17 +1,10 @@
 package app.game;
 
-import app.impl.component.TransformImpl;
-import app.impl.entity.Coin;
-import app.impl.entity.HarmfulObstacle;
-import app.impl.entity.Wall;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
-import app.core.component.Renderer;
-import app.core.entity.AbstractEntity;
 import app.core.entity.Entity;
-import app.impl.entity.PlayerImpl;
 import app.impl.level.LevelImpl;
+import app.ui.ConfirmBox;
+import app.util.DataManager;
+import app.util.Window;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -27,17 +20,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import app.ui.ConfirmBox;
-import app.util.AbstractEntityDeserializer;
-import app.util.PlayerImplDeserializer;
-import app.util.RendererDeserializer;
-import app.util.Window;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -48,12 +35,16 @@ public class Prova extends Application {
     private static final int MIN_WINDOW_HEIGHT = 600;
     private static final int MIN_WINDOW_WIDTH = 800;
 
-    private final LevelImpl currentLevel = new DataManager().loadLevel();//new LevelImpl();
+    private final LevelImpl currentLevel;//new LevelImpl();
     private Group root = new Group();
     private Scene currentScene;
     private InputManager inputManager;
     private Image image;
     private Paint imagePattern;
+
+    public Prova() throws Exception {
+        currentLevel = new DataManager().loadLevel();//new LevelImpl();
+    }
 
     public static String readFile(String path, Charset encoding) throws IOException
     {

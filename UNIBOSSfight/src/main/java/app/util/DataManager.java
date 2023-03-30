@@ -1,14 +1,18 @@
 package app.util;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
 import app.core.component.Renderer;
+import app.core.component.Transform;
 import app.core.entity.AbstractEntity;
 import app.core.entity.Entity;
 import app.core.level.Level;
+import app.impl.component.TransformImpl;
 import app.impl.entity.PlayerImpl;
 import app.impl.level.LevelImpl;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonObject;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -22,29 +26,41 @@ public class DataManager {
         byte[] encoded = Files.readAllBytes(Paths.get(path));
         return new String(encoded, encoding);
     }
-    public LevelImpl loadLevel() {
+    public LevelImpl loadLevel() throws Exception {
         try {
             String json = readFile("output.json", StandardCharsets.UTF_8);
 
             GsonBuilder gsonBuilder = new GsonBuilder();
 
-            JsonDeserializer<PlayerImpl> deserializer = new PlayerImplDeserializer(); // implementation detail
-            JsonDeserializer<AbstractEntity> Edeserializer = new AbstractEntityDeserializer(); // implementation detail
             JsonDeserializer<Renderer> Rdeserializer = new RendererDeserializer(); // implementation detail
 
+            JsonDeserializer<Transform> TDeserializer = (json12, typeOfT, context) -> {
+                JsonObject jsonObject = json12.getAsJsonObject();
+                    return new Gson().fromJson(jsonObject, TransformImpl.class);
+            };
 
-            gsonBuilder.registerTypeAdapter(Entity.class, Edeserializer);
-            gsonBuilder.registerTypeAdapter(Renderer.class, Rdeserializer);
-            gsonBuilder.registerTypeAdapter(PlayerImpl.class, deserializer);
+            JsonDeserializer<AbstractEntity> EntityDeserializer = (json12, typeOfT, context) -> {
+                JsonObject jsonObject = json12.getAsJsonObject();
+                try {
+                    return (AbstractEntity) new GsonBuilder()
+                            .registerTypeAdapter(Transform.class, TDeserializer)
+                            .registerTypeAdapter(Renderer.class, Rdeserializer)
+                            .create()
+                            .fromJson(jsonObject, Class.forName(jsonObject.get("className").getAsString()));
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            };
+
+            gsonBuilder.registerTypeAdapter(Entity.class, EntityDeserializer);
+            gsonBuilder.registerTypeAdapter(PlayerImpl.class, EntityDeserializer);
 
             Gson customGson = gsonBuilder.create();
-            LevelImpl customObject = customGson.fromJson(json, LevelImpl.class);
 
-            return customObject;
+            return customGson.fromJson(json, LevelImpl.class);
 
         } catch (Exception e) {
-            System.out.println(e);
-            return null;
+            throw new Exception(e);
         }
     }
 
