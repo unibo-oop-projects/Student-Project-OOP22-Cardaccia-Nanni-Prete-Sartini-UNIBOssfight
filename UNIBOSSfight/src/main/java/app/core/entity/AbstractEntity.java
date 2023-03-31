@@ -70,7 +70,7 @@ public abstract class AbstractEntity implements Entity {
      */
     @Override
     public Transform getTransform() {
-        return this.position.copyOf();
+        return this.position;
     }
 
     /**
