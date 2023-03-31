@@ -36,6 +36,13 @@ public interface Entity {
     }
 
     /**
+     * Returns a string with the runtime type of the current instance.
+     *
+     * @return the runtime type of the entity
+     */
+    String getType();
+
+    /**
      * This method returns the width of the entity.
      *
      * @return the width of the entity

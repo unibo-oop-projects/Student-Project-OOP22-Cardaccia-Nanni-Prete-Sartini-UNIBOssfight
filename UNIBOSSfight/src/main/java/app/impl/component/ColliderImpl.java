@@ -2,7 +2,7 @@ package app.impl.component;
 
 import app.core.component.Collider;
 import app.core.entity.Entity;
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -12,13 +12,13 @@ import java.util.function.Consumer;
  */
 public class ColliderImpl implements Collider {
 
-    private final Map<Entities, Consumer<Entity>> behaviours;
+    private final Map<String, Consumer<Entity>> behaviours;
 
     /**
      * Creates a new instance of the Collider.
      */
     public ColliderImpl() {
-        this.behaviours = new EnumMap<>(Entities.class);
+        this.behaviours = new HashMap<>();
     }
 
     /**
@@ -26,15 +26,16 @@ public class ColliderImpl implements Collider {
      */
     @Override
     public void manageCollision(final Entity e) {
-        this.behaviours.entrySet().stream().filter(b -> b.getKey().isEquals(e))
-                .findFirst().ifPresent(b -> b.getValue().accept(e));
+        if (this.behaviours.containsKey(e.getType())) {
+            this.behaviours.get(e.getType()).accept(e);
+        }
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addBehaviour(final Entities key, final Consumer<Entity> value) {
+    public void addBehaviour(final String key, final Consumer<Entity> value) {
         this.behaviours.putIfAbsent(key, value);
     }
 
@@ -42,8 +43,8 @@ public class ColliderImpl implements Collider {
      * {@inheritDoc}
      */
     @Override
-    public void addBehaviours(final List<Entities> keys, final Consumer<Entity> value) {
-        for (final Entities e : keys) {
+    public void addBehaviours(final List<String> keys, final Consumer<Entity> value) {
+        for (final String e : keys) {
             addBehaviour(e, value);
         }
     }

@@ -63,6 +63,9 @@ public class PlayerImpl extends ActiveEntity {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void init() {
         super.init();
@@ -75,9 +78,9 @@ public class PlayerImpl extends ActiveEntity {
                 .addStopFromSide()
                 .build());
 
-        final var collider = new ColliderImpl();
+        final Collider collider = new ColliderImpl();
 
-        collider.addBehaviour(Collider.Entities.WALL, e -> {
+        collider.addBehaviour(Wall.class.getName(), e -> {
             Wall.stop(this, e);
             if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) < 0
             && Math.abs(e.getPosition().getX() - this.getPosition().getX())
@@ -86,19 +89,19 @@ public class PlayerImpl extends ActiveEntity {
             }
         });
 
-        collider.addBehaviour(Collider.Entities.COIN, e -> {
+        collider.addBehaviour(Coin.class.getName(), e -> {
             this.coinsCollected++;
             e.getHealth().destroy();
         });
 
-        collider.addBehaviours(List.of(Collider.Entities.ENEMY, Collider.Entities.BOSS,
-                Collider.Entities.HARMFUL_OBSTACLE), e -> {
+        collider.addBehaviours(List.of(EnemyImpl.class.getName(), BossImpl.class.getName(),
+                HarmfulObstacle.class.getName()), e -> {
             setYSpeed(20);
             setXSpeed(20 * getHitbox().getCollisionSideOnX(e.getPosition().getX()));
             this.getHealth().damage(e.getDamage());
         });
 
-        collider.addBehaviour(Collider.Entities.PLATFORM, e -> Platform.jump(this, e));
+        collider.addBehaviour(Platform.class.getName(), e -> Platform.jump(this, e));
 
         setCollider(collider);
     }

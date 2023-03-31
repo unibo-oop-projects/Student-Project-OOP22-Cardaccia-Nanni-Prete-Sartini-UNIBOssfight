@@ -70,15 +70,9 @@ public class BossImpl extends Boss {
 
         final var collider = new ColliderImpl();
 
-        collider.addBehaviour(Collider.Entities.WALL, e -> {
-            Wall.stop(this, e);
-            if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) < 0) {
-                setYSpeed(0);
-            }
-            this.update(Inputs.SPACE);
-        });
+        final Collider collider = new ColliderImpl();
 
-        collider.addBehaviour(Collider.Entities.BULLET, e -> {
+        collider.addBehaviour(BulletImpl.class.getName(), e -> {
             final Bullet b = (Bullet) e;
             getHealth().damage(b.getDamage());
         });

@@ -4,6 +4,8 @@ import app.core.component.Collider;
 import app.core.component.Renderer;
 import app.core.component.Transform;
 import app.impl.component.ColliderImpl;
+import app.impl.entity.Platform;
+import app.impl.entity.Wall;
 import javafx.geometry.Point2D;
 import app.util.Window;
 
@@ -61,11 +63,11 @@ public abstract class Bullet extends AbstractEntity {
     public void init() {
         super.init();
 
-        final var collider = new ColliderImpl();
+        final Collider collider = new ColliderImpl();
 
-        collider.addBehaviour(Collider.Entities.WALL, e -> this.getHealth().destroy());
+        collider.addBehaviour(Wall.class.getName(), e -> this.getHealth().destroy());
 
-        collider.addBehaviour(Collider.Entities.PLATFORM, e -> {
+        collider.addBehaviour(Platform.class.getName(), e -> {
             if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) > 0) {
                 this.getHealth().destroy();
             }

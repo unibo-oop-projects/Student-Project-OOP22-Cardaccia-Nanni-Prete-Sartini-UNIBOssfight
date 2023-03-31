@@ -1,7 +1,11 @@
 package app.core.entity;
 
+import app.core.component.Collider;
 import app.core.component.Renderer;
 import app.core.component.Transform;
+import app.impl.component.ColliderImpl;
+import app.impl.entity.Platform;
+import app.impl.entity.Wall;
 
 /**
  * This class models the enemy of the game, which causes damage
@@ -22,4 +26,22 @@ public abstract class Enemy extends ActiveEntity {
         super(position, height, width, renderer);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void init() {
+        super.init();
+
+        final Collider collider = new ColliderImpl();
+
+        collider.addBehaviour(Wall.class.getName(), e -> {
+            Wall.stop(this, e);
+            this.update(Inputs.SPACE);
+        });
+
+        collider.addBehaviour(Platform.class.getName(), e -> Platform.jump(this, e));
+
+        setCollider(collider);
+    }
 }

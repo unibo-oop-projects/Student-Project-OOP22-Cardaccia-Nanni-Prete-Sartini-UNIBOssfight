@@ -44,16 +44,9 @@ public class EnemyImpl extends Enemy {
                 .addFollow()
                 .build());
 
-        final var collider = new ColliderImpl();
+        final Collider collider = new ColliderImpl();
 
-        collider.addBehaviour(Collider.Entities.WALL, e -> {
-            Wall.stop(this, e);
-            this.update(Inputs.SPACE);
-        });
-
-        collider.addBehaviour(Collider.Entities.PLATFORM, e -> Platform.jump(this, e));
-
-        collider.addBehaviour(Collider.Entities.BULLET, e -> {
+        collider.addBehaviour(BulletImpl.class.getName(), e -> {
             if (!e.getHealth().isDead()) {
                 getHealth().damage(e.getDamage());
             }

@@ -52,6 +52,13 @@ public abstract class AbstractEntity implements Entity {
     /**
      * {@inheritDoc}
      */
+    public String getType() {
+        return this.className;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Point2D getPosition() {
         return this.position.getPosition();
