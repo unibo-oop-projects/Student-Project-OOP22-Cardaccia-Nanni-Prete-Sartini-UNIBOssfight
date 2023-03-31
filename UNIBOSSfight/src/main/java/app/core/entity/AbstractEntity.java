@@ -52,6 +52,7 @@ public abstract class AbstractEntity implements Entity {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getType() {
         return this.className;
     }
@@ -69,7 +70,7 @@ public abstract class AbstractEntity implements Entity {
      */
     @Override
     public Transform getTransform() {
-        return this.position;
+        return this.position.copyOf();
     }
 
     /**

@@ -10,6 +10,9 @@ import javafx.geometry.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class models an Entity that can move and performs actions.
+ */
 public abstract class ActiveEntity extends AbstractEntity {
 
     private transient Behaviour behaviour;
@@ -34,6 +37,8 @@ public abstract class ActiveEntity extends AbstractEntity {
 
     /**
      * Gets the maximum movement speed on x-axis.
+     *
+     * @return a double representing the maximum speed on x-axis
      */
     public double getMaxXSpeed() {
         return this.maxXSpeed;
@@ -50,6 +55,8 @@ public abstract class ActiveEntity extends AbstractEntity {
 
     /**
      * Gets the maximum movement speed on y-axis.
+     *
+     * @return a double representing the maximum speed on y-axis
      */
     public double getMaxYSpeed() {
         return this.maxYSpeed;
@@ -91,6 +98,11 @@ public abstract class ActiveEntity extends AbstractEntity {
         return this.behaviour;
     }
 
+    /**
+     * Sets the behaviour of the entity.
+     *
+     * @param behaviour the new behaviour
+     */
     public void setBehaviour(final Behaviour behaviour) {
         this.behaviour = behaviour;
     }
@@ -130,6 +142,7 @@ public abstract class ActiveEntity extends AbstractEntity {
                 this.bullets.forEach(Bullet::update);
                 removeBullets();
             }
+            default -> throw new IllegalStateException();
         }
 
         getTransform().resetGroundLevel();
@@ -157,15 +170,21 @@ public abstract class ActiveEntity extends AbstractEntity {
         return Math.abs(this.getPosition().subtract(position).getX()) < Window.getWidth();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void init() {
         super.init();
         this.bullets = new ArrayList<>();
     }
 
+    /**
+     * Makes the entity jump.
+     */
     protected void jump() {
         if (!isJumping()) {
-            this.ySpeed = 30;
+            this.ySpeed = this.maxYSpeed;
             getTransform().move(0, 1);
         }
     }

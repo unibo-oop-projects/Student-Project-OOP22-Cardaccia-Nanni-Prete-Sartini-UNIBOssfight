@@ -110,7 +110,7 @@ public interface Entity {
      *
      * @param position position of the player
      * @return true if the entity is close enough to the player in order
-     * to be rendered inside the game window, false otherwise.
+     * to be rendered inside the game window, false otherwise
      */
     boolean isDisplayed(Point2D position);
 
@@ -125,7 +125,7 @@ public interface Entity {
     /**
      * Manages the collision of the entity.
      *
-     * @param e the entity colliding
+     * @param e the entity collided
      */
     void manageCollision(Entity e);
 
