@@ -1,10 +1,8 @@
 package app.impl.entity;
 
-import app.core.component.Collider;
 import app.core.component.Transform;
 import app.core.entity.Enemy;
 import app.impl.builder.BehaviourBuilderImpl;
-import app.impl.component.ColliderImpl;
 import app.impl.component.SpriteRenderer;
 import javafx.scene.paint.Color;
 
@@ -44,16 +42,12 @@ public class EnemyImpl extends Enemy {
                 .addFollow()
                 .build());
 
-        final Collider collider = new ColliderImpl();
-
-        collider.addBehaviour(BulletImpl.class.getName(), e -> {
+        getCollider().ifPresent(c -> c.addBehaviour(BulletImpl.class.getName(), e -> {
             if (!e.getHealth().isDead()) {
                 getHealth().damage(e.getDamage());
             }
             e.getHealth().destroy();
-        });
-
-        setCollider(collider);
+        }));
     }
 
 }

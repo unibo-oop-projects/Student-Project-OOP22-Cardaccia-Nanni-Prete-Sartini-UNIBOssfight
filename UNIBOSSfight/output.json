@@ -1,8 +1,8 @@
 {
   "entities": [
     {
-      "maxXSpeed": 10.0,
-      "maxYSpeed": 30.0,
+      "maxXSpeed": 7.0,
+      "maxYSpeed": 10.0,
       "className": "app.impl.entity.EnemyImpl",
       "height": 50,
       "width": 50,
@@ -29,8 +29,8 @@
       }
     },
     {
-      "maxXSpeed": 30.0,
-      "maxYSpeed": 30.0,
+      "maxXSpeed": 8.0,
+      "maxYSpeed": 10.0,
       "className": "app.impl.entity.EnemyImpl",
       "height": 50,
       "width": 50,
@@ -57,8 +57,8 @@
       }
     },
     {
-      "maxXSpeed": 15.0,
-      "maxYSpeed": 9.0,
+      "maxXSpeed": 9.0,
+      "maxYSpeed": 10.0,
       "className": "app.impl.entity.EnemyImpl",
       "height": 50,
       "width": 50,
@@ -85,8 +85,8 @@
       }
     },
     {
-      "maxXSpeed": 40.0,
-      "maxYSpeed": 6.0,
+      "maxXSpeed": 5.0,
+      "maxYSpeed": 10.0,
       "className": "app.impl.entity.EnemyImpl",
       "height": 50,
       "width": 50,
@@ -327,8 +327,8 @@
     }
   ],
   "player": {
-    "maxXSpeed": 150.0,
-    "maxYSpeed": 30.0,
+    "maxXSpeed": 20.0,
+    "maxYSpeed": 20.0,
     "className": "app.impl.entity.PlayerImpl",
     "height": 250,
     "width": 250,
