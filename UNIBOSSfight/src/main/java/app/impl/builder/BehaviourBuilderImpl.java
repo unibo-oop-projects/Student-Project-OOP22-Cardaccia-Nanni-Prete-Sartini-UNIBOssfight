@@ -10,10 +10,13 @@ import app.impl.component.BehaviourImpl;
  */
 public class BehaviourBuilderImpl implements BehaviourBuilder {
 
-    private boolean built = false;
+    private boolean built;
     private final Behaviour behaviour = new BehaviourImpl();
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BehaviourBuilder addJumpOnTop() {
         this.behaviour.setJumpingBehaviour((e1, e2) -> {
@@ -25,6 +28,9 @@ public class BehaviourBuilderImpl implements BehaviourBuilder {
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BehaviourBuilder addStopFromBottom() {
         this.behaviour.setBottomStoppingBehaviour((e1, e2) -> {
@@ -36,6 +42,9 @@ public class BehaviourBuilderImpl implements BehaviourBuilder {
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BehaviourBuilder addStopFromSide() {
         this.behaviour.setSideStoppingBehaviour((e1, e2) -> e1.getTransform()
@@ -43,6 +52,9 @@ public class BehaviourBuilderImpl implements BehaviourBuilder {
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BehaviourBuilder addFollow() {
         this.behaviour.setFollowingBehaviour((e1, e2) -> {
@@ -58,6 +70,9 @@ public class BehaviourBuilderImpl implements BehaviourBuilder {
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BehaviourBuilder addShooting() {
         this.behaviour.setShootingBehaviour((boss, player) -> {
@@ -66,6 +81,9 @@ public class BehaviourBuilderImpl implements BehaviourBuilder {
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Behaviour build() {
         if (built) {
