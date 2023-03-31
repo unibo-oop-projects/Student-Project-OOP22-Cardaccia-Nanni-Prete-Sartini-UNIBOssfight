@@ -59,6 +59,14 @@ public class BehaviourBuilderImpl implements BehaviourBuilder {
     }
 
     @Override
+    public BehaviourBuilder addShooting() {
+        this.behaviour.setShootingBehaviour((boss, player) -> {
+            //TODO TINO IMPLEMENTA
+        });
+        return this;
+    }
+
+    @Override
     public Behaviour build() {
         if (built) {
             throw new IllegalStateException();

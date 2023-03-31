@@ -1,12 +1,10 @@
 package app.impl.entity;
 
-import app.core.component.Collider;
 import app.core.component.Health;
 import app.core.component.Transform;
 import app.core.component.Weapon;
 import app.core.entity.Boss;
-import app.core.entity.Bullet;
-import app.impl.component.ColliderImpl;
+import app.impl.builder.BehaviourBuilderImpl;
 import app.impl.component.HealthImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -38,19 +36,20 @@ public class BossImpl extends Boss {
 
     @Override
     public void update(final Inputs input) {
+        super.update(input);
 
-        getTransform().move(getDirection(), 0);
-        getHitbox().update(getTransform().getPosition());
-
-        //TODO WORK IN PROGRESS, portare fire in nuovo metodo fire con input posizione ( e render[altezza] dello sprite del player) del player
-        //GESTIONE FUOCO AUTOMATICO
-        if(rateOfFireCounter >= 10){
-            //NO, DEVE RESTITUIRE UN BULLET/ AGGIUNGERLO ALLA SUA LISTA
-            this.addBullet(getWeapon().fire(new Point2D(100, 100)));
-            this.rateOfFireCounter = 0;
-        } else {
-            this.rateOfFireCounter++;
-        }
+//        getTransform().move(getDirection(), 0);
+//        getHitbox().update(getTransform().getPosition());
+//
+//        //TODO WORK IN PROGRESS, portare fire in nuovo metodo fire con input posizione ( e render[altezza] dello sprite del player) del player
+//        //GESTIONE FUOCO AUTOMATICO
+//        if(rateOfFireCounter >= 10){
+//            //NO, DEVE RESTITUIRE UN BULLET/ AGGIUNGERLO ALLA SUA LISTA
+//            this.addBullet(getWeapon().fire(new Point2D(100, 100)));
+//            this.rateOfFireCounter = 0;
+//        } else {
+//            this.rateOfFireCounter++;
+//        }
 
         this.getWeapon().updatePosition(this.getTransform());
 
@@ -68,15 +67,14 @@ public class BossImpl extends Boss {
     public void init() {
         super.init();
 
-        final var collider = new ColliderImpl();
+        setBehaviour(new BehaviourBuilderImpl()
+                .addJumpOnTop()
+                .addStopFromBottom()
+                .addStopFromSide()
+                .addFollow()
+                .build());
 
-        final Collider collider = new ColliderImpl();
-
-        collider.addBehaviour(BulletImpl.class.getName(), e -> {
-            final Bullet b = (Bullet) e;
-            getHealth().damage(b.getDamage());
-        });
-
-        setCollider(collider);
+        getCollider().ifPresent(c -> c.addBehaviour(BulletImpl.class.getName(),
+                e -> getHealth().damage(e.getDamage())));
     }
 }

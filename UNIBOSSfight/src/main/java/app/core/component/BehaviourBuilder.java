@@ -10,5 +10,7 @@ public interface BehaviourBuilder {
 
     BehaviourBuilder addFollow();
 
+    BehaviourBuilder addShooting();
+
     Behaviour build();
 }

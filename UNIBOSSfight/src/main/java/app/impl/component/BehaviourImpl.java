@@ -13,6 +13,7 @@ public class BehaviourImpl implements Behaviour {
     private BiConsumer<ActiveEntity, Entity> bottomStoppingBehaviour;
     private BiConsumer<ActiveEntity, Entity> sideStoppingBehaviour;
     private BiFunction<ActiveEntity, ActiveEntity, Entity.Inputs> followingBehaviour;
+    private BiConsumer<ActiveEntity, ActiveEntity> shootingBehaviour;
 
     @Override
     public Optional<BiConsumer<ActiveEntity, Entity>> getJumpingBehaviour() {
@@ -52,5 +53,15 @@ public class BehaviourImpl implements Behaviour {
     @Override
     public void setFollowingBehaviour(final BiFunction<ActiveEntity, ActiveEntity, Entity.Inputs> consumer) {
         this.followingBehaviour = consumer;
+    }
+
+    @Override
+    public Optional<BiConsumer<ActiveEntity, ActiveEntity>> getShootingBehaviour() {
+        return Optional.ofNullable(this.shootingBehaviour);
+    }
+
+    @Override
+    public void setShootingBehaviour(BiConsumer<ActiveEntity, ActiveEntity> consumer) {
+        this.shootingBehaviour = consumer;
     }
 }

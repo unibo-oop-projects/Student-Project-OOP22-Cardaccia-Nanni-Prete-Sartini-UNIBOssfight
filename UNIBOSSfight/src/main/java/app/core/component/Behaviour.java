@@ -26,6 +26,10 @@ public interface Behaviour {
 
     Optional<BiFunction<ActiveEntity, ActiveEntity, Entity.Inputs>> getFollowingBehaviour();
 
-    void setFollowingBehaviour(BiFunction<ActiveEntity, ActiveEntity, Entity.Inputs> consumer);
+    void setFollowingBehaviour(BiFunction<ActiveEntity, ActiveEntity, Entity.Inputs> function);
+
+    Optional<BiConsumer<ActiveEntity, ActiveEntity>> getShootingBehaviour();
+
+    void setShootingBehaviour(BiConsumer<ActiveEntity, ActiveEntity> consumer);
 
 }

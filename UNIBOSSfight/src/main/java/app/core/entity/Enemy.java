@@ -37,7 +37,9 @@ public abstract class Enemy extends ActiveEntity {
 
         collider.addBehaviour(Wall.class.getName(), e -> {
             Wall.stop(this, e);
-            this.update(Inputs.SPACE);
+            if (getHitbox().getCollisionSideOnY(e.getPosition().getY()) == 0) {
+                jump();
+            }
         });
 
         collider.addBehaviour(Platform.class.getName(), e -> Platform.jump(this, e));

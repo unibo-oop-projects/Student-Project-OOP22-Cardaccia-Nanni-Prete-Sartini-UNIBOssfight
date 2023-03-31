@@ -120,12 +120,8 @@ public abstract class ActiveEntity extends AbstractEntity {
                 this.xSpeed = Acceleration.accelerate(this.xSpeed, maxXSpeed, 1);
                 setDirection(1);
             }
-            case SPACE -> {
-                if (!isJumping()) {
-                    this.ySpeed = 30;
-                    getTransform().move(0, 1);
-                }
-            }
+            case SPACE -> jump();
+
             case EMPTY -> {
                 getTransform().move(this.xSpeed, this.ySpeed);
                 this.xSpeed = Acceleration.accelerate(this.xSpeed, 0, 0.5);
@@ -165,6 +161,13 @@ public abstract class ActiveEntity extends AbstractEntity {
     public void init() {
         super.init();
         this.bullets = new ArrayList<>();
+    }
+
+    protected void jump() {
+        if (!isJumping()) {
+            this.ySpeed = 30;
+            getTransform().move(0, 1);
+        }
     }
 
     private boolean isJumping() {
