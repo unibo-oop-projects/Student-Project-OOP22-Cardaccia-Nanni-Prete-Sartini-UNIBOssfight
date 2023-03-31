@@ -1,4 +1,4 @@
-package ui;
+package app.ui;
 
 import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
@@ -23,6 +23,7 @@ public class ViewManager {
     private CostumizedSubScene levelChoiceSubScene;
     private CostumizedSubScene helpSubScene;
     private CostumizedSubScene exitSubScene;
+    private CostumizedSubScene sceneToHide;
 
     public ViewManager() {
         menuButtons = new ArrayList<>();
@@ -34,8 +35,14 @@ public class ViewManager {
         createButtons();
         setBackground();
         createLogo();
+    }
 
-
+    private void showSubScene(CostumizedSubScene subScene) {
+        if (sceneToHide != null) {
+            sceneToHide.moveSubScene();
+        }
+        subScene.moveSubScene();
+        sceneToHide = subScene;
     }
 
     private void createSubScenes() {
@@ -44,7 +51,8 @@ public class ViewManager {
         helpSubScene = new CostumizedSubScene();
         exitSubScene = new CostumizedSubScene();
 
-        mainPane.getChildren().addAll(scoreSubScene, levelChoiceSubScene, helpSubScene, exitSubScene);
+        mainPane.getChildren().addAll(scoreSubScene, levelChoiceSubScene,
+                helpSubScene, exitSubScene);
     }
     public Stage getMainStage() {
         return this.mainStage;
@@ -82,25 +90,25 @@ public class ViewManager {
     private void createScoresButton() {
         CostumizedButton scoreButton = new CostumizedButton("SCORES");
         addMenuButton(scoreButton);
-        scoreButton.setOnAction(event -> scoreSubScene.moveSubScene());
+        scoreButton.setOnAction(event -> showSubScene(scoreSubScene));
     }
 
     private void createLevelButton() {
         CostumizedButton levelButton = new CostumizedButton("LEVEL");
         addMenuButton(levelButton);
-        levelButton.setOnAction(event -> levelChoiceSubScene.moveSubScene());
+        levelButton.setOnAction(event -> showSubScene(levelChoiceSubScene));
     }
 
     private void createHelpButton() {
         CostumizedButton helpButton = new CostumizedButton("HELP");
         addMenuButton(helpButton);
-        helpButton.setOnAction(event -> helpSubScene.moveSubScene());
+        helpButton.setOnAction(event -> showSubScene(helpSubScene));
     }
 
     private void createExitButton() {
         CostumizedButton exitButton = new CostumizedButton("EXIT");
         addMenuButton(exitButton);
-        exitButton.setOnAction(event -> exitSubScene.moveSubScene());
+        exitButton.setOnAction(event -> mainStage.close());
     }
 
     private void createLogo() {

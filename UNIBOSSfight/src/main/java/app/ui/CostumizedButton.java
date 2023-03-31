@@ -1,4 +1,4 @@
-package ui;
+package app.ui;
 
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
@@ -61,6 +61,5 @@ public class CostumizedButton extends Button {
         setOnMouseEntered(event -> setEffect(new DropShadow()));
 
         setOnMouseExited(event -> setEffect(null));
-
     }
 }

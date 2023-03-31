@@ -1,4 +1,4 @@
-package ui;
+package app.ui;
 
 import javafx.animation.TranslateTransition;
 import javafx.scene.SubScene;
