@@ -4,7 +4,6 @@ import app.core.component.BossFactory;
 import app.core.entity.Entity;
 import app.core.level.Level;
 import app.impl.factory.BossFactoryImpl;
-import app.impl.level.LevelImpl;
 import app.ui.ConfirmBox;
 import app.util.DataManager;
 import app.util.Window;
@@ -46,14 +45,7 @@ public class Prova extends Application {
     private Paint imagePattern;
 
     public Prova() throws Exception {
-        currentLevel = //new DataManager().loadLevel();
-                       new LevelImpl();
-    }
-
-    public static String readFile(String path, Charset encoding) throws IOException
-    {
-        byte[] encoded = Files.readAllBytes(Paths.get(path));
-        return new String(encoded, encoding);
+        currentLevel = new DataManager().loadLevel();//new LevelImpl();
     }
 
     @Override
@@ -102,6 +94,7 @@ public class Prova extends Application {
                 (observable, oldValue, newValue) -> Window.setWidth(currentScene.getWidth())
         );
 
+
         currentScene.setOnMouseClicked(e -> this.currentLevel.playerShoot(new Point2D(e.getX(), e.getY())));
 
         //Adding scene to the stage
@@ -111,42 +104,10 @@ public class Prova extends Application {
         stage.show();
 
         final Timeline tl = new Timeline(new KeyFrame(Duration.millis(FRAME_DURATION), e -> {
-            run();
+            if (!this.currentLevel.isOver())
+                run();
         }));
         tl.setCycleCount(Animation.INDEFINITE);
-
-
-        /*BossFactory bossFactory = new BossFactoryImpl();
-        this.currentLevel.addEntity(bossFactory.firstBoss(this.currentLevel.getPlayer().getTransform()));
-        */
-
-        /*this.currentLevel.addEntity(
-            new Wall(new TransformImpl(
-                    new Point2D(this.currentLevel.getPlayerPosition().getX() + 300, Window.getHeight())
-                    , 0),
-                    50, 50, "wall.png")
-        );
-
-        this.currentLevel.addEntity(
-                new Wall(new TransformImpl(
-                        new Point2D(this.currentLevel.getPlayerPosition().getX() + 900, Window.getHeight() / 2.0)
-                        , 0),
-                        50, 50, "wall.png")
-        );
-
-        this.currentLevel.addEntity(
-                new Coin(new TransformImpl(
-                        new Point2D(this.currentLevel.getPlayerPosition().getX() + 600, Window.getHeight() - 10)
-                        , 0),
-                        120, 120, "coin.png")
-        );
-
-        this.currentLevel.addEntity(
-                new HarmfulObstacle(new TransformImpl(
-                        new Point2D(this.currentLevel.getPlayerPosition().getX() + 1400, Window.getHeight() - 10)
-                        , 0),
-                        120, 120, "spine.png")
-        );*/
 
         tl.play();
         this.currentLevel.init();
@@ -217,15 +178,9 @@ public class Prova extends Application {
 
             this.scene.setOnKeyPressed(e -> {
                 switch (e.getCode()) {
-                    case A:
-                        this.isAPressed = true;
-                        break;
-                    case D:
-                        this.isDPressed = true;
-                        break;
-                    case SPACE:
-                        this.isSpacePressed = true;
-                        break;
+                    case A -> this.isAPressed = true;
+                    case D -> this.isDPressed = true;
+                    case SPACE -> this.isSpacePressed = true;
                 }
             });
 
@@ -233,29 +188,11 @@ public class Prova extends Application {
 
             this.scene.setOnKeyReleased(e -> {
                 switch (e.getCode()) {
-                    case A:
-                        this.isAPressed = false;
-                        break;
-                    case D:
-                        this.isDPressed = false;
-                        break;
-                    case SPACE:
-                        this.isSpacePressed = false;
-                        break;
+                    case A -> this.isAPressed = false;
+                    case D -> this.isDPressed = false;
+                    case SPACE -> this.isSpacePressed = false;
                 }
             });
-        }
-
-        public boolean isAPressed() {
-            return this.isAPressed;
-        }
-
-        public boolean isDPressed() {
-            return this.isDPressed;
-        }
-
-        public boolean isSpacePressed() {
-            return this.isSpacePressed;
         }
     }
 
