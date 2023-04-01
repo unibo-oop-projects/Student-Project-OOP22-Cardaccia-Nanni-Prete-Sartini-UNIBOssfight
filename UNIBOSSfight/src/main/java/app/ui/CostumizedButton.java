@@ -9,11 +9,11 @@ import java.io.FileNotFoundException;
 
 public class CostumizedButton extends Button {
 
-    private static final String FONT_PATH = "src/main/resources/kenvector_future.ttf";
+    private static final String FONT_PATH = "src/main/resources/font.ttf";
     private static final String BUTTON_PRESSED_STYLE = "-fx-background-color: transparent;" +
             " -fx-background-image: url('grey_button00.png');";
     private static final String BUTTON_FREE_STYLE = "-fx-background-color: transparent;" +
-            " -fx-background-image: url('yellow_button00.png');";
+            " -fx-background-image: url('blue_button00.png');";
 
 
     public CostumizedButton(String text) {

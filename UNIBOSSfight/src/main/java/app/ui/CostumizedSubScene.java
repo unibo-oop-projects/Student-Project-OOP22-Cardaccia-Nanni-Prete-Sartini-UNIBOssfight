@@ -8,8 +8,8 @@ import javafx.util.Duration;
 
 public class CostumizedSubScene extends SubScene {
 
-    private final static String FONT_PATH = "kenvector_future.ttf";
-    private final static String BACKGROUND_IMAGE = "yellow_panel.png";
+    private final static String FONT_PATH = "font.ttf";
+    private final static String BACKGROUND_IMAGE = "blue_panel.png";
     private boolean isHidden = true;
 
     public CostumizedSubScene() {

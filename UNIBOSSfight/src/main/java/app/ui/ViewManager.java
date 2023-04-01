@@ -82,6 +82,7 @@ public class ViewManager {
         createHelpButton();
         createExitButton();
     }
+
     private void createStartButton() {
         CostumizedButton startButton = new CostumizedButton("PLAY");
         addMenuButton(startButton);
