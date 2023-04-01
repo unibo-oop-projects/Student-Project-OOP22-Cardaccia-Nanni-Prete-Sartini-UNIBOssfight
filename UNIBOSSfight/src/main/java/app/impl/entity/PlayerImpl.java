@@ -7,7 +7,7 @@ import app.core.component.WeaponFactory;
 import app.core.entity.ActiveEntity;
 import app.core.entity.Bullet;
 import app.impl.builder.BehaviourBuilderImpl;
-import app.impl.component.AnimatedSpriteRenderer;
+import app.impl.component.LoopSpriteRenderer;
 import app.impl.component.ColliderImpl;
 import app.impl.factory.WeaponFactoryImpl;
 import javafx.geometry.Point2D;
@@ -27,7 +27,7 @@ public class PlayerImpl extends ActiveEntity {
     public PlayerImpl(final Transform position, final Integer height,
                       final Integer width, final String filename) {
         super(position, height, width,
-                new AnimatedSpriteRenderer(height, width, Color.RED, filename));
+                new LoopSpriteRenderer(height, width, Color.RED, filename));
 
         // TODO da togliere, compito della serializzazione
         setMaxXSpeed(10);
@@ -99,6 +99,7 @@ public class PlayerImpl extends ActiveEntity {
             setYSpeed(20);
             setXSpeed(20 * getHitbox().getCollisionSideOnX(e.getPosition().getX()));
             this.getHealth().damage(e.getDamage());
+            System.out.println(this.getHealth().getValue());
         });
 
         collider.addBehaviour(Platform.class.getName(), e -> Platform.jump(this, e));
