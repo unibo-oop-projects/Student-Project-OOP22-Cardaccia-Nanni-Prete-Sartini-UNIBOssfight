@@ -4,31 +4,26 @@ import app.core.component.Health;
 import app.core.component.Transform;
 import app.core.component.Weapon;
 import app.core.entity.Boss;
+import app.core.entity.Bullet;
 import app.impl.builder.BehaviourBuilderImpl;
 import app.impl.component.HealthImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 
+import java.util.List;
+
 public class BossImpl extends Boss {
+    private transient Weapon weapon;
+    private int rateOfFire;
+    private int rateOfFireCounter = 0;
 
-    private Weapon weapon;
-    private Health health;
-    private final int rateOfFire;
-    private  int rateOfFireCounter = 0;
-
-    public BossImpl(final Transform startingPos, final int height, final int width,
-                    final int health, final Weapon weapon, final int rateOfFire, final String filename) {
+    public BossImpl(final Transform startingPos, final int height, final int width, final String filename) {
         super(startingPos, height, width, filename);
+        this.setMaxXSpeed(1);
+        this.setMaxYSpeed(1);
 
-        this.weapon = weapon;
-        this.health = new HealthImpl();
-        this.rateOfFire = rateOfFire;
-
-        //TODO health
-    }
-
-    public boolean isDead() {
-        return  this.health.isDead();
+        //TODO TOGLIERE (SERIALIZZAZIONE)
+        rateOfFire = 30;
     }
 
     @Override
@@ -72,9 +67,43 @@ public class BossImpl extends Boss {
                 .addStopFromBottom()
                 .addStopFromSide()
                 .addFollow()
+                .addShooting()
                 .build());
 
         getCollider().ifPresent(c -> c.addBehaviour(BulletImpl.class.getName(),
                 e -> getHealth().damage(e.getDamage())));
+    }
+
+    public void shoot(final Point2D target) {
+        if(rateOfFireCounter >= rateOfFire) {
+            final Bullet newBullet = this.weapon.fire(target);
+            newBullet.init();
+            addBullet(newBullet);
+
+            rateOfFireCounter = 0;
+        }
+        else {
+            rateOfFireCounter++;
+        }
+    }
+
+    public List<Node> getBulletsNodes() {
+        return getBullets().stream().map(e -> e.render(getPosition())).toList();
+    }
+
+    @Override
+    public void setWeapon(final Weapon weapon) { this.weapon = weapon; }
+
+    //TODO INTERFACCIA?
+    @Override
+    public Node renderWeapon() {
+        // TODO togliere exception generica e print
+        try {
+            return this.weapon.render(this.getPosition() ,this.getDirection(), 0);
+        } catch (Exception e) {
+            System.out.println("ERROR cannot load resource " + e);
+        }
+
+        return null;
     }
 }

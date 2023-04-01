@@ -41,7 +41,7 @@ public abstract class Bullet extends AbstractEntity {
         final double dx = (target.getX() + getPosition().getX() - Window.getWidth() / 2)
                 - getPosition().getX();
         final double dy = Window.getHeight() - target.getY() - getPosition().getY();
-        final double angle = -Math.atan2(dy, dx);
+        final double angle = -Math.atan2(dy, dx);// Adjusted to new reference system
         this.xShift = speed * Math.cos(angle);
         this.yShift = -speed * Math.sin(angle);
 

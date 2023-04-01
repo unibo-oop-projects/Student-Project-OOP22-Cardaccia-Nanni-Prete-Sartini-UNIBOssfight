@@ -2,6 +2,7 @@ package app.impl.component;
 
 import app.core.component.Behaviour;
 import app.core.entity.ActiveEntity;
+import app.core.entity.Boss;
 import app.core.entity.Entity;
 import java.util.Optional;
 import java.util.function.BiConsumer;
@@ -18,7 +19,7 @@ public class BehaviourImpl implements Behaviour {
     private BiConsumer<ActiveEntity, Entity> bottomStoppingBehaviour;
     private BiConsumer<ActiveEntity, Entity> sideStoppingBehaviour;
     private BiFunction<ActiveEntity, ActiveEntity, Entity.Inputs> followingBehaviour;
-    private BiConsumer<ActiveEntity, ActiveEntity> shootingBehaviour;
+    private BiConsumer<Boss, Entity> shootingBehaviour;
 
     /**
      * {@inheritDoc}
@@ -88,7 +89,7 @@ public class BehaviourImpl implements Behaviour {
      * {@inheritDoc}
      */
     @Override
-    public Optional<BiConsumer<ActiveEntity, ActiveEntity>> getShootingBehaviour() {
+    public Optional<BiConsumer<Boss, Entity>> getShootingBehaviour() {
         return Optional.ofNullable(this.shootingBehaviour);
     }
 
@@ -96,7 +97,7 @@ public class BehaviourImpl implements Behaviour {
      * {@inheritDoc}
      */
     @Override
-    public void setShootingBehaviour(final BiConsumer<ActiveEntity, ActiveEntity> consumer) {
+    public void setShootingBehaviour(final BiConsumer<Boss, Entity> consumer) {
         this.shootingBehaviour = consumer;
     }
 }

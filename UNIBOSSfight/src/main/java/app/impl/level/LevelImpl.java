@@ -1,10 +1,13 @@
 package app.impl.level;
 
+import app.core.component.BossFactory;
 import app.core.entity.ActiveEntity;
+import app.core.entity.Boss;
 import app.impl.component.TransformImpl;
 import app.core.entity.Entity;
 import app.core.level.Level;
 import app.impl.entity.PlayerImpl;
+import app.impl.factory.BossFactoryImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import java.util.ArrayList;
@@ -19,6 +22,7 @@ public class LevelImpl implements Level {
 
     private final List<Entity> entities;
     private final PlayerImpl player;
+    private final Boss boss;
     private transient int count;
     private transient boolean goLeft = true;
 
@@ -29,6 +33,9 @@ public class LevelImpl implements Level {
 
         this.entities = new ArrayList<>();
         this.player = new PlayerImpl(new TransformImpl(new Point2D(0, 300), 0), 250, 250, "guido");
+
+        this.boss = new BossFactoryImpl().firstBoss(new TransformImpl(new Point2D(0, 400), 0));
+        this.addEntity(this.boss);
     }
 
     /**
@@ -46,6 +53,18 @@ public class LevelImpl implements Level {
                     var behaviour = e.getBehaviour().getFollowingBehaviour();
                     behaviour.ifPresent(b -> e.update(b.apply(getPlayer(), e)));
                 });
+
+        this.boss.shoot(this.player.getPosition());
+
+        //TODO pulire
+        /*this.entities.stream()
+                .filter(e -> e instanceof Boss)
+                .map(e -> (Boss) e)
+                .filter(e -> e.isUpdated(this.getPlayerPosition()))
+                .forEach(e -> {
+                    e.getBehaviour().getShootingBehaviour().ifPresent(b -> b.accept(e, getPlayer()));
+                });
+         */
 
         this.count++;
         if (this.count % 100 == 0) {
@@ -68,9 +87,17 @@ public class LevelImpl implements Level {
      */
     @Override
     public List<Node> renderEntities() {
-        return Stream.concat(this.entities.stream()
+        //TODO PULIRE
+        /*return Stream.concat(this.entities.stream()
                 .filter(e -> e.isDisplayed(this.player.getPosition()))
                 .map(e -> e.render(this.player.getPosition())), this.player.getBulletsNodes().stream()).toList();
+                */
+
+        return Stream.of(this.entities.stream()
+                .filter(e -> e.isDisplayed(this.player.getPosition()))
+                .map(e -> e.render(this.player.getPosition())),
+                this.player.getBulletsNodes().stream(),
+                this.boss.getBulletsNodes().stream()).reduce(Stream::concat).orElseGet(Stream::empty).toList();
 
     }
 
@@ -88,6 +115,11 @@ public class LevelImpl implements Level {
     @Override
     public Node renderWeapon() {
         return this.player.renderWeapon();
+    }
+
+    //TODO METTERE NELLINTERFACCIA
+    public Node renderBossWeapon() {
+        return this.boss.renderWeapon();
     }
 
     /**
@@ -151,6 +183,11 @@ public class LevelImpl implements Level {
     @Override
     public void playerShoot(final Point2D target) {
         this.player.shoot(target);
+    }
+
+    @Override
+    public void bossShoot(Point2D target) {
+        this.boss.shoot(target);
     }
 
     /**

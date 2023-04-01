@@ -66,6 +66,13 @@ public interface Level {
     void playerShoot(Point2D target);
 
     /**
+     * Makes the level's boss shoot to the given target.
+     *
+     * @param target the target position of the shot
+     */
+    void bossShoot(final Point2D target);
+
+    /**
      * Checks the collisions between the entities and handles them.
      */
     void collision();

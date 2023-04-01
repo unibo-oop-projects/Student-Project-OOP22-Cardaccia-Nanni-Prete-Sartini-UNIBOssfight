@@ -2,8 +2,20 @@ package app.core.component;
 
 public interface WeaponFactory {
 
-    Weapon getPlayerWeapon(final Transform playerPos);
+    /**
+     * Returns an instance of the player weapon.
+     *
+     * @param playerPos the player's position
+     * @return an instance of the player weapon
+     */
+    Weapon getPlayerWeapon(Transform playerPos);
 
-    Weapon getBigBulletGun(final Transform userPos);
+    /**
+     * Returns an instance of the bigBullet weapon.
+     *
+     * @param userPos position of the weapon's user
+     * @return an instance of the bigBullet weapon
+     */
+    Weapon getBigBulletGun(Transform userPos);
 
 }

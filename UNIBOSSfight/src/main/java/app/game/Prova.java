@@ -4,6 +4,7 @@ import app.core.component.BossFactory;
 import app.core.entity.Entity;
 import app.core.level.Level;
 import app.impl.factory.BossFactoryImpl;
+import app.impl.level.LevelImpl;
 import app.ui.ConfirmBox;
 import app.util.DataManager;
 import app.util.Window;
@@ -45,7 +46,8 @@ public class Prova extends Application {
     private Paint imagePattern;
 
     public Prova() throws Exception {
-        currentLevel = new DataManager().loadLevel();//new LevelImpl();
+        currentLevel = //new DataManager().loadLevel();
+                       new LevelImpl();
     }
 
     public static String readFile(String path, Charset encoding) throws IOException
@@ -100,7 +102,6 @@ public class Prova extends Application {
                 (observable, oldValue, newValue) -> Window.setWidth(currentScene.getWidth())
         );
 
-
         currentScene.setOnMouseClicked(e -> this.currentLevel.playerShoot(new Point2D(e.getX(), e.getY())));
 
         //Adding scene to the stage
@@ -115,8 +116,9 @@ public class Prova extends Application {
         tl.setCycleCount(Animation.INDEFINITE);
 
 
-        BossFactory bossFactory = new BossFactoryImpl();
+        /*BossFactory bossFactory = new BossFactoryImpl();
         this.currentLevel.addEntity(bossFactory.firstBoss(this.currentLevel.getPlayer().getTransform()));
+        */
 
         /*this.currentLevel.addEntity(
             new Wall(new TransformImpl(
