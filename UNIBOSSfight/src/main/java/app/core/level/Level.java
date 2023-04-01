@@ -102,4 +102,6 @@ public interface Level {
      * Calls the init method on all entities.
      */
     void init();
+
+    boolean isOver();
 }

@@ -22,7 +22,7 @@ public class LevelImpl implements Level {
 
     private final List<Entity> entities;
     private final PlayerImpl player;
-    private final Boss boss;
+    private transient Boss boss;
     private transient int count;
     private transient boolean goLeft = true;
 
@@ -34,8 +34,8 @@ public class LevelImpl implements Level {
         this.entities = new ArrayList<>();
         this.player = new PlayerImpl(new TransformImpl(new Point2D(0, 300), 0), 250, 250, "guido");
 
-        this.boss = new BossFactoryImpl().firstBoss(new TransformImpl(new Point2D(0, 400), 0));
-        this.addEntity(this.boss);
+//        this.boss = new BossFactoryImpl().firstBoss(new TransformImpl(new Point2D(0, 400), 0));
+//        this.addEntity(this.boss);
     }
 
     /**
@@ -54,7 +54,7 @@ public class LevelImpl implements Level {
                     behaviour.ifPresent(b -> e.update(b.apply(getPlayer(), e)));
                 });
 
-        this.boss.shoot(this.player.getPosition());
+        //this.boss.shoot(this.player.getPosition());
 
         //TODO pulire
         /*this.entities.stream()
@@ -96,8 +96,7 @@ public class LevelImpl implements Level {
         return Stream.of(this.entities.stream()
                 .filter(e -> e.isDisplayed(this.player.getPosition()))
                 .map(e -> e.render(this.player.getPosition())),
-                this.player.getBulletsNodes().stream(),
-                this.boss.getBulletsNodes().stream()).reduce(Stream::concat).orElseGet(Stream::empty).toList();
+                this.player.getBulletsNodes().stream()).reduce(Stream::concat).orElseGet(Stream::empty).toList();
 
     }
 
@@ -206,4 +205,11 @@ public class LevelImpl implements Level {
         this.player.init();
         this.entities.forEach(Entity::init);
     }
+
+    @Override
+    public boolean isOver() {
+        return this.player.getHealth().isDead();
+    }
+
+
 }
