@@ -21,7 +21,7 @@ public final class AppLogger extends Logger {
         Handler handler;
 
         try {
-            handler = new FileHandler("./log/app.log", true);
+            handler = new FileHandler("./app.log", true);
             handler.setFormatter(new LogFormatter());
         } catch (IOException e) {
             handler = new ConsoleHandler();
