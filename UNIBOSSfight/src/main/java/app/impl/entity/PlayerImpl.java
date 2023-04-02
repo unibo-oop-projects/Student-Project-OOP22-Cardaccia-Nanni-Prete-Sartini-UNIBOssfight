@@ -10,6 +10,7 @@ import app.impl.builder.BehaviourBuilderImpl;
 import app.impl.component.LoopSpriteRenderer;
 import app.impl.component.ColliderImpl;
 import app.impl.factory.WeaponFactoryImpl;
+import app.util.AppLogger;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import app.util.Window;
@@ -46,7 +47,7 @@ public class PlayerImpl extends ActiveEntity {
             return getRenderer().render(new Point2D(Window.getWidth() / 2,
                     this.getPosition().getY()), this.getDirection(), 1, 0);
         } catch (Exception e) {
-            System.out.println("ERROR cannot load resource " + e);
+            AppLogger.getLogger().warning("ERROR cannot load resource " + e);
         }
 
         return null;
@@ -57,7 +58,7 @@ public class PlayerImpl extends ActiveEntity {
         try {
             return this.weapon.render(this.getPosition() ,this.getDirection(), (int) this.rotation);
         } catch (Exception e) {
-            System.out.println("ERROR cannot load resource " + e);
+            AppLogger.getLogger().severe("ERROR: cannot load resource" + e.getMessage());
         }
 
         return null;

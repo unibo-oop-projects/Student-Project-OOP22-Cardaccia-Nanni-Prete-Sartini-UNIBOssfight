@@ -76,7 +76,7 @@ public class DataManager {
             file.write(jsonString);
             file.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            AppLogger.getLogger().severe(e.getMessage());
         }
     }
 }

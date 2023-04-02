@@ -3,6 +3,7 @@ package app.game;
 import app.core.entity.Entity;
 import app.core.level.Level;
 import app.ui.ConfirmBox;
+import app.util.AppLogger;
 import app.util.DataManager;
 import app.util.Window;
 import javafx.animation.Animation;
@@ -194,7 +195,7 @@ public class Prova extends Application {
             try {
                 new DataManager().serializeLevel(this.currentLevel);
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLogger.getLogger().severe(e.getMessage());
             }
         super.stop();
     }
@@ -206,7 +207,7 @@ public class Prova extends Application {
                 this.stop();
                 System.exit(0);
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLogger.getLogger().severe(e.getMessage());
             }
         }
     }
