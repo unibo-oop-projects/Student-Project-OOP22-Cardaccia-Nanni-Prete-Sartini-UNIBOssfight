@@ -70,7 +70,7 @@ public interface Level {
      *
      * @param target the target position of the shot
      */
-    void bossShoot(final Point2D target);
+    void bossShoot(Point2D target);
 
     /**
      * Checks the collisions between the entities and handles them.
@@ -103,5 +103,9 @@ public interface Level {
      */
     void init();
 
+    /**
+     * @return true if the player is dead and so the game is over,
+     * false otherwise
+     */
     boolean isOver();
 }

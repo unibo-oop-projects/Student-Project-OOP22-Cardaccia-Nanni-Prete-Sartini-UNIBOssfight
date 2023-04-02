@@ -1,9 +1,7 @@
 package app.game;
 
-import app.core.component.BossFactory;
 import app.core.entity.Entity;
 import app.core.level.Level;
-import app.impl.factory.BossFactoryImpl;
 import app.ui.ConfirmBox;
 import app.util.DataManager;
 import app.util.Window;
@@ -22,13 +20,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class Prova extends Application {
 

@@ -36,11 +36,11 @@ public abstract class Boss extends Enemy {
      */
     public abstract Weapon getWeapon();
 
-    public abstract void shoot(final Point2D target);
+    public abstract void shoot(Point2D target);
 
     public abstract List<Node> getBulletsNodes();
 
-    public abstract void setWeapon(final Weapon weapon);
+    public abstract void setWeapon(Weapon weapon);
 
     public abstract Node renderWeapon();
 

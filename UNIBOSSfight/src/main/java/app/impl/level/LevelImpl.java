@@ -1,13 +1,11 @@
 package app.impl.level;
 
-import app.core.component.BossFactory;
 import app.core.entity.ActiveEntity;
 import app.core.entity.Boss;
 import app.impl.component.TransformImpl;
 import app.core.entity.Entity;
 import app.core.level.Level;
 import app.impl.entity.PlayerImpl;
-import app.impl.factory.BossFactoryImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import java.util.ArrayList;
@@ -50,7 +48,7 @@ public class LevelImpl implements Level {
                 .filter(e -> e.isUpdated(this.getPlayerPosition()))
                 .forEach(e -> {
                     e.update(Entity.Inputs.EMPTY);
-                    var behaviour = e.getBehaviour().getFollowingBehaviour();
+                    final var behaviour = e.getBehaviour().getFollowingBehaviour();
                     behaviour.ifPresent(b -> e.update(b.apply(getPlayer(), e)));
                 });
 
@@ -185,7 +183,7 @@ public class LevelImpl implements Level {
     }
 
     @Override
-    public void bossShoot(Point2D target) {
+    public void bossShoot(final Point2D target) {
         this.boss.shoot(target);
     }
 
