@@ -2,7 +2,6 @@ package app.impl.factory;
 
 import app.core.component.BossFactory;
 import app.core.component.Transform;
-import app.core.component.Weapon;
 import app.core.component.WeaponFactory;
 import app.core.entity.Boss;
 import app.impl.entity.BossImpl;

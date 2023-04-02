@@ -1,6 +1,5 @@
 package app.impl.level;
 
-import app.core.component.BossFactory;
 import app.core.entity.ActiveEntity;
 import app.core.entity.Boss;
 import app.impl.component.TransformImpl;
@@ -49,7 +48,7 @@ public class LevelImpl implements Level {
                 .filter(e -> e.isUpdated(this.getPlayerPosition()))
                 .forEach(e -> {
                     e.update(Entity.Inputs.EMPTY);
-                    var behaviour = e.getBehaviour().getFollowingBehaviour();
+                    final var behaviour = e.getBehaviour().getFollowingBehaviour();
                     behaviour.ifPresent(b -> e.update(b.apply(getPlayer(), e)));
                 });
 

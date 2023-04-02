@@ -101,7 +101,7 @@ public class BossImpl extends Boss {
         try {
             return this.weapon.render(this.getPosition() ,this.getDirection(), 0);
         } catch (Exception e) {
-            System.out.println("ERROR cannot load resource " + e);
+            AppLogger.getLogger().warning("ERROR cannot load resource " + e);
         }
 
         return null;

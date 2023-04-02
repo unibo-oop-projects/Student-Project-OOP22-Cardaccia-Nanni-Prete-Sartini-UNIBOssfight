@@ -99,5 +99,9 @@ public interface Level {
      */
     void init();
 
+    /**
+     * @return true if the player is dead and so the game is over,
+     * false otherwise
+     */
     boolean isOver();
 }

@@ -5,7 +5,10 @@ public final class Window {
     private static double width;
     private static double height;
 
-    private Window() {}
+    private Window() {
+        throw new UnsupportedOperationException("This is a utility class" +
+                " and cannot be instantiated");
+    }
 
     public static void setHeight(final double height) {
         Window.height = height;

@@ -1,6 +1,7 @@
 package app.impl.component;
 
 import app.util.Window;
+import app.util.AppLogger;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -40,7 +41,7 @@ public class SpriteRenderer extends RendererImpl {
                     false,
                     true);
         } catch (Exception e) {
-            System.out.println("ERRORE: risorsa non trovata");
+            AppLogger.getLogger().severe("Errore risorsa non trovata");
         }
 
     }
@@ -111,7 +112,7 @@ public class SpriteRenderer extends RendererImpl {
 
             this.prerendered = createImageView(this.img);
         } catch (FileNotFoundException e) {
-            System.out.println(e);
+            AppLogger.getLogger().warning(e.getMessage());
         }
     }
 

@@ -8,7 +8,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
       prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.MainMenuController">
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.ui.MainMenuController">
    <children>
       <Label fx:id="mainTitle" layoutX="167.0" layoutY="99.0" style="-fx-text-fill: red;" text="UNIBOssfight">
          <font>

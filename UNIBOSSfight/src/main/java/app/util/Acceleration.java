@@ -5,6 +5,11 @@ package app.util;
  */
 public final class Acceleration {
 
+    private Acceleration() {
+        throw new UnsupportedOperationException("This is a utility class"
+                + " and cannot be instantiated");
+    }
+
     /**
      * This method is used to increase the speed of the entities.
      * @param currentVelocity the current velocity of the entity
