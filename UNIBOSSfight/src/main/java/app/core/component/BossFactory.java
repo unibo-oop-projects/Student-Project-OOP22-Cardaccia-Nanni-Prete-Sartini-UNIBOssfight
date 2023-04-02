@@ -2,6 +2,9 @@ package app.core.component;
 
 import app.core.entity.Boss;
 
+/**
+ * An interface modelling a Factory to create instances of Bosses.
+ */
 public interface BossFactory {
 
     /**

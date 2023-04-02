@@ -46,7 +46,7 @@ public class BossImpl extends Boss {
 //            this.rateOfFireCounter++;
 //        }
 
-        this.getWeapon().updatePosition(this.getTransform());
+        this.weapon.updatePosition(getTransform());
 
     }
 

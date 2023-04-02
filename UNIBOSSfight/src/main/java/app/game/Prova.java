@@ -4,6 +4,7 @@ import app.core.component.BossFactory;
 import app.core.entity.Entity;
 import app.core.level.Level;
 import app.impl.factory.BossFactoryImpl;
+import app.impl.level.LevelImpl;
 import app.ui.ConfirmBox;
 import app.util.DataManager;
 import app.util.Window;
@@ -134,8 +135,7 @@ public class Prova extends Application {
 
     private void render() {
         this.root.getChildren().clear();
-        root.getChildren().add(this.currentLevel.renderPlayer());
-        root.getChildren().add(this.currentLevel.renderWeapon());
+        root.getChildren().addAll(this.currentLevel.renderUniqueEntities());
         this.currentLevel.renderEntities().forEach(e -> root.getChildren().add(e));
 
         // create a Rectangle

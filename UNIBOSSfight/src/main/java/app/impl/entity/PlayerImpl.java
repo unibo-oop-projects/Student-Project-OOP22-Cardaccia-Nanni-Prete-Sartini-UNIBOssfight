@@ -99,7 +99,7 @@ public class PlayerImpl extends ActiveEntity {
             setYSpeed(20);
             setXSpeed(20 * getHitbox().getCollisionSideOnX(e.getPosition().getX()));
             this.getHealth().damage(e.getDamage());
-            System.out.println(this.getHealth().getValue());
+            //System.out.println(this.getHealth().getValue());
         });
 
         collider.addBehaviour(Platform.class.getName(), e -> Platform.jump(this, e));
