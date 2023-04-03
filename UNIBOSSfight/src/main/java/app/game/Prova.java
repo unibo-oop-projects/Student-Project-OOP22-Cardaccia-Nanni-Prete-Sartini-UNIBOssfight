@@ -4,6 +4,7 @@ import app.core.entity.Entity;
 import app.core.level.Level;
 import app.ui.ConfirmBox;
 import app.ui.CostumizedButton;
+import app.ui.MainMenu;
 import app.ui.ViewManager;
 import app.util.AppLogger;
 import app.util.DataManager;
@@ -12,6 +13,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Point2D;
@@ -37,11 +39,11 @@ public class Prova extends Application {
     private static final int MIN_WINDOW_HEIGHT = 600;
     private static final int MIN_WINDOW_WIDTH = 800;
     private final Level currentLevel;//new LevelImpl();
+    private Stage mainStage;
     private Group root = new Group();
     private Scene currentScene;
     private InputManager inputManager;
     private Image image;
-
     private Image bg;
     private Paint imagePattern;
     private Paint imagePattern2;
@@ -55,9 +57,11 @@ public class Prova extends Application {
     @Override
     public void start(final Stage stage) {
 
-        stage.setTitle("UNIBOssfight");
+        this.mainStage = stage;
 
-        stage.setOnCloseRequest(e -> {
+        this.mainStage.setTitle("UNIBOssfight");
+
+        this.mainStage.setOnCloseRequest(e -> {
             e.consume();
             saveState();
         });
@@ -80,12 +84,12 @@ public class Prova extends Application {
             throw new RuntimeException(e);
         }
 
-        stage.setX(bounds.getMinX());
-        stage.setY(bounds.getMinY());
-        stage.setWidth(bounds.getWidth());
-        stage.setHeight(bounds.getHeight());
-        stage.setMinHeight(MIN_WINDOW_HEIGHT);
-        stage.setMinWidth(MIN_WINDOW_WIDTH);
+        this.mainStage.setX(bounds.getMinX());
+        this.mainStage.setY(bounds.getMinY());
+        this.mainStage.setWidth(bounds.getWidth());
+        this.mainStage.setHeight(bounds.getHeight());
+        this.mainStage.setMinHeight(MIN_WINDOW_HEIGHT);
+        this.mainStage.setMinWidth(MIN_WINDOW_WIDTH);
 
         this.root = new Group();
 
@@ -105,16 +109,16 @@ public class Prova extends Application {
         );
 
         this.gameOver.addListener(
-                (observable, oldValue, newValue) -> new GameOverStage().show()
+                (observable, oldValue, newValue) -> new GameOverStage(this.mainStage).show()
         );
 
         this.currentScene.setOnMouseClicked(e -> this.currentLevel.playerShoot(new Point2D(e.getX(), e.getY())));
 
         //Adding scene to the stage
-        stage.setScene(currentScene);
+        this.mainStage.setScene(currentScene);
 
         //Displaying the contents of the stage
-        stage.show();
+        this.mainStage.show();
 
         final Timeline tl = new Timeline(new KeyFrame(Duration.millis(FRAME_DURATION), e -> {
             if (!this.currentLevel.isOver()) {
@@ -255,9 +259,11 @@ public class Prova extends Application {
         private static final int SCENE_WIDTH = 500;
         private static final int SCENE_HEIGHT = 300;
 
-        GameOverStage() {
+        GameOverStage(final Stage previousStage) {
             super();
             this.initModality(Modality.APPLICATION_MODAL);
+
+            this.setOnCloseRequest(event -> previousStage.close());
 
             final AnchorPane pane = new AnchorPane();
             //noinspection SuspiciousNameCombination
@@ -267,6 +273,22 @@ public class Prova extends Application {
 
             final CostumizedButton homeButton = new CostumizedButton("HOME");
             final CostumizedButton restartButton = new CostumizedButton("RESTART");
+
+            homeButton.setOnAction(event -> {
+                this.close();
+                previousStage.close();
+                Platform.runLater(() -> new MainMenu().start(new Stage()));
+            });
+
+            restartButton.setOnAction(event -> Platform.runLater(() -> {
+                try {
+                    this.close();
+                    previousStage.close();
+                    new Prova().start(new Stage());
+                } catch (final Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }));
 
             ViewManager.createLogo(150, 15, "gameover.png", pane);
             ViewManager.setBackground("blue.png", SCENE_WIDTH, SCENE_HEIGHT, pane);
