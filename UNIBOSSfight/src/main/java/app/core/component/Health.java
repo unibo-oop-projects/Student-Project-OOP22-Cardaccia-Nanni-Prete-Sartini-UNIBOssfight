@@ -14,6 +14,13 @@ public interface Health {
     int getValue();
 
     /**
+     * Sets the value of the health.
+     *
+     * @param hp the new health value
+     */
+    void setValue(int hp);
+
+    /**
      * Subtracts the specified damage from the health.
      *
      * @param damage the damage received

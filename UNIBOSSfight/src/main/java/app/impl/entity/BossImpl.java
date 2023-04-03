@@ -1,57 +1,64 @@
 package app.impl.entity;
 
-import app.core.component.Health;
 import app.core.component.Transform;
 import app.core.component.Weapon;
 import app.core.entity.Boss;
 import app.core.entity.Bullet;
 import app.impl.builder.BehaviourBuilderImpl;
-import app.impl.component.HealthImpl;
+import app.util.AppLogger;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 
 import java.util.List;
 
+/**
+ * Implementation of the Boss Interface.
+ */
 public class BossImpl extends Boss {
-    private transient Weapon weapon;
-    private int rateOfFire;
-    private int rateOfFireCounter = 0;
 
+    private static final int DEFAULT_RATE_OF_FIRE = 30;
+    private transient Weapon weapon;
+    private final int rateOfFire;
+    private int rateOfFireCounter;
+
+    /**
+     * Constructor that initializes a new instance of the Boss.
+     *
+     * @param startingPos The starting position of the Boss
+     * @param height Height of the Boss sprite
+     * @param width Width of the Boss sprite
+     * @param filename Path of the Boss sprite
+     */
     public BossImpl(final Transform startingPos, final int height, final int width, final String filename) {
         super(startingPos, height, width, filename);
         this.setMaxXSpeed(1);
         this.setMaxYSpeed(1);
 
-        //TODO TOGLIERE (SERIALIZZAZIONE)
-        rateOfFire = 30;
+        rateOfFire = DEFAULT_RATE_OF_FIRE;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Weapon getWeapon() { return this.weapon; }
+    public Weapon getWeapon() {
+        return this.weapon;
+    }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update(final Inputs input) {
         super.update(input);
-
-//        getTransform().move(getDirection(), 0);
-//        getHitbox().update(getTransform().getPosition());
-//
-//        //TODO WORK IN PROGRESS, portare fire in nuovo metodo fire con input posizione ( e render[altezza] dello sprite del player) del player
-//        //GESTIONE FUOCO AUTOMATICO
-//        if(rateOfFireCounter >= 10){
-//            //NO, DEVE RESTITUIRE UN BULLET/ AGGIUNGERLO ALLA SUA LISTA
-//            this.addBullet(getWeapon().fire(new Point2D(100, 100)));
-//            this.rateOfFireCounter = 0;
-//        } else {
-//            this.rateOfFireCounter++;
-//        }
-
-        this.getWeapon().updatePosition(this.getTransform());
-
+        this.weapon.updatePosition(getTransform());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Node render(Point2D position) {
+    public Node render(final Point2D position) {
         return super.render(position);
     }
 
@@ -74,32 +81,46 @@ public class BossImpl extends Boss {
                 e -> getHealth().damage(e.getDamage())));
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void shoot(final Point2D target) {
-        if(rateOfFireCounter >= rateOfFire) {
+        if (rateOfFireCounter >= rateOfFire) {
             final Bullet newBullet = this.weapon.fire(target);
             newBullet.init();
             addBullet(newBullet);
 
             rateOfFireCounter = 0;
-        }
-        else {
+        } else {
             rateOfFireCounter++;
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<Node> getBulletsNodes() {
         return getBullets().stream().map(e -> e.render(getPosition())).toList();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setWeapon(final Weapon weapon) { this.weapon = weapon; }
+    public void setWeapon(final Weapon weapon) {
+        this.weapon = weapon;
+    }
 
-    //TODO INTERFACCIA?
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Node renderWeapon() {
         // TODO togliere exception generica e print
         try {
-            return this.weapon.render(this.getPosition() ,this.getDirection(), 0);
+            return this.weapon.render(this.getPosition(), this.getDirection(), 0);
         } catch (Exception e) {
             AppLogger.getLogger().warning("ERROR cannot load resource " + e);
         }

@@ -6,15 +6,18 @@ import app.core.component.WeaponFactory;
 import app.core.entity.Boss;
 import app.impl.entity.BossImpl;
 
+/**
+ * Implementation of the BossFactory Interface
+ */
 public class BossFactoryImpl implements BossFactory {
 
-    WeaponFactory weaponFactory = new WeaponFactoryImpl();
+    private final WeaponFactory weaponFactory = new WeaponFactoryImpl();
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Boss firstBoss(final Transform startingPos){
+    public Boss firstBoss(final Transform startingPos) {
 
         final BossImpl boss = new BossImpl(startingPos, 500, 500, "ghini/ghini1.png");
         boss.setWeapon(weaponFactory.getBigBulletGun(startingPos));

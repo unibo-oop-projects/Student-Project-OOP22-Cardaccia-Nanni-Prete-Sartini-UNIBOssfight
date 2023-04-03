@@ -8,6 +8,9 @@ import app.impl.entity.BulletImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
+/**
+ * Implementation of the BulletFactory interface
+ */
 public class BulletFactoryImpl implements BulletFactory {
 
     /**

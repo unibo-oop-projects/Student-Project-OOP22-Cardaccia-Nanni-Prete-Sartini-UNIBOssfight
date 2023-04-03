@@ -20,7 +20,6 @@ public class LevelImpl implements Level {
 
     private final List<Entity> entities;
     private final PlayerImpl player;
-    private transient Boss boss;
     private transient int count;
     private transient boolean goLeft = true;
 
@@ -32,6 +31,7 @@ public class LevelImpl implements Level {
         this.entities = new ArrayList<>();
         this.player = new PlayerImpl(new TransformImpl(new Point2D(0, 300), 0), 250, 250, "guido");
 
+        //TODO TOGLIERE
 //        this.boss = new BossFactoryImpl().firstBoss(new TransformImpl(new Point2D(0, 400), 0));
 //        this.addEntity(this.boss);
     }
@@ -114,9 +114,9 @@ public class LevelImpl implements Level {
         return this.player.renderWeapon();
     }
 
-    //TODO METTERE NELLINTERFACCIA
-    public Node renderBossWeapon() {
-        return this.boss.renderWeapon();
+    @Override
+    public List<Node> renderUniqueEntities(){
+        return List.of(renderPlayer(), renderWeapon());
     }
 
     /**
@@ -182,11 +182,6 @@ public class LevelImpl implements Level {
         this.player.shoot(target);
     }
 
-    @Override
-    public void bossShoot(final Point2D target) {
-        this.boss.shoot(target);
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -208,6 +203,5 @@ public class LevelImpl implements Level {
     public boolean isOver() {
         return this.player.getHealth().isDead();
     }
-
 
 }

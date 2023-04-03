@@ -58,19 +58,15 @@ public interface Level {
      */
     Node renderWeapon();
 
+
+    List<Node> renderUniqueEntities();
+
     /**
      * Makes the player shoot to the given target.
      *
      * @param target the target position of the shot
      */
     void playerShoot(Point2D target);
-
-    /**
-     * Makes the level's boss shoot to the given target.
-     *
-     * @param target the target position of the shot
-     */
-    void bossShoot(Point2D target);
 
     /**
      * Checks the collisions between the entities and handles them.
