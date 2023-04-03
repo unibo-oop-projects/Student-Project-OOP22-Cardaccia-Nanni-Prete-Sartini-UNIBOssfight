@@ -319,7 +319,7 @@
   "player": {
     "maxXSpeed": 20.0,
     "maxYSpeed": 20.0,
-    "className": "app.impl.entity.PlayerImpl",
+    "className": "app.impl.entity.Player",
     "height": 250,
     "width": 250,
     "damage": 0,
@@ -341,7 +341,7 @@
         "blue": 0.0,
         "opacity": 1.0
       },
-      "className": "app.impl.component.LoopSpriteRenderer"
+      "className": "app.impl.component.AnimationSpriteRenderer"
     }
   }
 }

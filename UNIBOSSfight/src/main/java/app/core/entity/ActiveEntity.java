@@ -80,6 +80,10 @@ public abstract class ActiveEntity extends AbstractEntity {
         this.xSpeed = xSpeed;
     }
 
+    public double getxSpeed() {
+        return xSpeed;
+    }
+
     /**
      * Sets the movement speed on y-axis.
      *

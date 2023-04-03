@@ -33,5 +33,8 @@ public interface Renderer {
      */
     Node render(Point2D position, int xDirection, int yDirection, double rotation);
 
+    /**
+     * Initialize the Renderer.
+     */
     void init();
 }

@@ -7,61 +7,49 @@ import app.core.component.WeaponFactory;
 import app.core.entity.ActiveEntity;
 import app.core.entity.Bullet;
 import app.impl.builder.BehaviourBuilderImpl;
-import app.impl.component.LoopSpriteRenderer;
+import app.impl.component.AnimationSpriteRenderer;
 import app.impl.component.ColliderImpl;
+import app.impl.component.LoopSpriteRenderer;
 import app.impl.factory.WeaponFactoryImpl;
-import app.util.AppLogger;
+import app.util.Window;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import app.util.Window;
 import javafx.scene.paint.Color;
 
 import java.util.List;
 
-public class PlayerImpl extends ActiveEntity {
+/**
+ * This class implements the player.
+ */
+public class Player extends ActiveEntity {
+
+    private static final int RECOIL_VELOCITY = 20;
+    private static final int RIGHT_ANGLE = 90;
 
     private transient WeaponFactory weaponFactory = new WeaponFactoryImpl();
     private transient Weapon weapon = weaponFactory.getPlayerWeapon(this.getTransform());
     private transient double rotation;
     private transient int coinsCollected;
 
-    public PlayerImpl(final Transform position, final Integer height,
-                      final Integer width, final String filename) {
+    /**
+     * Creates a new instance of Player.
+     *
+     * @param position
+     * @param height
+     * @param width
+     * @param filename
+     */
+    public Player(final Transform position, final Integer height,
+                  final Integer width, final String filename) {
         super(position, height, width,
                 new LoopSpriteRenderer(height, width, Color.RED, filename));
-
-        // TODO da togliere, compito della serializzazione
-        setMaxXSpeed(10);
-        setMaxYSpeed(20);
     }
 
-    @Override
-    public boolean isDisplayed(final Point2D position) {
-        return true;
-    }
-
-    @Override
-    public Node render(final Point2D position) {
-        // TODO togliere exception generica e print
-        try {
-            return getRenderer().render(new Point2D(Window.getWidth() / 2,
-                    this.getPosition().getY()), this.getDirection(), 1, 0);
-        } catch (Exception e) {
-            AppLogger.getLogger().warning("ERROR cannot load resource " + e);
-        }
-
-        return null;
-    }
-
+    /**
+     * @return the rendered image of the weapon.
+     */
     public Node renderWeapon() {
-        // TODO togliere exception generica e print
-        try {
-            return this.weapon.render(this.getPosition() ,this.getDirection(), (int) this.rotation);
-        } catch (Exception e) {
-            AppLogger.getLogger().severe("ERROR: cannot load resource" + e.getMessage());
-        }
-
-        return null;
+        return this.weapon.render(this.getPosition(), this.getDirection(), (int) this.rotation);
     }
 
     /**
@@ -84,7 +72,7 @@ public class PlayerImpl extends ActiveEntity {
         collider.addBehaviour(Wall.class.getName(), e -> {
             Wall.stop(this, e);
             if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) < 0
-            && Math.abs(e.getPosition().getX() - this.getPosition().getX())
+                    && Math.abs(e.getPosition().getX() - this.getPosition().getX())
                     < e.getWidth() / 2.0 + this.getWidth() / 2.0) {
                 setYSpeed(0);
             }
@@ -95,10 +83,15 @@ public class PlayerImpl extends ActiveEntity {
             e.getHealth().destroy();
         });
 
-        collider.addBehaviours(List.of(EnemyImpl.class.getName(), BossImpl.class.getName(),
+        collider.addBehaviours(List.of(
+                EnemyImpl.class.getName(),
+                BossImpl.class.getName(),
                 HarmfulObstacle.class.getName()), e -> {
-            setYSpeed(20);
-            setXSpeed(20 * getHitbox().getCollisionSideOnX(e.getPosition().getX()));
+            setYSpeed(Player.RECOIL_VELOCITY);
+            setXSpeed(
+                    Player.RECOIL_VELOCITY
+                            * getHitbox().getCollisionSideOnX(e.getPosition().getX())
+            );
             this.getHealth().damage(e.getDamage());
             //System.out.println(this.getHealth().getValue());
         });
@@ -108,6 +101,11 @@ public class PlayerImpl extends ActiveEntity {
         setCollider(collider);
     }
 
+    /**
+     * Rotates the weapon according to the mouse coordinates.
+     *
+     * @param mousePosition
+     */
     public void rotateWeapon(final Point2D mousePosition) {
 
         //TODO PORTARE ROTATE IN WEAPON
@@ -116,12 +114,10 @@ public class PlayerImpl extends ActiveEntity {
         final double dy = Window.getHeight() - mousePosition.getY() - weapon.getWeaponPosition().getPosition().getY();
         final double angle = -Math.toDegrees(Math.atan2(dy, dx));
 
-        if (angle <= 90 && angle > -90) {
+        if (angle <= Player.RIGHT_ANGLE && angle > -Player.RIGHT_ANGLE) {
             this.setDirection(1);
             this.weapon.setYDirection(1);
-        }
-        else
-        {
+        } else {
             this.setDirection(-1);
             this.weapon.setYDirection(-1);
         }
@@ -129,24 +125,40 @@ public class PlayerImpl extends ActiveEntity {
         this.rotation = angle;
     }
 
+    /**
+     * Creates a new bullet pointing the current mouse position.
+     *
+     * @param target
+     */
     public void shoot(final Point2D target) {
         final Bullet newBullet = this.weapon.fire(target);
         newBullet.init();
         addBullet(newBullet);
     }
 
+    /**
+     * @return The list of rendered bullets.
+     */
     public List<Node> getBulletsNodes() {
         return getBullets().stream().map(e -> e.render(getPosition())).toList();
     }
 
-    public double getRotation() {
-        return this.rotation;
-    }
-
+    /**
+     * Updates the player and sets the current animation for the renderer.
+     *
+     * @param input an element of the enum
+     */
     @Override
     public void update(final Inputs input) {
         super.update(input);
 
         this.weapon.updatePosition(this.getTransform());
+        if (input == Inputs.EMPTY && this.getRenderer() instanceof AnimationSpriteRenderer) {
+            if (this.getxSpeed() != 0) {
+                ((AnimationSpriteRenderer) this.getRenderer()).setAnimation("walk");
+            } else {
+                ((AnimationSpriteRenderer) this.getRenderer()).setAnimation("idle");
+            }
+        }
     }
 }
