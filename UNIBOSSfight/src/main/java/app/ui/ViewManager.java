@@ -27,16 +27,39 @@ public class ViewManager {
 
     public ViewManager() {
         menuButtons = new ArrayList<>();
-        mainPane= new AnchorPane();
+        mainPane = new AnchorPane();
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         mainStage = new Stage();
         mainStage.setScene(mainScene);
         createSubScenes();
         createButtons();
-        setBackground();
-        createLogo();
+        setBackground("blue.png", 256, 256, mainPane);
+        createLogo(5, 5, "UNIBOssfight.png", mainPane);
     }
 
+    public Stage getMainStage() {
+        return this.mainStage;
+    }
+
+    public static void createLogo(final double layoutX, final double layoutY,
+                                  final String url, final AnchorPane pane) {
+        ImageView logo = new ImageView(url);
+        logo.setLayoutX(layoutX);
+        logo.setLayoutY(layoutY);
+        logo.setOnMouseEntered(event -> logo.setEffect(new DropShadow()));
+        logo.setOnMouseExited(event -> logo.setEffect(null));
+        pane.getChildren().add(logo);
+    }
+
+    public static void setBackground(final String url, final double width,
+                                     final double height, final AnchorPane pane) {
+        BackgroundImage background = new BackgroundImage(new Image(url, width,
+                height, false, true),
+                BackgroundRepeat.REPEAT,
+                BackgroundRepeat.REPEAT,
+                BackgroundPosition.DEFAULT, null);
+        pane.setBackground(new Background(background));
+    }
     private void showSubScene(CostumizedSubScene subScene) {
         if (sceneToHide != null) {
             sceneToHide.moveSubScene();
@@ -53,19 +76,6 @@ public class ViewManager {
 
         mainPane.getChildren().addAll(scoreSubScene, levelChoiceSubScene,
                 helpSubScene, exitSubScene);
-    }
-    public Stage getMainStage() {
-        return this.mainStage;
-    }
-
-    private void setBackground() {
-        Image backgroundImage = new Image("blue.png", 256,
-                256, false, true);
-        BackgroundImage background = new BackgroundImage(backgroundImage,
-                BackgroundRepeat.REPEAT,
-                BackgroundRepeat.REPEAT,
-                BackgroundPosition.DEFAULT, null);
-        mainPane.setBackground(new Background(background));
     }
 
     private void addMenuButton(CostumizedButton button) {
@@ -110,14 +120,5 @@ public class ViewManager {
         CostumizedButton exitButton = new CostumizedButton("EXIT");
         addMenuButton(exitButton);
         exitButton.setOnAction(event -> mainStage.close());
-    }
-
-    private void createLogo() {
-        ImageView logo = new ImageView("UNIBOssfight-1.png");
-        logo.setLayoutX(5);
-        logo.setLayoutY(5);
-        logo.setOnMouseEntered(event -> logo.setEffect(new DropShadow()));
-        logo.setOnMouseExited(event -> logo.setEffect(null));
-        mainPane.getChildren().add(logo);
     }
 }

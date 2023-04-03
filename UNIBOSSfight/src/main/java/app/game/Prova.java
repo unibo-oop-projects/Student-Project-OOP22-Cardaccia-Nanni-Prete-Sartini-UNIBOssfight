@@ -3,6 +3,8 @@ package app.game;
 import app.core.entity.Entity;
 import app.core.level.Level;
 import app.ui.ConfirmBox;
+import app.ui.CostumizedButton;
+import app.ui.ViewManager;
 import app.util.AppLogger;
 import app.util.DataManager;
 import app.util.Window;
@@ -18,10 +20,10 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -30,11 +32,10 @@ import java.io.FileNotFoundException;
 
 public class Prova extends Application {
 
-    private static final int FRAME_RATE = 60;
+    private static final double FRAME_RATE = 60;
     private static final double FRAME_DURATION = 1000 / FRAME_RATE;
     private static final int MIN_WINDOW_HEIGHT = 600;
     private static final int MIN_WINDOW_WIDTH = 800;
-
     private final Level currentLevel;//new LevelImpl();
     private Group root = new Group();
     private Scene currentScene;
@@ -95,7 +96,7 @@ public class Prova extends Application {
         );
 
         this.gameOver.addListener(
-                (observable, oldValue, newValue) -> new AnotherStage().show()
+                (observable, oldValue, newValue) -> new GameOverStage().show()
         );
 
         this.currentScene.setOnMouseClicked(e -> this.currentLevel.playerShoot(new Point2D(e.getX(), e.getY())));
@@ -223,14 +224,32 @@ public class Prova extends Application {
         }
     }
 
-    private static class AnotherStage extends Stage {
+    private static class GameOverStage extends Stage {
         private static final int SCENE_WIDTH = 500;
         private static final int SCENE_HEIGHT = 300;
 
-        AnotherStage() {
+        GameOverStage() {
             super();
-            setTitle("GAME OVER");
-            final VBox pane = new VBox();
+            this.initModality(Modality.APPLICATION_MODAL);
+
+            final AnchorPane pane = new AnchorPane();
+            //noinspection SuspiciousNameCombination
+            pane.prefWidth(SCENE_WIDTH);
+            //noinspection SuspiciousNameCombination
+            pane.prefHeight(SCENE_HEIGHT);
+
+            final CostumizedButton homeButton = new CostumizedButton("HOME");
+            final CostumizedButton restartButton = new CostumizedButton("RESTART");
+
+            ViewManager.createLogo(150, 15, "gameover.png", pane);
+            ViewManager.setBackground("blue.png", SCENE_WIDTH, SCENE_HEIGHT, pane);
+
+            homeButton.setLayoutX(155);
+            homeButton.setLayoutY(140);
+            restartButton.setLayoutX(155);
+            restartButton.setLayoutY(210);
+
+            pane.getChildren().addAll(homeButton, restartButton);
             setScene(new Scene(pane, SCENE_WIDTH, SCENE_HEIGHT));
         }
     }
