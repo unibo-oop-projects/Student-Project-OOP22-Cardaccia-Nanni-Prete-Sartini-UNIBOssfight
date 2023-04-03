@@ -1,7 +1,7 @@
 package app.core.level;
 
 import app.core.entity.Entity;
-import app.impl.entity.PlayerImpl;
+import app.impl.entity.Player;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import java.util.List;
@@ -85,7 +85,7 @@ public interface Level {
      *
      * @return the player
      */
-    PlayerImpl getPlayer();
+    Player getPlayer();
 
     /**
      * Returns the position of the player.

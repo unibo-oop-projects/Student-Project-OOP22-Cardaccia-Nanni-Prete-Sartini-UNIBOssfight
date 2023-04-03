@@ -40,7 +40,10 @@ public class Prova extends Application {
     private Scene currentScene;
     private InputManager inputManager;
     private Image image;
+
+    private Image bg;
     private Paint imagePattern;
+    private Paint imagePattern2;
     private final AnchorPane anchorPane = new AnchorPane();
     private final BooleanProperty gameOver = new SimpleBooleanProperty(false);
 
@@ -69,6 +72,12 @@ public class Prova extends Application {
         }
 
         this.image = new Image(input);
+
+        try {
+            this.bg = new Image(new FileInputStream("assets/background.png"),Window.getWidth(), Window.getHeight(), false, false);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         stage.setX(bounds.getMinX());
         stage.setY(bounds.getMinY());
@@ -140,6 +149,24 @@ public class Prova extends Application {
 
     private void render() {
         this.root.getChildren().clear();
+
+        final Rectangle bgr = new Rectangle(0, 0, Window.getWidth(), Window.getHeight());
+
+        // set fill for rectangle
+        this.imagePattern = new ImagePattern(
+                bg,
+                -(this.currentLevel.getPlayerPosition().getX() / 10),
+                0,
+                Window.getHeight() * 16 / 9,
+                Window.getHeight(),
+                false
+        );
+
+        bgr.setFill(this.imagePattern);
+
+        root.getChildren().add(bgr);
+
+
         root.getChildren().addAll(this.currentLevel.renderUniqueEntities());
         this.currentLevel.renderEntities().forEach(e -> root.getChildren().add(e));
 

@@ -15,7 +15,19 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-public class LoopSpriteRenderer extends SpriteRenderer{
+/**
+ * This class is used to render an animation that loops over time.
+ */
+public class LoopSpriteRenderer extends SpriteRenderer {
+
+    private static final int ANIMATION_DURATION = 24;
+
+    private transient List<ImageView> preRenderedSprites;
+    private transient int animationLength;
+    private transient int cont;
+    private transient int contDelay;
+    private transient int maxDelay;
+
     /**
      * Creates a new instance of the class SpriteRenderer.
      *
@@ -25,64 +37,89 @@ public class LoopSpriteRenderer extends SpriteRenderer{
      * @param filename the name of the file containing the sprite
      *                 to be used for rendering
      */
-
-    private transient List<Image> sprites;
-    private transient List<ImageView> preRenderedSprites;
-    private transient int animationLength;
-    private transient int cont = 0;
-    private transient int contDelay = 0;
-
-    public LoopSpriteRenderer(int height, int width, Color color, String filename) {
+    public LoopSpriteRenderer(final int height, final int width, final Color color, final String filename) {
         super(height, width, color, filename);
     }
 
+    /**
+     * @param position   the position of the entity
+     * @param xDirection the direction on the x-axis of the entity
+     * @param yDirection the direction on the y-axis of the entity
+     * @param rotation   the rotation of the entity
+     * @return the current sprite to render of the animation
+     */
     @Override
-    public Node render(Point2D position, int xDirection, int yDirection, double rotation) {
-        try {
-            if (this.animationLength == 1)
-                return super.render(position, xDirection,0 , rotation);
-            else {
+    public Node render(final Point2D position, final int xDirection, final int yDirection, final double rotation) {
+        if (this.animationLength == 1) {
+            return super.render(position, xDirection, 0, rotation);
+        } else {
 
-                this.setPrerendered(this.preRenderedSprites.get(cont % this.animationLength));
-                if(contDelay++ % 4 == 0){
-                    this.cont++;
-                }
-                return super.render(position, xDirection, yDirection, rotation);
+            this.setPrerendered(this.preRenderedSprites.get(cont % this.animationLength));
+
+            if (this.contDelay % this.maxDelay == 0) {
+                this.cont++;
             }
-        }catch (Exception e) {
-            return super.render(position, xDirection, 1, rotation);
+
+            this.contDelay++;
+
+            return super.render(position, xDirection, yDirection, rotation);
         }
     }
 
+    /**
+     *  Initialize the sprites of the loop and sets the animation length.
+     */
     @Override
     public void init() {
-        try {
-            File directory=new File("assets/" + this.getFilename());
-            this.animationLength = Objects.requireNonNull(directory.list()).length;
-            if(this.animationLength > 1) {
-                this.sprites = new ArrayList<>();
-                this.preRenderedSprites = new ArrayList<>();
-                IntStream.iterate(1, e -> e + 1)
-                        .limit(this.animationLength)
-                        .forEach(e -> {
-                            try {
-                                this.sprites.add(new Image(new FileInputStream("assets/" + this.getFilename() + "/" + this.getFilename() + e + ".png"),
-                                        getWidth(), getHeight(),
-                                        false,
-                                        true));
-                                this.preRenderedSprites.add(this.createImageView(this.sprites.get(this.sprites.size() - 1)));
-                            } catch (FileNotFoundException ex) {
-                                throw new RuntimeException(ex);
-                            }
-                        });
-            } else {
-                this.setImg(new Image(new FileInputStream("assets/" + this.getFilename() + ".png"),
-                        getWidth(), getHeight(),
-                        false,
-                        true));
-            }
-        } catch (Exception e){
-            AppLogger.getLogger().warning(e.getMessage());
-        }
+        final File directory = new File("assets/" + this.getFilename());
+        final String pathname = "assets/" + this.getFilename() +  "/" + this.getFilename();
+
+        this.animationLength = Objects.requireNonNull(directory.list()).length;
+        this.maxDelay = LoopSpriteRenderer.ANIMATION_DURATION / this.animationLength;
+
+        final List<Image> loopSprites = new ArrayList<>();
+
+        this.preRenderedSprites = IntStream.iterate(1, e -> e + 1)
+                .limit(this.animationLength)
+                .mapToObj(n -> {
+                    try {
+                        return new Image(
+                                new FileInputStream(pathname + n + ".png"),
+                                getWidth(), getHeight(),
+                                false,
+                                true);
+                    } catch (FileNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                })
+                .map(this::createImageView)
+                .toList();
+    }
+
+    /**
+     * sets the list of pre rendered sprites.
+     *
+     * @param preRenderedSprites the list to set
+     */
+    protected void setPreRenderedSprites(final List<ImageView> preRenderedSprites) {
+        this.preRenderedSprites = preRenderedSprites;
+    }
+
+    /**
+     * Sets the animation duration.
+     *
+     * @param animationLength the animation to set
+     */
+    public void setAnimationLength(final int animationLength) {
+        this.animationLength = animationLength;
+        this.maxDelay = LoopSpriteRenderer.ANIMATION_DURATION / this.animationLength;
+    }
+
+    /**
+     * Restarts the animation.
+     */
+    protected void resetAnimation() {
+        this.cont = 0;
+        this.contDelay = 0;
     }
 }

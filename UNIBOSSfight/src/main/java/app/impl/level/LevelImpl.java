@@ -5,7 +5,7 @@ import app.core.entity.Boss;
 import app.impl.component.TransformImpl;
 import app.core.entity.Entity;
 import app.core.level.Level;
-import app.impl.entity.PlayerImpl;
+import app.impl.entity.Player;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import java.util.ArrayList;
@@ -19,9 +19,7 @@ import java.util.stream.Stream;
 public class LevelImpl implements Level {
 
     private final List<Entity> entities;
-    private final PlayerImpl player;
-    private transient int count;
-    private transient boolean goLeft = true;
+    private final Player player;
 
     /**
      * Creates a new instance of the level.
@@ -29,9 +27,8 @@ public class LevelImpl implements Level {
     public LevelImpl() {
 
         this.entities = new ArrayList<>();
-        this.player = new PlayerImpl(new TransformImpl(new Point2D(0, 300), 0), 250, 250, "guido");
+        this.player = new Player(new TransformImpl(new Point2D(0, 300), 0), 250, 250, "guido");
 
-        //TODO TOGLIERE
 //        this.boss = new BossFactoryImpl().firstBoss(new TransformImpl(new Point2D(0, 400), 0));
 //        this.addEntity(this.boss);
     }
@@ -63,11 +60,6 @@ public class LevelImpl implements Level {
                     e.getBehaviour().getShootingBehaviour().ifPresent(b -> b.accept(e, getPlayer()));
                 });
          */
-
-        this.count++;
-        if (this.count % 100 == 0) {
-            this.goLeft = !this.goLeft;
-        }
 
         this.entities.removeIf(e -> e.getHealth().isDead());
     }
@@ -186,7 +178,7 @@ public class LevelImpl implements Level {
      * {@inheritDoc}
      */
     @Override
-    public PlayerImpl getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 
