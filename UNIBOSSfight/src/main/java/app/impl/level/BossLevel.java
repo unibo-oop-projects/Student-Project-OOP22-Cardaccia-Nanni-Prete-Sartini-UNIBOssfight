@@ -10,10 +10,17 @@ import javafx.scene.Node;
 
 import java.util.List;
 
+
+/**
+ * Class that extends the Level to implement the Boss room.
+ */
 public class BossLevel extends LevelImpl {
 
-    private transient final Boss boss;
+    private final transient Boss boss;
 
+    /**
+     * Initialization of a new BossLevel instance.
+     */
     public BossLevel() {
         super();
 
@@ -22,18 +29,36 @@ public class BossLevel extends LevelImpl {
         this.boss = bossFactory.firstBoss(new TransformImpl(new Point2D(500, 300), 0));
     }
 
-    public Node renderBoss(){
+    /**
+     * Method that return the node to Render the Boss.
+     *
+     * @return The node of the Boss
+     */
+    public Node renderBoss() {
         return boss.render(this.boss.getPosition());
     }
 
+    /**
+     * Method that return the node to Render the Weapon.
+     *
+     * @return The node of the Weapon
+     */
     public Node renderBossWeapon() {
         return this.boss.renderWeapon();
     }
 
-    public void bossShoot(Point2D target) {
+    /**
+     * A method that makes the Boss shoot.
+     *
+     * @param target
+     */
+    public void bossShoot(final Point2D target) {
         this.boss.shoot(target);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Node> renderEntities() {
         List<Node> nodes = super.renderEntities();
@@ -41,6 +66,9 @@ public class BossLevel extends LevelImpl {
         return nodes;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Node> renderUniqueEntities() {
         List<Node> nodes = super.renderUniqueEntities();
@@ -49,6 +77,9 @@ public class BossLevel extends LevelImpl {
         return nodes;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateEntities() {
         super.updateEntities();
@@ -60,5 +91,14 @@ public class BossLevel extends LevelImpl {
         var behaviour = boss.getBehaviour().getFollowingBehaviour();
         behaviour.ifPresent(b -> boss.update(b.apply(getPlayer(), boss)));
 
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void init() {
+        super.init();
+        this.boss.init();
     }
 }
