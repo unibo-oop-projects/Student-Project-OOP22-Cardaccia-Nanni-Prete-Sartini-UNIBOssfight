@@ -17,20 +17,19 @@ public class HealthImpl implements Health {
     }
 
     /**
-     * Creates a new instance of the class HealthImpl with an initial hp value.
-     *
-     * @param hp initial health points
+     * {@inheritDoc}
      */
-    public HealthImpl(final int hp) {
-        this.hp = hp;
+    @Override
+    public int getValue() {
+        return this.hp;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public int getValue() {
-        return this.hp;
+    public void setValue(final int hp) {
+        this.hp = hp;
     }
 
     /**
