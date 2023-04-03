@@ -1,23 +1,29 @@
 package app.ui;
 
+import app.game.Prova;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
 import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ViewManager {
 
-    private static final int WIDTH = 1024;
-    private static final int HEIGHT = 768;
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 600;
     private final AnchorPane mainPane;
     private final Scene mainScene;
     private final Stage mainStage;
-    private final static int MENU_BUTTONS_START_X = 100;
-    private final static int MENU_BUTTONS_START_Y = 150;
+    private final static int MENU_BUTTONS_START_X = 50;
+    private final static int MENU_BUTTONS_START_Y = 80;
     private final List<CostumizedButton> menuButtons;
     private CostumizedSubScene scoreSubScene;
     private CostumizedSubScene levelChoiceSubScene;
@@ -34,7 +40,7 @@ public class ViewManager {
         createSubScenes();
         createButtons();
         setBackground("blue.png", 256, 256, mainPane);
-        createLogo(5, 5, "UNIBOssfight.png", mainPane);
+        //createLogo(5, 5, "UNIBOssfight.png", mainPane);
     }
 
     public Stage getMainStage() {
@@ -60,14 +66,6 @@ public class ViewManager {
                 BackgroundPosition.DEFAULT, null);
         pane.setBackground(new Background(background));
     }
-    private void showSubScene(CostumizedSubScene subScene) {
-        if (sceneToHide != null) {
-            sceneToHide.moveSubScene();
-        }
-        subScene.moveSubScene();
-        sceneToHide = subScene;
-    }
-
     private void createSubScenes() {
         scoreSubScene = new CostumizedSubScene();
         levelChoiceSubScene = new CostumizedSubScene();
@@ -76,6 +74,14 @@ public class ViewManager {
 
         mainPane.getChildren().addAll(scoreSubScene, levelChoiceSubScene,
                 helpSubScene, exitSubScene);
+    }
+
+    private void showSubScene(CostumizedSubScene subScene) {
+        if (sceneToHide != null) {
+            sceneToHide.moveSubScene();
+        }
+        subScene.moveSubScene();
+        sceneToHide = subScene;
     }
 
     private void addMenuButton(CostumizedButton button) {
@@ -96,6 +102,15 @@ public class ViewManager {
     private void createStartButton() {
         CostumizedButton startButton = new CostumizedButton("PLAY");
         addMenuButton(startButton);
+
+        startButton.setOnAction(event -> Platform.runLater(() -> {
+            try {
+                new Prova().start(new Stage());
+                this.mainStage.close();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }));
     }
 
     private void createScoresButton() {
@@ -117,7 +132,7 @@ public class ViewManager {
     }
 
     private void createExitButton() {
-        CostumizedButton exitButton = new CostumizedButton("EXIT");
+        CostumizedButton exitButton = new CostumizedButton("QUIT");
         addMenuButton(exitButton);
         exitButton.setOnAction(event -> mainStage.close());
     }
