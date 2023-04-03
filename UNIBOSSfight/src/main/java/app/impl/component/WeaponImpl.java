@@ -21,18 +21,16 @@ public class WeaponImpl implements Weapon {
     private final Renderer renderer;
     private final BulletFactory bulletFactory = new BulletFactoryImpl();
     private int yDirection = 1;
-    private int rotation = 0;
 
     /**
      * Creates a new instance of the class Weapon.
      *
      * @param userPos the position of the entity
      *                which the weapon will be given to
-     * @param damage the damage that the weapon can cause
      * @param renderer the renderer of the weapon
+     * @param positionOffset the offset from the user's position and the render position of the Weapon
      */
-    public WeaponImpl(final Transform userPos,
-                      final int damage, final Renderer renderer, int positionOffset) {
+    public WeaponImpl(final Transform userPos, final Renderer renderer, final int positionOffset) {
         this.userPos = new TransformImpl(userPos.getPosition(), 0);
         this.renderer = renderer;
         this.renderer.init();
@@ -45,7 +43,6 @@ public class WeaponImpl implements Weapon {
      */
     @Override
     public Node render(final Point2D playerPosition, final int direction, final int rotation) {
-        this.rotation = rotation;
         return this.renderer.render(new Point2D(
                 this.getRenderPosition().getPosition()
                         .subtract(playerPosition)
@@ -59,52 +56,63 @@ public class WeaponImpl implements Weapon {
      */
     @Override
     public Bullet fire(final Point2D target) {
-        Bullet tempBullet = this.bulletFactory.getPlayerBullet(this.getWeaponPosition(), target);
-        return tempBullet;
+        return this.bulletFactory.getPlayerBullet(this.getWeaponPosition(), target);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setYDirection(final int yDirection) {
         this.yDirection = yDirection;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updatePosition(final Transform newPos) {
-        Transform posCopy = newPos.copyOf();
+        final Transform posCopy = newPos.copyOf();
 
-        //TODO PULIRE CODICE
         this.userPos.moveTo(posCopy.getPosition().getX(), posCopy.getPosition().getY());
-        //this.shootingPos.moveTo();
         this.shootingPos.moveTo(getWeaponPosition().getPosition().getX(), getWeaponPosition().getPosition().getY());
-
-
-
-
-        //System.out.println(Math.toRadians(this.rotation));
-        //this.shootingPos.move(-1 * Math.sin(Math.toRadians(rotation - 90)) * (this.renderer.getWidth()/2), -1 * Math.sin(Math.toRadians(rotation) * (this.renderer.getWidth()/2)) );
-        //this.shootingPos.move(, );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Transform getWeaponPosition() {
-        Transform posCopy = getRenderPosition().copyOf();
+        final Transform posCopy = getRenderPosition().copyOf();
         posCopy.move(0, renderer.getHeight() / 2);
         return posCopy;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Transform getUserPosition() {
         return this.userPos;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Transform getShootingPosition() { return this.shootingPos; }
+    public Transform getShootingPosition() {
+        return this.shootingPos;
+    }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Transform getRenderPosition() {
-        Transform posCopy = this.userPos.copyOf();
+        final Transform posCopy = this.userPos.copyOf();
         posCopy.move(0, positionOffset);
         return posCopy;
     }
+
 }
 

@@ -36,12 +36,32 @@ public abstract class Boss extends Enemy {
      */
     public abstract Weapon getWeapon();
 
+    /**
+     * Method that makes the Boss shoot.
+     *
+     * @param target target to be shot
+     */
     public abstract void shoot(Point2D target);
 
+    /**
+     * Method that returns the list of the Bullets Nodes to be rendered.
+     *
+     * @return the list of the Bullets Nodes
+     */
     public abstract List<Node> getBulletsNodes();
 
+    /**
+     * Method to set the Bosses Weapon.
+     *
+     * @param weapon the new Weapon
+     */
     public abstract void setWeapon(Weapon weapon);
 
+    /**
+     * The Node of the Bosses Weapon to be rendered.
+     *
+     * @return the Weapon's Node
+     */
     public abstract Node renderWeapon();
 
 }

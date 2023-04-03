@@ -10,6 +10,9 @@ import app.impl.component.WeaponImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
+/**
+ * Implementation of the WeaponFactory interface.
+ */
 public class WeaponFactoryImpl implements WeaponFactory {
 
     private final BulletFactory bulletFactory = new BulletFactoryImpl();
@@ -18,12 +21,12 @@ public class WeaponFactoryImpl implements WeaponFactory {
      * {@inheritDoc}
      */
     @Override
-    public Weapon getPlayerWeapon(final Transform playerPos){
+    public Weapon getPlayerWeapon(final Transform playerPos) {
 
-        return new WeaponImpl(playerPos, 50, new SpriteRenderer(50, 170, Color.RED, "gun.png"), 55){
+        return new WeaponImpl(playerPos, new SpriteRenderer(50, 170, Color.RED, "gun.png"), 55) {
 
             @Override
-            public Bullet fire(final Point2D target){
+            public Bullet fire(final Point2D target) {
                 return bulletFactory.getPlayerBullet(this.getShootingPosition(), target);
             }
 
@@ -34,11 +37,11 @@ public class WeaponFactoryImpl implements WeaponFactory {
      * {@inheritDoc}
      */
     @Override
-    public Weapon getBigBulletGun(final Transform userPos){
-        return new WeaponImpl(userPos, 100, new SpriteRenderer(300, 700, Color.RED, "gun.png"), 125){
+    public Weapon getBigBulletGun(final Transform userPos) {
+        return new WeaponImpl(userPos, new SpriteRenderer(300, 700, Color.RED, "gun.png"), 125) {
 
             @Override
-            public Bullet fire(final Point2D target){
+            public Bullet fire(final Point2D target) {
                 return bulletFactory.getBigBullet(this.getShootingPosition(), target);
             }
 
