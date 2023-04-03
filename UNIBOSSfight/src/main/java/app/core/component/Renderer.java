@@ -37,4 +37,8 @@ public interface Renderer {
      * Initialize the Renderer.
      */
     void init();
+
+    void setIsDamaged();
+
+    int getIsDamaged();
 }

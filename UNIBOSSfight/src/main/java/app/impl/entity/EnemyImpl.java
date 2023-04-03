@@ -43,6 +43,7 @@ public class EnemyImpl extends Enemy {
                 .build());
 
         getCollider().ifPresent(c -> c.addBehaviour(BulletImpl.class.getName(), e -> {
+            this.getRenderer().setIsDamaged();
             if (!e.getHealth().isDead()) {
                 getHealth().damage(e.getDamage());
             }

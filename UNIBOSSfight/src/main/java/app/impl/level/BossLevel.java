@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class BossLevel extends LevelImpl {
 
-    private final transient Boss boss;
+    private transient Boss boss;
 
     /**
      * Initialization of a new BossLevel instance.
@@ -34,8 +34,8 @@ public class BossLevel extends LevelImpl {
      *
      * @return The node of the Boss
      */
-    public Node renderBoss() {
-        return boss.render(this.boss.getPosition());
+    public Node renderBoss(Point2D playerPosition) {
+        return boss.render(playerPosition);
     }
 
     /**
@@ -59,12 +59,12 @@ public class BossLevel extends LevelImpl {
     /**
      * {@inheritDoc}
      */
-    @Override
-    public List<Node> renderEntities() {
-        List<Node> nodes = super.renderEntities();
-        nodes.add(this.boss.render(this.boss.getPosition()));
-        return nodes;
-    }
+//    @Override
+//    public List<Node> renderEntities() {
+//        List<Node> nodes = super.renderEntities();
+//        nodes.add(this.boss.render(this.boss.getPosition()));
+//        return nodes;
+//    }
 
     /**
      * {@inheritDoc}
@@ -72,7 +72,7 @@ public class BossLevel extends LevelImpl {
     @Override
     public List<Node> renderUniqueEntities() {
         List<Node> nodes = super.renderUniqueEntities();
-        nodes.addAll(List.of(renderBoss(), renderBossWeapon()));
+        nodes.addAll(List.of(renderBoss(this.getPlayerPosition()), renderBossWeapon()));
 
         return nodes;
     }
@@ -99,6 +99,10 @@ public class BossLevel extends LevelImpl {
     @Override
     public void init() {
         super.init();
+        System.out.println("bosslevel");
+        BossFactory bossFactory = new BossFactoryImpl();
+
+        this.boss = bossFactory.firstBoss(new TransformImpl(new Point2D(500, 300), 0));
         this.boss.init();
     }
 }

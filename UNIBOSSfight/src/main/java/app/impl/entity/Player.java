@@ -87,6 +87,7 @@ public class Player extends ActiveEntity {
                 EnemyImpl.class.getName(),
                 BossImpl.class.getName(),
                 HarmfulObstacle.class.getName()), e -> {
+            this.getRenderer().setIsDamaged();
             setYSpeed(Player.RECOIL_VELOCITY);
             setXSpeed(
                     Player.RECOIL_VELOCITY

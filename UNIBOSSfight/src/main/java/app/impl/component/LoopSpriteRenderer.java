@@ -1,6 +1,5 @@
 package app.impl.component;
 
-import app.util.AppLogger;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -10,7 +9,6 @@ import javafx.scene.paint.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
@@ -50,20 +48,15 @@ public class LoopSpriteRenderer extends SpriteRenderer {
      */
     @Override
     public Node render(final Point2D position, final int xDirection, final int yDirection, final double rotation) {
-        if (this.animationLength == 1) {
-            return super.render(position, xDirection, 0, rotation);
-        } else {
+        this.setPrerendered(this.preRenderedSprites.get(cont % this.animationLength));
 
-            this.setPrerendered(this.preRenderedSprites.get(cont % this.animationLength));
-
-            if (this.contDelay % this.maxDelay == 0) {
-                this.cont++;
-            }
-
-            this.contDelay++;
-
-            return super.render(position, xDirection, yDirection, rotation);
+        if (this.contDelay % this.maxDelay == 0) {
+            this.cont++;
         }
+
+        this.contDelay++;
+
+        return super.render(position, xDirection, yDirection, rotation);
     }
 
     /**
@@ -76,8 +69,6 @@ public class LoopSpriteRenderer extends SpriteRenderer {
 
         this.animationLength = Objects.requireNonNull(directory.list()).length;
         this.maxDelay = LoopSpriteRenderer.ANIMATION_DURATION / this.animationLength;
-
-        final List<Image> loopSprites = new ArrayList<>();
 
         this.preRenderedSprites = IntStream.iterate(1, e -> e + 1)
                 .limit(this.animationLength)

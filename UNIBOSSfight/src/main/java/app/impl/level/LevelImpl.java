@@ -108,7 +108,10 @@ public class LevelImpl implements Level {
 
     @Override
     public List<Node> renderUniqueEntities(){
-        return List.of(renderPlayer(), renderWeapon());
+        List<Node> nodes = new ArrayList<>();
+        nodes.add(renderPlayer());
+        nodes.add(renderWeapon());
+        return nodes;
     }
 
     /**
