@@ -3,7 +3,7 @@ package app.game;
 import app.core.entity.Entity;
 import app.core.level.Level;
 import app.ui.ConfirmBox;
-import app.ui.CostumizedButton;
+import app.ui.CustomizedButton;
 import app.ui.MainMenu;
 import app.ui.ViewManager;
 import app.util.AppLogger;
@@ -259,11 +259,11 @@ public class Prova extends Application {
         private static final int SCENE_WIDTH = 500;
         private static final int SCENE_HEIGHT = 300;
 
-        GameOverStage(final Stage previousStage) {
+        GameOverStage(final Stage gameStage) {
             super();
             this.initModality(Modality.APPLICATION_MODAL);
 
-            this.setOnCloseRequest(event -> previousStage.close());
+            this.setOnCloseRequest(event -> gameStage.close());
 
             final AnchorPane pane = new AnchorPane();
             //noinspection SuspiciousNameCombination
@@ -271,19 +271,22 @@ public class Prova extends Application {
             //noinspection SuspiciousNameCombination
             pane.prefHeight(SCENE_HEIGHT);
 
-            final CostumizedButton homeButton = new CostumizedButton("HOME");
-            final CostumizedButton restartButton = new CostumizedButton("RESTART");
+            final CustomizedButton homeButton = new CustomizedButton("HOME");
+            final CustomizedButton restartButton = new CustomizedButton("RESTART");
 
             homeButton.setOnAction(event -> {
                 this.close();
-                previousStage.close();
-                Platform.runLater(() -> new MainMenu().start(new Stage()));
+                gameStage.close();
+                Platform.runLater(() -> {
+                    ViewManager manager = new ViewManager();
+                    new MainMenu().start(manager.getMainStage());
+                });
             });
 
             restartButton.setOnAction(event -> Platform.runLater(() -> {
                 try {
                     this.close();
-                    previousStage.close();
+                    gameStage.close();
                     new Prova().start(new Stage());
                 } catch (final Exception e) {
                     throw new RuntimeException(e);
