@@ -2,8 +2,6 @@ package app.game;
 
 import app.core.entity.Entity;
 import app.core.level.Level;
-import app.impl.factory.BossFactoryImpl;
-import app.impl.level.LevelImpl;
 import app.ui.ConfirmBox;
 import app.util.AppLogger;
 import app.util.DataManager;
@@ -12,11 +10,15 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -39,6 +41,8 @@ public class Prova extends Application {
     private InputManager inputManager;
     private Image image;
     private Paint imagePattern;
+    private final AnchorPane anchorPane = new AnchorPane();
+    private final BooleanProperty gameOver = new SimpleBooleanProperty(false);
 
     public Prova() throws Exception {
         currentLevel = new DataManager().loadLevel();//new LevelImpl();
@@ -66,8 +70,6 @@ public class Prova extends Application {
 
         this.image = new Image(input);
 
-
-
         stage.setX(bounds.getMinX());
         stage.setY(bounds.getMinY());
         stage.setWidth(bounds.getWidth());
@@ -77,8 +79,10 @@ public class Prova extends Application {
 
         this.root = new Group();
 
+        this.anchorPane.getChildren().add(root);
+
         //Creating a scene object
-        currentScene = new Scene(root);
+        currentScene = new Scene(anchorPane);
 
         this.inputManager = new InputManager(currentScene);
 
@@ -90,8 +94,11 @@ public class Prova extends Application {
                 (observable, oldValue, newValue) -> Window.setWidth(currentScene.getWidth())
         );
 
+        this.gameOver.addListener(
+                (observable, oldValue, newValue) -> new AnotherStage().show()
+        );
 
-        currentScene.setOnMouseClicked(e -> this.currentLevel.playerShoot(new Point2D(e.getX(), e.getY())));
+        this.currentScene.setOnMouseClicked(e -> this.currentLevel.playerShoot(new Point2D(e.getX(), e.getY())));
 
         //Adding scene to the stage
         stage.setScene(currentScene);
@@ -100,8 +107,11 @@ public class Prova extends Application {
         stage.show();
 
         final Timeline tl = new Timeline(new KeyFrame(Duration.millis(FRAME_DURATION), e -> {
-            if (!this.currentLevel.isOver())
+            if (!this.currentLevel.isOver()) {
                 run();
+            } else {
+                gameOver.set(true);
+            }
         }));
         tl.setCycleCount(Animation.INDEFINITE);
 
@@ -210,6 +220,18 @@ public class Prova extends Application {
             } catch (Exception e) {
                 AppLogger.getLogger().severe(e.getMessage());
             }
+        }
+    }
+
+    private static class AnotherStage extends Stage {
+        private static final int SCENE_WIDTH = 500;
+        private static final int SCENE_HEIGHT = 300;
+
+        AnotherStage() {
+            super();
+            setTitle("GAME OVER");
+            final VBox pane = new VBox();
+            setScene(new Scene(pane, SCENE_WIDTH, SCENE_HEIGHT));
         }
     }
 }
