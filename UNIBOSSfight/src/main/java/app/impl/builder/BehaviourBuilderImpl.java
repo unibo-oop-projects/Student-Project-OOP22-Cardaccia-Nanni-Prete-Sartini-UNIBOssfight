@@ -76,7 +76,7 @@ public class BehaviourBuilderImpl implements BehaviourBuilder {
     @Override
     public BehaviourBuilder addShooting() {
         this.behaviour.setShootingBehaviour((boss, player) -> {
-            //TODO TINO IMPLEMENTA
+            boss.getWeapon().fire(player.getPosition());
         });
         return this;
     }

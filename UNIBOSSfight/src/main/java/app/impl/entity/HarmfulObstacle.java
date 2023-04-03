@@ -38,5 +38,4 @@ public class HarmfulObstacle extends AbstractEntity {
                            final int width, final Renderer renderer) {
         super(position, height, width, renderer);
     }
-
 }

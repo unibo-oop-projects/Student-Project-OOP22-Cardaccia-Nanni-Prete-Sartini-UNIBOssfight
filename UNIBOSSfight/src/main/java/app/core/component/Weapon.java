@@ -15,6 +15,7 @@ public interface Weapon {
      *
      * @param direction the direction of the weapon
      * @param rotation the rotation of the weapon
+     * @param playerPosition the position of the player
      * @return the Node that will be given as input to the Scene,
      *         representing the rendered weapon
      */

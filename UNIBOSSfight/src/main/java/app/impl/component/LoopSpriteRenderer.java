@@ -1,6 +1,6 @@
 package app.impl.component;
 
-import app.util.Window;
+import app.util.AppLogger;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-public class AnimatedSpriteRenderer extends SpriteRenderer{
+public class LoopSpriteRenderer extends SpriteRenderer{
     /**
      * Creates a new instance of the class SpriteRenderer.
      *
@@ -32,7 +32,7 @@ public class AnimatedSpriteRenderer extends SpriteRenderer{
     private transient int cont = 0;
     private transient int contDelay = 0;
 
-    public AnimatedSpriteRenderer(int height, int width, Color color, String filename) {
+    public LoopSpriteRenderer(int height, int width, Color color, String filename) {
         super(height, width, color, filename);
     }
 
@@ -82,7 +82,7 @@ public class AnimatedSpriteRenderer extends SpriteRenderer{
                         true));
             }
         } catch (Exception e){
-            System.out.println(e);
+            AppLogger.getLogger().warning(e.getMessage());
         }
     }
 }

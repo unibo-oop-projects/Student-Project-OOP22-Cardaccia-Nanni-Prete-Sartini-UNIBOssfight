@@ -58,6 +58,9 @@ public interface Level {
      */
     Node renderWeapon();
 
+
+    List<Node> renderUniqueEntities();
+
     /**
      * Makes the player shoot to the given target.
      *
@@ -95,4 +98,10 @@ public interface Level {
      * Calls the init method on all entities.
      */
     void init();
+
+    /**
+     * @return true if the player is dead and so the game is over,
+     * false otherwise
+     */
+    boolean isOver();
 }

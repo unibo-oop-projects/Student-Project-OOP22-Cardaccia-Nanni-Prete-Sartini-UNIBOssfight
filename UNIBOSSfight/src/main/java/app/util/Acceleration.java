@@ -6,7 +6,8 @@ package app.util;
 public final class Acceleration {
 
     private Acceleration() {
-
+        throw new UnsupportedOperationException("This is a utility class"
+                + " and cannot be instantiated");
     }
 
     /**

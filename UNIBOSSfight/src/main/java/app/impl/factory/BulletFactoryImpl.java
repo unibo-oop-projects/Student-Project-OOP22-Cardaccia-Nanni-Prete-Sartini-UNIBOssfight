@@ -10,17 +10,23 @@ import javafx.scene.paint.Color;
 
 public class BulletFactoryImpl implements BulletFactory {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Bullet getPlayerBullet(final Transform playerPos, final Point2D target) {
+    public Bullet getPlayerBullet(final Transform shootingPosition, final Point2D target) {
 
-        return new BulletImpl(playerPos,  20, 20,
-                new SpriteRenderer(20, 20, Color.BLACK, "bullet.png"),
-                100, target, 20);
+        return new BulletImpl(shootingPosition,  20, 20,
+                new SpriteRenderer(25, 40, Color.BLACK, "magicBullet.png"),
+                10, target, 20);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Bullet getBigBullet(final Transform startingPos, final Point2D target) {
-        return new BulletImpl(startingPos, 40, 40,
+    public Bullet getBigBullet(final Transform shootingPosition, final Point2D target) {
+        return new BulletImpl(shootingPosition, 40, 40,
                 new SpriteRenderer(40, 40, Color.BLACK, "bullet.png"), 200, target, 5);
     }
 

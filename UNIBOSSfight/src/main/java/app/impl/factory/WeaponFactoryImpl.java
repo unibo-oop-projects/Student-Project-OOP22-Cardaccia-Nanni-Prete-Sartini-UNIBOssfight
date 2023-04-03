@@ -14,6 +14,9 @@ public class WeaponFactoryImpl implements WeaponFactory {
 
     private final BulletFactory bulletFactory = new BulletFactoryImpl();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Weapon getPlayerWeapon(final Transform playerPos){
 
@@ -27,6 +30,9 @@ public class WeaponFactoryImpl implements WeaponFactory {
         };
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Weapon getBigBulletGun(final Transform userPos){
         return new WeaponImpl(userPos, 100, new SpriteRenderer(300, 700, Color.RED, "gun.png"), 125){

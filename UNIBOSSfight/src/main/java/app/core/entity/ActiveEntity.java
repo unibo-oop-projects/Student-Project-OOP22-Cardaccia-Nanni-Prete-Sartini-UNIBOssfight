@@ -184,7 +184,7 @@ public abstract class ActiveEntity extends AbstractEntity {
      */
     protected void jump() {
         if (!isJumping()) {
-            this.ySpeed = this.maxYSpeed;
+            this.ySpeed = this.getMaxYSpeed();
             getTransform().move(0, 1);
         }
     }

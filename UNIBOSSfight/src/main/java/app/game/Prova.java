@@ -1,34 +1,32 @@
 package app.game;
 
-import app.core.component.BossFactory;
 import app.core.entity.Entity;
 import app.core.level.Level;
-import app.impl.factory.BossFactoryImpl;
 import app.ui.ConfirmBox;
+import app.util.AppLogger;
 import app.util.DataManager;
 import app.util.Window;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class Prova extends Application {
 
@@ -43,15 +41,11 @@ public class Prova extends Application {
     private InputManager inputManager;
     private Image image;
     private Paint imagePattern;
+    private final AnchorPane anchorPane = new AnchorPane();
+    private final BooleanProperty gameOver = new SimpleBooleanProperty(false);
 
     public Prova() throws Exception {
         currentLevel = new DataManager().loadLevel();//new LevelImpl();
-    }
-
-    public static String readFile(String path, Charset encoding) throws IOException
-    {
-        byte[] encoded = Files.readAllBytes(Paths.get(path));
-        return new String(encoded, encoding);
     }
 
     @Override
@@ -76,8 +70,6 @@ public class Prova extends Application {
 
         this.image = new Image(input);
 
-
-
         stage.setX(bounds.getMinX());
         stage.setY(bounds.getMinY());
         stage.setWidth(bounds.getWidth());
@@ -87,8 +79,10 @@ public class Prova extends Application {
 
         this.root = new Group();
 
+        this.anchorPane.getChildren().add(root);
+
         //Creating a scene object
-        currentScene = new Scene(root);
+        currentScene = new Scene(anchorPane);
 
         this.inputManager = new InputManager(currentScene);
 
@@ -100,8 +94,11 @@ public class Prova extends Application {
                 (observable, oldValue, newValue) -> Window.setWidth(currentScene.getWidth())
         );
 
+        this.gameOver.addListener(
+                (observable, oldValue, newValue) -> new AnotherStage().show()
+        );
 
-        currentScene.setOnMouseClicked(e -> this.currentLevel.playerShoot(new Point2D(e.getX(), e.getY())));
+        this.currentScene.setOnMouseClicked(e -> this.currentLevel.playerShoot(new Point2D(e.getX(), e.getY())));
 
         //Adding scene to the stage
         stage.setScene(currentScene);
@@ -110,41 +107,13 @@ public class Prova extends Application {
         stage.show();
 
         final Timeline tl = new Timeline(new KeyFrame(Duration.millis(FRAME_DURATION), e -> {
-            run();
+            if (!this.currentLevel.isOver()) {
+                run();
+            } else {
+                gameOver.set(true);
+            }
         }));
         tl.setCycleCount(Animation.INDEFINITE);
-
-
-        BossFactory bossFactory = new BossFactoryImpl();
-        this.currentLevel.addEntity(bossFactory.firstBoss(this.currentLevel.getPlayer().getTransform()));
-
-        /*this.currentLevel.addEntity(
-            new Wall(new TransformImpl(
-                    new Point2D(this.currentLevel.getPlayerPosition().getX() + 300, Window.getHeight())
-                    , 0),
-                    50, 50, "wall.png")
-        );
-
-        this.currentLevel.addEntity(
-                new Wall(new TransformImpl(
-                        new Point2D(this.currentLevel.getPlayerPosition().getX() + 900, Window.getHeight() / 2.0)
-                        , 0),
-                        50, 50, "wall.png")
-        );
-
-        this.currentLevel.addEntity(
-                new Coin(new TransformImpl(
-                        new Point2D(this.currentLevel.getPlayerPosition().getX() + 600, Window.getHeight() - 10)
-                        , 0),
-                        120, 120, "coin.png")
-        );
-
-        this.currentLevel.addEntity(
-                new HarmfulObstacle(new TransformImpl(
-                        new Point2D(this.currentLevel.getPlayerPosition().getX() + 1400, Window.getHeight() - 10)
-                        , 0),
-                        120, 120, "spine.png")
-        );*/
 
         tl.play();
         this.currentLevel.init();
@@ -171,8 +140,7 @@ public class Prova extends Application {
 
     private void render() {
         this.root.getChildren().clear();
-        root.getChildren().add(this.currentLevel.renderPlayer());
-        root.getChildren().add(this.currentLevel.renderWeapon());
+        root.getChildren().addAll(this.currentLevel.renderUniqueEntities());
         this.currentLevel.renderEntities().forEach(e -> root.getChildren().add(e));
 
         // create a Rectangle
@@ -215,15 +183,9 @@ public class Prova extends Application {
 
             this.scene.setOnKeyPressed(e -> {
                 switch (e.getCode()) {
-                    case A:
-                        this.isAPressed = true;
-                        break;
-                    case D:
-                        this.isDPressed = true;
-                        break;
-                    case SPACE:
-                        this.isSpacePressed = true;
-                        break;
+                    case A -> this.isAPressed = true;
+                    case D -> this.isDPressed = true;
+                    case SPACE -> this.isSpacePressed = true;
                 }
             });
 
@@ -231,29 +193,11 @@ public class Prova extends Application {
 
             this.scene.setOnKeyReleased(e -> {
                 switch (e.getCode()) {
-                    case A:
-                        this.isAPressed = false;
-                        break;
-                    case D:
-                        this.isDPressed = false;
-                        break;
-                    case SPACE:
-                        this.isSpacePressed = false;
-                        break;
+                    case A -> this.isAPressed = false;
+                    case D -> this.isDPressed = false;
+                    case SPACE -> this.isSpacePressed = false;
                 }
             });
-        }
-
-        public boolean isAPressed() {
-            return this.isAPressed;
-        }
-
-        public boolean isDPressed() {
-            return this.isDPressed;
-        }
-
-        public boolean isSpacePressed() {
-            return this.isSpacePressed;
         }
     }
 
@@ -262,7 +206,7 @@ public class Prova extends Application {
             try {
                 new DataManager().serializeLevel(this.currentLevel);
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLogger.getLogger().severe(e.getMessage());
             }
         super.stop();
     }
@@ -274,8 +218,20 @@ public class Prova extends Application {
                 this.stop();
                 System.exit(0);
             } catch (Exception e) {
-                e.printStackTrace();
+                AppLogger.getLogger().severe(e.getMessage());
             }
+        }
+    }
+
+    private static class AnotherStage extends Stage {
+        private static final int SCENE_WIDTH = 500;
+        private static final int SCENE_HEIGHT = 300;
+
+        AnotherStage() {
+            super();
+            setTitle("GAME OVER");
+            final VBox pane = new VBox();
+            setScene(new Scene(pane, SCENE_WIDTH, SCENE_HEIGHT));
         }
     }
 }

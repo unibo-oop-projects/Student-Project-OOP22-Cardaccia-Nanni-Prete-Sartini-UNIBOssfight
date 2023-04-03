@@ -3,7 +3,11 @@ package app.core.entity;
 import app.core.component.Transform;
 import app.core.component.Weapon;
 import app.impl.component.SpriteRenderer;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
+
+import java.util.List;
 
 /**
  * This class models a more specific type of enemy, the boss,
@@ -30,8 +34,14 @@ public abstract class Boss extends Enemy {
      *
      * @return the weapon of the boss
      */
-    public Weapon getWeapon() {
-        return null;
-    }
+    public abstract Weapon getWeapon();
+
+    public abstract void shoot(Point2D target);
+
+    public abstract List<Node> getBulletsNodes();
+
+    public abstract void setWeapon(Weapon weapon);
+
+    public abstract Node renderWeapon();
 
 }

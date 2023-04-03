@@ -1,6 +1,7 @@
 package app.core.component;
 
 import app.core.entity.ActiveEntity;
+import app.core.entity.Boss;
 import app.core.entity.Entity;
 import java.util.Optional;
 import java.util.function.BiConsumer;
@@ -82,7 +83,7 @@ public interface Behaviour {
      *
      * @return a consumer that takes as input the player and an enemy shooting the player
      */
-    Optional<BiConsumer<ActiveEntity, ActiveEntity>> getShootingBehaviour();
+    Optional<BiConsumer<Boss, Entity>> getShootingBehaviour();
 
     /**
      * Sets the behaviour to shoot the player.
@@ -90,6 +91,6 @@ public interface Behaviour {
      * @param consumer a consumer that takes as input the player
      *                 and the enemy shooting the player
      */
-    void setShootingBehaviour(BiConsumer<ActiveEntity, ActiveEntity> consumer);
+    void setShootingBehaviour(BiConsumer<Boss, Entity> consumer);
 
 }
