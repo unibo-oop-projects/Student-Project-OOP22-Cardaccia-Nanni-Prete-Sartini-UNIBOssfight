@@ -39,7 +39,7 @@ public class Prova extends Application {
     private Paint imagePattern;
 
     public Prova() throws Exception {
-        currentLevel = new DataManager().loadLevel();//new LevelImpl();
+        currentLevel = new DataManager().loadLevel("output.json");
     }
 
     @Override
