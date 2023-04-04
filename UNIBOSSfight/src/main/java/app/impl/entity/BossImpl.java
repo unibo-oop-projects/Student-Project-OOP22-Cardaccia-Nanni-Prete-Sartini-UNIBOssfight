@@ -83,8 +83,6 @@ public class BossImpl extends Boss {
                 .addFollow()
                 .addShooting()
                 .build());
-
-        //System.out.println(this.getType());
     }
 
     /**
@@ -110,10 +108,7 @@ public class BossImpl extends Boss {
      */
     @Override
     public Node renderWeapon(Point2D playerPosition) {
-        // TODO togliere exception generica e print
         try {
-            //System.out.println(this.weapon.updateRotation(playerPosition));
-            //this.weapon.setXDirection(this.getDirection());
             return this.weapon.render(playerPosition, 0, 0);
         } catch (Exception e) {
             AppLogger.getLogger().warning("ERROR cannot load resource " + e);

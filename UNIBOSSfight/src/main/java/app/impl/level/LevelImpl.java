@@ -1,7 +1,6 @@
 package app.impl.level;
 
 import app.core.entity.ActiveEntity;
-import app.core.entity.Bullet;
 import app.impl.component.TransformImpl;
 import app.core.entity.Entity;
 import app.core.level.Level;
@@ -86,8 +85,11 @@ public class LevelImpl implements Level {
         return this.player.renderWeapon();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public List<Node> renderUniqueEntities(){
+    public List<Node> renderUniqueEntities() {
         List<Node> nodes = new ArrayList<>();
         nodes.add(renderPlayer());
         nodes.add(renderWeapon());
@@ -171,11 +173,17 @@ public class LevelImpl implements Level {
         this.entities.forEach(Entity::init);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isOver() {
         return this.player.getHealth().isDead();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void removeBullets() {
         this.entities.removeIf(e -> e.getType() == BulletImpl.class.getName() && !e.isDisplayed(this.getPlayerPosition())

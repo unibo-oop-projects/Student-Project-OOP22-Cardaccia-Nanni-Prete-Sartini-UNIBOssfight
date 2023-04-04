@@ -111,5 +111,8 @@ public interface Level {
      */
     boolean isOver();
 
+    /**
+     * Removes destroyed and not rendered Bullets in the level.
+     */
     void removeBullets();
 }

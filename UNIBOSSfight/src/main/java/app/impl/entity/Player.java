@@ -93,7 +93,6 @@ public class Player extends ActiveEntity {
                             * getHitbox().getCollisionSideOnX(e.getPosition().getX())
             );
             this.getHealth().damage(e.getDamage());
-            //System.out.println(this.getHealth().getValue());
         });
 
         collider.addBehaviour(Platform.class.getName(), e -> Platform.jump(this, e));

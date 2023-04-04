@@ -8,10 +8,7 @@ import app.impl.factory.BossFactoryImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
-
 
 /**
  * Class that extends the Level to implement the Boss room.
@@ -31,18 +28,20 @@ public class BossLevel extends LevelImpl {
     /**
      * Method that return the node to Render the Boss.
      *
-     * @return The node of the Boss
+     * @param playerPosition the position of the Player
+     * @return the node of the Boss
      */
-    public Node renderBoss(Point2D playerPosition) {
+    public Node renderBoss(final Point2D playerPosition) {
         return boss.render(playerPosition);
     }
 
     /**
      * Method that return the node to Render the Weapon.
      *
+     * @param playerPosition the position of the Player
      * @return The node of the Weapon
      */
-    public Node renderBossWeapon(Point2D playerPosition) {
+    public Node renderBossWeapon(final Point2D playerPosition) {
         return this.boss.renderWeapon(playerPosition);
     }
 
@@ -66,7 +65,7 @@ public class BossLevel extends LevelImpl {
 
         this.boss.update(Entity.Inputs.EMPTY);
 
-        if(this.boss.isUpdated(this.getPlayerPosition())) {
+        if (this.boss.isUpdated(this.getPlayerPosition())) {
             if (this.rateOfFireCounter >= this.boss.getRateOfFire()) {
                 addEntity(this.boss.shoot(this.getPlayerPosition()));
                 rateOfFireCounter = 0;
@@ -93,11 +92,13 @@ public class BossLevel extends LevelImpl {
         this.boss.init();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void collision() {
         super.collision();
 
-        //System.out.println(getEntities());
         // Player collisions
         this.getEntities().stream()
                 .filter(e -> this.boss.getHitbox().collide(e.getHitbox()))
@@ -107,4 +108,5 @@ public class BossLevel extends LevelImpl {
             this.getPlayer().manageCollision(this.boss);
         }
     }
+
 }
