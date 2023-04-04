@@ -23,9 +23,6 @@ public class EnemyImpl extends Enemy {
     public EnemyImpl(final Transform position, final int height, final int width, final String filename) {
         super(position, height, width,
                 new SpriteRenderer(height, width, Color.ALICEBLUE, filename));
-        // TODO da togliere, compito della serializzazione
-        setMaxXSpeed(5);
-        setMaxYSpeed(20);
     }
 
     /**
@@ -41,14 +38,6 @@ public class EnemyImpl extends Enemy {
                 .addStopFromSide()
                 .addFollow()
                 .build());
-
-        getCollider().ifPresent(c -> c.addBehaviour(BulletImpl.class.getName(), e -> {
-            this.getRenderer().setIsDamaged();
-            if (!e.getHealth().isDead()) {
-                getHealth().damage(e.getDamage());
-            }
-            e.getHealth().destroy();
-        }));
     }
 
 }
