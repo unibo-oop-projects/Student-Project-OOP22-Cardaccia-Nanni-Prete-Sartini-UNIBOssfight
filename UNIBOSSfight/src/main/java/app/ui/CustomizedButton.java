@@ -17,6 +17,11 @@ public class CustomizedButton extends Button {
             + " -fx-background-image: url('grey_button00.png');";
     private static final String BUTTON_FREE_STYLE = "-fx-background-color: transparent;"
             + " -fx-background-image: url('blue_button00.png');";
+    private static final int BUTTON_PRESSED_HEIGHT = 45;
+    private static final int HEIGHT = 49;
+    private static final int WIDTH = 190;
+    private static final int FONT_SIZE = 23;
+    private static final int OFFSET = 4;
 
     /**
      * Creates a new instance of the class CustomizedButton.
@@ -26,30 +31,30 @@ public class CustomizedButton extends Button {
     public CustomizedButton(final String text) {
         setText(text);
         setButtonFont();
-        setPrefHeight(49);
-        setPrefWidth(190);
+        setPrefHeight(HEIGHT);
+        setPrefWidth(WIDTH);
         setStyle(BUTTON_FREE_STYLE);
         initButtonListeners();
     }
 
     private void setButtonFont() {
         try {
-            setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
-        } catch (FileNotFoundException e) {
-            setFont(Font.font("Verdana", 23));
+            setFont(Font.loadFont(new FileInputStream(FONT_PATH), FONT_SIZE));
+        } catch (final FileNotFoundException e) {
+            setFont(Font.font("Verdana", FONT_SIZE));
         }
     }
 
     private void setButtonPressedStyle() {
         setStyle(BUTTON_PRESSED_STYLE);
-        setPrefHeight(45);
-        setLayoutY(getLayoutY() + 4);
+        setPrefHeight(BUTTON_PRESSED_HEIGHT);
+        setLayoutY(getLayoutY() + OFFSET);
     }
 
     private void setButtonReleasedStyle() {
         setStyle(BUTTON_FREE_STYLE);
-        setPrefHeight(45);
-        setLayoutY(getLayoutY() - 4);
+        setPrefHeight(BUTTON_PRESSED_HEIGHT);
+        setLayoutY(getLayoutY() - OFFSET);
     }
 
     private void initButtonListeners() {

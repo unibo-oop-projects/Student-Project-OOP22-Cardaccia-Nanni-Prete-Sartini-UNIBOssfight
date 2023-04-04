@@ -1,6 +1,6 @@
 package app.ui;
 
-import javafx.animation.TranslateTransition;
+import javafx.animation.FadeTransition;
 import javafx.scene.SubScene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -15,43 +15,39 @@ import javafx.util.Duration;
  */
 public class CustomizedSubScene extends SubScene {
 
-    private static final int WIDTH = 600;
-    private static final int HEIGHT = 400;
-    private final String backgroundImage = "blue_panel.png";
-    private boolean isHidden = true;
+    private static final int WIDTH = 400;
+    private static final int HEIGHT = 300;
+    private static final int LAYOUTX = 325;
+    private static final int LAYOUTY = HEIGHT / 2;
+    private static final String BACKGROUND_IMAGE = "blue_panel.png";
 
     /**
      * Creates a new instance of the class CustomizedSubScene.
      */
     public CustomizedSubScene() {
         super(new AnchorPane(), WIDTH, HEIGHT);
+
         prefHeight(HEIGHT);
         prefWidth(WIDTH);
-        BackgroundImage image = new BackgroundImage(new Image(backgroundImage, WIDTH, HEIGHT,
-                false, true), BackgroundRepeat.NO_REPEAT,
+
+        final BackgroundImage image = new BackgroundImage(new Image(BACKGROUND_IMAGE,
+                WIDTH, HEIGHT, false, true), BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
-        AnchorPane root2 = (AnchorPane) this.getRoot();
-        root2.setBackground(new Background(image));
+        final AnchorPane root = (AnchorPane) this.getRoot();
+        root.setBackground(new Background(image));
 
-        setLayoutX(1024);
-        setLayoutY(180);
-
+        setLayoutX(LAYOUTX);
+        setLayoutY(LAYOUTY);
     }
 
     /**
-     * This method is used to create the transition for the sub scene.
+     * This method is used to create the fade-in transition for the sub scene.
      */
-    public void moveSubScene() {
-        TranslateTransition transition = new TranslateTransition();
-        transition.setDuration(Duration.seconds(0.3));
+    public void fadeInSubScene() {
+        final var transition = new FadeTransition(Duration.millis(600));
         transition.setNode(this);
-        if (isHidden) {
-            transition.setToX(-676);
-            this.isHidden = false;
-        } else {
-            transition.setToX(0);
-            this.isHidden = true;
-        }
+        transition.setFromValue(0);
+        transition.setToValue(1);
         transition.play();
     }
 }
