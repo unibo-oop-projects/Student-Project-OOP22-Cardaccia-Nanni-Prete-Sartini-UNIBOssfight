@@ -14,6 +14,7 @@
         "rotation": 0.0
       },
       "renderer": {
+        "className": "app.impl.component.SpriteRenderer",
         "filename": "wall.png",
         "height": 4,
         "width": 4,
