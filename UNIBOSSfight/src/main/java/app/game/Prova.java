@@ -2,6 +2,9 @@ package app.game;
 
 import app.core.entity.Entity;
 import app.core.level.Level;
+import app.impl.component.PatternRender;
+import app.impl.component.TransformImpl;
+import app.impl.entity.Wall;
 import app.ui.ConfirmBox;
 import app.ui.CustomizedButton;
 import app.ui.MainMenu;
@@ -22,6 +25,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -279,8 +283,7 @@ public class Prova extends Application {
                 this.close();
                 gameStage.close();
                 Platform.runLater(() -> {
-                    ViewManager manager = new ViewManager();
-                    new MainMenu().start(manager.getMainStage());
+                    new MainMenu().start(new Stage());
                 });
             });
 

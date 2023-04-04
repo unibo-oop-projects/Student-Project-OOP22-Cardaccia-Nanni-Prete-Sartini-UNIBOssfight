@@ -1,6 +1,6 @@
 package app.ui;
 
-import app.game.Game;
+import app.game.Prova;
 import app.util.AppLogger;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -134,7 +134,7 @@ public class ViewManager {
 
         startButton.setOnAction(event -> Platform.runLater(() -> {
             try {
-                new Game().start(new Stage());
+                new Prova().start(new Stage());
                 this.mainStage.close();
             } catch (final IOException e) {
                 AppLogger.getLogger().severe(e.getMessage());
