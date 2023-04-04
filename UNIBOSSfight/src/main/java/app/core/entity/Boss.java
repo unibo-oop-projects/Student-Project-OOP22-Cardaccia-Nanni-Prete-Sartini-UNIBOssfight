@@ -62,6 +62,6 @@ public abstract class Boss extends Enemy {
      *
      * @return the Weapon's Node
      */
-    public abstract Node renderWeapon();
+    public abstract Node renderWeapon(Point2D playerPosition);
 
 }

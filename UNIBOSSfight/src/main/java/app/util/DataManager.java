@@ -7,6 +7,7 @@ import app.core.entity.Entity;
 import app.core.level.Level;
 import app.impl.component.TransformImpl;
 import app.impl.entity.Player;
+import app.impl.level.BossLevel;
 import app.impl.level.LevelImpl;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

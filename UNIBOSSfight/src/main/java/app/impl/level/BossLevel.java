@@ -34,8 +34,8 @@ public class BossLevel extends LevelImpl {
      *
      * @return The node of the Boss
      */
-    public Node renderBoss() {
-        return boss.render(this.boss.getPosition());
+    public Node renderBoss(Point2D playerPosition) {
+        return boss.render(playerPosition);
     }
 
     /**
@@ -43,8 +43,8 @@ public class BossLevel extends LevelImpl {
      *
      * @return The node of the Weapon
      */
-    public Node renderBossWeapon() {
-        return this.boss.renderWeapon();
+    public Node renderBossWeapon(Point2D playerPosition) {
+        return this.boss.renderWeapon(playerPosition);
     }
 
     /**
@@ -59,12 +59,12 @@ public class BossLevel extends LevelImpl {
     /**
      * {@inheritDoc}
      */
-    @Override
-    public List<Node> renderEntities() {
-        List<Node> nodes = super.renderEntities();
-        nodes.add(this.boss.render(this.boss.getPosition()));
-        return nodes;
-    }
+//    @Override
+//    public List<Node> renderEntities() {
+//        List<Node> nodes = super.renderEntities();
+//        nodes.add(this.boss.render(this.boss.getPosition()));
+//        return nodes;
+//    }
 
     /**
      * {@inheritDoc}
@@ -72,7 +72,7 @@ public class BossLevel extends LevelImpl {
     @Override
     public List<Node> renderUniqueEntities() {
         List<Node> nodes = super.renderUniqueEntities();
-        nodes.addAll(List.of(renderBoss(), renderBossWeapon()));
+        nodes.addAll(List.of(renderBoss(this.getPlayerPosition()), renderBossWeapon(this.getPlayerPosition())));
 
         return nodes;
     }
@@ -87,7 +87,6 @@ public class BossLevel extends LevelImpl {
         this.boss.update(Entity.Inputs.EMPTY);
 
         //TODO beahaviour
-        //this.boss.update();
         var behaviour = boss.getBehaviour().getFollowingBehaviour();
         behaviour.ifPresent(b -> boss.update(b.apply(getPlayer(), boss)));
 
@@ -99,6 +98,23 @@ public class BossLevel extends LevelImpl {
     @Override
     public void init() {
         super.init();
+        BossFactory bossFactory = new BossFactoryImpl();
+
+        this.boss = bossFactory.firstBoss(new TransformImpl(new Point2D(500, 300), 0));
         this.boss.init();
+    }
+
+    @Override
+    public void collision() {
+        super.collision();
+
+        // Player collisions
+        this.getEntities().stream()
+                .filter(e -> this.boss.getHitbox().collide(e.getHitbox()))
+                .forEach(this.boss::manageCollision);
+
+        if (this.boss.getHitbox().collide(getPlayer().getHitbox())) {
+            this.getPlayer().manageCollision(this.boss);
+        }
     }
 }

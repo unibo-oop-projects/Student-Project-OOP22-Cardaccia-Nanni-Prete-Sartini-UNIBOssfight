@@ -54,6 +54,7 @@ public class BossImpl extends Boss {
     public void update(final Inputs input) {
         super.update(input);
         this.weapon.updatePosition(getTransform());
+        this.weapon.setXDirection(this.getDirection());
     }
 
     /**
@@ -122,10 +123,10 @@ public class BossImpl extends Boss {
      * {@inheritDoc}
      */
     @Override
-    public Node renderWeapon() {
+    public Node renderWeapon(Point2D playerPosition) {
         // TODO togliere exception generica e print
         try {
-            return this.weapon.render(this.getPosition(), this.getDirection(), 0);
+            return this.weapon.render(playerPosition, this.getDirection(), 0);
         } catch (Exception e) {
             AppLogger.getLogger().warning("ERROR cannot load resource " + e);
         }
