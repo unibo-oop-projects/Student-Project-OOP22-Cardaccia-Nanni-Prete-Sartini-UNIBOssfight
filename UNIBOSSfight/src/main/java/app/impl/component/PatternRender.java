@@ -1,5 +1,6 @@
 package app.impl.component;
 
+import app.util.Window;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -58,10 +59,11 @@ public class PatternRender extends SpriteRenderer {
             final int yDirection,
             final double rotation
     ) {
+        System.out.println("pattern renderer");
         try {
             final Rectangle rect = new Rectangle(
                     position.getX() - this.getWidth() / 2.0,
-                    position.getY() - this.getHeight(),
+                    Window.getHeight() - position.getY() - getHeight(),
                     this.getWidth(),
                     this.getHeight()
             );
@@ -83,6 +85,7 @@ public class PatternRender extends SpriteRenderer {
             );
 
             rect.setFill(imagePattern);
+            //rect.setFill(Color.RED);
 
             return rect;
 
