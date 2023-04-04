@@ -1,9 +1,12 @@
 package app.impl.component;
 
-import app.util.Window;
 import app.util.AppLogger;
+import app.util.Window;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -16,8 +19,6 @@ import java.io.FileNotFoundException;
  */
 public class SpriteRenderer extends RendererImpl {
     private final String filename;
-    private transient Image img;
-
     private transient ImageView prerendered;
 
     /**
@@ -34,16 +35,6 @@ public class SpriteRenderer extends RendererImpl {
 
         super(height, width, color);
         this.filename = filename;
-
-        try {
-            this.img = new Image(new FileInputStream("assets/" + filename),
-                    getWidth(), getHeight(),
-                    false,
-                    true);
-        } catch (Exception e) {
-            AppLogger.getLogger().severe("Errore risorsa non trovata");
-        }
-
     }
 
     /**
@@ -69,26 +60,49 @@ public class SpriteRenderer extends RendererImpl {
             prerendered.setX(position.getX() - getWidth() / 2.0);
             prerendered.setY(Window.getHeight() - position.getY() - getHeight());
 
+            prerendered.setEffect(null);
+
+
+            if (this.getIsDamaged() > 0) {
+                final Blend blend = new Blend();
+                final ColorInput topInput = new ColorInput(position.getX() - getWidth() / 2.0,
+                        Window.getHeight() - position.getY() - getHeight(),
+                        getWidth(),
+                        getHeight(),
+                        new Color(1, 0, 0, 0.5));
+
+                //setting the top input to the blend object
+                blend.setTopInput(topInput);
+
+                //setting the blend mode
+                blend.setMode(BlendMode.SRC_ATOP);
+
+                prerendered.setEffect(blend);
+            }
+
             return prerendered;
         } else {
             return super.render(position, xDirection, yDirection, rotation);
         }
     }
 
-    protected Image getImg() {
-        return this.img;
-    }
-
-    public void setImg(Image img) {
-        this.img = img;
-    }
-
-    public void setPrerendered(ImageView prerendered) {
+    /**
+     * Sets the prerendered sprite.
+     *
+     * @param prerendered
+     */
+    public void setPrerendered(final ImageView prerendered) {
         this.prerendered = prerendered;
     }
 
+    /**
+     * Creates an ImageView from a given image.
+     *
+     * @param img image to render
+     * @return the imageview created with the given image
+     */
     protected ImageView createImageView(final Image img) {
-        ImageView prerenderedImage = new ImageView();
+        final ImageView prerenderedImage = new ImageView();
 
         prerenderedImage.setImage(img);
 
@@ -102,20 +116,28 @@ public class SpriteRenderer extends RendererImpl {
         return prerenderedImage;
     }
 
+    /**
+     * Initialize the renderer creating the prerendered sprite.
+     */
     @Override
     public void init() {
         try {
-            this.img = new Image(new FileInputStream("assets/" + filename),
+            final Image img = new Image(new FileInputStream("assets/" + filename),
                     getWidth(), getHeight(),
                     false,
                     true);
 
-            this.prerendered = createImageView(this.img);
+            this.prerendered = createImageView(img);
         } catch (FileNotFoundException e) {
             AppLogger.getLogger().warning(e.getMessage());
         }
     }
 
+    /**
+     * get the filename of the sprite.
+     *
+     * @return the filename of the rendered image
+     */
     protected String getFilename() {
         return this.filename;
     }

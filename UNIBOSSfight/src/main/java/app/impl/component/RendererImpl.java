@@ -16,6 +16,7 @@ public class RendererImpl implements Renderer {
     private final int width;
     private final Color color;
     private final String className;
+    private int isDamaged;
 
     /**
      * Creates a new instance of the class Renderer.
@@ -66,5 +67,16 @@ public class RendererImpl implements Renderer {
 
     public void init() {
 
+    }
+
+    @Override
+    public void setIsDamaged() {
+        this.isDamaged = 12;
+    }
+
+    @Override
+    public int getIsDamaged() {
+        this.isDamaged--;
+        return this.isDamaged;
     }
 }

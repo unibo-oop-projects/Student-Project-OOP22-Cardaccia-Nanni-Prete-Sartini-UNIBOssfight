@@ -4,6 +4,7 @@ import app.core.component.Collider;
 import app.core.component.Renderer;
 import app.core.component.Transform;
 import app.impl.component.ColliderImpl;
+import app.impl.entity.BulletImpl;
 import app.impl.entity.Platform;
 import app.impl.entity.Wall;
 
@@ -41,6 +42,13 @@ public abstract class Enemy extends ActiveEntity {
                 jump();
             }
         });
+
+        getCollider().ifPresent(c -> c.addBehaviour(BulletImpl.class.getName(), e -> {
+            if (!e.getHealth().isDead()) {
+                getHealth().damage(e.getDamage());
+                e.getHealth().destroy();
+            }
+        }));
 
         collider.addBehaviour(Platform.class.getName(), e -> Platform.jump(this, e));
 

@@ -1,63 +1,109 @@
 package app.util;
 
-import app.core.component.Renderer;
-import app.core.component.Transform;
-import app.core.entity.AbstractEntity;
 import app.core.entity.Entity;
 import app.core.level.Level;
-import app.impl.component.TransformImpl;
 import app.impl.entity.Player;
 import app.impl.level.BossLevel;
 import app.impl.level.LevelImpl;
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonObject;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ * This class is used to serialize and deserializer levels.
+ */
 public class DataManager {
-    private String readFile(String path) throws IOException
-    {
-        byte[] encoded = Files.readAllBytes(Paths.get(path));
+    /**
+     * This method get the content of the json file to load.
+     *
+     * @param path
+     * @return the json string of the level.
+     * @throws IOException
+     */
+    private String readFile(final String path) throws IOException {
+        final byte[] encoded = Files.readAllBytes(Paths.get(path));
         return new String(encoded, StandardCharsets.UTF_8);
     }
 
-    public LevelImpl loadLevel(String jsonFile) throws Exception {
+    /**
+     * Loads a level from the given json file.
+     *
+     * @param jsonFile
+     * @return a level without a boss
+     * @throws Exception
+     */
+    public LevelImpl loadLevel(final String jsonFile) throws IOException {
+        String json;
         try {
-            String json = readFile(jsonFile);
-
-            GsonBuilder gsonBuilder = new GsonBuilder();
-
-            JsonDeserializer<Entity> EntityDeserializer = new EntityDeserializer();
-
-            gsonBuilder.registerTypeAdapter(Entity.class, EntityDeserializer);
-            gsonBuilder.registerTypeAdapter(Player.class, EntityDeserializer);
-
-            return gsonBuilder.create().fromJson(json, LevelImpl.class);
-
-        } catch (Exception e) {
-            throw new Exception(e);
+            json = readFile(jsonFile);
+        } catch (IOException e) {
+            AppLogger.getLogger().severe(e.getMessage());
+            throw new IOException(e);
         }
+
+        return createGsonBuilder().create().fromJson(json, LevelImpl.class);
     }
 
-    public void serializeLevel(final Level level) {
-        try {
-            String jsonString = new GsonBuilder()
-                    .setPrettyPrinting()
-                    .create()
-                    .toJson(level);
+    /**
+     * Loads a level from the given json file.
+     *
+     * @param jsonFile
+     * @return a level without a boss
+     * @throws Exception
+     */
 
-            FileWriter file = new FileWriter("output.json");
+    public LevelImpl loadBossLevel(final String jsonFile) throws IOException {
+        String json;
+        try {
+            json = readFile(jsonFile);
+        } catch (IOException e) {
+            AppLogger.getLogger().severe(e.getMessage());
+            throw new IOException(e);
+        }
+
+        return createGsonBuilder().create().fromJson(json, BossLevel.class);
+    }
+
+    /**
+     * creates the GsonBuilder.
+     *
+     * @return the Gsonbuilder used to deserialize levels
+     */
+    private GsonBuilder createGsonBuilder() {
+        final GsonBuilder gsonBuilder = new GsonBuilder();
+
+        final JsonDeserializer<Entity> entityDeserializer = new EntityDeserializer();
+
+        gsonBuilder.registerTypeAdapter(Entity.class, entityDeserializer);
+        gsonBuilder.registerTypeAdapter(Player.class, entityDeserializer);
+
+        return gsonBuilder;
+    }
+
+    /**
+     * Serializes the level and saves it in a json file.
+     *
+     * @param level
+     */
+    public void serializeLevel(final Level level) throws IOException {
+        final String jsonString = new GsonBuilder()
+                .setPrettyPrinting()
+                .create()
+                .toJson(level);
+
+        final FileWriter file;
+        try {
+            file = new FileWriter("output.json");
             file.write(jsonString);
             file.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             AppLogger.getLogger().severe(e.getMessage());
+            throw new IOException(e);
         }
     }
 }

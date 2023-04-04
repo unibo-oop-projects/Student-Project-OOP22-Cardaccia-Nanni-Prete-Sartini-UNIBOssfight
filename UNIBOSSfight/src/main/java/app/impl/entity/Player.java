@@ -86,6 +86,7 @@ public class Player extends ActiveEntity {
                 EnemyImpl.class.getName(),
                 BossImpl.class.getName(),
                 HarmfulObstacle.class.getName()), e -> {
+            this.getRenderer().setIsDamaged();
             setYSpeed(Player.RECOIL_VELOCITY);
             setXSpeed(
                     Player.RECOIL_VELOCITY
@@ -145,7 +146,7 @@ public class Player extends ActiveEntity {
 
         this.weapon.updatePosition(this.getTransform());
         if (input == Inputs.EMPTY && this.getRenderer() instanceof AnimationSpriteRenderer) {
-            if (this.getxSpeed() != 0) {
+            if (this.getXSpeed() != 0) {
                 ((AnimationSpriteRenderer) this.getRenderer()).setAnimation("walk");
             } else {
                 ((AnimationSpriteRenderer) this.getRenderer()).setAnimation("idle");

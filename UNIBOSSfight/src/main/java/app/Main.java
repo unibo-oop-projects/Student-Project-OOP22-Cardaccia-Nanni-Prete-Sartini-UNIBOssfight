@@ -1,8 +1,7 @@
 package app;
 
-import app.game.Prova;
-import javafx.application.Application;
 import app.ui.MainMenu;
+import javafx.application.Application;
 
 /**
  * Main class of the project.
@@ -16,8 +15,6 @@ public final class Main {
      * @param args ...
      */
     public static void main(final String[] args) {
-        Application.launch(Prova.class, args);
-        //MainMenu.run(args);
-
+        Application.launch(MainMenu.class, args);
     }
 }

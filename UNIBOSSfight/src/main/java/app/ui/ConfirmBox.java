@@ -8,6 +8,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * This utility class creates a new stage to interact
+ * with the user while trying to close the game window.
+ */
 public final class ConfirmBox {
 
     private static final int WIDTH = 300;
@@ -18,6 +22,13 @@ public final class ConfirmBox {
 
     }
 
+    /**
+     * This static method is used to display the new stage.
+     *
+     * @param message the message to be shown
+     * @return true if the "yes" button is clicked,
+     * false if the "no" button is clicked
+     */
     public static boolean display(final String message) {
         final Stage window = new Stage();
 

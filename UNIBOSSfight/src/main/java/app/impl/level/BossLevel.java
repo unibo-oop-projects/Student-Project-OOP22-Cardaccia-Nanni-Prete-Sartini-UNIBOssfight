@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class BossLevel extends LevelImpl {
 
-    private final transient Boss boss;
+    private transient Boss boss;
 
     /**
      * Initialization of a new BossLevel instance.

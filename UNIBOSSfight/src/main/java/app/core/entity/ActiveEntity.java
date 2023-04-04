@@ -80,7 +80,12 @@ public abstract class ActiveEntity extends AbstractEntity {
         this.xSpeed = xSpeed;
     }
 
-    public double getxSpeed() {
+    /**
+     * Returns the max xSpeed of the entity.
+     *
+     * @return the max xSpeed
+     */
+    public double getXSpeed() {
         return xSpeed;
     }
 

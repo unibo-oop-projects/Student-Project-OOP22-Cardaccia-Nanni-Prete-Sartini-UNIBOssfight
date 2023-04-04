@@ -58,6 +58,13 @@ public interface Level {
      */
     Node renderWeapon();
 
+
+    /**
+     * Returns the weapon and the player rendered separately.
+     *
+     * @return a list with the node of the player
+     * and the node of the weapon
+     */
     List<Node> renderUniqueEntities();
 
     /**
