@@ -7,23 +7,15 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-
 import java.lang.reflect.Type;
 
 /**
- * This class implements a Deserializer for the Transform interface.
+ * This utility class implements a Deserializer for the Transform interface.
  */
 public class TransformDeserializer implements JsonDeserializer<Transform> {
 
     /**
-     * Deserializes a json object extracted from an input file.
-     *
-     * @param json    The Json data being deserialized
-     * @param typeOfT The type of the Object to deserialize to
-     * @param context
-     * @return the deserialized Transform
-     * @throws JsonParseException
+     * {@inheritDoc}
      */
     @Override
     public Transform deserialize(

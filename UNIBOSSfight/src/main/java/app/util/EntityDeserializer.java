@@ -4,22 +4,20 @@ import app.core.component.Renderer;
 import app.core.component.Transform;
 import app.core.entity.AbstractEntity;
 import app.core.entity.Entity;
-import com.google.gson.*;
-
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import java.lang.reflect.Type;
 
 /**
- * This class implements a Deserializer for the Entity interface.
+ * This utility class implements a Deserializer for the Entity interface.
  */
 public class EntityDeserializer implements JsonDeserializer<Entity> {
 
     /**
-     * Deserializes a json object extracted from an input file.
-     *
-     * @param json    The Json data being deserialized
-     * @param typeOfT The type of the Object to deserialize to
-     * @param context
-     * @return the deserialized Entity
+     * {@inheritDoc}
      */
     @Override
     public Entity deserialize(

@@ -2,22 +2,20 @@ package app.util;
 
 import app.core.component.Renderer;
 import app.impl.component.RendererImpl;
-import com.google.gson.*;
-
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import java.lang.reflect.Type;
 
 /**
- * This class implements a Deserializer for the Renderer interface.
+ * This utility class implements a Deserializer for the Renderer interface.
  */
 public class RendererDeserializer implements JsonDeserializer<Renderer> {
 
     /**
-     * Deserializes a json object extracted from an input file.
-     *
-     * @param json    The Json data being deserialized
-     * @param typeOfT The type of the Object to deserialize to
-     * @param context
-     * @return the deserialized Renderer
+     * {@inheritDoc}
      */
     @Override
     public Renderer deserialize(

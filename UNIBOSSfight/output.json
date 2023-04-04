@@ -186,7 +186,8 @@
           "green": 0.16470589,
           "blue": 0.16470589,
           "opacity": 1.0
-        }
+        },
+        "className": "app.impl.component.SpriteRenderer"
       }
     },
     {
@@ -211,7 +212,8 @@
           "green": 0.16470589,
           "blue": 0.16470589,
           "opacity": 1.0
-        }
+        },
+        "className": "app.impl.component.SpriteRenderer"
       }
     },
     {
@@ -236,7 +238,8 @@
           "green": 0.16470589,
           "blue": 0.16470589,
           "opacity": 1.0
-        }
+        },
+        "className": "app.impl.component.SpriteRenderer"
       }
     },
     {
@@ -261,7 +264,8 @@
           "green": 0.16470589,
           "blue": 0.16470589,
           "opacity": 1.0
-        }
+        },
+        "className": "app.impl.component.SpriteRenderer"
       }
     },
     {
@@ -286,7 +290,8 @@
           "green": 0.16470589,
           "blue": 0.16470589,
           "opacity": 1.0
-        }
+        },
+        "className": "app.impl.component.SpriteRenderer"
       }
     },
     {
