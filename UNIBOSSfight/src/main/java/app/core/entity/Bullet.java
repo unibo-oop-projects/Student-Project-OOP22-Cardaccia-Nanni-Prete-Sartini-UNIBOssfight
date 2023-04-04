@@ -19,6 +19,7 @@ public abstract class Bullet extends AbstractEntity {
 
     private final double xShift;
     private final double yShift;
+    private final boolean isPlayerBullet;
 
     /**
      * Creates a new instance of the class Bullet.
@@ -33,10 +34,11 @@ public abstract class Bullet extends AbstractEntity {
      */
     public Bullet(final Transform startingPos, final int height, final int width,
                   final Renderer renderer, final int damage, final Point2D target,
-                  final int speed) {
+                  final int speed, final boolean isPlayerBullet) {
 
         super(startingPos, height, width, renderer);
         this.setDamage(damage);
+        this.isPlayerBullet = isPlayerBullet;
 
         final double angle = Angle.findAngle(this.getPosition(), target);
         this.xShift = speed * Math.cos(angle);

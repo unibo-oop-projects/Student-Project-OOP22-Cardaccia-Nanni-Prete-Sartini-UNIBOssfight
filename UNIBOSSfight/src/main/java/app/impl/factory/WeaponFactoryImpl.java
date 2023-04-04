@@ -21,13 +21,13 @@ public class WeaponFactoryImpl implements WeaponFactory {
      * {@inheritDoc}
      */
     @Override
-    public Weapon getPlayerWeapon(final Transform playerPos) {
+    public Weapon getPlayerWeapon(final Transform playerPos, final boolean isPlayerWeapon) {
 
         return new WeaponImpl(playerPos, new SpriteRenderer(50, 170, Color.RED, "gun.png"), 55) {
 
             @Override
             public Bullet fire(final Point2D target) {
-                return bulletFactory.getPlayerBullet(this.getShootingPosition(), target);
+                return bulletFactory.getPlayerBullet(this.getShootingPosition(), target, isPlayerWeapon);
             }
 
         };
@@ -37,12 +37,12 @@ public class WeaponFactoryImpl implements WeaponFactory {
      * {@inheritDoc}
      */
     @Override
-    public Weapon getBigBulletGun(final Transform userPos) {
+    public Weapon getBigBulletGun(final Transform userPos, final boolean isPlayerWeapon) {
         return new WeaponImpl(userPos, new SpriteRenderer(300, 700, Color.RED, "gun.png"), 125) {
 
             @Override
             public Bullet fire(final Point2D target) {
-                return bulletFactory.getBigBullet(this.getShootingPosition(), target);
+                return bulletFactory.getBigBullet(this.getShootingPosition(), target, isPlayerWeapon);
             }
 
         };

@@ -27,8 +27,7 @@ public class Player extends ActiveEntity {
     private static final int RECOIL_VELOCITY = 20;
 
     private transient WeaponFactory weaponFactory = new WeaponFactoryImpl();
-    private transient Weapon weapon = weaponFactory.getPlayerWeapon(this.getTransform());
-    private transient double rotation;
+    private transient Weapon weapon = weaponFactory.getPlayerWeapon(this.getTransform(), true);
     private transient int coinsCollected;
 
     /**
@@ -59,7 +58,7 @@ public class Player extends ActiveEntity {
     public void init() {
         super.init();
         this.weaponFactory = new WeaponFactoryImpl();
-        this.weapon = this.weaponFactory.getPlayerWeapon(this.getTransform());
+        this.weapon = this.weaponFactory.getPlayerWeapon(this.getTransform(), true);
 
         setBehaviour(new BehaviourBuilderImpl()
                 .addJumpOnTop()

@@ -59,7 +59,7 @@ public class WeaponImpl implements Weapon {
      */
     @Override
     public Bullet fire(final Point2D target) {
-        return this.bulletFactory.getPlayerBullet(this.getWeaponPosition(), target);
+        return this.bulletFactory.getPlayerBullet(this.getWeaponPosition(), target, false);
     }
 
     /**
