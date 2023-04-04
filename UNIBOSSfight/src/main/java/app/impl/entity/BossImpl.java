@@ -6,6 +6,7 @@ import app.core.component.WeaponFactory;
 import app.core.entity.Boss;
 import app.core.entity.Bullet;
 import app.impl.builder.BehaviourBuilderImpl;
+import app.impl.component.WeaponImpl;
 import app.impl.factory.WeaponFactoryImpl;
 import app.util.AppLogger;
 import javafx.geometry.Point2D;
@@ -19,7 +20,7 @@ import java.util.List;
 public class BossImpl extends Boss {
 
     private static final int DEFAULT_RATE_OF_FIRE = 30;
-    private transient Weapon weapon;
+    private transient WeaponImpl weapon;
     private final int rateOfFire;
     private int rateOfFireCounter;
 
@@ -73,7 +74,7 @@ public class BossImpl extends Boss {
         super.init();
 
         WeaponFactory weaponFactory = new WeaponFactoryImpl();
-        this.weapon = weaponFactory.getBigBulletGun(this.getTransform(), false);
+        this.weapon = weaponFactory.getGhiniGun(this.getTransform(), false);
 
         setBehaviour(new BehaviourBuilderImpl()
                 .addJumpOnTop()
@@ -85,6 +86,8 @@ public class BossImpl extends Boss {
 
         getCollider().ifPresent(c -> c.addBehaviour(BulletImpl.class.getName(),
                 e -> getHealth().damage(e.getDamage())));
+
+        System.out.println(this.getType());
     }
 
     /**
@@ -115,7 +118,7 @@ public class BossImpl extends Boss {
      * {@inheritDoc}
      */
     @Override
-    public void setWeapon(final Weapon weapon) {
+    public void setWeapon(final WeaponImpl weapon) {
         this.weapon = weapon;
     }
 
@@ -126,11 +129,14 @@ public class BossImpl extends Boss {
     public Node renderWeapon(Point2D playerPosition) {
         // TODO togliere exception generica e print
         try {
-            return this.weapon.render(playerPosition, this.getDirection(), 0);
+            //System.out.println(this.weapon.updateRotation(playerPosition));
+            //this.weapon.setXDirection(this.getDirection());
+            return this.weapon.render(playerPosition, 0, 0);
         } catch (Exception e) {
             AppLogger.getLogger().warning("ERROR cannot load resource " + e);
         }
 
         return null;
     }
+
 }

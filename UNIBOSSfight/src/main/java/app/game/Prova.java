@@ -51,7 +51,7 @@ public class Prova extends Application {
     private final BooleanProperty gameOver = new SimpleBooleanProperty(false);
 
     public Prova() throws Exception {
-        currentLevel = new DataManager().loadLevel("output.json");
+        currentLevel = new DataManager().loadLevel("bossLevel.json");
     }
 
     @Override

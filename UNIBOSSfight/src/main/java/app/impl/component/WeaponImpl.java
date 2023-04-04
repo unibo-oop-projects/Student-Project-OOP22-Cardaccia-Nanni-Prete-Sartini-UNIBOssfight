@@ -46,8 +46,11 @@ public class WeaponImpl implements Weapon {
      */
     @Override
     public Node render(final Point2D playerPosition, final int direction, final int rotation) {
+        //System.out.println("render " + this.getRenderPosition().getPosition());
+        //System.out.println("user " + this.getUserPosition().getPosition());
+        //System.out.println("weapon " + this.getWeaponPosition().getPosition());
         return this.renderer.render(new Point2D(
-                this.getRenderPosition().getPosition()
+                this.getWeaponPosition().getPosition()
                         .subtract(playerPosition)
                         .add(Window.getWidth() / 2, 0)
                         .getX(),
@@ -59,6 +62,7 @@ public class WeaponImpl implements Weapon {
      */
     @Override
     public Bullet fire(final Point2D target) {
+        System.out.println("not so big bullet");
         return this.bulletFactory.getPlayerBullet(this.getWeaponPosition(), target, false);
     }
 
@@ -123,14 +127,14 @@ public class WeaponImpl implements Weapon {
     }
 
     @Override
-    public double setRotation(Point2D target){
+    public double updateRotation(Point2D target){
         this.rotation = Math.toDegrees(Angle.findAngle(this.getShootingPosition().getPosition(), target));
         if (this.rotation <= Angle.RIGHT_ANGLE && this.rotation > -Angle.RIGHT_ANGLE) {
             setYDirection(1);
         } else {
             setYDirection(-1);
         }
-        System.out.println(this.rotation);
+        //System.out.println(this.rotation);
         return this.rotation;
     }
 

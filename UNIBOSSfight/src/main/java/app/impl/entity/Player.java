@@ -108,7 +108,7 @@ public class Player extends ActiveEntity {
      */
     public void rotateWeapon(final Point2D mousePosition) {
 
-        final double angle = this.weapon.setRotation(mousePosition);
+        final double angle = this.weapon.updateRotation(mousePosition);
 
         if (angle <= Angle.RIGHT_ANGLE && angle > -Angle.RIGHT_ANGLE) {
             this.setDirection(1);

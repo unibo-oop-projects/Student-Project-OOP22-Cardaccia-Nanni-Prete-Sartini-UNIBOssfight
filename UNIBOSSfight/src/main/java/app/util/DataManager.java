@@ -46,7 +46,7 @@ public class DataManager {
             throw new IOException(e);
         }
 
-        return createGsonBuilder().create().fromJson(json, LevelImpl.class);
+        return createGsonBuilder().create().fromJson(json, BossLevel.class);//TODO CHANGE BACK TO LEVEL
     }
 
     /**

@@ -3,6 +3,7 @@ package app.core.entity;
 import app.core.component.Transform;
 import app.core.component.Weapon;
 import app.impl.component.SpriteRenderer;
+import app.impl.component.WeaponImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -55,7 +56,7 @@ public abstract class Boss extends Enemy {
      *
      * @param weapon the new Weapon
      */
-    public abstract void setWeapon(Weapon weapon);
+    public abstract void setWeapon(WeaponImpl weapon);
 
     /**
      * The Node of the Bosses Weapon to be rendered.
@@ -63,5 +64,4 @@ public abstract class Boss extends Enemy {
      * @return the Weapon's Node
      */
     public abstract Node renderWeapon(Point2D playerPosition);
-
 }

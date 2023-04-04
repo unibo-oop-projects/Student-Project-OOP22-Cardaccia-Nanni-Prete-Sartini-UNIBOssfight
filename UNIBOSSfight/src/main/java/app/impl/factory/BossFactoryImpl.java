@@ -7,7 +7,7 @@ import app.core.entity.Boss;
 import app.impl.entity.BossImpl;
 
 /**
- * Implementation of the BossFactory Interface
+ * Implementation of the BossFactory Interface.
  */
 public class BossFactoryImpl implements BossFactory {
 
@@ -20,7 +20,7 @@ public class BossFactoryImpl implements BossFactory {
     public Boss firstBoss(final Transform startingPos) {
 
         final BossImpl boss = new BossImpl(startingPos, 500, 500, "ghini/ghini1.png");
-        boss.setWeapon(weaponFactory.getBigBulletGun(startingPos, false));
+        boss.setWeapon(weaponFactory.getGhiniGun(startingPos, false));
 
         return boss;
     }

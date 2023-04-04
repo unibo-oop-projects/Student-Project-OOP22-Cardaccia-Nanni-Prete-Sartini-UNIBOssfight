@@ -15,7 +15,7 @@ import app.util.Window;
  * of the game, which can cause damage, has a
  * speed and shifts along a vector.
  */
-public abstract class Bullet extends AbstractEntity {
+public abstract class Bullet extends ActiveEntity {
 
     private final double xShift;
     private final double yShift;

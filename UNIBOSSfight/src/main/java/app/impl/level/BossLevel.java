@@ -8,7 +8,9 @@ import app.impl.factory.BossFactoryImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 
 /**
@@ -24,9 +26,9 @@ public class BossLevel extends LevelImpl {
     public BossLevel() {
         super();
 
-        BossFactory bossFactory = new BossFactoryImpl();
+        //BossFactory bossFactory = new BossFactoryImpl();
 
-        this.boss = bossFactory.firstBoss(new TransformImpl(new Point2D(500, 300), 0));
+        //this.boss = bossFactory.firstBoss(new TransformImpl(new Point2D(500, 300), 0));
     }
 
     /**
@@ -59,12 +61,17 @@ public class BossLevel extends LevelImpl {
     /**
      * {@inheritDoc}
      */
-//    @Override
-//    public List<Node> renderEntities() {
-//        List<Node> nodes = super.renderEntities();
-//        nodes.add(this.boss.render(this.boss.getPosition()));
-//        return nodes;
-//    }
+    @Override
+    public List<Node> renderEntities() {
+        /*List<Node> nodes = new ArrayList<>(super.renderEntities());
+        nodes.addAll(this.boss.getBulletsNodes());
+        return nodes;*/
+
+        return Stream.of(this.getEntities().stream()
+                        .filter(e -> e.isDisplayed(this.getPlayer().getPosition()))
+                        .map(e -> e.render(this.getPlayer().getPosition())),
+                this.boss.getBulletsNodes().stream()).reduce(Stream::concat).orElseGet(Stream::empty).toList();
+    }
 
     /**
      * {@inheritDoc}
@@ -86,6 +93,8 @@ public class BossLevel extends LevelImpl {
 
         this.boss.update(Entity.Inputs.EMPTY);
 
+        this.boss.shoot(this.getPlayerPosition());
+
         //TODO beahaviour
         var behaviour = boss.getBehaviour().getFollowingBehaviour();
         behaviour.ifPresent(b -> boss.update(b.apply(getPlayer(), boss)));
@@ -100,7 +109,7 @@ public class BossLevel extends LevelImpl {
         super.init();
         BossFactory bossFactory = new BossFactoryImpl();
 
-        this.boss = bossFactory.firstBoss(new TransformImpl(new Point2D(500, 300), 0));
+        this.boss = bossFactory.firstBoss(new TransformImpl(new Point2D(1600, 300), 0));
         this.boss.init();
     }
 
