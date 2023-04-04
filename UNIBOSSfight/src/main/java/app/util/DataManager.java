@@ -7,7 +7,6 @@ import app.impl.level.BossLevel;
 import app.impl.level.LevelImpl;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
