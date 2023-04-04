@@ -7,7 +7,6 @@ import app.impl.component.TransformImpl;
 import app.impl.entity.Player;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -109,7 +108,7 @@ public class LevelImpl implements Level {
     }
 
     /**
-     * @return a List of rendered player and weapon
+     * {@inheritDoc}
      */
     @Override
     public List<Node> renderUniqueEntities() {
@@ -200,7 +199,7 @@ public class LevelImpl implements Level {
     }
 
     /**
-     * @return true if the player's health is minor or equal than 0
+     * {@inheritDoc}
      */
     @Override
     public boolean isOver() {
