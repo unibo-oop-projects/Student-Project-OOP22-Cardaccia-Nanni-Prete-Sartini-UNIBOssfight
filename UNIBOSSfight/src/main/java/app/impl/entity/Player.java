@@ -11,6 +11,7 @@ import app.impl.component.AnimationSpriteRenderer;
 import app.impl.component.ColliderImpl;
 import app.impl.component.LoopSpriteRenderer;
 import app.impl.factory.WeaponFactoryImpl;
+import app.util.Angle;
 import app.util.Window;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -24,7 +25,6 @@ import java.util.List;
 public class Player extends ActiveEntity {
 
     private static final int RECOIL_VELOCITY = 20;
-    private static final int RIGHT_ANGLE = 90;
 
     private transient WeaponFactory weaponFactory = new WeaponFactoryImpl();
     private transient Weapon weapon = weaponFactory.getPlayerWeapon(this.getTransform());
@@ -49,7 +49,7 @@ public class Player extends ActiveEntity {
      * @return the rendered image of the weapon.
      */
     public Node renderWeapon() {
-        return this.weapon.render(this.getPosition(), this.getDirection(), (int) this.rotation);
+        return this.weapon.render(this.getPosition(), this.getDirection(), 0);
     }
 
     /**
@@ -108,21 +108,13 @@ public class Player extends ActiveEntity {
      */
     public void rotateWeapon(final Point2D mousePosition) {
 
-        //TODO PORTARE ROTATE IN WEAPON
-        //System.out.println(mousePosition);
-        final double dx = mousePosition.getX() - Window.getWidth() / 2;
-        final double dy = Window.getHeight() - mousePosition.getY() - weapon.getWeaponPosition().getPosition().getY();
-        final double angle = -Math.toDegrees(Math.atan2(dy, dx));
+        final double angle = this.weapon.setRotation(mousePosition);
 
-        if (angle <= Player.RIGHT_ANGLE && angle > -Player.RIGHT_ANGLE) {
+        if (angle <= Angle.RIGHT_ANGLE && angle > -Angle.RIGHT_ANGLE) {
             this.setDirection(1);
-            this.weapon.setYDirection(1);
         } else {
             this.setDirection(-1);
-            this.weapon.setYDirection(-1);
         }
-
-        this.rotation = angle;
     }
 
     /**

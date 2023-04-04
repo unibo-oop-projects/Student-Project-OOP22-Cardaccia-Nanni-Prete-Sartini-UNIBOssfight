@@ -58,7 +58,6 @@ public interface Level {
      */
     Node renderWeapon();
 
-
     List<Node> renderUniqueEntities();
 
     /**

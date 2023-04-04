@@ -6,6 +6,7 @@ import app.core.component.Transform;
 import app.impl.component.ColliderImpl;
 import app.impl.entity.Platform;
 import app.impl.entity.Wall;
+import app.util.Angle;
 import javafx.geometry.Point2D;
 import app.util.Window;
 
@@ -37,11 +38,7 @@ public abstract class Bullet extends AbstractEntity {
         super(startingPos, height, width, renderer);
         this.setDamage(damage);
 
-        // Finding vector angle
-        final double dx = (target.getX() + getPosition().getX() - Window.getWidth() / 2)
-                - getPosition().getX();
-        final double dy = Window.getHeight() - target.getY() - getPosition().getY();
-        final double angle = -Math.atan2(dy, dx); // Adjusted to new reference system
+        final double angle = Angle.findAngle(this.getPosition(), target);
         this.xShift = speed * Math.cos(angle);
         this.yShift = -speed * Math.sin(angle);
 
@@ -74,5 +71,9 @@ public abstract class Bullet extends AbstractEntity {
         });
 
         setCollider(collider);
+    }
+
+    public boolean isPlayerBullet() {
+        return this.isPlayerBullet;
     }
 }
