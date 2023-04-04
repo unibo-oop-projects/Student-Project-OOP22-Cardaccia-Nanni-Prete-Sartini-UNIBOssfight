@@ -1,13 +1,13 @@
 package app.impl.level;
 
 import app.core.entity.ActiveEntity;
-import app.core.entity.Boss;
-import app.impl.component.TransformImpl;
 import app.core.entity.Entity;
 import app.core.level.Level;
+import app.impl.component.TransformImpl;
 import app.impl.entity.Player;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -27,7 +27,9 @@ public class LevelImpl implements Level {
     public LevelImpl() {
 
         this.entities = new ArrayList<>();
-        this.player = new Player(new TransformImpl(new Point2D(0, 300), 0), 250, 250, "guido");
+        this.player = new Player(
+                new TransformImpl(new Point2D(0, 0), 0), 250, 250, "guido"
+        );
 
 //        this.boss = new BossFactoryImpl().firstBoss(new TransformImpl(new Point2D(0, 400), 0));
 //        this.addEntity(this.boss);
@@ -106,8 +108,11 @@ public class LevelImpl implements Level {
         return this.player.renderWeapon();
     }
 
+    /**
+     * @return a List of rendered player and weapon
+     */
     @Override
-    public List<Node> renderUniqueEntities(){
+    public List<Node> renderUniqueEntities() {
         List<Node> nodes = new ArrayList<>();
         nodes.add(renderPlayer());
         nodes.add(renderWeapon());
@@ -194,6 +199,9 @@ public class LevelImpl implements Level {
         this.entities.forEach(Entity::init);
     }
 
+    /**
+     * @return true if the player's health is minor or equal than 0
+     */
     @Override
     public boolean isOver() {
         return this.player.getHealth().isDead();

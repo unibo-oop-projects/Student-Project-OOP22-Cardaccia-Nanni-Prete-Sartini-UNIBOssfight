@@ -12,10 +12,12 @@ import javafx.scene.shape.Rectangle;
  */
 public class RendererImpl implements Renderer {
 
+    private static final int IS_DAMAGED_DURATION = 12;
+
     private final int height;
     private final int width;
     private final Color color;
-    private final String className;
+    private final String className; //NOPMD this field is necessary for serialization
     private int isDamaged;
 
     /**
@@ -65,15 +67,25 @@ public class RendererImpl implements Renderer {
         return rectangle;
     }
 
+    /**
+     * Initializes the Renderer.
+     */
+    @Override
     public void init() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setIsDamaged() {
-        this.isDamaged = 12;
+        this.isDamaged = RendererImpl.IS_DAMAGED_DURATION;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getIsDamaged() {
         this.isDamaged--;

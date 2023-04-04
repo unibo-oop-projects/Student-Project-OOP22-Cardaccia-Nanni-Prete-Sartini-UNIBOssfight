@@ -31,6 +31,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Prova extends Application {
 
@@ -50,7 +51,7 @@ public class Prova extends Application {
     private final AnchorPane anchorPane = new AnchorPane();
     private final BooleanProperty gameOver = new SimpleBooleanProperty(false);
 
-    public Prova() throws Exception {
+    public Prova() throws IOException {
         currentLevel = new DataManager().loadLevel("output.json");
     }
 
