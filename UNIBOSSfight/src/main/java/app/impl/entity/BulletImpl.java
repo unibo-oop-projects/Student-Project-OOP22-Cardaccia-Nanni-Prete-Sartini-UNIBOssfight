@@ -23,8 +23,8 @@ public class BulletImpl extends Bullet {
      */
     public BulletImpl(final Transform startingPos, final int height, final int width,
                       final Renderer renderer, final int damage, final Point2D target,
-                      final int speed) {
-        super(startingPos, height, width, renderer, damage, target, speed);
+                      final int speed, final boolean isPlayerBullet) {
+        super(startingPos, height, width, renderer, damage, target, speed, isPlayerBullet);
     }
 
 }

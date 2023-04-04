@@ -1,0 +1,26 @@
+package app.util;
+
+import javafx.geometry.Point2D;
+
+/**
+ * Util class to manage angles needed in the application
+ */
+public class Angle {
+
+    public static final int RIGHT_ANGLE = 90;
+
+    /**
+     * This method finds the angle in gradients between two given points in the game's reference system.
+     *
+     * @param point1 starting point of the vector
+     * @param point2 finish point of the vector
+     * @return
+     */
+    public static double findAngle(final Point2D point1, final Point2D point2){
+        final double dx = (point2.getX() + point1.getX() - Window.getWidth() / 2)
+                - point1.getX();
+        final double dy = Window.getHeight() - point2.getY() - point1.getY();
+        return  -Math.atan2(dy, dx); // Adjusted to new reference system
+    }
+
+}

@@ -6,6 +6,7 @@ import app.core.component.Transform;
 import app.core.component.Weapon;
 import app.core.entity.Bullet;
 import app.impl.factory.BulletFactoryImpl;
+import app.util.Angle;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import app.util.Window;
@@ -21,6 +22,8 @@ public class WeaponImpl implements Weapon {
     private final Renderer renderer;
     private final BulletFactory bulletFactory = new BulletFactoryImpl();
     private int yDirection = 1;
+    private int xDirection = 1;
+    private double rotation;
 
     /**
      * Creates a new instance of the class Weapon.
@@ -48,7 +51,7 @@ public class WeaponImpl implements Weapon {
                         .subtract(playerPosition)
                         .add(Window.getWidth() / 2, 0)
                         .getX(),
-                this.getRenderPosition().getPosition().getY()), 1, this.yDirection, rotation);
+                this.getRenderPosition().getPosition().getY()), this.xDirection, this.yDirection, this.rotation);
     }
 
     /**
@@ -56,7 +59,7 @@ public class WeaponImpl implements Weapon {
      */
     @Override
     public Bullet fire(final Point2D target) {
-        return this.bulletFactory.getPlayerBullet(this.getWeaponPosition(), target);
+        return this.bulletFactory.getPlayerBullet(this.getWeaponPosition(), target, false);
     }
 
     /**
@@ -65,6 +68,11 @@ public class WeaponImpl implements Weapon {
     @Override
     public void setYDirection(final int yDirection) {
         this.yDirection = yDirection;
+    }
+
+    @Override
+    public void setXDirection(int xDirection) {
+        this.xDirection = xDirection;
     }
 
     /**
@@ -112,6 +120,18 @@ public class WeaponImpl implements Weapon {
         final Transform posCopy = this.userPos.copyOf();
         posCopy.move(0, positionOffset);
         return posCopy;
+    }
+
+    @Override
+    public double setRotation(Point2D target){
+        this.rotation = Math.toDegrees(Angle.findAngle(this.getShootingPosition().getPosition(), target));
+        if (this.rotation <= Angle.RIGHT_ANGLE && this.rotation > -Angle.RIGHT_ANGLE) {
+            setYDirection(1);
+        } else {
+            setYDirection(-1);
+        }
+        System.out.println(this.rotation);
+        return this.rotation;
     }
 
 }

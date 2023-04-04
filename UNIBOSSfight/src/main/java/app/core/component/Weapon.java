@@ -36,6 +36,8 @@ public interface Weapon {
      */
     void setYDirection(int direction);
 
+    void setXDirection(int xDirection);
+
     /**
      * Updates the position of the weapon with the given one.
      *
@@ -70,4 +72,6 @@ public interface Weapon {
      * @return the position from which the bullet is shot
      */
     Transform getShootingPosition();
+
+    double setRotation(Point2D target);
 }

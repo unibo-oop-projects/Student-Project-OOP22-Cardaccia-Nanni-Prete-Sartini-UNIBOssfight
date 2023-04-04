@@ -17,20 +17,20 @@ public class BulletFactoryImpl implements BulletFactory {
      * {@inheritDoc}
      */
     @Override
-    public Bullet getPlayerBullet(final Transform shootingPosition, final Point2D target) {
+    public Bullet getPlayerBullet(final Transform shootingPosition, final Point2D target, final boolean isPlayerBullet) {
 
         return new BulletImpl(shootingPosition,  20, 20,
                 new SpriteRenderer(25, 40, Color.BLACK, "magicBullet.png"),
-                10, target, 20);
+                10, target, 20, isPlayerBullet);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Bullet getBigBullet(final Transform shootingPosition, final Point2D target) {
+    public Bullet getBigBullet(final Transform shootingPosition, final Point2D target, final  boolean isPlayerBullet) {
         return new BulletImpl(shootingPosition, 40, 40,
-                new SpriteRenderer(40, 40, Color.BLACK, "bullet.png"), 200, target, 5);
+                new SpriteRenderer(40, 40, Color.BLACK, "bullet.png"), 200, target, 5, isPlayerBullet);
     }
 
 }

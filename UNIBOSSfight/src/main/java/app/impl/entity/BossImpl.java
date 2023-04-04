@@ -2,9 +2,11 @@ package app.impl.entity;
 
 import app.core.component.Transform;
 import app.core.component.Weapon;
+import app.core.component.WeaponFactory;
 import app.core.entity.Boss;
 import app.core.entity.Bullet;
 import app.impl.builder.BehaviourBuilderImpl;
+import app.impl.factory.WeaponFactoryImpl;
 import app.util.AppLogger;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -52,6 +54,7 @@ public class BossImpl extends Boss {
     public void update(final Inputs input) {
         super.update(input);
         this.weapon.updatePosition(getTransform());
+        this.weapon.setXDirection(this.getDirection());
     }
 
     /**
@@ -68,6 +71,9 @@ public class BossImpl extends Boss {
     @Override
     public void init() {
         super.init();
+
+        WeaponFactory weaponFactory = new WeaponFactoryImpl();
+        this.weapon = weaponFactory.getBigBulletGun(this.getTransform(), false);
 
         setBehaviour(new BehaviourBuilderImpl()
                 .addJumpOnTop()
@@ -117,10 +123,10 @@ public class BossImpl extends Boss {
      * {@inheritDoc}
      */
     @Override
-    public Node renderWeapon() {
+    public Node renderWeapon(Point2D playerPosition) {
         // TODO togliere exception generica e print
         try {
-            return this.weapon.render(this.getPosition(), this.getDirection(), 0);
+            return this.weapon.render(playerPosition, this.getDirection(), 0);
         } catch (Exception e) {
             AppLogger.getLogger().warning("ERROR cannot load resource " + e);
         }
