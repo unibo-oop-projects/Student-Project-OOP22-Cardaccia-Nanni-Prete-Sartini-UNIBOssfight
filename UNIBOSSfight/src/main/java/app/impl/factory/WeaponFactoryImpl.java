@@ -46,7 +46,6 @@ public class WeaponFactoryImpl implements WeaponFactory {
 
             @Override
             public Bullet fire(final Point2D target) {
-                System.out.println("sono infuocato");
                 return bulletFactory.getBigBullet(new TransformImpl(new Point2D(target.getX(), Window.getHeight()), 0),
                         target, false);
             }
@@ -60,7 +59,6 @@ public class WeaponFactoryImpl implements WeaponFactory {
 
             @Override
             public Bullet fire(Point2D target) {
-                System.out.println("big bullet");
                 return bulletFactory.getBigBullet(new TransformImpl(new Point2D(target.getX(), Window.getHeight()), 0),
                         target, false);
             }

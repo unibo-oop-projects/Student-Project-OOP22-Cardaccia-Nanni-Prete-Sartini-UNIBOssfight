@@ -63,14 +63,9 @@ public class BossLevel extends LevelImpl {
      */
     @Override
     public List<Node> renderEntities() {
-        /*List<Node> nodes = new ArrayList<>(super.renderEntities());
-        nodes.addAll(this.boss.getBulletsNodes());
-        return nodes;*/
-
-        return Stream.of(this.getEntities().stream()
-                        .filter(e -> e.isDisplayed(this.getPlayer().getPosition()))
-                        .map(e -> e.render(this.getPlayer().getPosition())),
-                this.boss.getBulletsNodes().stream()).reduce(Stream::concat).orElseGet(Stream::empty).toList();
+        List<Node> nodes = new ArrayList<>(super.renderEntities());
+        nodes.addAll(this.boss.getBulletsNodes(this.getPlayerPosition()));
+        return nodes;
     }
 
     /**

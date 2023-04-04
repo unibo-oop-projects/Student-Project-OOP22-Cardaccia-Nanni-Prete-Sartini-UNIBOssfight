@@ -203,7 +203,7 @@ public abstract class ActiveEntity extends AbstractEntity {
     }
 
     private void removeBullets() {
-        this.bullets.removeIf(e -> !e.isDisplayed(this.getPosition())
+        this.bullets.removeIf(e -> !e.isUpdated(this.getPosition())
                 || e.getHealth().isDead());
     }
 }

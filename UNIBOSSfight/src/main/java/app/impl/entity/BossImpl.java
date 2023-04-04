@@ -110,8 +110,8 @@ public class BossImpl extends Boss {
      * {@inheritDoc}
      */
     @Override
-    public List<Node> getBulletsNodes() {
-        return getBullets().stream().map(e -> e.render(getPosition())).toList();
+    public List<Node> getBulletsNodes(Point2D playerPosition) {
+        return getBullets().stream().map(e -> e.render(playerPosition)).toList();
     }
 
     /**

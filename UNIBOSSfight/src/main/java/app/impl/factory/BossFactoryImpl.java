@@ -20,7 +20,7 @@ public class BossFactoryImpl implements BossFactory {
     public Boss firstBoss(final Transform startingPos) {
 
         final BossImpl boss = new BossImpl(startingPos, 500, 500, "ghini/ghini1.png");
-        boss.setWeapon(weaponFactory.getGhiniGun(startingPos, false));
+        boss.setWeapon(weaponFactory.getBigBulletGun(startingPos, false));
 
         return boss;
     }

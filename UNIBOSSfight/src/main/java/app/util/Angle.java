@@ -26,9 +26,8 @@ public class Angle {
      * @return the angle in gradients
      */
     public static double findAngle(final Point2D point1, final Point2D point2) {
-        final double dx = (point2.getX() + point1.getX() - Window.getWidth() / 2)
-                - point1.getX();
-        final double dy = Window.getHeight() - point2.getY() - point1.getY();
+        final double dx = point2.getX() - point1.getX();
+        final double dy = point2.getY() - point1.getY();
         return  -Math.atan2(dy, dx); // Adjusted to new reference system
     }
 

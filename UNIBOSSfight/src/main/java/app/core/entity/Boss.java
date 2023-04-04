@@ -49,7 +49,7 @@ public abstract class Boss extends Enemy {
      *
      * @return the list of the Bullets Nodes
      */
-    public abstract List<Node> getBulletsNodes();
+    public abstract List<Node> getBulletsNodes(Point2D playerPosition);
 
     /**
      * Method to set the Bosses Weapon.
