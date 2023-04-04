@@ -178,6 +178,7 @@
         "rotation": 0.0
       },
       "renderer": {
+        "className": "app.impl.component.SpriteRenderer",
         "filename": "wall.png",
         "height": 50,
         "width": 50,
@@ -203,6 +204,7 @@
         "rotation": 0.0
       },
       "renderer": {
+        "className": "app.impl.component.SpriteRenderer",
         "filename": "wall.png",
         "height": 50,
         "width": 50,
@@ -228,6 +230,7 @@
         "rotation": 0.0
       },
       "renderer": {
+        "className": "app.impl.component.SpriteRenderer",
         "filename": "wall.png",
         "height": 50,
         "width": 50,
@@ -253,6 +256,7 @@
         "rotation": 0.0
       },
       "renderer": {
+        "className": "app.impl.component.SpriteRenderer",
         "filename": "wall.png",
         "height": 50,
         "width": 50,
@@ -278,6 +282,7 @@
         "rotation": 0.0
       },
       "renderer": {
+        "className": "app.impl.component.SpriteRenderer",
         "filename": "wall.png",
         "height": 50,
         "width": 50,
