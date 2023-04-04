@@ -20,7 +20,6 @@ public abstract class ActiveEntity extends AbstractEntity {
     private transient double ySpeed;
     private double maxXSpeed;
     private double maxYSpeed;
-    private transient List<Bullet> bullets = new ArrayList<>();
 
     /**
      * Creates a new instance of the abstract class AbstractEntity.
@@ -117,15 +116,6 @@ public abstract class ActiveEntity extends AbstractEntity {
     }
 
     /**
-     * This method returns the list of bullets shot by the entity.
-     *
-     * @return the list of bullet
-     */
-    public List<Bullet> getBullets() {
-        return new ArrayList<>(this.bullets);
-    }
-
-    /**
      * Takes as input an element of Inputs enum and,
      * from that, the class will do the update.
      *
@@ -148,23 +138,12 @@ public abstract class ActiveEntity extends AbstractEntity {
                 this.xSpeed = Acceleration.accelerate(this.xSpeed, 0, 0.5);
                 this.ySpeed = this.isJumping()
                         ? Acceleration.accelerate(this.ySpeed, -maxYSpeed, 1) : 0;
-                this.bullets.forEach(Bullet::update);
-                removeBullets();
             }
             default -> throw new IllegalStateException();
         }
 
         getTransform().resetGroundLevel();
         getHitbox().update(this.getPosition());
-    }
-
-    /**
-     * Adds a new bullet to the shot ones.
-     *
-     * @param bullet the shot bullet
-     */
-    public void addBullet(final Bullet bullet) {
-        this.bullets.add(bullet);
     }
 
     /**
@@ -185,7 +164,6 @@ public abstract class ActiveEntity extends AbstractEntity {
     @Override
     public void init() {
         super.init();
-        this.bullets = new ArrayList<>();
     }
 
     /**
@@ -202,8 +180,4 @@ public abstract class ActiveEntity extends AbstractEntity {
         return this.getPosition().getY() > getTransform().getGroundLevel();
     }
 
-    private void removeBullets() {
-        this.bullets.removeIf(e -> !e.isUpdated(this.getPosition())
-                || e.getHealth().isDead());
-    }
 }

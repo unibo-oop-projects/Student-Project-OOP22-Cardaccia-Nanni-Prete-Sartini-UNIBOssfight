@@ -19,16 +19,13 @@ import java.util.stream.Stream;
 public class BossLevel extends LevelImpl {
 
     private transient Boss boss;
+    private int rateOfFireCounter = 0;
 
     /**
      * Initialization of a new BossLevel instance.
      */
     public BossLevel() {
         super();
-
-        //BossFactory bossFactory = new BossFactoryImpl();
-
-        //this.boss = bossFactory.firstBoss(new TransformImpl(new Point2D(500, 300), 0));
     }
 
     /**
@@ -47,25 +44,6 @@ public class BossLevel extends LevelImpl {
      */
     public Node renderBossWeapon(Point2D playerPosition) {
         return this.boss.renderWeapon(playerPosition);
-    }
-
-    /**
-     * A method that makes the Boss shoot.
-     *
-     * @param target
-     */
-    public void bossShoot(final Point2D target) {
-        this.boss.shoot(target);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<Node> renderEntities() {
-        List<Node> nodes = new ArrayList<>(super.renderEntities());
-        nodes.addAll(this.boss.getBulletsNodes(this.getPlayerPosition()));
-        return nodes;
     }
 
     /**
@@ -88,7 +66,14 @@ public class BossLevel extends LevelImpl {
 
         this.boss.update(Entity.Inputs.EMPTY);
 
-        this.boss.shoot(this.getPlayerPosition());
+        if(this.boss.isUpdated(this.getPlayerPosition())) {
+            if (this.rateOfFireCounter >= this.boss.getRateOfFire()) {
+                addEntity(this.boss.shoot(this.getPlayerPosition()));
+                rateOfFireCounter = 0;
+            } else {
+                rateOfFireCounter++;
+            }
+        }
 
         //TODO beahaviour
         var behaviour = boss.getBehaviour().getFollowingBehaviour();
@@ -112,6 +97,7 @@ public class BossLevel extends LevelImpl {
     public void collision() {
         super.collision();
 
+        //System.out.println(getEntities());
         // Player collisions
         this.getEntities().stream()
                 .filter(e -> this.boss.getHitbox().collide(e.getHitbox()))

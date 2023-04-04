@@ -42,14 +42,7 @@ public abstract class Boss extends Enemy {
      *
      * @param target target to be shot
      */
-    public abstract void shoot(Point2D target);
-
-    /**
-     * Method that returns the list of the Bullets Nodes to be rendered.
-     *
-     * @return the list of the Bullets Nodes
-     */
-    public abstract List<Node> getBulletsNodes(Point2D playerPosition);
+    public abstract Bullet shoot(Point2D target);
 
     /**
      * Method to set the Bosses Weapon.
@@ -64,4 +57,6 @@ public abstract class Boss extends Enemy {
      * @return the Weapon's Node
      */
     public abstract Node renderWeapon(Point2D playerPosition);
+
+    public abstract int getRateOfFire();
 }

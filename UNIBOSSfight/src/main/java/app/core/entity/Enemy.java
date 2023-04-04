@@ -43,12 +43,14 @@ public abstract class Enemy extends ActiveEntity {
             }
         });
 
-        getCollider().ifPresent(c -> c.addBehaviour(BulletImpl.class.getName(), e -> {
+        collider.addBehaviour(BulletImpl.class.getName(), e -> {
             if (!e.getHealth().isDead()) {
+                getRenderer().setIsDamaged();
                 getHealth().damage(e.getDamage());
                 e.getHealth().destroy();
             }
-        }));
+
+        });
 
         collider.addBehaviour(Platform.class.getName(), e -> Platform.jump(this, e));
 

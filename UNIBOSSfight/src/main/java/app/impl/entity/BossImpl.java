@@ -74,7 +74,7 @@ public class BossImpl extends Boss {
         super.init();
 
         WeaponFactory weaponFactory = new WeaponFactoryImpl();
-        this.weapon = weaponFactory.getGhiniGun(this.getTransform(), false);
+        this.weapon = weaponFactory.getBigBulletGun(this.getTransform(), false);
 
         setBehaviour(new BehaviourBuilderImpl()
                 .addJumpOnTop()
@@ -84,34 +84,17 @@ public class BossImpl extends Boss {
                 .addShooting()
                 .build());
 
-        getCollider().ifPresent(c -> c.addBehaviour(BulletImpl.class.getName(),
-                e -> getHealth().damage(e.getDamage())));
-
-        System.out.println(this.getType());
+        //System.out.println(this.getType());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void shoot(final Point2D target) {
-        if (rateOfFireCounter >= rateOfFire) {
-            final Bullet newBullet = this.weapon.fire(target);
-            newBullet.init();
-            addBullet(newBullet);
-
-            rateOfFireCounter = 0;
-        } else {
-            rateOfFireCounter++;
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<Node> getBulletsNodes(Point2D playerPosition) {
-        return getBullets().stream().map(e -> e.render(playerPosition)).toList();
+    public Bullet shoot(final Point2D target) {
+        final Bullet newBullet = this.weapon.fire(target);
+        newBullet.init();
+        return newBullet;
     }
 
     /**
@@ -139,4 +122,8 @@ public class BossImpl extends Boss {
         return null;
     }
 
+    @Override
+    public int getRateOfFire() {
+        return this.rateOfFire;
+    }
 }

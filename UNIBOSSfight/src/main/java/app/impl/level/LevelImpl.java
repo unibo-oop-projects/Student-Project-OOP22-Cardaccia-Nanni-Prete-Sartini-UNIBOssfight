@@ -1,10 +1,11 @@
 package app.impl.level;
 
 import app.core.entity.ActiveEntity;
-import app.core.entity.Boss;
+import app.core.entity.Bullet;
 import app.impl.component.TransformImpl;
 import app.core.entity.Entity;
 import app.core.level.Level;
+import app.impl.entity.BulletImpl;
 import app.impl.entity.Player;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -25,12 +26,8 @@ public class LevelImpl implements Level {
      * Creates a new instance of the level.
      */
     public LevelImpl() {
-
         this.entities = new ArrayList<>();
         this.player = new Player(new TransformImpl(new Point2D(0, 300), 0), 250, 250, "guido");
-
-//        this.boss = new BossFactoryImpl().firstBoss(new TransformImpl(new Point2D(0, 400), 0));
-//        this.addEntity(this.boss);
     }
 
     /**
@@ -49,19 +46,9 @@ public class LevelImpl implements Level {
                     behaviour.ifPresent(b -> e.update(b.apply(getPlayer(), e)));
                 });
 
-        //this.boss.shoot(this.player.getPosition());
-
-        //TODO pulire
-        /*this.entities.stream()
-                .filter(e -> e instanceof Boss)
-                .map(e -> (Boss) e)
-                .filter(e -> e.isUpdated(this.getPlayerPosition()))
-                .forEach(e -> {
-                    e.getBehaviour().getShootingBehaviour().ifPresent(b -> b.accept(e, getPlayer()));
-                });
-         */
-
         this.entities.removeIf(e -> e.getHealth().isDead());
+
+        removeBullets();
     }
 
     /**
@@ -77,16 +64,9 @@ public class LevelImpl implements Level {
      */
     @Override
     public List<Node> renderEntities() {
-        //TODO PULIRE
-        /*return Stream.concat(this.entities.stream()
-                .filter(e -> e.isDisplayed(this.player.getPosition()))
-                .map(e -> e.render(this.player.getPosition())), this.player.getBulletsNodes().stream()).toList();
-                */
-
         return Stream.of(this.entities.stream()
                 .filter(e -> e.isDisplayed(this.player.getPosition()))
-                .map(e -> e.render(this.player.getPosition())),
-                this.player.getBulletsNodes().stream()).reduce(Stream::concat).orElseGet(Stream::empty).toList();
+                .map(e -> e.render(this.player.getPosition()))).reduce(Stream::concat).orElseGet(Stream::empty).toList();
 
     }
 
@@ -132,15 +112,12 @@ public class LevelImpl implements Level {
                 .filter(e -> this.player.getHitbox().collide(e.getHitbox()))
                 .forEach(this.player::manageCollision);
 
-        final List<Entity> allEntities = new ArrayList<>(this.entities);
-        allEntities.addAll(this.player.getBullets());
-
         // Entity collisions
-        final List<Entity> collidingEntities = allEntities.stream()
+        final List<Entity> collidingEntities = this.entities.stream()
                 .filter(e -> e instanceof ActiveEntity)
                 .toList();
 
-        collidingEntities.forEach(ce -> allEntities.stream()
+        collidingEntities.forEach(ce -> this.entities.stream()
                 .filter(e -> !e.equals(ce) && e.getHitbox().collide(ce.getHitbox()))
                 .forEach(ce::manageCollision));
     }
@@ -174,7 +151,7 @@ public class LevelImpl implements Level {
      */
     @Override
     public void playerShoot(final Point2D target) {
-        this.player.shoot(target);
+        addEntity(this.player.shoot(target));
     }
 
     /**
@@ -199,4 +176,9 @@ public class LevelImpl implements Level {
         return this.player.getHealth().isDead();
     }
 
+    @Override
+    public void removeBullets() {
+        this.entities.removeIf(e -> e.getType() == BulletImpl.class.getName() && !e.isDisplayed(this.getPlayerPosition())
+                || e.getHealth().isDead());
+    }
 }

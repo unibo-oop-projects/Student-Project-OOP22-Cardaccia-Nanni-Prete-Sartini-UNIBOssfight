@@ -110,4 +110,6 @@ public interface Level {
      * false otherwise
      */
     boolean isOver();
+
+    void removeBullets();
 }

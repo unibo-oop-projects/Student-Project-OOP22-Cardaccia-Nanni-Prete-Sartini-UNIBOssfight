@@ -47,12 +47,12 @@ public abstract class Bullet extends ActiveEntity {
         this.getTransform().setRotation(Math.toDegrees(angle));
     }
 
-    /**
-     * Updates Bullet position and hitbox.
-     */
-    public void update() {
-        getTransform().move(xShift, yShift);
-        this.getHitbox().update(this.getPosition());
+    @Override
+    public void update(Inputs input) {
+        if(input == Inputs.EMPTY) {
+            getTransform().move(xShift, yShift);
+            this.getHitbox().update(this.getPosition());
+        }
     }
 
     /**

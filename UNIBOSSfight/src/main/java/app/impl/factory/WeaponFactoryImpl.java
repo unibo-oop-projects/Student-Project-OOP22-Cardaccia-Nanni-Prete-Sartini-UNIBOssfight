@@ -46,8 +46,7 @@ public class WeaponFactoryImpl implements WeaponFactory {
 
             @Override
             public Bullet fire(final Point2D target) {
-                return bulletFactory.getBigBullet(new TransformImpl(new Point2D(target.getX(), Window.getHeight()), 0),
-                        target, false);
+                return bulletFactory.getBigBullet(getShootingPosition(), target ,false);
             }
 
         };
