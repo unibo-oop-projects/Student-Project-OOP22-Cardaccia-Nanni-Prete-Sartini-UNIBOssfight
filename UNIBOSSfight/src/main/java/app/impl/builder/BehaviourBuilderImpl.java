@@ -4,6 +4,7 @@ import app.core.component.Behaviour;
 import app.core.component.BehaviourBuilder;
 import app.core.entity.Entity;
 import app.impl.component.BehaviourImpl;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * This class implements the Behaviour.
@@ -84,6 +85,10 @@ public class BehaviourBuilderImpl implements BehaviourBuilder {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+            value="EI_EXPOSE_REP",
+            justification="The Builder pattern require this type of return statement"
+    )
     @Override
     public Behaviour build() {
         if (built) {

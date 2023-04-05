@@ -2,7 +2,6 @@ package app.ui;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -14,8 +13,9 @@ import javafx.stage.Stage;
  */
 public final class ConfirmBox {
 
-    private static final int WIDTH = 300;
-    private static final int HEIGHT = 200;
+    private static final int WIDTH = 500;
+    private static final int HEIGHT = 300;
+    private static final int FONT_SIZE = 23;
     private static boolean answer;
 
     private ConfirmBox() {
@@ -38,9 +38,10 @@ public final class ConfirmBox {
 
         final Label label = new Label();
         label.setText(message);
+        ViewManager.setFont("src/main/resources/font.ttf", FONT_SIZE, label);
 
-        final Button yesButton = new Button("Yes");
-        final Button noButton = new Button("No");
+        final CustomizedButton yesButton = new CustomizedButton("Yes");
+        final CustomizedButton noButton = new CustomizedButton("No");
 
         yesButton.setOnAction(e -> {
             answer = true;
@@ -49,10 +50,10 @@ public final class ConfirmBox {
 
         noButton.setOnAction(e -> {
             answer = false;
-            System.exit(0);
+            window.close();
         });
 
-        final VBox layout = new VBox(10);
+        final VBox layout = new VBox(15);
         layout.getChildren().addAll(label, yesButton, noButton);
         layout.setAlignment(Pos.CENTER);
 
