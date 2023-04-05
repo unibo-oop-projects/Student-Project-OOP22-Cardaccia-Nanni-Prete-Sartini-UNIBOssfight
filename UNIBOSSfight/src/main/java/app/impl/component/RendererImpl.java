@@ -18,7 +18,7 @@ public class RendererImpl implements Renderer {
     private final int width;
     private final Color color;
     private final String className; //NOPMD this field is necessary for serialization
-    private int remainingDamagedFrames;
+    private transient int remainingDamagedFrames;
 
     /**
      * Creates a new instance of the class Renderer.

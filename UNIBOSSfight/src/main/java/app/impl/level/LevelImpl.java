@@ -31,11 +31,13 @@ public class LevelImpl implements Level {
     private final List<Entity> entities;
     private final Player player;
     private transient Image bg;
+    private int endPosition;
 
     /**
      * Creates a new instance of the level.
      */
     public LevelImpl() {
+        this.endPosition = 10000;
         this.entities = new ArrayList<>();
         this.player = new Player(
                 new TransformImpl(new Point2D(0, 0), 0),
@@ -222,6 +224,11 @@ public class LevelImpl implements Level {
     @Override
     public boolean isOver() {
         return this.player.getHealth().isDead();
+    }
+
+    @Override
+    public boolean isLevelEnded() {
+        return this.getPlayerPosition().getX() >= this.endPosition;
     }
 
     /**

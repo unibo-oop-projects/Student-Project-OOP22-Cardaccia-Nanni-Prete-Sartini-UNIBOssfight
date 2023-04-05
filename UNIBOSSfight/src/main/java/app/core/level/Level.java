@@ -119,6 +119,13 @@ public interface Level {
     boolean isOver();
 
     /**
+     * Function that establishes if the player reache the end of the level
+     *
+     * @return true if the player reaches the end of the level
+     */
+    boolean isLevelEnded();
+
+    /**
      * Removes destroyed and not rendered Bullets in the level.
      */
     void removeBullets();

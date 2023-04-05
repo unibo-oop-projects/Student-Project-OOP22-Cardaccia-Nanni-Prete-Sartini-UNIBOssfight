@@ -163,6 +163,8 @@ public class Game extends Application {
         final Timeline tl = new Timeline(new KeyFrame(Duration.millis(FRAME_DURATION),
             e -> {
                 if (!this.currentLevel.isOver()) {
+                    if (this.currentLevel.isLevelEnded())
+                        System.out.println("HAI VINTOOOOOOOOO");
                     run();
                 } else {
                     gameOver.set(true);
