@@ -123,6 +123,15 @@ public class Player extends ActiveEntity {
     }
 
     /**
+     * Returns the number of coins collected by the player.
+     *
+     * @return the number of coins collected
+     */
+    public int getCoinsCollected() {
+        return this.coinsCollected;
+    }
+
+    /**
      * Updates the player and sets the current animation for the renderer.
      *
      * @param input an element of the enum

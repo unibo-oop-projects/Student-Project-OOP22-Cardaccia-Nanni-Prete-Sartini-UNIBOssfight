@@ -1,9 +1,10 @@
 package app.ui;
 
-import app.game.Prova;
+import app.game.Game;
 import app.util.AppLogger;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,7 +13,11 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -134,7 +139,7 @@ public class ViewManager {
 
         startButton.setOnAction(event -> Platform.runLater(() -> {
             try {
-                new Prova().start(new Stage());
+                new Game().start(new Stage());
                 this.mainStage.close();
             } catch (final IOException e) {
                 AppLogger.getLogger().severe(e.getMessage());

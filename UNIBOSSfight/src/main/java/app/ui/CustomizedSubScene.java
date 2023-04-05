@@ -21,10 +21,10 @@ import java.io.InputStream;
  */
 public class CustomizedSubScene extends SubScene {
 
-    private static final int WIDTH = 400;
-    private static final int HEIGHT = 300;
-    private static final int LAYOUTX = 325;
-    private static final int LAYOUTY = HEIGHT / 2;
+    private static final int WIDTH = 450;
+    private static final int HEIGHT = 350;
+    private static final int LAYOUTX = 300;
+    private static final int LAYOUTY = 150;
     private static final String BACKGROUND_IMAGE = "blue_panel.png";
 
     /**
