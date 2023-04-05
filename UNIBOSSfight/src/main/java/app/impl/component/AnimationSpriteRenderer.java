@@ -19,6 +19,10 @@ import java.util.stream.IntStream;
  * This class implements an animation renderer.
  */
 public class AnimationSpriteRenderer extends LoopSpriteRenderer {
+
+    private static final String ANIMATION_IDLE = "idle";
+    private static final String ANIMATION_WALK = "walk";
+
     private transient Map<String, List<ImageView>> animations;
     private transient String previousAnimation;
     private String animation;
@@ -40,7 +44,7 @@ public class AnimationSpriteRenderer extends LoopSpriteRenderer {
     /**
      * Sets the animation to be rendered.
      *
-     * @param animation
+     * @param animation the name of the animation to set
      */
     public void setAnimation(final String animation) {
         if (this.previousAnimation == null || !this.previousAnimation.equals(animation)) {
@@ -66,7 +70,7 @@ public class AnimationSpriteRenderer extends LoopSpriteRenderer {
             }
         });
         this.animations = new HashMap<>();
-        final List<String> animations = List.of("idle", "walk");
+        final List<String> animations = List.of(ANIMATION_IDLE, ANIMATION_WALK);
         animations.forEach(e -> {
 
             final String pathname = "assets/" + this.getFilename() +  "/" + e;
@@ -93,9 +97,8 @@ public class AnimationSpriteRenderer extends LoopSpriteRenderer {
                     .toList();
             this.animations.put(e, preRenderedSprites);
         });
-        this.animation = "idle";
-        setPreRenderedSprites(this.animations.get("idle"));
-        setAnimationLength(this.animations.get("idle").size());
+        setPreRenderedSprites(this.animations.get(ANIMATION_IDLE));
+        setAnimationLength(this.animations.get(ANIMATION_IDLE).size());
 
     }
 }
