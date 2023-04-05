@@ -491,7 +491,7 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "flame.png",
+        "filename": "flame",
         "height": 50,
         "width": 50,
         "color": {
@@ -500,7 +500,7 @@
           "blue": 0.0,
           "opacity": 1.0
         },
-        "className": "app.impl.component.SpriteRenderer"
+        "className": "app.impl.component.LoopSpriteRenderer"
       },
       "health": {
         "maxHp": 100,
@@ -1129,7 +1129,7 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "flame.png",
+        "filename": "flame",
         "height": 75,
         "width": 75,
         "color": {
@@ -1138,7 +1138,7 @@
           "blue": 0.0,
           "opacity": 1.0
         },
-        "className": "app.impl.component.SpriteRenderer"
+        "className": "app.impl.component.LoopSpriteRenderer"
       },
       "health": {
         "maxHp": 100,
