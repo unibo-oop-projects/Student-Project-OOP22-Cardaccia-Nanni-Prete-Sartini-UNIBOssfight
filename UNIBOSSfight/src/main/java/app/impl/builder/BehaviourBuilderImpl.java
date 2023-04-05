@@ -70,9 +70,12 @@ public class BehaviourBuilderImpl implements BehaviourBuilder {
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BehaviourBuilder addFlying() {
-        this.behaviour.setFlyingBehaviour((activeEntity, player) ->{
+        this.behaviour.setFlyingBehaviour((activeEntity, player) -> {
             return null;
         });
         return this;

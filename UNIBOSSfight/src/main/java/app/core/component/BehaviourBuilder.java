@@ -27,6 +27,9 @@ public interface BehaviourBuilder {
      */
     BehaviourBuilder addFollow();
 
+    /**
+     * @return this, and add a behaviour to fly over the player
+     */
     BehaviourBuilder addFlying();
 
     /**

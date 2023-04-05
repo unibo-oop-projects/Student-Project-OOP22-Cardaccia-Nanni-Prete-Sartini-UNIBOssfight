@@ -86,13 +86,19 @@ public class BehaviourImpl implements Behaviour {
         this.followingBehaviour = function;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<BiFunction<ActiveEntity, Player, Entity.Inputs>> getFlyingBehaviour() {
         return Optional.ofNullable(this.flyingBehaviour);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setFlyingBehaviour(BiFunction<ActiveEntity, Player, Entity.Inputs> function) {
+    public void setFlyingBehaviour(final BiFunction<ActiveEntity, Player, Entity.Inputs> function) {
         this.flyingBehaviour = function;
     }
 }

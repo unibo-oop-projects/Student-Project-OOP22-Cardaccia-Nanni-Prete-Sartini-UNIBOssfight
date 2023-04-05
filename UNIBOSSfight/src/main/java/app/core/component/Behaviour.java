@@ -79,8 +79,20 @@ public interface Behaviour {
      */
     void setFollowingBehaviour(BiFunction<ActiveEntity, ActiveEntity, Entity.Inputs> function);
 
+    /**
+     * Returns the behaviour to fly.
+     *
+     * @return a function that takes as input two entities,
+     * the player and the one following it, and returns an Input for the update method
+     */
     Optional<BiFunction<ActiveEntity, Player, Entity.Inputs>> getFlyingBehaviour();
 
+    /**
+     * Sets the behaviour to fly over the player.
+     *
+     * @param function that takes as input the player and the entity following the player
+     *                 and returns an Input for the update method
+     */
     void setFlyingBehaviour(BiFunction<ActiveEntity, Player, Entity.Inputs> function);
 
 }
