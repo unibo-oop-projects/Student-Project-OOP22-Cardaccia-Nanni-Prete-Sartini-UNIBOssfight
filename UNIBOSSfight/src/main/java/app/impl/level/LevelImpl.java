@@ -29,7 +29,9 @@ public class LevelImpl implements Level {
     private static final int PLAYER_HEIGHT = 250;
     private static final int PLAYER_WIDTH = 250;
     private static final int BACKGROUND_CONSTANT = 9;
-
+    private static final int END_POSITION = 10_000;
+    private static final int MAX_X_SPEED = 20;
+    private  static final int MAX_Y_SPEED = 10;
     private int levelNumber;
     private final List<Entity> entities;
     private final Player player;
@@ -41,15 +43,15 @@ public class LevelImpl implements Level {
      * Creates a new instance of the level.
      */
     public LevelImpl() {
-        this.endPosition = 10_000;
+        this.endPosition = END_POSITION;
         this.entities = new ArrayList<>();
         this.player = new Player(
                 new TransformImpl(new Point2D(0, 0), 0),
                 PLAYER_HEIGHT, PLAYER_WIDTH, "guido"
         );
 
-        this.player.setMaxYSpeed(20);
-        this.player.setMaxXSpeed(20);
+        this.player.setMaxYSpeed(MAX_Y_SPEED);
+        this.player.setMaxXSpeed(MAX_X_SPEED);
     }
 
     /**
@@ -243,6 +245,9 @@ public class LevelImpl implements Level {
         return this.player.getHealth().isDead();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isLevelEnded() {
         return this.getPlayerPosition().getX() >= this.endPosition;

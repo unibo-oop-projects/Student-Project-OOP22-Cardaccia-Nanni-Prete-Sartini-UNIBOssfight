@@ -59,7 +59,6 @@ public class Game extends Application {
     private Scene currentScene;
     private InputManager inputManager;
     private Image image;
-    private Image bg;
     private final ProgressBar progressBar = new ProgressBar(0);
     private final Label timeLabel = new Label();
     private final Label coinsLabel = new Label();
@@ -104,9 +103,6 @@ public class Game extends Application {
             saveState();
         });
 
-        final Screen screen = Screen.getPrimary();
-        final Rectangle2D bounds = screen.getVisualBounds();
-
         initHUD();
 
         FileInputStream input;
@@ -118,12 +114,8 @@ public class Game extends Application {
 
         this.image = new Image(input);
 
-        try {
-            this.bg = new Image(new FileInputStream("assets/background.png"),
-                    Window.getWidth(), Window.getHeight(), false, false);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        final Screen screen = Screen.getPrimary();
+        final Rectangle2D bounds = screen.getVisualBounds();
 
         this.mainStage.setX(bounds.getMinX());
         this.mainStage.setY(bounds.getMinY());
@@ -197,7 +189,7 @@ public class Game extends Application {
     public void stop() throws Exception {
         try {
             new DataManager().serializeLevel(this.currentLevel);
-        } catch (final Exception e) {
+        } catch (final IOException e) {
             AppLogger.getLogger().severe(e.getMessage());
         }
         super.stop();
@@ -246,7 +238,7 @@ public class Game extends Application {
                 Window.getWidth(), this.image.getHeight());
 
         // set fill for rectangle
-        ImagePattern imagePattern = new ImagePattern(
+        final ImagePattern imagePattern = new ImagePattern(
                 this.image,
                 -this.currentLevel.getPlayerPosition().getX(),
                 Window.getHeight() - this.image.getHeight(),
@@ -278,7 +270,7 @@ public class Game extends Application {
 
         this.coinsLabel.setText(Integer.toString(this.currentLevel
                 .getPlayer().getCoinsCollected()));
-        this.coinsLabel.setLayoutX((Window.getWidth() / 2)
+        this.coinsLabel.setLayoutX(Window.getWidth() / 2
                 - this.coinsLabel.getWidth() / 2);
     }
 
@@ -289,9 +281,9 @@ public class Game extends Application {
 
     private class InputManager {
         private final Scene scene;
-        private boolean isAPressed = false;
-        private boolean isDPressed = false;
-        private boolean isSpacePressed = false;
+        private boolean isAPressed;
+        private boolean isDPressed;
+        private boolean isSpacePressed;
 
         InputManager(final Scene scene) {
             this.scene = scene;
@@ -338,7 +330,7 @@ public class Game extends Application {
     }
 
     private void saveState() {
-        boolean answer = ConfirmBox.display("Do you want to save the state?");
+        final boolean answer = ConfirmBox.display("Do you want to save the state?");
         if (answer) {
             try {
                 this.stop();
@@ -379,11 +371,12 @@ public class Game extends Application {
             });
 
             restartButton.setOnAction(event -> Platform.runLater(() -> {
+                this.close();
+                gameStage.close();
                 try {
-                    this.close();
-                    gameStage.close();
                     new Game().start(new Stage());
-                } catch (final Exception e) {
+                } catch (final IOException e) {
+                    AppLogger.getLogger().severe(e.getMessage());
                     throw new RuntimeException(e);
                 }
             }));
