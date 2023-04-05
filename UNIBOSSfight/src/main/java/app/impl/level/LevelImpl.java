@@ -1,13 +1,21 @@
 package app.impl.level;
 
 import app.core.entity.ActiveEntity;
-import app.impl.entity.Bullet;
-import app.impl.component.TransformImpl;
 import app.core.entity.Entity;
 import app.core.level.Level;
+import app.impl.component.TransformImpl;
+import app.impl.entity.Bullet;
 import app.impl.entity.Player;
+import app.util.AppLogger;
+import app.util.Window;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -22,6 +30,7 @@ public class LevelImpl implements Level {
     private static final int PLAYER_WIDTH = 250;
     private final List<Entity> entities;
     private final Player player;
+    private transient Image bg;
 
     /**
      * Creates a new instance of the level.
@@ -61,6 +70,30 @@ public class LevelImpl implements Level {
     @Override
     public void updatePlayer(final Entity.Inputs input) {
         this.player.update(input);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Node renderBackground() {
+
+        final Rectangle bgr = new Rectangle(0, 0, Window.getWidth(), Window.getHeight());
+
+
+        // set fill for rectangle
+        final ImagePattern imagePattern = new ImagePattern(
+                this.bg,
+                -(this.getPlayerPosition().getX() / 10),
+                0,
+                Window.getHeight() * 16 / 9,
+                Window.getHeight(),
+                false
+        );
+
+        bgr.setFill(imagePattern);
+
+        return bgr;
     }
 
     /**
@@ -174,6 +207,11 @@ public class LevelImpl implements Level {
      */
     @Override
     public void init() {
+        try {
+            this.bg = new Image(new FileInputStream("assets/background.png"));
+        } catch (FileNotFoundException e) {
+            AppLogger.getLogger().severe(e.getMessage());
+        }
         this.player.init();
         this.entities.forEach(Entity::init);
     }
@@ -191,7 +229,19 @@ public class LevelImpl implements Level {
      */
     @Override
     public void removeBullets() {
-        this.entities.removeIf(e -> e.getType().equals(Bullet.class.getName()) && !((ActiveEntity)e).isUpdated(this.getPlayerPosition())
-                || e.getHealth().isDead());
+        this.entities.removeIf(
+                e -> e.getType().equals(Bullet.class.getName())
+                        && !((ActiveEntity) e).isUpdated(this.getPlayerPosition())
+                        || e.getHealth().isDead()
+        );
+    }
+
+    /**
+     * Sets the background img.
+     *
+     * @param bg the image to set
+     */
+    protected void setBg(final Image bg) {
+        this.bg = bg;
     }
 }
