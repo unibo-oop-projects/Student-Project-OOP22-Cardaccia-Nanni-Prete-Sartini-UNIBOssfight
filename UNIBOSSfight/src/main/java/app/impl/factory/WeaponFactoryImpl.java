@@ -43,18 +43,21 @@ public class WeaponFactoryImpl implements WeaponFactory {
 
             @Override
             public Bullet fire(final Point2D target) {
-                return bulletFactory.getBigBullet(getShootingPosition(), target ,false);
+                return bulletFactory.getBigBullet(getShootingPosition(), target, false);
             }
-
         };
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public WeaponImpl getGhiniGun(Transform userPos, boolean isPlayerWeapon) {
-        return new WeaponImpl(userPos, new SpriteRenderer(200, 500, Color.RED, "gun.png"),125){
+    public WeaponImpl getMeteorGun(final Transform userPos, final boolean isPlayerWeapon) {
+        return new WeaponImpl(userPos, new SpriteRenderer(200, 500,
+                Color.RED, "gun.png"), 125) {
 
             @Override
-            public Bullet fire(Point2D target) {
+            public Bullet fire(final Point2D target) {
                 return bulletFactory.getBigBullet(new TransformImpl(new Point2D(target.getX(), Window.getHeight()), 0),
                         target, false);
             }

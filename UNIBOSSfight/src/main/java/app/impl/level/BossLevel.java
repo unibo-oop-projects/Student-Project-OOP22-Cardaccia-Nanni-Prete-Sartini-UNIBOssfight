@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class BossLevel extends LevelImpl {
 
+    private static final int BOSS_X_POSITION = 1600;
+    private static final int BOSS_Y_POSITION = 300;
     private transient Boss boss;
     private int rateOfFireCounter = 0;
 
@@ -88,7 +90,7 @@ public class BossLevel extends LevelImpl {
         super.init();
         BossFactory bossFactory = new BossFactoryImpl();
 
-        this.boss = bossFactory.firstBoss(new TransformImpl(new Point2D(1600, 300), 0));
+        this.boss = bossFactory.firstBoss(new TransformImpl(new Point2D(BOSS_X_POSITION, BOSS_Y_POSITION), 0));
         this.boss.init();
     }
 
@@ -108,5 +110,4 @@ public class BossLevel extends LevelImpl {
             this.getPlayer().manageCollision(this.boss);
         }
     }
-
 }

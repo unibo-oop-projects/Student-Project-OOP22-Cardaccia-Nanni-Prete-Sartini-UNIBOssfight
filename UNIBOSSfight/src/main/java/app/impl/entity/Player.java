@@ -115,6 +115,7 @@ public class Player extends ActiveEntity {
      * Creates a new bullet pointing the current mouse position.
      *
      * @param target the target point of the shooting
+     * @return new Bullet
      */
     public Bullet shoot(final Point2D target) {
         final Bullet newBullet = this.weapon.fire(target);

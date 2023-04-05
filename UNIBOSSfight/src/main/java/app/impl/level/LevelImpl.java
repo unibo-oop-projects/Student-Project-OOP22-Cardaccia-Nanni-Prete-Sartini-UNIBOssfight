@@ -18,6 +18,8 @@ import java.util.stream.Stream;
  */
 public class LevelImpl implements Level {
 
+    private static final int PLAYER_HEIGHT = 250;
+    private static final int PLAYER_WIDTH = 250;
     private final List<Entity> entities;
     private final Player player;
 
@@ -27,7 +29,8 @@ public class LevelImpl implements Level {
     public LevelImpl() {
         this.entities = new ArrayList<>();
         this.player = new Player(
-                new TransformImpl(new Point2D(0, 0), 0), 250, 250, "guido"
+                new TransformImpl(new Point2D(0, 0), 0),
+                PLAYER_HEIGHT, PLAYER_WIDTH, "guido"
         );
     }
 
@@ -188,7 +191,7 @@ public class LevelImpl implements Level {
      */
     @Override
     public void removeBullets() {
-        this.entities.removeIf(e -> e.getType() == Bullet.class.getName() && !e.isDisplayed(this.getPlayerPosition())
+        this.entities.removeIf(e -> e.getType().equals(Bullet.class.getName()) && !e.isDisplayed(this.getPlayerPosition())
                 || e.getHealth().isDead());
     }
 }

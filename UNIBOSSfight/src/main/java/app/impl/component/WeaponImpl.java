@@ -70,8 +70,11 @@ public class WeaponImpl implements Weapon {
         this.yDirection = yDirection;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setXDirection(int xDirection) {
+    public void setXDirection(final int xDirection) {
         this.xDirection = xDirection;
     }
 
@@ -92,7 +95,7 @@ public class WeaponImpl implements Weapon {
     @Override
     public Transform getWeaponPosition() {
         final Transform posCopy = getRenderPosition().copyOf();
-        posCopy.move(0, renderer.getHeight() / 2);
+        posCopy.move(0, renderer.getHeight() / 2.0);
         return posCopy;
     }
 
@@ -122,8 +125,11 @@ public class WeaponImpl implements Weapon {
         return posCopy;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public double updateRotation(Point2D target){
+    public double updateRotation(final Point2D target) {
         this.rotation = Math.toDegrees(Angle.findAngle(this.getShootingPosition().getPosition(), target));
         if (this.rotation <= Angle.RIGHT_ANGLE && this.rotation > -Angle.RIGHT_ANGLE) {
             setYDirection(1);

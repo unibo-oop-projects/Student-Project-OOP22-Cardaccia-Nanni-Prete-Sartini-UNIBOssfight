@@ -32,10 +32,15 @@ public interface Weapon {
     /**
      * Method used to modify the direction on the Y-axis of the weapon.
      *
-     * @param direction new direction on Y-axis
+     * @param yDirection new direction on Y-axis
      */
-    void setYDirection(int direction);
+    void setYDirection(int yDirection);
 
+    /**
+     * Method used to modify the direction on the X-axis of the weapon.
+     *
+     * @param xDirection new direction on X-axis
+     */
     void setXDirection(int xDirection);
 
     /**
@@ -73,5 +78,11 @@ public interface Weapon {
      */
     Transform getShootingPosition();
 
+    /**
+     * Update the weapon rotation.
+     *
+     * @param target the target to point with the weapon
+     * @return the new angle between the weapon and the target
+     */
     double updateRotation(Point2D target);
 }

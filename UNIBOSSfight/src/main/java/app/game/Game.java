@@ -63,6 +63,9 @@ public class Game extends Application {
         this.currentLevel = new DataManager().loadLevel("output.json");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void start(final Stage stage) {
 
@@ -249,14 +252,23 @@ public class Game extends Application {
         private boolean isSpacePressed = false;
 
 
-        public InputManager(final Scene scene) {
+        InputManager(final Scene scene) {
             this.scene = scene;
 
             this.scene.setOnKeyPressed(e -> {
                 switch (e.getCode()) {
-                    case A -> this.isAPressed = true;
-                    case D -> this.isDPressed = true;
-                    case SPACE -> this.isSpacePressed = true;
+                    case A -> {
+                        this.isAPressed = true;
+                    }
+                    case D -> {
+                        this.isDPressed = true;
+                    }
+                    case SPACE -> {
+                        this.isSpacePressed = true;
+                    }
+                    default -> {
+                        AppLogger.getLogger().warning("Unexpected Input from keyboard.");
+                    }
                 }
             });
 
@@ -266,9 +278,18 @@ public class Game extends Application {
 
             this.scene.setOnKeyReleased(e -> {
                 switch (e.getCode()) {
-                    case A -> this.isAPressed = false;
-                    case D -> this.isDPressed = false;
-                    case SPACE -> this.isSpacePressed = false;
+                    case A -> {
+                        this.isAPressed = false;
+                    }
+                    case D -> {
+                        this.isDPressed = false;
+                    }
+                    case SPACE -> {
+                        this.isSpacePressed = false;
+                    }
+                    default -> {
+                        AppLogger.getLogger().warning("Unexpected Input release from keyboard.");
+                    }
                 }
             });
         }

@@ -40,6 +40,7 @@ public abstract class Boss extends Enemy {
      * Method that makes the Boss shoot.
      *
      * @param target target to be shot
+     * @return the bullet to be rendered
      */
     public abstract Bullet shoot(Point2D target);
 
@@ -53,9 +54,15 @@ public abstract class Boss extends Enemy {
     /**
      * The Node of the Bosses Weapon to be rendered.
      *
+     * @param playerPosition the position of the player
      * @return the Weapon's Node
      */
     public abstract Node renderWeapon(Point2D playerPosition);
 
+    /**
+     * Returns the rate of fire of the boss.
+     *
+     * @return the number of frames between each shot
+     */
     public abstract int getRateOfFire();
 }

@@ -5,7 +5,7 @@ import javafx.geometry.Point2D;
 /**
  * Util class to manage angles needed in the application.
  */
-public class Angle {
+public final class Angle {
 
     /**
      * Right angle value.

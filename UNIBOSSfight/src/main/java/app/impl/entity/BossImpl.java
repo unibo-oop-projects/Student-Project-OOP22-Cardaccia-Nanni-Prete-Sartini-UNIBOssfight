@@ -19,7 +19,6 @@ public class BossImpl extends Boss {
     private static final int DEFAULT_RATE_OF_FIRE = 30;
     private transient WeaponImpl weapon;
     private final int rateOfFire;
-    private int rateOfFireCounter;
 
     /**
      * Constructor that initializes a new instance of the Boss.
@@ -104,7 +103,7 @@ public class BossImpl extends Boss {
      * {@inheritDoc}
      */
     @Override
-    public Node renderWeapon(Point2D playerPosition) {
+    public Node renderWeapon(final Point2D playerPosition) {
         try {
             return this.weapon.render(playerPosition, 0, 0);
         } catch (Exception e) {
@@ -114,6 +113,9 @@ public class BossImpl extends Boss {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getRateOfFire() {
         return this.rateOfFire;

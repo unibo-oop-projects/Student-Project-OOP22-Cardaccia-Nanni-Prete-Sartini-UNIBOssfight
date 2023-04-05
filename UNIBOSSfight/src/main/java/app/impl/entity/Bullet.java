@@ -5,8 +5,6 @@ import app.core.component.Renderer;
 import app.core.component.Transform;
 import app.core.entity.ActiveEntity;
 import app.impl.component.ColliderImpl;
-import app.impl.entity.Platform;
-import app.impl.entity.Wall;
 import app.util.Angle;
 import javafx.geometry.Point2D;
 

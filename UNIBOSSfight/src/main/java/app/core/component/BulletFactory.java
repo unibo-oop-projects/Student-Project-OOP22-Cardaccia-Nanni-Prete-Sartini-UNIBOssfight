@@ -11,8 +11,9 @@ public interface BulletFactory {
     /**
      * This method returns an instance of the player weapon's bullet.
      *
-     * @param shootingPosition The starting position of the bullet
-     * @param target The target of the bullet
+     * @param shootingPosition the starting position of the bullet
+     * @param target the target of the bullet
+     * @param isPlayerBullet identifier of the Bullet owner
      * @return an instance of the player weapon's bullet.
      */
     Bullet getPlayerBullet(Transform shootingPosition, Point2D target, boolean isPlayerBullet);
@@ -21,8 +22,9 @@ public interface BulletFactory {
     /**
      * This method returns an instance of the bigBullet weapon's bullet.
      *
-     * @param shootingPosition The starting position of the bullet
-     * @param target The target of the bullet
+     * @param shootingPosition the starting position of the bullet
+     * @param target the target of the bullet
+     * @param isPlayerBullet identifier of the Bullet owner
      * @return an instance of the player weapon's bullet.
      */
     Bullet getBigBullet(Transform shootingPosition, Point2D target, boolean isPlayerBullet);
