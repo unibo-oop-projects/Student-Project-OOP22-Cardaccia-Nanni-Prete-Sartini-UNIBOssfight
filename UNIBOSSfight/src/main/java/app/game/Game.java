@@ -30,13 +30,16 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * This class models the game itself: in here, the current level is loaded.
+ * The behavioural pattern Input-Update-Render is managed in this class.
+ */
 public class Game extends Application {
 
     private static final double FRAME_RATE = 60;
@@ -72,7 +75,7 @@ public class Game extends Application {
      * constructor if problems while reading the file are detected.
      */
     public Game() throws IOException {
-        this.currentLevel = new DataManager().loadBossLevel("bossLevel2.json");
+        this.currentLevel = new DataManager().loadLevel("output.json");
     }
 
     /**
@@ -333,11 +336,15 @@ public class Game extends Application {
     private static class GameOverStage extends Stage {
         private static final int SCENE_WIDTH = 500;
         private static final int SCENE_HEIGHT = 300;
+        private static final int LOGO_LAYOUTX = 150;
+        private static final int LOGO_LAYOUTY = 15;
+        private static final int BUTTON_LAYOUTX = 155;
+        private static final int HOME_BUTTON_LAYOUTY = 140;
+        private static final int RESTART_BUTTON_LAYOUTY = 210;
 
         GameOverStage(final Stage gameStage) {
             super();
             this.initModality(Modality.APPLICATION_MODAL);
-
             this.setOnCloseRequest(event -> gameStage.close());
 
             final AnchorPane pane = new AnchorPane();
@@ -365,13 +372,13 @@ public class Game extends Application {
                 }
             }));
 
-            ViewManager.createLogo(150, 15, "gameover.png", pane);
+            ViewManager.createLogo(LOGO_LAYOUTX, LOGO_LAYOUTY, "gameover.png", pane);
             ViewManager.setBackground("blue.png", SCENE_WIDTH, SCENE_HEIGHT, pane);
 
-            homeButton.setLayoutX(155);
-            homeButton.setLayoutY(140);
-            restartButton.setLayoutX(155);
-            restartButton.setLayoutY(210);
+            homeButton.setLayoutX(BUTTON_LAYOUTX);
+            homeButton.setLayoutY(HOME_BUTTON_LAYOUTY);
+            restartButton.setLayoutX(BUTTON_LAYOUTX);
+            restartButton.setLayoutY(RESTART_BUTTON_LAYOUTY);
 
             pane.getChildren().addAll(homeButton, restartButton);
             setScene(new Scene(pane, SCENE_WIDTH, SCENE_HEIGHT));

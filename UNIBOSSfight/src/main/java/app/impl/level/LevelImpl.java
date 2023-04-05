@@ -13,13 +13,11 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
-
 
 /**
  * This class implements the level.
@@ -28,6 +26,8 @@ public class LevelImpl implements Level {
 
     private static final int PLAYER_HEIGHT = 250;
     private static final int PLAYER_WIDTH = 250;
+    private static final int BACKGROUND_CONSTANT = 9;
+
     private final List<Entity> entities;
     private final Player player;
     private transient Image bg;
@@ -80,13 +80,12 @@ public class LevelImpl implements Level {
 
         final Rectangle bgr = new Rectangle(0, 0, Window.getWidth(), Window.getHeight());
 
-
         // set fill for rectangle
         final ImagePattern imagePattern = new ImagePattern(
                 this.bg,
                 -(this.getPlayerPosition().getX() / 10),
                 0,
-                Window.getHeight() * 16 / 9,
+                Window.getHeight() * 16 / BACKGROUND_CONSTANT,
                 Window.getHeight(),
                 false
         );
@@ -103,7 +102,8 @@ public class LevelImpl implements Level {
     public List<Node> renderEntities() {
         return Stream.of(this.entities.stream()
                 .filter(e -> e.isDisplayed(this.player.getPosition()))
-                .map(e -> e.render(this.player.getPosition()))).reduce(Stream::concat).orElseGet(Stream::empty).toList();
+                .map(e -> e.render(this.player.getPosition())))
+                .reduce(Stream::concat).orElseGet(Stream::empty).toList();
 
     }
 
@@ -237,7 +237,7 @@ public class LevelImpl implements Level {
     }
 
     /**
-     * Sets the background img.
+     * Sets the background image.
      *
      * @param bg the image to set
      */
