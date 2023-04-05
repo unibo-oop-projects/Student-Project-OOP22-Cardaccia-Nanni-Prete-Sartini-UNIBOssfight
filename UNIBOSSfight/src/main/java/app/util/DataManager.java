@@ -45,7 +45,7 @@ public class DataManager {
             throw new IOException(e);
         }
 
-        return createGsonBuilder().create().fromJson(json, BossLevel.class);//TODO CHANGE BACK TO LEVEL
+        return createGsonBuilder().create().fromJson(json, LevelImpl.class);
     }
 
     /**
@@ -55,7 +55,6 @@ public class DataManager {
      * @return a level without a boss
      * @throws Exception
      */
-
     public LevelImpl loadBossLevel(final String jsonFile) throws IOException {
         String json;
         try {
