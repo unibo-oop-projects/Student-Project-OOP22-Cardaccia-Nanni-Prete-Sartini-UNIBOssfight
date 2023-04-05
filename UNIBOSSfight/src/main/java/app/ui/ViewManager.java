@@ -15,7 +15,6 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -71,7 +70,7 @@ public class ViewManager {
     }
 
     /**
-     * Creates the logo of the game.
+     * Creates a logo with an image.
      *
      * @param layoutX the x layout of the logo
      * @param layoutY the y layout of the logo
@@ -104,6 +103,35 @@ public class ViewManager {
                 BackgroundRepeat.REPEAT,
                 BackgroundPosition.DEFAULT, null);
         pane.setBackground(new Background(background));
+    }
+
+//    public static void setBackground(final String url, final double width,
+//                                     final double height, final List<Label> labels) {
+//        labels.forEach(label -> {
+//            final BackgroundImage background = new BackgroundImage(new Image(url, width,
+//                    height, false, true),
+//                    BackgroundRepeat.NO_REPEAT,
+//                    BackgroundRepeat.NO_REPEAT,
+//                    BackgroundPosition.CENTER, null);
+//            label.setBackground(new Background(background));
+//        });
+//    }
+
+    /**
+     * Sets the font of the labels.
+     *
+     * @param url the url where to find the font to apply
+     * @param fontSize the font size
+     * @param labels the label on which the font is set
+     */
+    public static void setFont(final String url, final double fontSize, final List<Label> labels) {
+        labels.forEach(label -> {
+            try {
+                label.setFont(Font.loadFont(new FileInputStream(url), fontSize));
+            } catch (final FileNotFoundException e) {
+                label.setFont(Font.font("Verdana", fontSize));
+            }
+        });
     }
     private void createSubScenes() {
         this.scoreSubScene = new CustomizedSubScene();
