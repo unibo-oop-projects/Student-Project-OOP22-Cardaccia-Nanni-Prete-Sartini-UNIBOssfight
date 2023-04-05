@@ -11,6 +11,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import app.util.Window;
 import java.util.Optional;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * This class is an implementation of Entity.
@@ -71,6 +72,10 @@ public abstract class AbstractEntity implements Entity {
      * {@inheritDoc}
      */
     @Override
+    @SuppressFBWarnings(
+            value="EI_EXPOSE_REP",
+            justification="It is necessary for the motion of the game"
+    )
     public Transform getTransform() {
         return this.position;
     }
