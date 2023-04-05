@@ -191,7 +191,7 @@ public class LevelImpl implements Level {
      */
     @Override
     public void removeBullets() {
-        this.entities.removeIf(e -> e.getType().equals(Bullet.class.getName()) && !e.isDisplayed(this.getPlayerPosition())
+        this.entities.removeIf(e -> e.getType().equals(Bullet.class.getName()) && !((ActiveEntity)e).isUpdated(this.getPlayerPosition())
                 || e.getHealth().isDead());
     }
 }
