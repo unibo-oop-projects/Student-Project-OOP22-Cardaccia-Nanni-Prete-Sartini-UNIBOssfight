@@ -1,8 +1,10 @@
 package app.ui;
 
 import javafx.animation.FadeTransition;
+import javafx.scene.Group;
 import javafx.scene.SubScene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -10,15 +12,19 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.util.Duration;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 /**
  * This class models a custom SubScene with its own background and measures.
  */
 public class CustomizedSubScene extends SubScene {
 
-    private static final int WIDTH = 400;
-    private static final int HEIGHT = 300;
-    private static final int LAYOUTX = 325;
-    private static final int LAYOUTY = HEIGHT / 2;
+    private static final int WIDTH = 450;
+    private static final int HEIGHT = 350;
+    private static final int LAYOUTX = 300;
+    private static final int LAYOUTY = 150;
     private static final String BACKGROUND_IMAGE = "blue_panel.png";
 
     /**
@@ -49,5 +55,17 @@ public class CustomizedSubScene extends SubScene {
         transition.setFromValue(0);
         transition.setToValue(1);
         transition.play();
+    }
+
+    public void addImage(final String url) throws FileNotFoundException {
+        final InputStream stream = new FileInputStream(url);
+        final Image image = new Image(stream);
+        final ImageView imageView = new ImageView();
+        imageView.setImage(image);
+        imageView.setX(10);
+        imageView.setY(10);
+        imageView.setFitWidth(575);
+        imageView.setPreserveRatio(true);
+        final Group root = new Group(imageView);
     }
 }

@@ -2,6 +2,9 @@ package app.game;
 
 import app.core.entity.Entity;
 import app.core.level.Level;
+import app.impl.component.SpriteRenderer;
+import app.impl.component.TransformImpl;
+import app.impl.entity.Coin;
 import app.ui.ConfirmBox;
 import app.ui.CustomizedButton;
 import app.ui.MainMenu;
@@ -24,7 +27,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
@@ -36,6 +38,7 @@ import javafx.util.Duration;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Game extends Application {
@@ -51,8 +54,9 @@ public class Game extends Application {
     private InputManager inputManager;
     private Image image;
     private Image bg;
-    private ProgressBar progressBar = new ProgressBar(0);
-    private Label timeLabel = new Label();
+    private final ProgressBar progressBar = new ProgressBar(0);
+    private final Label timeLabel = new Label();
+    private final Label coinsLabel = new Label();
     private Paint imagePattern;
     private Paint imagePattern2;
     private final AnchorPane anchorPane = new AnchorPane();
@@ -152,14 +156,17 @@ public class Game extends Application {
     }
 
     private void initHUD() {
-        this.progressBar.setPrefSize(300, 30);
+        this.progressBar.setPrefSize(300, 50);
         this.progressBar.setLayoutX(30);
-        this.progressBar.setLayoutY(5);
-        this.progressBar.setStyle("-fx-accent: red;");
+        this.progressBar.setLayoutY(20);
+        this.progressBar.setStyle("#00bbf0");
 
-        this.timeLabel.setLayoutX(400);
         this.timeLabel.setLayoutY(5);
-        this.timeLabel.setBackground(Background.fill(Color.WHITE));
+
+        this.coinsLabel.setLayoutY(5);
+
+        ViewManager.setFont("src/main/resources/HUDfont.ttf", 50,
+                List.of(this.coinsLabel, this.timeLabel));
     }
 
     private void inputPoll() {
@@ -190,7 +197,7 @@ public class Game extends Application {
 
         // set fill for rectangle
         this.imagePattern = new ImagePattern(
-                bg,
+                this.bg,
                 -(this.currentLevel.getPlayerPosition().getX() / 10),
                 0,
                 Window.getHeight() * 16 / 9,
@@ -200,38 +207,47 @@ public class Game extends Application {
 
         bgr.setFill(this.imagePattern);
 
-        root.getChildren().addAll(bgr, progressBar, timeLabel);
+        this.root.getChildren().add(bgr);
 
-        root.getChildren().addAll(this.currentLevel.renderUniqueEntities());
-        this.currentLevel.renderEntities().forEach(e -> root.getChildren().add(e));
+        this.root.getChildren().addAll(this.currentLevel.renderUniqueEntities());
+        this.currentLevel.renderEntities().forEach(e -> this.root.getChildren().add(e));
 
         // create a Rectangle
-        final Rectangle rect = new Rectangle(0, Window.getHeight(), Window.getWidth(), image.getHeight());
+        final Rectangle rect = new Rectangle(0, Window.getHeight(),
+                Window.getWidth(), this.image.getHeight());
 
         // set fill for rectangle
         this.imagePattern = new ImagePattern(
-                image,
+                this.image,
                 -this.currentLevel.getPlayerPosition().getX(),
-                Window.getHeight() - image.getHeight(),
-                image.getWidth(), image.getHeight(),
+                Window.getHeight() - this.image.getHeight(),
+                this.image.getWidth(), this.image.getHeight(),
                 false
         );
 
         rect.setFill(this.imagePattern);
 
-        root.getChildren().add(rect);
+        this.root.getChildren().addAll(rect, this.progressBar,
+                this.timeLabel, this.coinsLabel);
     }
 
     private void renderHUD() {
-        this.progressBar.setProgress(this.currentLevel.getPlayer().getHealth().getValue() / 100.0);
-
         final long elapsed = System.currentTimeMillis() - this.startTime;
         final String timeStamp = String.format("%d:%d",
                 TimeUnit.MILLISECONDS.toMinutes(elapsed),
                 TimeUnit.MILLISECONDS.toSeconds(elapsed)
                 - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(elapsed)));
 
+        this.progressBar.setProgress(this.currentLevel.getPlayer().getHealth().getValue() / 100.0);
+        this.progressBar.setLayoutX(20);
+
         this.timeLabel.setText(timeStamp);
+        this.timeLabel.setLayoutX(Window.getWidth() - (this.timeLabel.getWidth() + 10));
+
+        this.coinsLabel.setText(Integer.toString(this.currentLevel
+                .getPlayer().getCoinsCollected()));
+        this.coinsLabel.setLayoutX((Window.getWidth() / 2)
+                - this.coinsLabel.getWidth() / 2);
     }
 
     // TODO creare copyOf del level
@@ -324,7 +340,6 @@ public class Game extends Application {
         GameOverStage(final Stage gameStage) {
             super();
             this.initModality(Modality.APPLICATION_MODAL);
-
             this.setOnCloseRequest(event -> gameStage.close());
 
             final AnchorPane pane = new AnchorPane();
