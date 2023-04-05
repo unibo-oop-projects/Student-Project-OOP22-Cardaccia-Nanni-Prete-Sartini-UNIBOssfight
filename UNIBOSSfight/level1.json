@@ -143,7 +143,7 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "coin.png",
+        "filename": "coin",
         "height": 50,
         "width": 50,
         "color": {
@@ -152,7 +152,7 @@
           "blue": 0.0,
           "opacity": 1.0
         },
-        "className": "app.impl.component.SpriteRenderer"
+        "className": "app.impl.component.LoopSpriteRenderer"
       },
       "health": {
         "maxHp": 100,
@@ -207,7 +207,7 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "coin.png",
+        "filename": "coin",
         "height": 50,
         "width": 50,
         "color": {
@@ -216,7 +216,7 @@
           "blue": 0.0,
           "opacity": 1.0
         },
-        "className": "app.impl.component.SpriteRenderer"
+        "className": "app.impl.component.LoopSpriteRenderer"
       },
       "health": {
         "maxHp": 100,
@@ -397,7 +397,7 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "coin.png",
+        "filename": "coin",
         "height": 50,
         "width": 50,
         "color": {
@@ -406,7 +406,7 @@
           "blue": 0.0,
           "opacity": 1.0
         },
-        "className": "app.impl.component.SpriteRenderer"
+        "className": "app.impl.component.LoopSpriteRenderer"
       },
       "health": {
         "maxHp": 100,
@@ -523,7 +523,7 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "coin.png",
+        "filename": "coin",
         "height": 50,
         "width": 50,
         "color": {
@@ -532,7 +532,7 @@
           "blue": 0.0,
           "opacity": 1.0
         },
-        "className": "app.impl.component.SpriteRenderer"
+        "className": "app.impl.component.LoopSpriteRenderer"
       },
       "health": {
         "maxHp": 100,
@@ -587,7 +587,7 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "coin.png",
+        "filename": "coin",
         "height": 50,
         "width": 50,
         "color": {
@@ -596,7 +596,7 @@
           "blue": 0.0,
           "opacity": 1.0
         },
-        "className": "app.impl.component.SpriteRenderer"
+        "className": "app.impl.component.LoopSpriteRenderer"
       },
       "health": {
         "maxHp": 100,
@@ -683,7 +683,7 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "coin.png",
+        "filename": "coin",
         "height": 50,
         "width": 50,
         "color": {
@@ -692,7 +692,7 @@
           "blue": 0.0,
           "opacity": 1.0
         },
-        "className": "app.impl.component.SpriteRenderer"
+        "className": "app.impl.component.LoopSpriteRenderer"
       },
       "health": {
         "maxHp": 100,
@@ -875,7 +875,7 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "coin.png",
+        "filename": "coin",
         "height": 50,
         "width": 50,
         "color": {
@@ -884,7 +884,7 @@
           "blue": 0.0,
           "opacity": 1.0
         },
-        "className": "app.impl.component.SpriteRenderer"
+        "className": "app.impl.component.LoopSpriteRenderer"
       },
       "health": {
         "maxHp": 100,
@@ -1003,7 +1003,7 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "coin.png",
+        "filename": "coin",
         "height": 50,
         "width": 50,
         "color": {
@@ -1012,7 +1012,7 @@
           "blue": 0.0,
           "opacity": 1.0
         },
-        "className": "app.impl.component.SpriteRenderer"
+        "className": "app.impl.component.LoopSpriteRenderer"
       },
       "health": {
         "maxHp": 100,
@@ -1099,7 +1099,7 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "coin.png",
+        "filename": "coin",
         "height": 50,
         "width": 50,
         "color": {
@@ -1108,7 +1108,7 @@
           "blue": 0.0,
           "opacity": 1.0
         },
-        "className": "app.impl.component.SpriteRenderer"
+        "className": "app.impl.component.LoopSpriteRenderer"
       },
       "health": {
         "maxHp": 100,
@@ -1161,7 +1161,7 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "coin.png",
+        "filename": "coin",
         "height": 50,
         "width": 50,
         "color": {
@@ -1170,7 +1170,7 @@
           "blue": 0.0,
           "opacity": 1.0
         },
-        "className": "app.impl.component.SpriteRenderer"
+        "className": "app.impl.component.LoopSpriteRenderer"
       },
       "health": {
         "maxHp": 100,
@@ -1257,7 +1257,7 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "coin.png",
+        "filename": "coin",
         "height": 50,
         "width": 50,
         "color": {
@@ -1266,7 +1266,7 @@
           "blue": 0.0,
           "opacity": 1.0
         },
-        "className": "app.impl.component.SpriteRenderer"
+        "className": "app.impl.component.LoopSpriteRenderer"
       },
       "health": {
         "maxHp": 100,
@@ -1385,7 +1385,7 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "coin.png",
+        "filename": "coin",
         "height": 50,
         "width": 50,
         "color": {
@@ -1394,7 +1394,7 @@
           "blue": 0.0,
           "opacity": 1.0
         },
-        "className": "app.impl.component.SpriteRenderer"
+        "className": "app.impl.component.LoopSpriteRenderer"
       },
       "health": {
         "maxHp": 100,
@@ -1449,7 +1449,7 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "coin.png",
+        "filename": "coin",
         "height": 50,
         "width": 50,
         "color": {
@@ -1458,7 +1458,7 @@
           "blue": 0.0,
           "opacity": 1.0
         },
-        "className": "app.impl.component.SpriteRenderer"
+        "className": "app.impl.component.LoopSpriteRenderer"
       },
       "health": {
         "maxHp": 100,
@@ -1513,7 +1513,7 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "coin.png",
+        "filename": "coin",
         "height": 50,
         "width": 50,
         "color": {
@@ -1522,7 +1522,7 @@
           "blue": 0.0,
           "opacity": 1.0
         },
-        "className": "app.impl.component.SpriteRenderer"
+        "className": "app.impl.component.LoopSpriteRenderer"
       },
       "health": {
         "maxHp": 100,
@@ -1577,7 +1577,7 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "coin.png",
+        "filename": "coin",
         "height": 50,
         "width": 50,
         "color": {
@@ -1586,7 +1586,7 @@
           "blue": 0.0,
           "opacity": 1.0
         },
-        "className": "app.impl.component.SpriteRenderer"
+        "className": "app.impl.component.LoopSpriteRenderer"
       },
       "health": {
         "maxHp": 100,
