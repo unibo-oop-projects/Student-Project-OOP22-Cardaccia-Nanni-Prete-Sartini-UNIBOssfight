@@ -89,6 +89,15 @@ public class Player extends ActiveEntity {
             this.getHealth().damage(e.getDamage());
         });
 
+        collider.addBehaviour(Bullet.class.getName(), e -> {
+            final Bullet b = (Bullet) e;
+            if (!b.getHealth().isDead() && !b.isPlayerBullet()) {
+                getRenderer().setIsDamaged();
+                getHealth().damage(b.getDamage());
+                b.getHealth().destroy();
+            }
+        });
+
         collider.addBehaviour(Platform.class.getName(), e -> Platform.jump(this, e));
 
         setCollider(collider);

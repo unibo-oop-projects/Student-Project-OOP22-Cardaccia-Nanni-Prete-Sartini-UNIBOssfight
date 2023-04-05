@@ -59,7 +59,6 @@ public class PatternRender extends SpriteRenderer {
             final int yDirection,
             final double rotation
     ) {
-        System.out.println("pattern renderer");
         try {
             final Rectangle rect = new Rectangle(
                     position.getX() - this.getWidth() / 2.0,
@@ -85,7 +84,6 @@ public class PatternRender extends SpriteRenderer {
             );
 
             rect.setFill(imagePattern);
-            //rect.setFill(Color.RED);
 
             return rect;
 
