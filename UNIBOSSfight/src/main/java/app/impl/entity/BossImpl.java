@@ -68,7 +68,6 @@ public class BossImpl extends Boss {
                 .addStopFromBottom()
                 .addStopFromSide()
                 .addFollow()
-                .addShooting()
                 .build());
     }
 
