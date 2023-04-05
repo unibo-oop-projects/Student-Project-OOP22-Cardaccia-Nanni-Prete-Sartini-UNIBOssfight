@@ -42,12 +42,12 @@ public interface Renderer {
      * Set the field isDamaged that is used to paint the rendered object with a red
      * shade.
      */
-    void setIsDamaged();
+    void setRemainingDamagedFrames();
 
     /**
      * Returns the isDamaged field.
      *
      * @return the field isDamaged reduced by one
      */
-    int getIsDamaged();
+    int getRemainingDamagedFrames();
 }

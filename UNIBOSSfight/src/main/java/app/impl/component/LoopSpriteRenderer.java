@@ -1,5 +1,8 @@
 package app.impl.component;
 
+import app.util.AppLogger;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -25,6 +28,7 @@ public class LoopSpriteRenderer extends SpriteRenderer {
     private transient int cont;
     private transient int contDelay;
     private transient int maxDelay;
+    private transient BooleanProperty isAnimationEnded; // NOPMD it's used like a boolean
 
     /**
      * Creates a new instance of the class SpriteRenderer.
@@ -49,6 +53,9 @@ public class LoopSpriteRenderer extends SpriteRenderer {
     @Override
     public Node render(final Point2D position, final int xDirection, final int yDirection, final double rotation) {
         this.setPrerendered(this.preRenderedSprites.get(cont % this.animationLength));
+        if (cont % this.animationLength == 0) {
+            this.isAnimationEnded.set(true);
+        }
 
         if (this.contDelay % this.maxDelay == 0) {
             this.cont++;
@@ -80,11 +87,21 @@ public class LoopSpriteRenderer extends SpriteRenderer {
                                 false,
                                 true);
                     } catch (FileNotFoundException ex) {
-                        throw new RuntimeException(ex);
+                        AppLogger.getLogger().severe(ex.getMessage());
+                        return null;
                     }
                 })
                 .map(this::createImageView)
                 .toList();
+
+        this.isAnimationEnded = new SimpleBooleanProperty(true);
+
+        this.isAnimationEnded.addListener((observable, oldValue, newValue) -> {
+            if (this.isAnimationEnded.get()) {
+                this.cont = 0;
+                this.contDelay = 0;
+            }
+        });
     }
 
     /**
@@ -104,6 +121,24 @@ public class LoopSpriteRenderer extends SpriteRenderer {
     public void setAnimationLength(final int animationLength) {
         this.animationLength = animationLength;
         this.maxDelay = LoopSpriteRenderer.ANIMATION_DURATION / this.animationLength;
+    }
+
+    /**
+     * Returns the BooleanProperty that specifies if the animation is ended.
+     *
+     * @return the BooleanProperty
+     */
+    protected BooleanProperty getIsAnimationEnded() {
+        return this.isAnimationEnded;
+    }
+
+    /**
+     * Sets the BooleanProperty that specifies if the animation is ended.
+     *
+     * @param isAnimationEnded the BooleanProperty
+     */
+    protected void setIsAnimationEnded(final BooleanProperty isAnimationEnded) {
+        this.isAnimationEnded = isAnimationEnded;
     }
 
     /**
