@@ -57,7 +57,6 @@ public class ViewManager {
         createSubScenes();
         createButtons();
         setBackground("blue.png", BACKGROUND_WIDTH, BACKGROUND_HEIGHT, mainPane);
-        //createLogo(325, 150, "UNIBOssfight.png", mainPane);
     }
 
     /**
@@ -104,18 +103,6 @@ public class ViewManager {
                 BackgroundPosition.DEFAULT, null);
         pane.setBackground(new Background(background));
     }
-
-//    public static void setBackground(final String url, final double width,
-//                                     final double height, final List<Label> labels) {
-//        labels.forEach(label -> {
-//            final BackgroundImage background = new BackgroundImage(new Image(url, width,
-//                    height, false, true),
-//                    BackgroundRepeat.NO_REPEAT,
-//                    BackgroundRepeat.NO_REPEAT,
-//                    BackgroundPosition.CENTER, null);
-//            label.setBackground(new Background(background));
-//        });
-//    }
 
     /**
      * Sets the font of the labels.

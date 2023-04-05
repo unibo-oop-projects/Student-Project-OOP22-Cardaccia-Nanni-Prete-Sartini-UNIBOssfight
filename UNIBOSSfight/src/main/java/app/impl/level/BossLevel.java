@@ -87,7 +87,7 @@ public class BossLevel extends LevelImpl {
         try {
             this.setBg(new Image(new FileInputStream("assets/stages/aula-magna.png")));
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
 
         final BossFactory bossFactory = new BossFactoryImpl();

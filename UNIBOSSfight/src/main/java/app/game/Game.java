@@ -108,8 +108,8 @@ public class Game extends Application {
         FileInputStream input;
         try {
             input = new FileInputStream("assets/ground/ground.png");
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+        } catch (final FileNotFoundException e) {
+            throw new IllegalStateException(e);
         }
 
         this.image = new Image(input);
