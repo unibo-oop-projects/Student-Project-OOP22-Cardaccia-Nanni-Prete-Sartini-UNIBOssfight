@@ -12,6 +12,13 @@ import java.util.List;
 public interface Level {
 
     /**
+     * Returns the number of the level.
+     *
+     * @return the number of the level
+     */
+    int getLevelNumber();
+
+    /**
      * Returns the list of the entities in the level.
      *
      * @return the list of all entities
@@ -64,7 +71,6 @@ public interface Level {
      * @return the node of the weapon
      */
     Node renderWeapon();
-
 
     /**
      * Returns the weapon and the player rendered separately.
@@ -119,7 +125,7 @@ public interface Level {
     boolean isOver();
 
     /**
-     * Function that establishes if the player reache the end of the level
+     * Function that establishes if the player reach the end of the level.
      *
      * @return true if the player reaches the end of the level
      */
@@ -129,4 +135,11 @@ public interface Level {
      * Removes destroyed and not rendered Bullets in the level.
      */
     void removeBullets();
+
+    /**
+     * Returns the count of the enemies defeated from the player in the level.
+     *
+     * @return the defeated enemies number
+     */
+    int getDefeatedEnemiesCount();
 }

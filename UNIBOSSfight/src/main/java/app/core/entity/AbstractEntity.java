@@ -25,7 +25,7 @@ public abstract class AbstractEntity implements Entity {
     private final Transform position;
     private transient Hitbox hitbox;
     private final Renderer renderer;
-    public Health health;
+    private Health health;
     private transient Collider collider;
 
     /**

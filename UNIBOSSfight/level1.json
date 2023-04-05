@@ -1,4 +1,6 @@
 {
+  "levelNumber": 0,
+  "endPosition": 8000,
   "entities": [
     {
       "className": "app.impl.entity.Wall",

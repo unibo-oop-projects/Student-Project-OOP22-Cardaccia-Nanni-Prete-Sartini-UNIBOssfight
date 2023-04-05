@@ -20,9 +20,9 @@ public class DataManager {
     /**
      * This method get the content of the json file to load.
      *
-     * @param path
+     * @param path the path to the file to load
      * @return the json string of the level.
-     * @throws IOException
+     * @throws IOException if an error with the file occurs
      */
     private String readFile(final String path) throws IOException {
         final byte[] encoded = Files.readAllBytes(Paths.get(path));
@@ -32,9 +32,9 @@ public class DataManager {
     /**
      * Loads a level from the given json file.
      *
-     * @param jsonFile
+     * @param jsonFile the name of the file that contains the level
      * @return a level without a boss
-     * @throws Exception
+     * @throws IOException input output exception
      */
     public LevelImpl loadLevel(final String jsonFile) throws IOException {
         String json;
@@ -51,9 +51,9 @@ public class DataManager {
     /**
      * Loads a level from the given json file.
      *
-     * @param jsonFile
+     * @param jsonFile the name of the file to load
      * @return a level without a boss
-     * @throws Exception
+     * @throws IOException input output exception
      */
     public LevelImpl loadBossLevel(final String jsonFile) throws IOException {
         String json;
@@ -86,7 +86,7 @@ public class DataManager {
     /**
      * Serializes the level and saves it in a json file.
      *
-     * @param level
+     * @param level the level to serialize
      */
     public void serializeLevel(final Level level) throws IOException {
         final String jsonString = new GsonBuilder()

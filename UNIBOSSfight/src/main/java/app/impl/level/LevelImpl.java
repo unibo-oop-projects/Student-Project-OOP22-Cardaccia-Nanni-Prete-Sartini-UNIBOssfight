@@ -1,6 +1,7 @@
 package app.impl.level;
 
 import app.core.entity.ActiveEntity;
+import app.core.entity.Enemy;
 import app.core.entity.Entity;
 import app.core.level.Level;
 import app.impl.component.TransformImpl;
@@ -17,6 +18,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -28,21 +30,34 @@ public class LevelImpl implements Level {
     private static final int PLAYER_WIDTH = 250;
     private static final int BACKGROUND_CONSTANT = 9;
 
+    private int levelNumber;
     private final List<Entity> entities;
     private final Player player;
+    private transient int defeatedEnemiesCount;
     private transient Image bg;
-    private int endPosition;
+    private final int endPosition;
 
     /**
      * Creates a new instance of the level.
      */
     public LevelImpl() {
-        this.endPosition = 10000;
+        this.endPosition = 10_000;
         this.entities = new ArrayList<>();
         this.player = new Player(
                 new TransformImpl(new Point2D(0, 0), 0),
                 PLAYER_HEIGHT, PLAYER_WIDTH, "guido"
         );
+
+        this.player.setMaxYSpeed(20);
+        this.player.setMaxXSpeed(20);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getLevelNumber() {
+        return this.levelNumber;
     }
 
     /**
@@ -61,6 +76,9 @@ public class LevelImpl implements Level {
                     behaviour.ifPresent(b -> e.update(b.apply(getPlayer(), e)));
                 });
 
+        this.defeatedEnemiesCount += this.entities.stream()
+                .filter(e -> e instanceof Enemy && e.getHealth().isDead())
+                .count();
         this.entities.removeIf(e -> e.getHealth().isDead());
 
         removeBullets();
@@ -102,10 +120,9 @@ public class LevelImpl implements Level {
      */
     @Override
     public List<Node> renderEntities() {
-        return Stream.of(this.entities.stream()
-                .filter(e -> e.isDisplayed(this.player.getPosition()))
-                .map(e -> e.render(this.player.getPosition())))
-                .reduce(Stream::concat).orElseGet(Stream::empty).toList();
+        return Optional.of(this.entities.stream()
+            .filter(e -> e.isDisplayed(this.player.getPosition()))
+            .map(e -> e.render(this.player.getPosition()))).orElseGet(Stream::empty).toList();
 
     }
 
@@ -250,5 +267,13 @@ public class LevelImpl implements Level {
      */
     protected void setBg(final Image bg) {
         this.bg = bg;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getDefeatedEnemiesCount() {
+        return this.defeatedEnemiesCount;
     }
 }

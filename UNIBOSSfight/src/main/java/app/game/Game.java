@@ -68,6 +68,17 @@ public class Game extends Application {
     private long startTime;
 
     /**
+     * Creates a new instance of the class Game
+     * by loading the level from the given json file.
+     *
+     * @param filename the file of the level
+     * @throws IOException when loading errors occurs
+     */
+    public Game(final String filename) throws IOException {
+        this.currentLevel = new DataManager().loadLevel(filename);
+    }
+
+    /**
      * Creates a new instance of the class Game,
      * by loading the level from the json file.
      *
@@ -75,7 +86,7 @@ public class Game extends Application {
      * constructor if problems while reading the file are detected.
      */
     public Game() throws IOException {
-        this.currentLevel = new DataManager().loadLevel("output.json");
+        this.currentLevel = new DataManager().loadLevel("level1.json");
     }
 
     /**
@@ -98,7 +109,7 @@ public class Game extends Application {
 
         initHUD();
 
-        FileInputStream input = null;
+        FileInputStream input;
         try {
             input = new FileInputStream("assets/ground/ground.png");
         } catch (FileNotFoundException e) {
@@ -163,8 +174,9 @@ public class Game extends Application {
         final Timeline tl = new Timeline(new KeyFrame(Duration.millis(FRAME_DURATION),
             e -> {
                 if (!this.currentLevel.isOver()) {
-                    if (this.currentLevel.isLevelEnded())
+                    if (this.currentLevel.isLevelEnded()) {
                         System.out.println("HAI VINTOOOOOOOOO");
+                    }
                     run();
                 } else {
                     gameOver.set(true);
@@ -255,7 +267,10 @@ public class Game extends Application {
                 TimeUnit.MILLISECONDS.toSeconds(elapsed)
                 - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(elapsed)));
 
-        this.progressBar.setProgress(this.currentLevel.getPlayer().getHealth().getValue() / 100.0);
+        this.progressBar.setProgress(
+                (double) this.currentLevel.getPlayer().getHealth().getValue()
+                        / this.currentLevel.getPlayer().getHealth().getMaxValue()
+        );
         this.progressBar.setLayoutX(PROGRESS_BAR_LAYOUTX);
 
         this.timeLabel.setText(timeStamp);
@@ -276,7 +291,6 @@ public class Game extends Application {
         private final Scene scene;
         private boolean isAPressed = false;
         private boolean isDPressed = false;
-
         private boolean isSpacePressed = false;
 
         InputManager(final Scene scene) {
