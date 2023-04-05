@@ -1,14 +1,15 @@
 package app.core.entity;
 
 import app.core.component.Behaviour;
+import app.core.component.Collider;
 import app.core.component.Renderer;
 import app.core.component.Transform;
 import app.impl.builder.BehaviourBuilderImpl;
+import app.impl.component.ColliderImpl;
+import app.impl.entity.Platform;
 import app.util.Acceleration;
 import app.util.Window;
 import javafx.geometry.Point2D;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class models an Entity that can move and performs actions.
@@ -164,6 +165,12 @@ public abstract class ActiveEntity extends AbstractEntity {
     @Override
     public void init() {
         super.init();
+
+        final Collider collider = new ColliderImpl();
+
+        collider.addBehaviour(Platform.class.getName(), e -> Platform.jump(this, e));
+
+        setCollider(collider);
     }
 
     /**

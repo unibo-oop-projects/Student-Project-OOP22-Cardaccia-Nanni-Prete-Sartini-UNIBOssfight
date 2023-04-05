@@ -1,12 +1,10 @@
 package app.impl.entity;
 
-import app.core.component.Collider;
 import app.core.component.Transform;
 import app.core.component.Weapon;
 import app.core.entity.ActiveEntity;
 import app.impl.builder.BehaviourBuilderImpl;
 import app.impl.component.AnimationSpriteRenderer;
-import app.impl.component.ColliderImpl;
 import app.impl.factory.WeaponFactoryImpl;
 import app.util.Angle;
 import javafx.geometry.Point2D;
@@ -28,10 +26,10 @@ public class Player extends ActiveEntity {
     /**
      * Creates a new instance of Player.
      *
-     * @param position
-     * @param height
-     * @param width
-     * @param filename
+     * @param position the initial position
+     * @param height the height of the entity
+     * @param width the width of the entity
+     * @param filename the name of the image to render
      */
     public Player(final Transform position, final Integer height,
                   final Integer width, final String filename) {
@@ -60,23 +58,21 @@ public class Player extends ActiveEntity {
                 .addStopFromSide()
                 .build());
 
-        final Collider collider = new ColliderImpl();
-
-        collider.addBehaviour(Wall.class.getName(), e -> {
+        getCollider().ifPresent(c -> c.addBehaviour(Wall.class.getName(), e -> {
             Wall.stop(this, e);
             if (this.getHitbox().getCollisionSideOnY(e.getPosition().getY()) < 0
                     && Math.abs(e.getPosition().getX() - this.getPosition().getX())
                     < e.getWidth() / 2.0 + this.getWidth() / 2.0) {
                 setYSpeed(0);
             }
-        });
+        }));
 
-        collider.addBehaviour(Coin.class.getName(), e -> {
+        getCollider().ifPresent(c -> c.addBehaviour(Coin.class.getName(), e -> {
             this.coinsCollected++;
             e.getHealth().destroy();
-        });
+        }));
 
-        collider.addBehaviours(List.of(
+        getCollider().ifPresent(c -> c.addBehaviours(List.of(
                 EnemyImpl.class.getName(),
                 BossImpl.class.getName(),
                 HarmfulObstacle.class.getName()), e -> {
@@ -87,17 +83,22 @@ public class Player extends ActiveEntity {
                             * getHitbox().getCollisionSideOnX(e.getPosition().getX())
             );
             this.getHealth().damage(e.getDamage());
-        });
+        }));
 
-        collider.addBehaviour(Platform.class.getName(), e -> Platform.jump(this, e));
-
-        setCollider(collider);
+        getCollider().ifPresent(c -> c.addBehaviour(Bullet.class.getName(), e -> {
+            final Bullet b = (Bullet) e;
+            if (!b.getHealth().isDead() && !b.isPlayerBullet()) {
+                getRenderer().setIsDamaged();
+                getHealth().damage(b.getDamage());
+                b.getHealth().destroy();
+            }
+        }));
     }
 
     /**
      * Rotates the weapon according to the mouse coordinates.
      *
-     * @param mousePosition
+     * @param mousePosition the mouse position
      */
     public void rotateWeapon(final Point2D mousePosition) {
 
@@ -113,7 +114,7 @@ public class Player extends ActiveEntity {
     /**
      * Creates a new bullet pointing the current mouse position.
      *
-     * @param target
+     * @param target the target point of the shooting
      */
     public Bullet shoot(final Point2D target) {
         final Bullet newBullet = this.weapon.fire(target);
