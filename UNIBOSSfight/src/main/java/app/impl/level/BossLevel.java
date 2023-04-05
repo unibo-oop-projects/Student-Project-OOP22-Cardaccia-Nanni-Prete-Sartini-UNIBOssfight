@@ -18,14 +18,7 @@ public class BossLevel extends LevelImpl {
     private static final int BOSS_X_POSITION = 1600;
     private static final int BOSS_Y_POSITION = 300;
     private transient Boss boss;
-    private int rateOfFireCounter = 0;
-
-    /**
-     * Initialization of a new BossLevel instance.
-     */
-    public BossLevel() {
-        super();
-    }
+    private int rateOfFireCounter;
 
     /**
      * Method that return the node to Render the Boss.
@@ -52,7 +45,7 @@ public class BossLevel extends LevelImpl {
      */
     @Override
     public List<Node> renderUniqueEntities() {
-        List<Node> nodes = super.renderUniqueEntities();
+        final List<Node> nodes = super.renderUniqueEntities();
         nodes.addAll(List.of(renderBoss(this.getPlayerPosition()), renderBossWeapon(this.getPlayerPosition())));
 
         return nodes;
@@ -77,7 +70,7 @@ public class BossLevel extends LevelImpl {
         }
 
         //TODO beahaviour
-        var behaviour = boss.getBehaviour().getFollowingBehaviour();
+        final var behaviour = boss.getBehaviour().getFollowingBehaviour();
         behaviour.ifPresent(b -> boss.update(b.apply(getPlayer(), boss)));
 
     }
@@ -88,7 +81,7 @@ public class BossLevel extends LevelImpl {
     @Override
     public void init() {
         super.init();
-        BossFactory bossFactory = new BossFactoryImpl();
+        final BossFactory bossFactory = new BossFactoryImpl();
 
         this.boss = bossFactory.firstBoss(new TransformImpl(new Point2D(BOSS_X_POSITION, BOSS_Y_POSITION), 0));
         this.boss.init();

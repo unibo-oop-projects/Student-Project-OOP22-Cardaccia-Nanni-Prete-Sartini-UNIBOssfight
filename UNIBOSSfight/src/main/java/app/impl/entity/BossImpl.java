@@ -7,7 +7,6 @@ import app.core.entity.Boss;
 import app.impl.builder.BehaviourBuilderImpl;
 import app.impl.component.WeaponImpl;
 import app.impl.factory.WeaponFactoryImpl;
-import app.util.AppLogger;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 
@@ -33,7 +32,7 @@ public class BossImpl extends Boss {
         this.setMaxXSpeed(1);
         this.setMaxYSpeed(1);
 
-        rateOfFire = DEFAULT_RATE_OF_FIRE;
+        this.rateOfFire = DEFAULT_RATE_OF_FIRE;
     }
 
     /**
@@ -58,18 +57,10 @@ public class BossImpl extends Boss {
      * {@inheritDoc}
      */
     @Override
-    public Node render(final Point2D position) {
-        return super.render(position);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void init() {
         super.init();
 
-        WeaponFactory weaponFactory = new WeaponFactoryImpl();
+        final WeaponFactory weaponFactory = new WeaponFactoryImpl();
         this.weapon = weaponFactory.getBigBulletGun(this.getTransform(), false);
 
         setBehaviour(new BehaviourBuilderImpl()
@@ -104,13 +95,7 @@ public class BossImpl extends Boss {
      */
     @Override
     public Node renderWeapon(final Point2D playerPosition) {
-        try {
-            return this.weapon.render(playerPosition, 0, 0);
-        } catch (Exception e) {
-            AppLogger.getLogger().warning("ERROR cannot load resource " + e);
-        }
-
-        return null;
+        return this.weapon.render(playerPosition, 0, 0);
     }
 
     /**
