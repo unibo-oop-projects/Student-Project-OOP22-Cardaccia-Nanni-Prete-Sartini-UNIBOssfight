@@ -17,6 +17,15 @@ import app.util.Window;
 public class WeaponFactoryImpl implements WeaponFactory {
 
     private final BulletFactory bulletFactory = new BulletFactoryImpl();
+    private static final int PLAYER_WEAPON_HEIGHT = 50;
+    private static final int PLAYER_WEAPON_WIDTH = 170;
+    private static final int PLAYER_WEAPON_OFFSET = 55;
+    private static final int BIG_WEAPON_HEIGHT = 150;
+    private static final int BIG_WEAPON_WIDTH = 500;
+    private static final int BIG_WEAPON_OFFSET = 125;
+    private static final int METEOR_WEAPON_HEIGHT = 150;
+    private static final int METEOR_WEAPON_WIDTH = 500;
+    private static final int METEOR_WEAPON_OFFSET = 125;
 
     /**
      * {@inheritDoc}
@@ -24,7 +33,8 @@ public class WeaponFactoryImpl implements WeaponFactory {
     @Override
     public WeaponImpl getPlayerWeapon(final Transform playerPos, final boolean isPlayerWeapon) {
 
-        return new WeaponImpl(playerPos, new SpriteRenderer(50, 170, Color.RED, "gun.png"), 55) {
+        return new WeaponImpl(playerPos, new SpriteRenderer(PLAYER_WEAPON_HEIGHT, PLAYER_WEAPON_WIDTH,
+                Color.RED, "gun.png"), PLAYER_WEAPON_OFFSET) {
 
             @Override
             public Bullet fire(final Point2D target) {
@@ -39,7 +49,8 @@ public class WeaponFactoryImpl implements WeaponFactory {
      */
     @Override
     public WeaponImpl getBigBulletGun(final Transform userPos, final boolean isPlayerWeapon) {
-        return new WeaponImpl(userPos, new SpriteRenderer(300, 700, Color.RED, "gun.png"), 125) {
+        return new WeaponImpl(userPos, new SpriteRenderer(BIG_WEAPON_HEIGHT, BIG_WEAPON_WIDTH,
+                Color.RED, "gun.png"), BIG_WEAPON_OFFSET) {
 
             @Override
             public Bullet fire(final Point2D target) {
@@ -53,8 +64,8 @@ public class WeaponFactoryImpl implements WeaponFactory {
      */
     @Override
     public WeaponImpl getMeteorGun(final Transform userPos, final boolean isPlayerWeapon) {
-        return new WeaponImpl(userPos, new SpriteRenderer(200, 500,
-                Color.RED, "gun.png"), 125) {
+        return new WeaponImpl(userPos, new SpriteRenderer(METEOR_WEAPON_HEIGHT, METEOR_WEAPON_WIDTH,
+                Color.RED, "gun.png"), METEOR_WEAPON_OFFSET) {
 
             @Override
             public Bullet fire(final Point2D target) {
