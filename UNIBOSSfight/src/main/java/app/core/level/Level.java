@@ -38,6 +38,13 @@ public interface Level {
     void updatePlayer(Entity.Inputs input);
 
     /**
+     * Returns the rendered background.
+     *
+     * @return the node of the background
+     */
+    Node renderBackground();
+
+    /**
      * Calls the render method on all entities.
      *
      * @return the list of nodes of the entities

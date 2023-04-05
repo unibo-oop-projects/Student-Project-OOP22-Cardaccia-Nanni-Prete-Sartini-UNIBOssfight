@@ -74,17 +74,6 @@ public class BehaviourBuilderImpl implements BehaviourBuilder {
      * {@inheritDoc}
      */
     @Override
-    public BehaviourBuilder addShooting() {
-        this.behaviour.setShootingBehaviour((boss, player) -> {
-            boss.getWeapon().fire(player.getPosition());
-        });
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Behaviour build() {
         if (built) {
             throw new IllegalStateException();

@@ -28,11 +28,6 @@ public interface BehaviourBuilder {
     BehaviourBuilder addFollow();
 
     /**
-     * @return this, and add a behaviour to shoot the player
-     */
-    BehaviourBuilder addShooting();
-
-    /**
      * @return the Behaviour built with all of the above
      */
     Behaviour build();

@@ -41,7 +41,7 @@ public abstract class Enemy extends ActiveEntity {
         getCollider().ifPresent(c -> c.addBehaviour(Bullet.class.getName(), e -> {
             final Bullet b = (Bullet) e;
             if (!b.getHealth().isDead() && b.isPlayerBullet()) {
-                getRenderer().setIsDamaged();
+                getRenderer().setRemainingDamagedFrames();
                 getHealth().damage(b.getDamage());
                 b.getHealth().destroy();
             }
