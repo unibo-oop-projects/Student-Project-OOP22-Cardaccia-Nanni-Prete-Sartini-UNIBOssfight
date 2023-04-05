@@ -22,6 +22,7 @@ public class AnimationSpriteRenderer extends LoopSpriteRenderer {
 
     private static final String ANIMATION_IDLE = "idle";
     private static final String ANIMATION_WALK = "walk";
+    private static final String ANIMATION_ATTACK = "attack";
 
     private transient Map<String, List<ImageView>> animations;
     private transient String previousAnimation;
@@ -70,7 +71,7 @@ public class AnimationSpriteRenderer extends LoopSpriteRenderer {
             }
         });
         this.animations = new HashMap<>();
-        final List<String> animations = List.of(ANIMATION_IDLE, ANIMATION_WALK);
+        final List<String> animations = List.of(ANIMATION_IDLE, ANIMATION_WALK, ANIMATION_ATTACK);
         animations.forEach(e -> {
 
             final String pathname = "assets/" + this.getFilename() +  "/" + e;
