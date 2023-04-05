@@ -25,7 +25,6 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
@@ -45,7 +44,6 @@ public class Game extends Application {
 
     private static final double FRAME_RATE = 60;
     private static final double FRAME_DURATION = 1000 / FRAME_RATE;
-    private static final int BACKGROUND_CONSTANT = 9;
     private static final int MIN_WINDOW_HEIGHT = 600;
     private static final int MIN_WINDOW_WIDTH = 800;
     private static final int PROGRESS_BAR_HEIGHT = 50;
