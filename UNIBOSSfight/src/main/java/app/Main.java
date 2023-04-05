@@ -1,7 +1,6 @@
 package app;
 
-import app.game.Prova;
-import app.ui.MainMenu;
+import app.game.Game;
 import javafx.application.Application;
 
 /**
@@ -17,6 +16,6 @@ public final class Main {
      */
     public static void main(final String[] args) {
         //Application.launch(MainMenu.class, args);
-        Application.launch(Prova.class, args);
+        Application.launch(Game.class, args);
     }
 }
