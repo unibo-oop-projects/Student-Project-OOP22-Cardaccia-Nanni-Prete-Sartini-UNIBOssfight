@@ -142,7 +142,6 @@ public class Game extends Application {
         tl.setCycleCount(Animation.INDEFINITE);
 
         tl.play();
-        initLevel();
         this.currentLevel.init();
         this.startTime = System.currentTimeMillis();
     }
