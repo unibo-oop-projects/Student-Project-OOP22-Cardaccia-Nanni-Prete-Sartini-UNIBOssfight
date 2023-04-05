@@ -45,6 +45,7 @@ public class Game extends Application {
 
     private static final double FRAME_RATE = 60;
     private static final double FRAME_DURATION = 1000 / FRAME_RATE;
+    private static final int BACKGROUND_CONSTANT = 9;
     private static final int MIN_WINDOW_HEIGHT = 600;
     private static final int MIN_WINDOW_WIDTH = 800;
     private static final int PROGRESS_BAR_HEIGHT = 50;
@@ -230,7 +231,7 @@ public class Game extends Application {
                 this.bg,
                 -(this.currentLevel.getPlayerPosition().getX() / 10),
                 0,
-                Window.getHeight() * 16 / 9,
+                Window.getHeight() * 16 / BACKGROUND_CONSTANT,
                 Window.getHeight(),
                 false
         );
@@ -350,6 +351,11 @@ public class Game extends Application {
     private static class GameOverStage extends Stage {
         private static final int SCENE_WIDTH = 500;
         private static final int SCENE_HEIGHT = 300;
+        private static final int LOGO_LAYOUTX = 150;
+        private static final int LOGO_LAYOUTY = 15;
+        private static final int BUTTON_LAYOUTX = 155;
+        private static final int HOME_BUTTON_LAYOUTY = 140;
+        private static final int RESTART_BUTTON_LAYOUTY = 210;
 
         GameOverStage(final Stage gameStage) {
             super();
@@ -381,13 +387,13 @@ public class Game extends Application {
                 }
             }));
 
-            ViewManager.createLogo(150, 15, "gameover.png", pane);
+            ViewManager.createLogo(LOGO_LAYOUTX, LOGO_LAYOUTY, "gameover.png", pane);
             ViewManager.setBackground("blue.png", SCENE_WIDTH, SCENE_HEIGHT, pane);
 
-            homeButton.setLayoutX(155);
-            homeButton.setLayoutY(140);
-            restartButton.setLayoutX(155);
-            restartButton.setLayoutY(210);
+            homeButton.setLayoutX(BUTTON_LAYOUTX);
+            homeButton.setLayoutY(HOME_BUTTON_LAYOUTY);
+            restartButton.setLayoutX(BUTTON_LAYOUTX);
+            restartButton.setLayoutY(RESTART_BUTTON_LAYOUTY);
 
             pane.getChildren().addAll(homeButton, restartButton);
             setScene(new Scene(pane, SCENE_WIDTH, SCENE_HEIGHT));
