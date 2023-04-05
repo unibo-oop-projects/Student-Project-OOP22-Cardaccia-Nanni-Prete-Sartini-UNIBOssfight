@@ -1,5 +1,6 @@
 package app.impl.component;
 
+import app.util.AppLogger;
 import app.util.Window;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -88,7 +89,8 @@ public class PatternRender extends SpriteRenderer {
             return rect;
 
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            AppLogger.getLogger().severe(e.getMessage());
+            return null;
         }
     }
 }

@@ -7,7 +7,10 @@ import app.impl.component.TransformImpl;
 import app.impl.factory.BossFactoryImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
@@ -81,7 +84,12 @@ public class BossLevel extends LevelImpl {
     @Override
     public void init() {
         super.init();
-        final BossFactory bossFactory = new BossFactoryImpl();
+        try {
+            this.setBg(new Image(new FileInputStream("assets/stages/aula-magna.png")));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        BossFactory bossFactory = new BossFactoryImpl();
 
         this.boss = bossFactory.firstBoss(new TransformImpl(new Point2D(BOSS_X_POSITION, BOSS_Y_POSITION), 0));
         this.boss.init();

@@ -1,6 +1,7 @@
 package app.impl.component;
 
 import app.util.AppLogger;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -20,6 +21,7 @@ import java.util.stream.IntStream;
 public class AnimationSpriteRenderer extends LoopSpriteRenderer {
     private transient Map<String, List<ImageView>> animations;
     private transient String previousAnimation;
+    private String animation;
 
 
     /**
@@ -42,10 +44,9 @@ public class AnimationSpriteRenderer extends LoopSpriteRenderer {
      */
     public void setAnimation(final String animation) {
         if (this.previousAnimation == null || !this.previousAnimation.equals(animation)) {
-            resetAnimation();
-            setPreRenderedSprites(this.animations.get(animation));
-            setAnimationLength(this.animations.get(animation).size());
-            this.previousAnimation = animation;
+            this.getIsAnimationEnded().set(false);
+            this.animation = animation;
+
         }
     }
 
@@ -54,6 +55,16 @@ public class AnimationSpriteRenderer extends LoopSpriteRenderer {
      */
     @Override
     public void init() {
+        this.setIsAnimationEnded(new SimpleBooleanProperty(true));
+
+        this.getIsAnimationEnded().addListener((observable, oldValue, newValue) -> {
+            if (this.getIsAnimationEnded().get()) {
+                resetAnimation();
+                setPreRenderedSprites(this.animations.get(animation));
+                setAnimationLength(this.animations.get(animation).size());
+                this.previousAnimation = animation;
+            }
+        });
         this.animations = new HashMap<>();
         final List<String> animations = List.of("idle", "walk");
         animations.forEach(e -> {
@@ -75,12 +86,16 @@ public class AnimationSpriteRenderer extends LoopSpriteRenderer {
                                     true);
                         } catch (FileNotFoundException ex) {
                             AppLogger.getLogger().severe(ex.getMessage());
-                            throw (RuntimeException) new RuntimeException(ex);
+                            return null;
                         }
                     })
                     .map(this::createImageView)
                     .toList();
             this.animations.put(e, preRenderedSprites);
         });
+        this.animation = "idle";
+        setPreRenderedSprites(this.animations.get("idle"));
+        setAnimationLength(this.animations.get("idle").size());
+
     }
 }

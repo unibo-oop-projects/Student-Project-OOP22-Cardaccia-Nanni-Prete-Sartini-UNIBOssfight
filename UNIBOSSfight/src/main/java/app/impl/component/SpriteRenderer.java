@@ -63,7 +63,7 @@ public class SpriteRenderer extends RendererImpl {
             prerendered.setEffect(null);
 
 
-            if (this.getIsDamaged() > 0) {
+            if (this.getRemainingDamagedFrames() > 0) {
                 final Blend blend = new Blend();
                 final ColorInput topInput = new ColorInput(position.getX() - getWidth() / 2.0,
                         Window.getHeight() - position.getY() - getHeight(),

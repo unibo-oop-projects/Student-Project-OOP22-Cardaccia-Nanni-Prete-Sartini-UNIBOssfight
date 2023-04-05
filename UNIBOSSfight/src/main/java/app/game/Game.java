@@ -222,23 +222,10 @@ public class Game extends Application {
     private void render() {
         this.root.getChildren().clear();
 
-        final Rectangle bgr = new Rectangle(0, 0, Window.getWidth(), Window.getHeight());
-
         renderHUD();
 
-        // set fill for rectangle
-        Paint imagePattern = new ImagePattern(
-                this.bg,
-                -(this.currentLevel.getPlayerPosition().getX() / 10),
-                0,
-                Window.getHeight() * 16 / BACKGROUND_CONSTANT,
-                Window.getHeight(),
-                false
-        );
+        root.getChildren().addAll(this.currentLevel.renderBackground());
 
-        bgr.setFill(imagePattern);
-
-        this.root.getChildren().add(bgr);
         this.root.getChildren().addAll(this.currentLevel.renderUniqueEntities());
         this.currentLevel.renderEntities().forEach(e -> this.root.getChildren().add(e));
 
@@ -247,7 +234,7 @@ public class Game extends Application {
                 Window.getWidth(), this.image.getHeight());
 
         // set fill for rectangle
-        imagePattern = new ImagePattern(
+        ImagePattern imagePattern = new ImagePattern(
                 this.image,
                 -this.currentLevel.getPlayerPosition().getX(),
                 Window.getHeight() - this.image.getHeight(),

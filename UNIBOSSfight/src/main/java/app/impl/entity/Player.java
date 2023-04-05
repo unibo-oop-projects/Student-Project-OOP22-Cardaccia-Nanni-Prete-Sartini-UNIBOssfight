@@ -76,7 +76,7 @@ public class Player extends ActiveEntity {
                 EnemyImpl.class.getName(),
                 BossImpl.class.getName(),
                 HarmfulObstacle.class.getName()), e -> {
-            this.getRenderer().setIsDamaged();
+            this.getRenderer().setRemainingDamagedFrames();
             setYSpeed(Player.RECOIL_VELOCITY);
             setXSpeed(
                     Player.RECOIL_VELOCITY
@@ -88,7 +88,7 @@ public class Player extends ActiveEntity {
         getCollider().ifPresent(c -> c.addBehaviour(Bullet.class.getName(), e -> {
             final Bullet b = (Bullet) e;
             if (!b.getHealth().isDead() && !b.isPlayerBullet()) {
-                getRenderer().setIsDamaged();
+                getRenderer().setRemainingDamagedFrames();
                 getHealth().damage(b.getDamage());
                 b.getHealth().destroy();
             }
@@ -118,6 +118,11 @@ public class Player extends ActiveEntity {
      * @return new Bullet
      */
     public Bullet shoot(final Point2D target) {
+
+        if (this.getRenderer() instanceof AnimationSpriteRenderer) {
+                ((AnimationSpriteRenderer) this.getRenderer()).setAnimation("walk");
+        }
+
         final Bullet newBullet = this.weapon.fire(target);
         newBullet.init();
         return newBullet;

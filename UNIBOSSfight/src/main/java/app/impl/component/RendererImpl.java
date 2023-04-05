@@ -18,7 +18,7 @@ public class RendererImpl implements Renderer {
     private final int width;
     private final Color color;
     private final String className; //NOPMD this field is necessary for serialization
-    private int isDamaged;
+    private int remainingDamagedFrames;
 
     /**
      * Creates a new instance of the class Renderer.
@@ -79,16 +79,16 @@ public class RendererImpl implements Renderer {
      * {@inheritDoc}
      */
     @Override
-    public void setIsDamaged() {
-        this.isDamaged = RendererImpl.IS_DAMAGED_DURATION;
+    public void setRemainingDamagedFrames() {
+        this.remainingDamagedFrames = RendererImpl.IS_DAMAGED_DURATION;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public int getIsDamaged() {
-        this.isDamaged--;
-        return this.isDamaged;
+    public int getRemainingDamagedFrames() {
+        this.remainingDamagedFrames--;
+        return this.remainingDamagedFrames;
     }
 }
