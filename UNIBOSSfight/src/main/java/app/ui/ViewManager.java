@@ -105,11 +105,11 @@ public class ViewManager {
     }
 
     /**
-     * Sets the font of the labels.
+     * Sets the font of a list of labels.
      *
      * @param url the url where to find the font to apply
      * @param fontSize the font size
-     * @param labels the label on which the font is set
+     * @param labels the labels on which the font is set
      */
     public static void setFont(final String url, final double fontSize, final List<Label> labels) {
         labels.forEach(label -> {
@@ -119,6 +119,21 @@ public class ViewManager {
                 label.setFont(Font.font("Verdana", fontSize));
             }
         });
+    }
+
+    /**
+     * Sets the font of the label.
+     *
+     * @param url the url where to find the font to apply
+     * @param fontSize the font size
+     * @param label the label on which the font is set
+     */
+    public static void setFont(final String url, final double fontSize, final Label label) {
+        try {
+            label.setFont(Font.loadFont(new FileInputStream(url), fontSize));
+        } catch (final FileNotFoundException e) {
+            label.setFont(Font.font("Verdana", fontSize));
+        }
     }
     private void createSubScenes() {
         this.scoreSubScene = new CustomizedSubScene();

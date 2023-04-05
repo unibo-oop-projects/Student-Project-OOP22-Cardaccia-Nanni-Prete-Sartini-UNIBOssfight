@@ -100,7 +100,9 @@ public class Game extends Application {
 
         this.mainStage.setOnCloseRequest(e -> {
             e.consume();
-            saveState();
+            if (ConfirmBox.display("\tAre you sure you\nwant to quit the game?")) {
+                this.mainStage.close();
+            }
         });
 
         initHUD();
@@ -167,7 +169,7 @@ public class Game extends Application {
             e -> {
                 if (!this.currentLevel.isOver()) {
                     if (this.currentLevel.isLevelEnded()) {
-                        System.out.println("HAI VINTOOOOOOOOO");
+                        System.out.println("HAI VINTOOOOOOOOO"); // NOPMD
                     }
                     run();
                 } else {
@@ -180,19 +182,6 @@ public class Game extends Application {
         tl.play();
         this.currentLevel.init();
         this.startTime = System.currentTimeMillis();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void stop() throws Exception {
-        try {
-            new DataManager().serializeLevel(this.currentLevel);
-        } catch (final IOException e) {
-            AppLogger.getLogger().severe(e.getMessage());
-        }
-        super.stop();
     }
 
     private void initHUD() {
@@ -327,18 +316,6 @@ public class Game extends Application {
             });
         }
 
-    }
-
-    private void saveState() {
-        final boolean answer = ConfirmBox.display("Do you want to save the state?");
-        if (answer) {
-            try {
-                this.stop();
-                System.exit(0);
-            } catch (Exception e) {
-                AppLogger.getLogger().severe(e.getMessage());
-            }
-        }
     }
 
     private static class GameOverStage extends Stage {
