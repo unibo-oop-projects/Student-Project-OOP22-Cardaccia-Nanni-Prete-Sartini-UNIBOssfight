@@ -7,12 +7,14 @@ import app.core.component.Health;
  */
 public class HealthImpl implements Health {
 
+    private final int maxHp;
     private int hp;
 
     /**
      * Creates a new instance of the class HealthImpl.
      */
     public HealthImpl() {
+        this.maxHp = 100;
         this.hp = 100;
     }
 
@@ -28,8 +30,8 @@ public class HealthImpl implements Health {
      * {@inheritDoc}
      */
     @Override
-    public void setValue(final int hp) {
-        this.hp = hp;
+    public int getMaxValue() {
+        return this.maxHp;
     }
 
     /**

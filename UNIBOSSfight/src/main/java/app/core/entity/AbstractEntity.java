@@ -25,11 +25,12 @@ public abstract class AbstractEntity implements Entity {
     private final Transform position;
     private transient Hitbox hitbox;
     private final Renderer renderer;
-    private transient Health health;
+    public Health health;
     private transient Collider collider;
 
     /**
      * Creates a new instance of the abstract class AbstractEntity.
+     *
      * @param position the position of the entity
      * @param height the height of the entity
      * @param width the width of the entity
@@ -47,6 +48,7 @@ public abstract class AbstractEntity implements Entity {
         this.height = height;
         this.width = width;
         this.direction = 1;
+        this.health = new HealthImpl();
     }
 
     /**

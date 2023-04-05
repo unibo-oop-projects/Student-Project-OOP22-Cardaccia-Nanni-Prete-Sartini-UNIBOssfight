@@ -14,11 +14,11 @@ public interface Health {
     int getValue();
 
     /**
-     * Sets the value of the health.
+     * Returns the maximum health of the entity.
      *
-     * @param hp the new health value
+     * @return the max health value
      */
-    void setValue(int hp);
+    int getMaxValue();
 
     /**
      * Subtracts the specified damage from the health.
