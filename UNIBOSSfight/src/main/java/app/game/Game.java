@@ -20,8 +20,12 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -32,6 +36,7 @@ import javafx.util.Duration;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class Game extends Application {
 
@@ -46,10 +51,13 @@ public class Game extends Application {
     private InputManager inputManager;
     private Image image;
     private Image bg;
+    private ProgressBar progressBar = new ProgressBar(0);
+    private Label timeLabel = new Label();
     private Paint imagePattern;
     private Paint imagePattern2;
     private final AnchorPane anchorPane = new AnchorPane();
     private final BooleanProperty gameOver = new SimpleBooleanProperty(false);
+    private long startTime;
 
     public Game() throws IOException {
         this.currentLevel = new DataManager().loadLevel("output.json");
@@ -69,6 +77,8 @@ public class Game extends Application {
 
         final Screen screen = Screen.getPrimary();
         final Rectangle2D bounds = screen.getVisualBounds();
+
+        initHUD();
 
         FileInputStream input = null;
         try {
@@ -132,7 +142,20 @@ public class Game extends Application {
         tl.setCycleCount(Animation.INDEFINITE);
 
         tl.play();
+        initLevel();
         this.currentLevel.init();
+        this.startTime = System.currentTimeMillis();
+    }
+
+    private void initHUD() {
+        this.progressBar.setPrefSize(300, 30);
+        this.progressBar.setLayoutX(30);
+        this.progressBar.setLayoutY(5);
+        this.progressBar.setStyle("-fx-accent: red;");
+
+        this.timeLabel.setLayoutX(400);
+        this.timeLabel.setLayoutY(5);
+        this.timeLabel.setBackground(Background.fill(Color.WHITE));
     }
 
     private void inputPoll() {
@@ -159,6 +182,8 @@ public class Game extends Application {
 
         final Rectangle bgr = new Rectangle(0, 0, Window.getWidth(), Window.getHeight());
 
+        renderHUD();
+
         // set fill for rectangle
         this.imagePattern = new ImagePattern(
                 bg,
@@ -171,8 +196,7 @@ public class Game extends Application {
 
         bgr.setFill(this.imagePattern);
 
-        root.getChildren().add(bgr);
-
+        root.getChildren().addAll(bgr, progressBar, timeLabel);
 
         root.getChildren().addAll(this.currentLevel.renderUniqueEntities());
         this.currentLevel.renderEntities().forEach(e -> root.getChildren().add(e));
@@ -192,6 +216,18 @@ public class Game extends Application {
         rect.setFill(this.imagePattern);
 
         root.getChildren().add(rect);
+    }
+
+    private void renderHUD() {
+        this.progressBar.setProgress(this.currentLevel.getPlayer().getHealth().getValue() / 100.0);
+
+        final long elapsed = System.currentTimeMillis() - this.startTime;
+        final String timeStamp = String.format("%d:%d",
+                TimeUnit.MILLISECONDS.toMinutes(elapsed),
+                TimeUnit.MILLISECONDS.toSeconds(elapsed)
+                - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(elapsed)));
+
+        this.timeLabel.setText(timeStamp);
     }
 
     // TODO creare copyOf del level
