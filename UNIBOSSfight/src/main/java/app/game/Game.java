@@ -2,9 +2,6 @@ package app.game;
 
 import app.core.entity.Entity;
 import app.core.level.Level;
-import app.impl.component.SpriteRenderer;
-import app.impl.component.TransformImpl;
-import app.impl.entity.Coin;
 import app.ui.ConfirmBox;
 import app.ui.CustomizedButton;
 import app.ui.MainMenu;
@@ -27,7 +24,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -41,15 +37,26 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * This class models the game itself: in here, the current level is loaded.
+ * The behavioural pattern Input-Update-Render is managed in this class.
+ */
 public class Game extends Application {
 
     private static final double FRAME_RATE = 60;
     private static final double FRAME_DURATION = 1000 / FRAME_RATE;
     private static final int MIN_WINDOW_HEIGHT = 600;
     private static final int MIN_WINDOW_WIDTH = 800;
-    private final Level currentLevel; //new LevelImpl();
+    private static final int PROGRESS_BAR_HEIGHT = 50;
+    private static final int PROGRESS_BAR_WIDTH = 300;
+    private static final int PROGRESS_BAR_LAYOUTX = 30;
+    private static final int PROGRESS_BAR_LAYOUTY = 20;
+    private static final int LABEL_LAYOUTY = 5;
+    private static final int OFFSET = 10;
+    private static final int FONT_SIZE = 50;
+    private final Level currentLevel;
     private Stage mainStage;
-    private Group root = new Group();
+    private Group root;
     private Scene currentScene;
     private InputManager inputManager;
     private Image image;
@@ -57,12 +64,17 @@ public class Game extends Application {
     private final ProgressBar progressBar = new ProgressBar(0);
     private final Label timeLabel = new Label();
     private final Label coinsLabel = new Label();
-    private Paint imagePattern;
-    private Paint imagePattern2;
     private final AnchorPane anchorPane = new AnchorPane();
     private final BooleanProperty gameOver = new SimpleBooleanProperty(false);
     private long startTime;
 
+    /**
+     * Creates a new instance of the class Game,
+     * by loading the level from the json file.
+     *
+     * @throws IOException the exception thrown by the
+     * constructor if problems while reading the file are detected.
+     */
     public Game() throws IOException {
         this.currentLevel = new DataManager().loadLevel("output.json");
     }
@@ -120,20 +132,28 @@ public class Game extends Application {
         this.inputManager = new InputManager(currentScene);
 
         this.currentScene.heightProperty().addListener(
-                (observable, oldValue, newValue) -> Window.setHeight(currentScene.getHeight() - this.image.getHeight())
+                (observable, oldValue, newValue) ->
+                        Window.setHeight(currentScene.getHeight()
+                                - this.image.getHeight())
         );
 
         this.currentScene.widthProperty().addListener(
-                (observable, oldValue, newValue) -> Window.setWidth(currentScene.getWidth())
+                (observable, oldValue, newValue) ->
+                        Window.setWidth(currentScene.getWidth())
         );
 
         this.gameOver.addListener(
-                (observable, oldValue, newValue) -> new GameOverStage(this.mainStage).show()
+                (observable, oldValue, newValue) ->
+                        new GameOverStage(this.mainStage).show()
         );
 
         this.currentScene.setOnMouseClicked(e -> this.currentLevel.playerShoot(
-                new Point2D(e.getX() + getCurrentLevel().getPlayerPosition().getX() - Window.getWidth() / 2,
-                        Window.getHeight() - e.getY())));
+                new Point2D(e.getX() + this.currentLevel
+                        .getPlayerPosition()
+                        .getX() - Window.getWidth() / 2,
+                        Window.getHeight() - e.getY())
+                )
+        );
 
         //Adding scene to the stage
         this.mainStage.setScene(currentScene);
@@ -141,13 +161,15 @@ public class Game extends Application {
         //Displaying the contents of the stage
         this.mainStage.show();
 
-        final Timeline tl = new Timeline(new KeyFrame(Duration.millis(FRAME_DURATION), e -> {
-            if (!this.currentLevel.isOver()) {
-                run();
-            } else {
-                gameOver.set(true);
-            }
-        }));
+        final Timeline tl = new Timeline(new KeyFrame(Duration.millis(FRAME_DURATION),
+            e -> {
+                if (!this.currentLevel.isOver()) {
+                    run();
+                } else {
+                    gameOver.set(true);
+                }
+            })
+        );
         tl.setCycleCount(Animation.INDEFINITE);
 
         tl.play();
@@ -155,21 +177,29 @@ public class Game extends Application {
         this.startTime = System.currentTimeMillis();
     }
 
-    private void initHUD() {
-        this.progressBar.setPrefSize(300, 50);
-        this.progressBar.setLayoutX(30);
-        this.progressBar.setLayoutY(20);
-        this.progressBar.setStyle("#00bbf0");
-
-        this.timeLabel.setLayoutY(5);
-
-        this.coinsLabel.setLayoutY(5);
-
-        ViewManager.setFont("src/main/resources/HUDfont.ttf", 50,
-                List.of(this.coinsLabel, this.timeLabel));
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void stop() throws Exception {
+        try {
+            new DataManager().serializeLevel(this.currentLevel);
+        } catch (final Exception e) {
+            AppLogger.getLogger().severe(e.getMessage());
+        }
+        super.stop();
     }
 
-    private void inputPoll() {
+    private void initHUD() {
+        this.progressBar.setPrefSize(PROGRESS_BAR_WIDTH, PROGRESS_BAR_HEIGHT);
+        this.progressBar.setStyle("#00bbf0");
+
+        this.progressBar.setLayoutY(PROGRESS_BAR_LAYOUTY);
+        this.timeLabel.setLayoutY(LABEL_LAYOUTY);
+        this.coinsLabel.setLayoutY(LABEL_LAYOUTY);
+
+        ViewManager.setFont("src/main/resources/HUDfont.ttf", FONT_SIZE,
+                List.of(this.coinsLabel, this.timeLabel));
     }
 
     private void update() {
@@ -196,7 +226,7 @@ public class Game extends Application {
         renderHUD();
 
         // set fill for rectangle
-        this.imagePattern = new ImagePattern(
+        Paint imagePattern = new ImagePattern(
                 this.bg,
                 -(this.currentLevel.getPlayerPosition().getX() / 10),
                 0,
@@ -205,10 +235,9 @@ public class Game extends Application {
                 false
         );
 
-        bgr.setFill(this.imagePattern);
+        bgr.setFill(imagePattern);
 
         this.root.getChildren().add(bgr);
-
         this.root.getChildren().addAll(this.currentLevel.renderUniqueEntities());
         this.currentLevel.renderEntities().forEach(e -> this.root.getChildren().add(e));
 
@@ -217,7 +246,7 @@ public class Game extends Application {
                 Window.getWidth(), this.image.getHeight());
 
         // set fill for rectangle
-        this.imagePattern = new ImagePattern(
+        imagePattern = new ImagePattern(
                 this.image,
                 -this.currentLevel.getPlayerPosition().getX(),
                 Window.getHeight() - this.image.getHeight(),
@@ -225,7 +254,7 @@ public class Game extends Application {
                 false
         );
 
-        rect.setFill(this.imagePattern);
+        rect.setFill(imagePattern);
 
         this.root.getChildren().addAll(rect, this.progressBar,
                 this.timeLabel, this.coinsLabel);
@@ -239,10 +268,10 @@ public class Game extends Application {
                 - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(elapsed)));
 
         this.progressBar.setProgress(this.currentLevel.getPlayer().getHealth().getValue() / 100.0);
-        this.progressBar.setLayoutX(20);
+        this.progressBar.setLayoutX(PROGRESS_BAR_LAYOUTX);
 
         this.timeLabel.setText(timeStamp);
-        this.timeLabel.setLayoutX(Window.getWidth() - (this.timeLabel.getWidth() + 10));
+        this.timeLabel.setLayoutX(Window.getWidth() - (this.timeLabel.getWidth() + OFFSET));
 
         this.coinsLabel.setText(Integer.toString(this.currentLevel
                 .getPlayer().getCoinsCollected()));
@@ -250,13 +279,7 @@ public class Game extends Application {
                 - this.coinsLabel.getWidth() / 2);
     }
 
-    // TODO creare copyOf del level
-    public Level getCurrentLevel() {
-        return this.currentLevel;
-    }
-
     private void run() {
-        inputPoll();
         update();
         render();
     }
@@ -265,8 +288,8 @@ public class Game extends Application {
         private final Scene scene;
         private boolean isAPressed = false;
         private boolean isDPressed = false;
-        private boolean isSpacePressed = false;
 
+        private boolean isSpacePressed = false;
 
         InputManager(final Scene scene) {
             this.scene = scene;
@@ -289,7 +312,7 @@ public class Game extends Application {
             });
 
             this.scene.setOnMouseMoved(e -> currentLevel.rotatePlayerWeapon(new Point2D(
-                    e.getX() + getCurrentLevel().getPlayerPosition().getX() - Window.getWidth() / 2,
+                    e.getX() + currentLevel.getPlayerPosition().getX() - Window.getWidth() / 2,
                     Window.getHeight() - e.getY())));
 
             this.scene.setOnKeyReleased(e -> {
@@ -309,16 +332,7 @@ public class Game extends Application {
                 }
             });
         }
-    }
 
-    @Override
-    public void stop() throws Exception {
-            try {
-                new DataManager().serializeLevel(this.currentLevel);
-            } catch (Exception e) {
-                AppLogger.getLogger().severe(e.getMessage());
-            }
-        super.stop();
     }
 
     private void saveState() {
