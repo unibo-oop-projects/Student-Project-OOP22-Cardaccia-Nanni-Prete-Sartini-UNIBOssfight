@@ -43,7 +43,7 @@ public final class AppLogger extends Logger {
         return LazyLoggerHolder.LOGGER;
     }
 
-    private static class LazyLoggerHolder {
+    private static class LazyLoggerHolder { // NOPMD this class is necessary for lazy initialisation
         private static final Logger LOGGER = new AppLogger();
     }
 

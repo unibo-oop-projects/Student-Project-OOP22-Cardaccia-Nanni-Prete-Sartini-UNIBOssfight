@@ -3,16 +3,13 @@ package app.impl.entity;
 import app.core.component.Collider;
 import app.core.component.Transform;
 import app.core.component.Weapon;
-import app.core.component.WeaponFactory;
 import app.core.entity.ActiveEntity;
 import app.core.entity.Bullet;
 import app.impl.builder.BehaviourBuilderImpl;
 import app.impl.component.AnimationSpriteRenderer;
 import app.impl.component.ColliderImpl;
-import app.impl.component.LoopSpriteRenderer;
 import app.impl.factory.WeaponFactoryImpl;
 import app.util.Angle;
-import app.util.Window;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -26,8 +23,7 @@ public class Player extends ActiveEntity {
 
     private static final int RECOIL_VELOCITY = 20;
 
-    private transient WeaponFactory weaponFactory = new WeaponFactoryImpl();
-    private transient Weapon weapon = weaponFactory.getPlayerWeapon(this.getTransform(), true);
+    private transient Weapon weapon;
     private transient int coinsCollected;
 
     /**
@@ -41,7 +37,7 @@ public class Player extends ActiveEntity {
     public Player(final Transform position, final Integer height,
                   final Integer width, final String filename) {
         super(position, height, width,
-                new LoopSpriteRenderer(height, width, Color.RED, filename));
+                new AnimationSpriteRenderer(height, width, Color.RED, filename));
     }
 
     /**
@@ -57,8 +53,7 @@ public class Player extends ActiveEntity {
     @Override
     public void init() {
         super.init();
-        this.weaponFactory = new WeaponFactoryImpl();
-        this.weapon = this.weaponFactory.getPlayerWeapon(this.getTransform(), true);
+        this.weapon = new WeaponFactoryImpl().getPlayerWeapon(this.getTransform(), true);
 
         setBehaviour(new BehaviourBuilderImpl()
                 .addJumpOnTop()
@@ -93,7 +88,6 @@ public class Player extends ActiveEntity {
                             * getHitbox().getCollisionSideOnX(e.getPosition().getX())
             );
             this.getHealth().damage(e.getDamage());
-            //System.out.println(this.getHealth().getValue());
         });
 
         collider.addBehaviour(Platform.class.getName(), e -> Platform.jump(this, e));

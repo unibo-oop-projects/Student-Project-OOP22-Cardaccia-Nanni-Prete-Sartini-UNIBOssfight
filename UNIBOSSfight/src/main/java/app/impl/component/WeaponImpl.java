@@ -130,7 +130,6 @@ public class WeaponImpl implements Weapon {
         } else {
             setYDirection(-1);
         }
-        System.out.println(this.rotation);
         return this.rotation;
     }
 
