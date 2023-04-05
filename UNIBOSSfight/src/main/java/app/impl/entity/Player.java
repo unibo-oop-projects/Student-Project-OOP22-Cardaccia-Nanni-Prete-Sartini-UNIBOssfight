@@ -120,7 +120,7 @@ public class Player extends ActiveEntity {
     public Bullet shoot(final Point2D target) {
 
         if (this.getRenderer() instanceof AnimationSpriteRenderer) {
-                ((AnimationSpriteRenderer) this.getRenderer()).setAnimation("walk");
+                ((AnimationSpriteRenderer) this.getRenderer()).setAnimation("attack");
         }
 
         final Bullet newBullet = this.weapon.fire(target);
