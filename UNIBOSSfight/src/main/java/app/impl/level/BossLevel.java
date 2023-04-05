@@ -89,9 +89,11 @@ public class BossLevel extends LevelImpl {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        BossFactory bossFactory = new BossFactoryImpl();
 
-        this.boss = bossFactory.firstBoss(new TransformImpl(new Point2D(BOSS_X_POSITION, BOSS_Y_POSITION), 0));
+        final BossFactory bossFactory = new BossFactoryImpl();
+
+        this.boss = bossFactory.firstBoss(new TransformImpl(
+                new Point2D(BOSS_X_POSITION, BOSS_Y_POSITION), 0));
         this.boss.init();
     }
 

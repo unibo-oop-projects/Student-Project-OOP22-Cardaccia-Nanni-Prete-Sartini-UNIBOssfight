@@ -37,7 +37,7 @@ public class WeaponImpl implements Weapon {
         this.userPos = new TransformImpl(userPos.getPosition(), 0);
         this.renderer = renderer;
         this.renderer.init();
-        this.shootingPos = getWeaponPosition(); //TODO RIPARA (VEDI PMD)
+        this.shootingPos= new TransformImpl(userPos.getPosition(), 0);
         //this.shootingPos = this.userPos;
         this.positionOffset = positionOffset;
     }
