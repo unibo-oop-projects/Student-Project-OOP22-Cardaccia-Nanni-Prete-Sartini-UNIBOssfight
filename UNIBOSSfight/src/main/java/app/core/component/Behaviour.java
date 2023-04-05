@@ -2,6 +2,8 @@ package app.core.component;
 
 import app.core.entity.ActiveEntity;
 import app.core.entity.Entity;
+import app.impl.entity.Player;
+
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -76,5 +78,9 @@ public interface Behaviour {
      *                 and returns an Input for the update method
      */
     void setFollowingBehaviour(BiFunction<ActiveEntity, ActiveEntity, Entity.Inputs> function);
+
+    Optional<BiFunction<ActiveEntity, Player, Entity.Inputs>> getFlyingBehaviour();
+
+    void setFlyingBehaviour(BiFunction<ActiveEntity, Player, Entity.Inputs> function);
 
 }

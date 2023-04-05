@@ -21,7 +21,7 @@ public class BossLevel extends LevelImpl {
     private static final int BOSS_X_POSITION = 1600;
     private static final int BOSS_Y_POSITION = 300;
     private transient Boss boss;
-    private int rateOfFireCounter;
+    private transient int rateOfFireCounter;
 
     /**
      * Method that return the node to Render the Boss.

@@ -27,6 +27,8 @@ public interface BehaviourBuilder {
      */
     BehaviourBuilder addFollow();
 
+    BehaviourBuilder addFlying();
+
     /**
      * @return the Behaviour built with all of the above
      */

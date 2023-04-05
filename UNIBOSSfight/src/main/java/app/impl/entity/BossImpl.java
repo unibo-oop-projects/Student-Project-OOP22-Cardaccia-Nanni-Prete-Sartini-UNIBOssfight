@@ -60,9 +60,6 @@ public class BossImpl extends Boss {
     public void init() {
         super.init();
 
-        final WeaponFactory weaponFactory = new WeaponFactoryImpl();
-        this.weapon = weaponFactory.getBigBulletGun(this.getTransform(), false);
-
         setBehaviour(new BehaviourBuilderImpl()
                 .addJumpOnTop()
                 .addStopFromBottom()

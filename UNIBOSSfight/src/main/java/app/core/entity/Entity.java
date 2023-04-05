@@ -18,6 +18,14 @@ public interface Entity {
      */
     enum Inputs {
         /**
+         * Up input.
+         */
+        UP,
+        /**
+         * Down input.
+         */
+        DOWN,
+        /**
          * Left input.
          */
         LEFT,
