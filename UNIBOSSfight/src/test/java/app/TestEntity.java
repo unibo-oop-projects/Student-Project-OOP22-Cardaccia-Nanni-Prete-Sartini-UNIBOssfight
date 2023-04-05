@@ -85,6 +85,7 @@ public class TestEntity {
         assertEquals(RIGHT_COLLISION, player.getHitbox().getCollisionSideOnX(entity.getPosition().getX()));
 
         player.manageCollision(entity);
+        player.update(Entity.Inputs.EMPTY);
 
         assertNotEquals(entity.getHitbox().getBottomSide() - 1, player.getHitbox().getTopSide());
         assertEquals(entity.getHitbox().getRightSide(), player.getHitbox().getLeftSide());
