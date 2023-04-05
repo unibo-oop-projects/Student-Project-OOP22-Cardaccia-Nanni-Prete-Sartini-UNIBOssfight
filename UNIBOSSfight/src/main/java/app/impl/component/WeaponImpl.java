@@ -4,7 +4,7 @@ import app.core.component.BulletFactory;
 import app.core.component.Renderer;
 import app.core.component.Transform;
 import app.core.component.Weapon;
-import app.core.entity.Bullet;
+import app.impl.entity.Bullet;
 import app.impl.factory.BulletFactoryImpl;
 import app.util.Angle;
 import javafx.geometry.Point2D;

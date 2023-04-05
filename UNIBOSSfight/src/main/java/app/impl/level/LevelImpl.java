@@ -1,11 +1,10 @@
 package app.impl.level;
 
 import app.core.entity.ActiveEntity;
+import app.impl.entity.Bullet;
 import app.impl.component.TransformImpl;
 import app.core.entity.Entity;
 import app.core.level.Level;
-import app.impl.entity.BulletImpl;
-import app.impl.component.TransformImpl;
 import app.impl.entity.Player;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -189,7 +188,7 @@ public class LevelImpl implements Level {
      */
     @Override
     public void removeBullets() {
-        this.entities.removeIf(e -> e.getType() == BulletImpl.class.getName() && !e.isDisplayed(this.getPlayerPosition())
+        this.entities.removeIf(e -> e.getType() == Bullet.class.getName() && !e.isDisplayed(this.getPlayerPosition())
                 || e.getHealth().isDead());
     }
 }

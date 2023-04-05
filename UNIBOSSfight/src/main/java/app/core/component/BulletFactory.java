@@ -1,6 +1,6 @@
 package app.core.component;
 
-import app.core.entity.Bullet;
+import app.impl.entity.Bullet;
 import javafx.geometry.Point2D;
 
 /**

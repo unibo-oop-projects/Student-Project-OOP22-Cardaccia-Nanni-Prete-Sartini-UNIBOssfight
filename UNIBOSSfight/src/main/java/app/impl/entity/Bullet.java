@@ -1,8 +1,9 @@
-package app.core.entity;
+package app.impl.entity;
 
 import app.core.component.Collider;
 import app.core.component.Renderer;
 import app.core.component.Transform;
+import app.core.entity.ActiveEntity;
 import app.impl.component.ColliderImpl;
 import app.impl.entity.Platform;
 import app.impl.entity.Wall;
@@ -14,7 +15,7 @@ import javafx.geometry.Point2D;
  * of the game, which can cause damage, has a
  * speed and shifts along a vector.
  */
-public abstract class Bullet extends ActiveEntity {
+public class Bullet extends ActiveEntity {
 
     private final double xShift;
     private final double yShift;

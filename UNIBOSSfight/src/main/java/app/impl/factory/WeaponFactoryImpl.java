@@ -2,17 +2,14 @@ package app.impl.factory;
 
 import app.core.component.BulletFactory;
 import app.core.component.Transform;
-import app.core.component.Weapon;
 import app.core.component.WeaponFactory;
-import app.core.entity.Bullet;
+import app.impl.entity.Bullet;
 import app.impl.component.SpriteRenderer;
 import app.impl.component.TransformImpl;
 import app.impl.component.WeaponImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import app.util.Window;
-
-import java.awt.*;
 
 /**
  * Implementation of the WeaponFactory interface.

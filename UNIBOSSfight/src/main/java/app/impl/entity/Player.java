@@ -4,7 +4,6 @@ import app.core.component.Collider;
 import app.core.component.Transform;
 import app.core.component.Weapon;
 import app.core.entity.ActiveEntity;
-import app.core.entity.Bullet;
 import app.impl.builder.BehaviourBuilderImpl;
 import app.impl.component.AnimationSpriteRenderer;
 import app.impl.component.ColliderImpl;

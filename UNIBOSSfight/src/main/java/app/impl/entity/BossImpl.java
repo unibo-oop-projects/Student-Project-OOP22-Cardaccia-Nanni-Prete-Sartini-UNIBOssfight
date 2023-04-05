@@ -4,15 +4,12 @@ import app.core.component.Transform;
 import app.core.component.Weapon;
 import app.core.component.WeaponFactory;
 import app.core.entity.Boss;
-import app.core.entity.Bullet;
 import app.impl.builder.BehaviourBuilderImpl;
 import app.impl.component.WeaponImpl;
 import app.impl.factory.WeaponFactoryImpl;
 import app.util.AppLogger;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-
-import java.util.List;
 
 /**
  * Implementation of the Boss Interface.
