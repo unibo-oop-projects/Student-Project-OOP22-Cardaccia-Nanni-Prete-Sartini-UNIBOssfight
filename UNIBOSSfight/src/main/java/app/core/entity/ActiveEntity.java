@@ -124,6 +124,12 @@ public abstract class ActiveEntity extends AbstractEntity {
      */
     public void update(final Inputs input) {
         switch (input) {
+            case UP -> {
+                this.ySpeed = Acceleration.accelerate(this.ySpeed, maxYSpeed, 1);
+            }
+            case DOWN -> {
+                this.ySpeed = Acceleration.accelerate(this.ySpeed, -maxYSpeed, 1);
+            }
             case LEFT -> {
                 this.xSpeed =  Acceleration.accelerate(this.xSpeed, -maxXSpeed, 1);
                 setDirection(-1);
@@ -139,12 +145,11 @@ public abstract class ActiveEntity extends AbstractEntity {
                 this.xSpeed = Acceleration.accelerate(this.xSpeed, 0, 0.5);
                 this.ySpeed = this.isJumping()
                         ? Acceleration.accelerate(this.ySpeed, -maxYSpeed, 1) : 0;
+                getTransform().resetGroundLevel();
+                getHitbox().update(this.getPosition());
             }
             default -> throw new IllegalStateException();
         }
-
-        getTransform().resetGroundLevel();
-        getHitbox().update(this.getPosition());
     }
 
     /**
@@ -183,7 +188,13 @@ public abstract class ActiveEntity extends AbstractEntity {
         }
     }
 
-    private boolean isJumping() {
+    /**
+     * Checks if the Entity is jumping.
+     *
+     * @return true if the y position of the entity is over the ground level,
+     * false otherwise
+     */
+    protected boolean isJumping() {
         return this.getPosition().getY() > getTransform().getGroundLevel();
     }
 

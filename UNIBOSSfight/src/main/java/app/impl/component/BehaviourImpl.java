@@ -3,6 +3,8 @@ package app.impl.component;
 import app.core.component.Behaviour;
 import app.core.entity.ActiveEntity;
 import app.core.entity.Entity;
+import app.impl.entity.Player;
+
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -18,6 +20,7 @@ public class BehaviourImpl implements Behaviour {
     private BiConsumer<ActiveEntity, Entity> bottomStoppingBehaviour;
     private BiConsumer<ActiveEntity, Entity> sideStoppingBehaviour;
     private BiFunction<ActiveEntity, ActiveEntity, Entity.Inputs> followingBehaviour;
+    private BiFunction<ActiveEntity, Player, Entity.Inputs> flyingBehaviour;
 
     /**
      * {@inheritDoc}
@@ -81,5 +84,15 @@ public class BehaviourImpl implements Behaviour {
     @Override
     public void setFollowingBehaviour(final BiFunction<ActiveEntity, ActiveEntity, Entity.Inputs> function) {
         this.followingBehaviour = function;
+    }
+
+    @Override
+    public Optional<BiFunction<ActiveEntity, Player, Entity.Inputs>> getFlyingBehaviour() {
+        return Optional.ofNullable(this.flyingBehaviour);
+    }
+
+    @Override
+    public void setFlyingBehaviour(BiFunction<ActiveEntity, Player, Entity.Inputs> function) {
+        this.flyingBehaviour = function;
     }
 }
