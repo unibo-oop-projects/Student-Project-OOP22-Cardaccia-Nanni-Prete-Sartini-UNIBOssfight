@@ -7,7 +7,7 @@ import app.core.entity.Boss;
 import app.impl.entity.BossImpl;
 
 /**
- * Implementation of the BossFactory Interface
+ * Implementation of the BossFactory Interface.
  */
 public class BossFactoryImpl implements BossFactory {
 

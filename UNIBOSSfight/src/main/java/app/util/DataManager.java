@@ -55,7 +55,6 @@ public class DataManager {
      * @return a level without a boss
      * @throws Exception
      */
-
     public LevelImpl loadBossLevel(final String jsonFile) throws IOException {
         String json;
         try {

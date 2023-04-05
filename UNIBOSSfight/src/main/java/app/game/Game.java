@@ -124,7 +124,9 @@ public class Game extends Application {
                 (observable, oldValue, newValue) -> new GameOverStage(this.mainStage).show()
         );
 
-        this.currentScene.setOnMouseClicked(e -> this.currentLevel.playerShoot(new Point2D(e.getX(), e.getY())));
+        this.currentScene.setOnMouseClicked(e -> this.currentLevel.playerShoot(
+                new Point2D(e.getX() + getCurrentLevel().getPlayerPosition().getX() - Window.getWidth() / 2,
+                        Window.getHeight() - e.getY())));
 
         //Adding scene to the stage
         this.mainStage.setScene(currentScene);
@@ -258,7 +260,9 @@ public class Game extends Application {
                 }
             });
 
-            this.scene.setOnMouseMoved(e -> currentLevel.rotatePlayerWeapon(new Point2D(e.getX(), e.getY())));
+            this.scene.setOnMouseMoved(e -> currentLevel.rotatePlayerWeapon(new Point2D(
+                    e.getX() + getCurrentLevel().getPlayerPosition().getX() - Window.getWidth() / 2,
+                    Window.getHeight() - e.getY())));
 
             this.scene.setOnKeyReleased(e -> {
                 switch (e.getCode()) {

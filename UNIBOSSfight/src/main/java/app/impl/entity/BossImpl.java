@@ -4,14 +4,12 @@ import app.core.component.Transform;
 import app.core.component.Weapon;
 import app.core.component.WeaponFactory;
 import app.core.entity.Boss;
-import app.core.entity.Bullet;
 import app.impl.builder.BehaviourBuilderImpl;
+import app.impl.component.WeaponImpl;
 import app.impl.factory.WeaponFactoryImpl;
 import app.util.AppLogger;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-
-import java.util.List;
 
 /**
  * Implementation of the Boss Interface.
@@ -19,7 +17,7 @@ import java.util.List;
 public class BossImpl extends Boss {
 
     private static final int DEFAULT_RATE_OF_FIRE = 30;
-    private transient Weapon weapon;
+    private transient WeaponImpl weapon;
     private final int rateOfFire;
     private int rateOfFireCounter;
 
@@ -82,40 +80,23 @@ public class BossImpl extends Boss {
                 .addFollow()
                 .addShooting()
                 .build());
-
-        getCollider().ifPresent(c -> c.addBehaviour(BulletImpl.class.getName(),
-                e -> getHealth().damage(e.getDamage())));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void shoot(final Point2D target) {
-        if (rateOfFireCounter >= rateOfFire) {
-            final Bullet newBullet = this.weapon.fire(target);
-            newBullet.init();
-            addBullet(newBullet);
-
-            rateOfFireCounter = 0;
-        } else {
-            rateOfFireCounter++;
-        }
+    public Bullet shoot(final Point2D target) {
+        final Bullet newBullet = this.weapon.fire(target);
+        newBullet.init();
+        return newBullet;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<Node> getBulletsNodes() {
-        return getBullets().stream().map(e -> e.render(getPosition())).toList();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setWeapon(final Weapon weapon) {
+    public void setWeapon(final WeaponImpl weapon) {
         this.weapon = weapon;
     }
 
@@ -124,13 +105,17 @@ public class BossImpl extends Boss {
      */
     @Override
     public Node renderWeapon(Point2D playerPosition) {
-        // TODO togliere exception generica e print
         try {
-            return this.weapon.render(playerPosition, this.getDirection(), 0);
+            return this.weapon.render(playerPosition, 0, 0);
         } catch (Exception e) {
             AppLogger.getLogger().warning("ERROR cannot load resource " + e);
         }
 
         return null;
+    }
+
+    @Override
+    public int getRateOfFire() {
+        return this.rateOfFire;
     }
 }

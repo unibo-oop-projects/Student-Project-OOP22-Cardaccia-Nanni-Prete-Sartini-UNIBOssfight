@@ -1,5 +1,10 @@
 package app.core.component;
 
+import app.impl.component.WeaponImpl;
+
+/**
+ * An interface modelling a Factory to create instances of Weapons.
+ */
 public interface WeaponFactory {
 
     /**
@@ -8,7 +13,7 @@ public interface WeaponFactory {
      * @param playerPos the player's position
      * @return an instance of the player weapon
      */
-    Weapon getPlayerWeapon(Transform playerPos, boolean isPlayerWeapon);
+    WeaponImpl getPlayerWeapon(Transform playerPos, boolean isPlayerWeapon);
 
     /**
      * Returns an instance of the bigBullet weapon.
@@ -16,6 +21,8 @@ public interface WeaponFactory {
      * @param userPos position of the weapon's user
      * @return an instance of the bigBullet weapon
      */
-    Weapon getBigBulletGun(Transform userPos, boolean isPlayerWeapon);
+    WeaponImpl getBigBulletGun(Transform userPos, boolean isPlayerWeapon);
+
+    WeaponImpl getGhiniGun(Transform userPos, boolean isPlayerWeapon);
 
 }

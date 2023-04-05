@@ -4,7 +4,6 @@ import app.core.component.Collider;
 import app.core.component.Transform;
 import app.core.component.Weapon;
 import app.core.entity.ActiveEntity;
-import app.core.entity.Bullet;
 import app.impl.builder.BehaviourBuilderImpl;
 import app.impl.component.AnimationSpriteRenderer;
 import app.impl.component.ColliderImpl;
@@ -102,7 +101,7 @@ public class Player extends ActiveEntity {
      */
     public void rotateWeapon(final Point2D mousePosition) {
 
-        final double angle = this.weapon.setRotation(mousePosition);
+        final double angle = this.weapon.updateRotation(mousePosition);
 
         if (angle <= Angle.RIGHT_ANGLE && angle > -Angle.RIGHT_ANGLE) {
             this.setDirection(1);
@@ -116,17 +115,10 @@ public class Player extends ActiveEntity {
      *
      * @param target
      */
-    public void shoot(final Point2D target) {
+    public Bullet shoot(final Point2D target) {
         final Bullet newBullet = this.weapon.fire(target);
         newBullet.init();
-        addBullet(newBullet);
-    }
-
-    /**
-     * @return The list of rendered bullets.
-     */
-    public List<Node> getBulletsNodes() {
-        return getBullets().stream().map(e -> e.render(getPosition())).toList();
+        return newBullet;
     }
 
     /**

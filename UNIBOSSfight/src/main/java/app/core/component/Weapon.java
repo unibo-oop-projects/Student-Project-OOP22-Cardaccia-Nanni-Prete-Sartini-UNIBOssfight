@@ -1,6 +1,6 @@
 package app.core.component;
 
-import app.core.entity.Bullet;
+import app.impl.entity.Bullet;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 
@@ -73,5 +73,5 @@ public interface Weapon {
      */
     Transform getShootingPosition();
 
-    double setRotation(Point2D target);
+    double updateRotation(Point2D target);
 }
