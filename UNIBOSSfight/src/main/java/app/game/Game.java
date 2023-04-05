@@ -25,22 +25,18 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-/**
- * This class models the game itself: in here, the current level is loaded.
- * The behavioural pattern Input-Update-Render is managed in this class.
- */
 public class Game extends Application {
 
     private static final double FRAME_RATE = 60;
@@ -76,7 +72,7 @@ public class Game extends Application {
      * constructor if problems while reading the file are detected.
      */
     public Game() throws IOException {
-        this.currentLevel = new DataManager().loadLevel("output.json");
+        this.currentLevel = new DataManager().loadBossLevel("bossLevel2.json");
     }
 
     /**
@@ -221,23 +217,10 @@ public class Game extends Application {
     private void render() {
         this.root.getChildren().clear();
 
-        final Rectangle bgr = new Rectangle(0, 0, Window.getWidth(), Window.getHeight());
-
         renderHUD();
 
-        // set fill for rectangle
-        Paint imagePattern = new ImagePattern(
-                this.bg,
-                -(this.currentLevel.getPlayerPosition().getX() / 10),
-                0,
-                Window.getHeight() * 16 / 9,
-                Window.getHeight(),
-                false
-        );
+        root.getChildren().addAll(this.currentLevel.renderBackground());
 
-        bgr.setFill(imagePattern);
-
-        this.root.getChildren().add(bgr);
         this.root.getChildren().addAll(this.currentLevel.renderUniqueEntities());
         this.currentLevel.renderEntities().forEach(e -> this.root.getChildren().add(e));
 
@@ -246,7 +229,7 @@ public class Game extends Application {
                 Window.getWidth(), this.image.getHeight());
 
         // set fill for rectangle
-        imagePattern = new ImagePattern(
+        ImagePattern imagePattern = new ImagePattern(
                 this.image,
                 -this.currentLevel.getPlayerPosition().getX(),
                 Window.getHeight() - this.image.getHeight(),
@@ -354,6 +337,7 @@ public class Game extends Application {
         GameOverStage(final Stage gameStage) {
             super();
             this.initModality(Modality.APPLICATION_MODAL);
+
             this.setOnCloseRequest(event -> gameStage.close());
 
             final AnchorPane pane = new AnchorPane();
