@@ -73,5 +73,5 @@ public interface Weapon {
      */
     Transform getShootingPosition();
 
-    double setRotation(Point2D target);
+    double updateRotation(Point2D target);
 }

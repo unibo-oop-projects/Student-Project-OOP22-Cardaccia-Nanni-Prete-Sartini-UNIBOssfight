@@ -102,7 +102,7 @@ public class Player extends ActiveEntity {
      */
     public void rotateWeapon(final Point2D mousePosition) {
 
-        final double angle = this.weapon.setRotation(mousePosition);
+        final double angle = this.weapon.updateRotation(mousePosition);
 
         if (angle <= Angle.RIGHT_ANGLE && angle > -Angle.RIGHT_ANGLE) {
             this.setDirection(1);
@@ -116,17 +116,10 @@ public class Player extends ActiveEntity {
      *
      * @param target
      */
-    public void shoot(final Point2D target) {
+    public Bullet shoot(final Point2D target) {
         final Bullet newBullet = this.weapon.fire(target);
         newBullet.init();
-        addBullet(newBullet);
-    }
-
-    /**
-     * @return The list of rendered bullets.
-     */
-    public List<Node> getBulletsNodes() {
-        return getBullets().stream().map(e -> e.render(getPosition())).toList();
+        return newBullet;
     }
 
     /**

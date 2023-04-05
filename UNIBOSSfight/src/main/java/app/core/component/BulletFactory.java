@@ -3,6 +3,9 @@ package app.core.component;
 import app.core.entity.Bullet;
 import javafx.geometry.Point2D;
 
+/**
+ * An interface modelling a Factory to create instances of Bullets.
+ */
 public interface BulletFactory {
 
     /**

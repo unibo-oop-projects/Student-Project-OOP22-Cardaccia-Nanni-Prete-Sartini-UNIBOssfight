@@ -9,7 +9,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
 /**
- * Implementation of the BulletFactory interface
+ * Implementation of the BulletFactory interface.
  */
 public class BulletFactoryImpl implements BulletFactory {
 
@@ -30,7 +30,7 @@ public class BulletFactoryImpl implements BulletFactory {
     @Override
     public Bullet getBigBullet(final Transform shootingPosition, final Point2D target, final  boolean isPlayerBullet) {
         return new BulletImpl(shootingPosition, 40, 40,
-                new SpriteRenderer(40, 40, Color.BLACK, "bullet.png"), 200, target, 5, isPlayerBullet);
+                new SpriteRenderer(40, 40, Color.BLACK, "bullet.png"), 1, target, 5, isPlayerBullet);
     }
 
 }
