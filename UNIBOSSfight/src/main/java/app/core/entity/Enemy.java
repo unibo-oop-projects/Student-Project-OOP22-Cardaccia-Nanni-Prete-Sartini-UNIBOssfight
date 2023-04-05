@@ -1,11 +1,8 @@
 package app.core.entity;
 
-import app.core.component.Collider;
 import app.core.component.Renderer;
 import app.core.component.Transform;
-import app.impl.component.ColliderImpl;
 import app.impl.entity.Bullet;
-import app.impl.entity.Platform;
 import app.impl.entity.Wall;
 
 /**
@@ -34,16 +31,14 @@ public abstract class Enemy extends ActiveEntity {
     public void init() {
         super.init();
 
-        final Collider collider = new ColliderImpl();
-
-        collider.addBehaviour(Wall.class.getName(), e -> {
+        getCollider().ifPresent(c -> c.addBehaviour(Wall.class.getName(), e -> {
             Wall.stop(this, e);
             if (getHitbox().getCollisionSideOnY(e.getPosition().getY()) == 0) {
                 jump();
             }
-        });
+        }));
 
-        collider.addBehaviour(Bullet.class.getName(), e -> {
+        getCollider().ifPresent(c -> c.addBehaviour(Bullet.class.getName(), e -> {
             final Bullet b = (Bullet) e;
             if (!b.getHealth().isDead() && b.isPlayerBullet()) {
                 getRenderer().setIsDamaged();
@@ -51,10 +46,6 @@ public abstract class Enemy extends ActiveEntity {
                 b.getHealth().destroy();
             }
 
-        });
-
-        collider.addBehaviour(Platform.class.getName(), e -> Platform.jump(this, e));
-
-        setCollider(collider);
+        }));
     }
 }

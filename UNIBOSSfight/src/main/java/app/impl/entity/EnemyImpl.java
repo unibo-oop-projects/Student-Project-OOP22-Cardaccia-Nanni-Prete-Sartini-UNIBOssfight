@@ -38,6 +38,8 @@ public class EnemyImpl extends Enemy {
                 .addStopFromSide()
                 .addFollow()
                 .build());
+
+
     }
 
 }
