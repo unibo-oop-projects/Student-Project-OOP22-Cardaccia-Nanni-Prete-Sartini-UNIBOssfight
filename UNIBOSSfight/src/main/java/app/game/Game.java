@@ -54,7 +54,6 @@ public class Game extends Application {
     private static final int OFFSET = 10;
     private static final int FONT_SIZE = 50;
     private final Level currentLevel;
-    private Stage mainStage;
     private Group root;
     private Scene currentScene;
     private InputManager inputManager;
@@ -93,15 +92,12 @@ public class Game extends Application {
      */
     @Override
     public void start(final Stage stage) {
+        stage.setTitle("UNIBOssfight");
 
-        this.mainStage = stage;
-
-        this.mainStage.setTitle("UNIBOssfight");
-
-        this.mainStage.setOnCloseRequest(e -> {
+        stage.setOnCloseRequest(e -> {
             e.consume();
             if (ConfirmBox.display("\tAre you sure you\nwant to quit the game?")) {
-                this.mainStage.close();
+                stage.close();
             }
         });
 
@@ -119,12 +115,12 @@ public class Game extends Application {
         final Screen screen = Screen.getPrimary();
         final Rectangle2D bounds = screen.getVisualBounds();
 
-        this.mainStage.setX(bounds.getMinX());
-        this.mainStage.setY(bounds.getMinY());
-        this.mainStage.setWidth(bounds.getWidth());
-        this.mainStage.setHeight(bounds.getHeight());
-        this.mainStage.setMinHeight(MIN_WINDOW_HEIGHT);
-        this.mainStage.setMinWidth(MIN_WINDOW_WIDTH);
+        stage.setX(bounds.getMinX());
+        stage.setY(bounds.getMinY());
+        stage.setWidth(bounds.getWidth());
+        stage.setHeight(bounds.getHeight());
+        stage.setMinHeight(MIN_WINDOW_HEIGHT);
+        stage.setMinWidth(MIN_WINDOW_WIDTH);
 
         this.root = new Group();
 
@@ -148,7 +144,7 @@ public class Game extends Application {
 
         this.gameOver.addListener(
                 (observable, oldValue, newValue) ->
-                        new GameOverStage(this.mainStage).show()
+                        new GameOverStage(stage).show()
         );
 
         this.currentScene.setOnMouseClicked(e -> this.currentLevel.playerShoot(
@@ -160,10 +156,10 @@ public class Game extends Application {
         );
 
         //Adding scene to the stage
-        this.mainStage.setScene(currentScene);
+        stage.setScene(currentScene);
 
         //Displaying the contents of the stage
-        this.mainStage.show();
+        stage.show();
 
         final Timeline tl = new Timeline(new KeyFrame(Duration.millis(FRAME_DURATION),
             e -> {
