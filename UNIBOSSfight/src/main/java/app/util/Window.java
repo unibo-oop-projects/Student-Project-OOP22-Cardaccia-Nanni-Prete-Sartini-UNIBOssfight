@@ -5,12 +5,21 @@ package app.util;
  */
 public final class Window {
 
-    private static double width;
-    private static double height;
+    private static volatile Window instanceOfWindow;
+    private double width;
+    private double height;
 
     private Window() {
-        throw new UnsupportedOperationException("This is a utility class"
-                + " and cannot be instantiated");
+    }
+
+    private static Window getInstanceOfWindow() {
+        synchronized (Window.class){
+            if (instanceOfWindow == null) {
+                instanceOfWindow = new Window();
+            }
+        }
+
+        return instanceOfWindow;
     }
 
     /**
@@ -19,7 +28,7 @@ public final class Window {
      * @param height the height of the window
      */
     public static void setHeight(final double height) {
-        Window.height = height;
+        Window.getInstanceOfWindow().height = height;
     }
 
     /**
@@ -28,7 +37,7 @@ public final class Window {
      * @return the height of the window
      */
     public static double getHeight() {
-        return Window.height;
+        return Window.getInstanceOfWindow().height;
     }
 
     /**
@@ -37,7 +46,7 @@ public final class Window {
      * @param width the width of the window
      */
     public static void setWidth(final double width) {
-        Window.width = width;
+        Window.getInstanceOfWindow().width = width;
     }
 
     /**
@@ -46,6 +55,6 @@ public final class Window {
      * @return the width of the window
      */
     public static double getWidth() {
-        return Window.width;
+        return Window.getInstanceOfWindow().width;
     }
 }
