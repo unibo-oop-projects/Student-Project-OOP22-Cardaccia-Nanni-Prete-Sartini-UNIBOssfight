@@ -67,6 +67,7 @@ public class Game extends Application {
     private final Label coinsLabel = new Label();
     private final AnchorPane anchorPane = new AnchorPane();
     private final BooleanProperty gameOver = new SimpleBooleanProperty(false);
+    private final BooleanProperty victory = new SimpleBooleanProperty(false);
     private long startTime;
 
     /**
@@ -147,8 +148,22 @@ public class Game extends Application {
         );
 
         this.gameOver.addListener(
-                (observable, oldValue, newValue) ->
-                        new GameOverStage(stage).show()
+                (observable, oldValue, newValue) -> {
+                    final CustomizedButton restartButton = new CustomizedButton(
+                            "RESTART");
+                    new GameOverStage(stage, restartButton,
+                            "level1.json", "gameover.png").show();
+                }
+        );
+
+        //TODO cambiare in level2.json e settare a true dopo la bossfight
+        this.victory.addListener(
+                (observable, oldValue, newValue) -> {
+                    final CustomizedButton nextLevelButton = new CustomizedButton(
+                            "LEVEL 2");
+                    new GameOverStage(stage, nextLevelButton,
+                            "level1.json", "gameover.png").show();
+                }
         );
 
         this.currentScene.setOnMouseClicked(e -> this.currentLevel.playerShoot(
@@ -182,7 +197,7 @@ public class Game extends Application {
                     }
                     run();
                 } else {
-                    gameOver.set(true);
+                    this.gameOver.set(true);
                 }
             })
         );
@@ -363,7 +378,8 @@ public class Game extends Application {
         private static final int HOME_BUTTON_LAYOUTY = 140;
         private static final int RESTART_BUTTON_LAYOUTY = 210;
 
-        GameOverStage(final Stage gameStage) {
+        GameOverStage(final Stage gameStage, final CustomizedButton button,
+                      final String jsonFile, final String logo) {
             super();
             this.initModality(Modality.APPLICATION_MODAL);
             this.setOnCloseRequest(event -> gameStage.close());
@@ -375,7 +391,7 @@ public class Game extends Application {
             pane.prefHeight(SCENE_HEIGHT);
 
             final CustomizedButton homeButton = new CustomizedButton("HOME");
-            final CustomizedButton restartButton = new CustomizedButton("RESTART");
+            //final CustomizedButton restartButton = new CustomizedButton("RESTART");
 
             homeButton.setOnAction(event -> {
                 this.close();
@@ -383,26 +399,26 @@ public class Game extends Application {
                 Platform.runLater(() -> new MainMenu().start(new Stage()));
             });
 
-            restartButton.setOnAction(event -> Platform.runLater(() -> {
+            button.setOnAction(event -> Platform.runLater(() -> {
                 this.close();
                 gameStage.close();
                 try {
-                    new Game().start(new Stage());
+                    new Game(jsonFile).start(new Stage());
                 } catch (final IOException e) {
                     AppLogger.getLogger().severe(e.getMessage());
                     throw (IllegalStateException) new IllegalStateException().initCause(e);
                 }
             }));
 
-            ViewManager.createLogo(LOGO_LAYOUTX, LOGO_LAYOUTY, "gameover.png", pane);
+            ViewManager.createLogo(LOGO_LAYOUTX, LOGO_LAYOUTY, logo, pane);
             ViewManager.setBackground("blue.png", SCENE_WIDTH, SCENE_HEIGHT, pane);
 
             homeButton.setLayoutX(BUTTON_LAYOUTX);
             homeButton.setLayoutY(HOME_BUTTON_LAYOUTY);
-            restartButton.setLayoutX(BUTTON_LAYOUTX);
-            restartButton.setLayoutY(RESTART_BUTTON_LAYOUTY);
+            button.setLayoutX(BUTTON_LAYOUTX);
+            button.setLayoutY(RESTART_BUTTON_LAYOUTY);
 
-            pane.getChildren().addAll(homeButton, restartButton);
+            pane.getChildren().addAll(homeButton, button);
             setScene(new Scene(pane, SCENE_WIDTH, SCENE_HEIGHT));
         }
     }

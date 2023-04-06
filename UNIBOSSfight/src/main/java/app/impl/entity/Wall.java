@@ -5,28 +5,12 @@ import app.core.component.Transform;
 import app.core.entity.AbstractEntity;
 import app.core.entity.ActiveEntity;
 import app.core.entity.Entity;
-import app.impl.component.SpriteRenderer;
-import javafx.scene.paint.Color;
 
 /**
  * This class models a wall, which is an obstacle that stops
  * the player while running but can be climbed.
  */
 public class Wall extends AbstractEntity {
-
-    /**
-     * Creates a new instance of the class Wall.
-     *
-     * @param position the position of the wall
-     * @param height the height of the wall
-     * @param width the width of the wall
-     * @param filename the name of the file containing the sprite for the renderer
-     */
-    public Wall(final Transform position, final int height,
-                final int width, final String filename) {
-        super(position, height, width,
-                new SpriteRenderer(height, width, Color.BROWN, filename));
-    }
 
     /**
      * Creates a new instance of the class Wall.
@@ -69,5 +53,4 @@ public class Wall extends AbstractEntity {
                            .ifPresent(e -> e.accept(collidingEntity, wall));
         }
     }
-
 }

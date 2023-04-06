@@ -8,8 +8,10 @@ import app.impl.builder.BehaviourBuilderImpl;
 import app.impl.component.ColliderImpl;
 import app.impl.entity.Platform;
 import app.util.Acceleration;
-import app.util.Window;
 import javafx.geometry.Point2D;
+import app.util.Window;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * This class models an Entity that can move and performs actions.
@@ -103,6 +105,11 @@ public abstract class ActiveEntity extends AbstractEntity {
      *
      * @return the component Behaviour
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "It is needed because it is necessary"
+                    + " to modify the state of the object from the outside"
+    )
     public Behaviour getBehaviour() {
         return this.behaviour;
     }
@@ -112,6 +119,11 @@ public abstract class ActiveEntity extends AbstractEntity {
      *
      * @param behaviour the new behaviour
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "It is needed because it is necessary"
+                    + " to modify the state of the object from the outside"
+    )
     public void setBehaviour(final Behaviour behaviour) {
         this.behaviour = behaviour;
     }
@@ -197,5 +209,4 @@ public abstract class ActiveEntity extends AbstractEntity {
     protected boolean isJumping() {
         return this.getPosition().getY() > getTransform().getGroundLevel();
     }
-
 }

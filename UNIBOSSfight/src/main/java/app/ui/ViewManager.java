@@ -18,8 +18,11 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * This class is used to manage the appearance of the user interface
@@ -41,20 +44,25 @@ public class ViewManager {
     private CustomizedSubScene helpSubScene;
     private CustomizedSubScene currentScene;
 
-
     /**
      * Creates a new instance of the class ViewManager.
      *
      * @param stage the stage of the menu
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "It is needed to change the appearance of the stage"
+                    + "passed as input in the start method of the MainMenu"
+    )
     public ViewManager(final Stage stage) {
         this.mainStage = stage;
-        this.mainStage.setResizable(false);
+        stage.setResizable(false);
         this.menuButtons = new ArrayList<>();
         this.mainPane = new AnchorPane();
         final Scene mainScene = new Scene(mainPane, WIDTH, HEIGHT);
-        this.mainStage.setScene(mainScene);
+        stage.setScene(mainScene);
         createSubScenes();
+        createLevelChoiceSubScene();
         createButtons();
         setBackground("blue.png", BACKGROUND_WIDTH, BACKGROUND_HEIGHT, mainPane);
     }
@@ -64,6 +72,11 @@ public class ViewManager {
      *
      * @return the main stage
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "It is needed to let the MainMenu show"
+                    + "the new appearance of the stage, set in here"
+    )
     public Stage getMainStage() {
         return this.mainStage;
     }
@@ -137,8 +150,33 @@ public class ViewManager {
     }
     private void createSubScenes() {
         this.scoreSubScene = new CustomizedSubScene();
-        this.levelChoiceSubScene = new CustomizedSubScene();
         this.helpSubScene = new CustomizedSubScene();
+    }
+
+    private void createLevelChoiceSubScene() {
+        this.levelChoiceSubScene = new CustomizedSubScene();
+        this.levelChoiceSubScene.addLabel("Choose a level: ");
+        final CustomizedButton level1 = new CustomizedButton("LEVEL 1");
+        final CustomizedButton level2 = new CustomizedButton("LEVEL 2");
+        this.levelChoiceSubScene.addButtons(level1, level2);
+
+        level1.setOnAction(event -> Platform.runLater(() -> {
+            try {
+                new Game("level1.json").start(new Stage());
+                this.mainStage.close();
+            } catch (final IOException e) {
+                AppLogger.getLogger().severe(e.getMessage());
+            }
+        }));
+
+        level2.setOnAction(event -> Platform.runLater(() -> {
+            try {
+                new Game().start(new Stage());
+                this.mainStage.close();
+            } catch (final IOException e) {
+                AppLogger.getLogger().severe(e.getMessage());
+            }
+        }));
     }
 
     private void showSubScene(final CustomizedSubScene subScene) {

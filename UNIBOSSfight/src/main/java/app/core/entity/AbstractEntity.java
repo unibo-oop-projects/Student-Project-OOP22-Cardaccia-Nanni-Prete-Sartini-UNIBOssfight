@@ -154,7 +154,6 @@ public abstract class AbstractEntity implements Entity {
     /**
      * {@inheritDoc}
      */
-    //TODO valutare se eliminare questo metodo
     @Override
     public void setDamage(final int damage) {
         this.damage = damage;
