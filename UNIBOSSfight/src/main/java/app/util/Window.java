@@ -13,7 +13,7 @@ public final class Window {
     }
 
     private static Window getInstanceOfWindow() {
-        synchronized (Window.class){
+        synchronized (Window.class) {
             if (instanceOfWindow == null) {
                 instanceOfWindow = new Window();
             }

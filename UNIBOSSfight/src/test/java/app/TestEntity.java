@@ -8,90 +8,116 @@ import app.util.AppLogger;
 import app.util.DataManager;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class TestEntity {
+/**
+ * This class tests the entities.
+ */
+final class TestEntity {
 
     private static final int LEFT_COLLISION = -1;
     private static final int RIGHT_COLLISION = 1;
     private static final int UPPER_COLLISION = 1;
     private static final int BOTTOM_COLLISION = -1;
+    private static final int LEFT_MOVEMENT = -2;
 
-    Level level;
+    private Level level;
 
-    public void init(final String filename) {
+    void init(final String filename) {
         try {
             this.level = new DataManager().loadLevel("src/test/resources/" + filename);
-        } catch (Exception e) {
-            AppLogger.getLogger().severe("errore nel caricamento del livello " + e.getMessage());
+        } catch (IOException e) {
+            AppLogger.getLogger().severe("Errore nel caricamento del livello di test "
+                    + e.getMessage());
         }
 
         this.level.getPlayer().init();
         this.level.getEntities().forEach(Entity::init);
     }
 
+    /**
+     * This method tests the collision from the left side, when colliding
+     * the entity should be moved back.
+     */
     @Test
-    public void testSideCollision() {
+    void testSideCollision() {
         init("leftcollision.json");
 
-        Player player = this.level.getPlayer();
-        Entity entity = this.level.getEntities().get(0);
+        final Player player = this.level.getPlayer();
+        final Entity entity = this.level.getEntities().get(0);
 
         // Collision from left side
         while (!player.getHitbox().collide(entity.getHitbox())) {
             update(player, Entity.Inputs.RIGHT);
         }
 
-        assertEquals(LEFT_COLLISION, player.getHitbox().getCollisionSideOnX(entity.getPosition().getX()));
+        assertEquals(LEFT_COLLISION,
+                player.getHitbox().getCollisionSideOnX(entity.getPosition().getX()));
 
         player.manageCollision(entity);
 
         assertEquals(entity.getHitbox().getLeftSide(), player.getHitbox().getRightSide());
     }
 
+    /**
+     * This method tests the upper collision, when the entity collides
+     * its ground level must be set to the top of the collided entity.
+     */
     @Test
-    public void testUpperCollision() {
+    void testUpperCollision() {
         init("uppercollision.json");
 
-        Player player = this.level.getPlayer();
-        Entity entity = this.level.getEntities().get(0);
+        final Player player = this.level.getPlayer();
+        final Entity entity = this.level.getEntities().get(0);
 
         // Collision from up
         while (!player.getHitbox().collide(entity.getHitbox())) {
             update(player, Entity.Inputs.EMPTY);
         }
 
-        assertEquals(UPPER_COLLISION, player.getHitbox().getCollisionSideOnY(entity.getPosition().getY()));
+        assertEquals(UPPER_COLLISION,
+                player.getHitbox().getCollisionSideOnY(entity.getPosition().getY()));
 
         player.manageCollision(entity);
 
         assertEquals(entity.getHitbox().getTopSide(), player.getHitbox().getBottomSide());
     }
 
+    /**
+     * Tests the bottom collision, the case in which the intersections are equals
+     * and it should prefer the side collision, then the bottom collision when the
+     * entity should be stopped from the top.
+     */
     @Test
-    public void testBottomCollision() {
+    void testBottomCollision() {
         init("bottomcollision.json");
 
         Player player = this.level.getPlayer();
-        Entity entity = this.level.getEntities().get(0);
+        final Entity entity = this.level.getEntities().get(0);
 
         // Collision from side
         while (!player.getHitbox().collide(entity.getHitbox())) {
             update(player, Entity.Inputs.SPACE);
         }
 
-        assertEquals(BOTTOM_COLLISION, player.getHitbox().getCollisionSideOnY(entity.getPosition().getY()));
-        assertEquals(RIGHT_COLLISION, player.getHitbox().getCollisionSideOnX(entity.getPosition().getX()));
+        assertEquals(BOTTOM_COLLISION,
+                player.getHitbox().getCollisionSideOnY(entity.getPosition().getY()));
+        assertEquals(RIGHT_COLLISION,
+                player.getHitbox().getCollisionSideOnX(entity.getPosition().getX()));
 
         player.manageCollision(entity);
         player.update(Entity.Inputs.EMPTY);
 
-        assertNotEquals(entity.getHitbox().getBottomSide() - 1, player.getHitbox().getTopSide());
-        assertEquals(entity.getHitbox().getRightSide(), player.getHitbox().getLeftSide());
+        assertNotEquals(entity.getHitbox().getBottomSide() - 1,
+                player.getHitbox().getTopSide());
+        assertEquals(entity.getHitbox().getRightSide(),
+                player.getHitbox().getLeftSide());
 
         player = this.level.getPlayer();
-        player.getTransform().move(-2, 0);
+        player.getTransform().move(LEFT_MOVEMENT, 0);
 
         // Collision from bottom
         while (!player.getHitbox().collide(entity.getHitbox())) {
@@ -102,18 +128,23 @@ public class TestEntity {
 
         update(player, Entity.Inputs.EMPTY);
 
-        assertEquals(entity.getHitbox().getBottomSide(), player.getHitbox().getTopSide());
-        assertNotEquals(entity.getHitbox().getRightSide(), player.getHitbox().getLeftSide());
+        assertEquals(entity.getHitbox().getBottomSide(),
+                player.getHitbox().getTopSide());
+        assertNotEquals(entity.getHitbox().getRightSide(),
+                player.getHitbox().getLeftSide());
     }
 
+    /**
+     * Tests the damage to the player.
+     */
     @Test
-    public void testDamage() {
+    void testDamage() {
         init("damage.json");
 
         int counter = 0;
 
-        Player player = this.level.getPlayer();
-        Entity entity = this.level.getEntities().get(0);
+        final Player player = this.level.getPlayer();
+        final Entity entity = this.level.getEntities().get(0);
 
         final int collisionsToDeath = entity.getDamage() != 0 ? player.getHealth().getValue() / entity.getDamage() : 0;
 
@@ -129,7 +160,7 @@ public class TestEntity {
         assertEquals(collisionsToDeath, counter);
     }
 
-    private void update(final ActiveEntity ac, final Entity.Inputs input) {
+    void update(final ActiveEntity ac, final Entity.Inputs input) {
         ac.update(input);
         ac.update(Entity.Inputs.EMPTY);
     }
