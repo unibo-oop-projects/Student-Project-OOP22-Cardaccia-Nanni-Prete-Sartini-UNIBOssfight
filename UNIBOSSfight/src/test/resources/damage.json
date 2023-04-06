@@ -16,7 +16,7 @@
         "rotation": 0.0
       },
       "renderer": {
-        "filename": "goomba",
+        "filename": "goomba/goomba.png",
         "height": 10,
         "width": 10,
         "color": {
