@@ -85,4 +85,5 @@ public interface Weapon {
      * @return the new angle between the weapon and the target
      */
     double updateRotation(Point2D target);
+
 }

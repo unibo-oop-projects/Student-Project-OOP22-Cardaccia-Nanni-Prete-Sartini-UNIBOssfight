@@ -7,6 +7,7 @@ import app.core.component.Weapon;
 import app.impl.entity.Bullet;
 import app.impl.factory.BulletFactoryImpl;
 import app.util.Angle;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import app.util.Window;
@@ -33,6 +34,10 @@ public class WeaponImpl implements Weapon {
      * @param renderer the renderer of the weapon
      * @param positionOffset the offset from the user's position and the render position of the Weapon
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "The renderer Class cannot be Cloned" //TODO VA BENE? CAMBIARE GIUSTIFICAZIONE
+    )
     public WeaponImpl(final Transform userPos, final Renderer renderer, final int positionOffset) {
         this.userPos = new TransformImpl(userPos.getPosition(), 0);
         this.renderer = renderer;
@@ -105,7 +110,7 @@ public class WeaponImpl implements Weapon {
      */
     @Override
     public Transform getUserPosition() {
-        return this.userPos;
+        return this.userPos.copyOf();
     }
 
     /**
@@ -113,7 +118,7 @@ public class WeaponImpl implements Weapon {
      */
     @Override
     public Transform getShootingPosition() {
-        return this.shootingPos;
+        return this.shootingPos.copyOf();
     }
 
     /**

@@ -350,7 +350,7 @@ public class Game extends Application {
                     new Game().start(new Stage());
                 } catch (final IOException e) {
                     AppLogger.getLogger().severe(e.getMessage());
-                    throw (IllegalStateException)new IllegalStateException().initCause(e);
+                    throw (IllegalStateException) new IllegalStateException().initCause(e);
                 }
             }));
 

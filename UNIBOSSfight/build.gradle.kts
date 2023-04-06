@@ -1,8 +1,8 @@
 plugins {
     java
     application
-    //id("org.danilopianini.gradle-java-qa") version "1.0.0"
-    id("com.github.spotbugs") version "5.0.13"
+    id("org.danilopianini.gradle-java-qa") version "1.0.0"
+    //id("com.github.spotbugs") version "5.0.13"
     //id("de.aaschmid.cpd") version "3.3"
 
 }

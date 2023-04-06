@@ -34,22 +34,12 @@ public class BossLevel extends LevelImpl {
     }
 
     /**
-     * Method that return the node to Render the Weapon.
-     *
-     * @param playerPosition the position of the Player
-     * @return The node of the Weapon
-     */
-    public Node renderBossWeapon(final Point2D playerPosition) {
-        return this.boss.renderWeapon(playerPosition);
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
     public List<Node> renderUniqueEntities() {
         final List<Node> nodes = super.renderUniqueEntities();
-        nodes.addAll(List.of(renderBoss(this.getPlayerPosition()), renderBossWeapon(this.getPlayerPosition())));
+        nodes.addAll(List.of(renderBoss(this.getPlayerPosition())));
 
         return nodes;
     }
@@ -72,10 +62,10 @@ public class BossLevel extends LevelImpl {
             }
         }
 
-        //TODO beahaviour
-        final var behaviour = boss.getBehaviour().getFollowingBehaviour();
-        behaviour.ifPresent(b -> boss.update(b.apply(getPlayer(), boss)));
-
+        final var followingBehaviour = boss.getBehaviour().getFollowingBehaviour();
+        followingBehaviour.ifPresent(b -> boss.update(b.apply(getPlayer(), boss)));
+        final var flyingBehaviour = boss.getBehaviour().getFlyingBehaviour();
+        flyingBehaviour.ifPresent(b -> boss.update(b.apply(boss, getPlayer())));
     }
 
     /**
@@ -92,7 +82,7 @@ public class BossLevel extends LevelImpl {
 
         final BossFactory bossFactory = new BossFactoryImpl();
 
-        this.boss = bossFactory.firstBoss(new TransformImpl(
+        this.boss = bossFactory.flyingBoss(new TransformImpl(
                 new Point2D(BOSS_X_POSITION, BOSS_Y_POSITION), 0));
         this.boss.init();
     }

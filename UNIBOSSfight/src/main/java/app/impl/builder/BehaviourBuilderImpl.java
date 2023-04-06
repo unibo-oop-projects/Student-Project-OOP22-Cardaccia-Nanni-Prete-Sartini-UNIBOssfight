@@ -5,6 +5,7 @@ import app.core.component.BehaviourBuilder;
 import app.core.entity.Entity;
 import app.impl.component.BehaviourImpl;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import app.util.Window;
 
 /**
  * This class implements the Behaviour.
@@ -77,7 +78,22 @@ public class BehaviourBuilderImpl implements BehaviourBuilder {
     @Override
     public BehaviourBuilder addFlying() {
         this.behaviour.setFlyingBehaviour((activeEntity, player) -> {
-            return null;
+
+            if (activeEntity.getPosition().getX() < player.getPosition().getX()
+                    + (Window.getWidth() / 4) && activeEntity.getPosition().getX()
+                    > player.getPosition().getX() || activeEntity.getPosition().getX()
+                    < player.getPosition().getX() - Window.getWidth() / 4) {
+                return Entity.Inputs.RIGHT;
+            } else if (activeEntity.getPosition().getX() > player.getPosition().getX()
+                    - Window.getWidth() / 4 && activeEntity.getPosition().getX()
+                    < player.getPosition().getX() || activeEntity.getPosition().getX()
+                    > player.getPosition().getX() + Window.getWidth() / 4) {
+                return Entity.Inputs.LEFT;
+            } else if (activeEntity.getPosition().getY() < Window.getHeight() / 2 + Window.getHeight() / 4) {
+                return Entity.Inputs.UP;
+            } else {
+                return Entity.Inputs.DOWN;
+            }
         });
         return this;
     }

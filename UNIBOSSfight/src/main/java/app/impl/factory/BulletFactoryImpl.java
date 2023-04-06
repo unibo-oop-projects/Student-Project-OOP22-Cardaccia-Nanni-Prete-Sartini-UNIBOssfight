@@ -16,9 +16,9 @@ public class BulletFactoryImpl implements BulletFactory {
     private static final int PLAYER_BULLET_WIDTH = 40;
     private static final int PLAYER_BULLET_SPEED = 30;
     private static final int PLAYER_BULLET_DAMAGE = 10;
-    private static final int BIG_BULLET_HEIGHT = 45;
-    private static final int BIG_BULLET_WIDTH = 45;
-    private static final int BIG_BULLET_SPEED = 5;
+    private static final int BIG_BULLET_HEIGHT = 40;
+    private static final int BIG_BULLET_WIDTH = 60;
+    private static final int BIG_BULLET_SPEED = 4;
     private static final int BIG_BULLET_DAMAGE = 25;
 
     /**
@@ -39,7 +39,7 @@ public class BulletFactoryImpl implements BulletFactory {
     public Bullet getBigBullet(final Transform shootingPosition, final Point2D target, final  boolean isPlayerBullet) {
         return new Bullet(shootingPosition, BIG_BULLET_HEIGHT, BIG_BULLET_WIDTH,
                 new SpriteRenderer(BIG_BULLET_HEIGHT, BIG_BULLET_WIDTH,
-                        Color.BLACK, "bullet.png"), BIG_BULLET_DAMAGE,
+                        Color.BLACK, "magicBullet.png"), BIG_BULLET_DAMAGE,
                         target, BIG_BULLET_SPEED, isPlayerBullet);
     }
 

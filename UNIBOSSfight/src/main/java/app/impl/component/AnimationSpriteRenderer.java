@@ -51,7 +51,6 @@ public class AnimationSpriteRenderer extends LoopSpriteRenderer {
         if (this.previousAnimation == null || !this.previousAnimation.equals(animation)) {
             this.getIsAnimationEnded().set(false);
             this.animation = animation;
-
         }
     }
 

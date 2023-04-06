@@ -4,9 +4,10 @@ import app.core.component.Transform;
 import app.core.component.Weapon;
 import app.core.entity.Boss;
 import app.impl.builder.BehaviourBuilderImpl;
+import app.impl.component.AnimationSpriteRenderer;
 import app.impl.component.WeaponImpl;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 
 /**
  * Implementation of the Boss Interface.
@@ -15,7 +16,7 @@ public class BossImpl extends Boss {
 
     private static final int DEFAULT_RATE_OF_FIRE = 30;
     private transient WeaponImpl weapon;
-    private final int rateOfFire;
+    private int rateOfFire;
 
     /**
      * Constructor that initializes a new instance of the Boss.
@@ -36,6 +37,10 @@ public class BossImpl extends Boss {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "This Class cannot be Cloned due to it being initialized through a Factory"
+    )
     @Override
     public Weapon getWeapon() {
         return this.weapon;
@@ -49,6 +54,14 @@ public class BossImpl extends Boss {
         super.update(input);
         this.weapon.updatePosition(getTransform());
         this.weapon.setXDirection(this.getDirection());
+
+        if (input == Inputs.EMPTY && this.getRenderer() instanceof AnimationSpriteRenderer) {
+            if (this.getXSpeed() != 0) {
+                ((AnimationSpriteRenderer) this.getRenderer()).setAnimation("walk");
+            } else {
+                ((AnimationSpriteRenderer) this.getRenderer()).setAnimation("idle");
+            }
+        }
     }
 
     /**
@@ -71,6 +84,10 @@ public class BossImpl extends Boss {
      */
     @Override
     public Bullet shoot(final Point2D target) {
+        if (this.getRenderer() instanceof AnimationSpriteRenderer) {
+            ((AnimationSpriteRenderer) this.getRenderer()).setAnimation("attack");
+        }
+
         final Bullet newBullet = this.weapon.fire(target);
         newBullet.init();
         return newBullet;
@@ -79,6 +96,10 @@ public class BossImpl extends Boss {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "This Class cannot be Cloned due to it being initialized through a Factory"
+    )
     @Override
     public void setWeapon(final WeaponImpl weapon) {
         this.weapon = weapon;
@@ -88,15 +109,15 @@ public class BossImpl extends Boss {
      * {@inheritDoc}
      */
     @Override
-    public Node renderWeapon(final Point2D playerPosition) {
-        return this.weapon.render(playerPosition, 0, 0);
+    public int getRateOfFire() {
+        return this.rateOfFire;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public int getRateOfFire() {
-        return this.rateOfFire;
+    public void setRateOfFire(final int rateOfFire) {
+        this.rateOfFire = rateOfFire;
     }
 }

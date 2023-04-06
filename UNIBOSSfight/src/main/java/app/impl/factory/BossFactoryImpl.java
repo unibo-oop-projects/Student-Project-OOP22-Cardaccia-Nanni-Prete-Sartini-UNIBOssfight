@@ -16,7 +16,9 @@ public class BossFactoryImpl implements BossFactory {
     private static final int FIRST_BOSS_HEIGHT = 500;
     private static final int FIRST_BOSS_WIDTH = 400;
     private static final int FLYING_BOSS_HEIGHT = 300;
-    private static final int FLYING_BOSS_WIDTH = 100;
+    private static final int FLYING_BOSS_WIDTH = 150;
+    private static final int FLYING_BOSS_RATEOFIRE = 49;
+    private static final int FLYING_BOSS_MAX_SPEED = 5;
 
     /**
      * {@inheritDoc}
@@ -36,7 +38,7 @@ public class BossFactoryImpl implements BossFactory {
     @Override
     public Boss flyingBoss(final Transform startingPos) {
 
-        final BossImpl boss = new BossImpl(startingPos, FLYING_BOSS_HEIGHT, FLYING_BOSS_WIDTH, "ghini/ghini1.png") {
+        final BossImpl boss = new BossImpl(startingPos, FLYING_BOSS_HEIGHT, FLYING_BOSS_WIDTH, "pianini") {
             @Override
             public void init() {
                 super.init();
@@ -47,6 +49,9 @@ public class BossFactoryImpl implements BossFactory {
                         .addStopFromSide()
                         .addFlying()
                         .build());
+
+                this.setRateOfFire(FLYING_BOSS_RATEOFIRE);
+                this.setMaxXSpeed(FLYING_BOSS_MAX_SPEED);
             }
 
             @Override
