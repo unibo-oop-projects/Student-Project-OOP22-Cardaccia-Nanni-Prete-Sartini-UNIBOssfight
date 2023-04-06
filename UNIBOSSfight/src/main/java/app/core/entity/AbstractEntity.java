@@ -37,6 +37,10 @@ public abstract class AbstractEntity implements Entity {
      * @param width the width of the entity
      * @param renderer the renderer of the entity
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP2",
+            justification = ""
+    )
     public AbstractEntity(
             final Transform position,
             final int height,
@@ -73,8 +77,8 @@ public abstract class AbstractEntity implements Entity {
      */
     @Override
     @SuppressFBWarnings(
-            value="EI_EXPOSE_REP",
-            justification="It is necessary for the motion of the game"
+            value = "EI_EXPOSE_REP",
+            justification = "It is necessary for the motion of the game"
     )
     public Transform getTransform() {
         return this.position;

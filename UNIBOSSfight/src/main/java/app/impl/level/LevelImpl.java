@@ -9,6 +9,7 @@ import app.impl.entity.Bullet;
 import app.impl.entity.Player;
 import app.util.AppLogger;
 import app.util.Window;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -219,8 +220,13 @@ public class LevelImpl implements Level {
      * {@inheritDoc}
      */
     @Override
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "It is needed because the player is used"
+                    + "in the subclasses and its state has to be modified"
+    )
     public Player getPlayer() {
-        return player;
+        return this.player;
     }
 
     /**
