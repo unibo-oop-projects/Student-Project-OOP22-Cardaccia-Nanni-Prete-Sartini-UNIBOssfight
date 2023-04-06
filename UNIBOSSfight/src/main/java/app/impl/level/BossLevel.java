@@ -23,10 +23,6 @@ public class BossLevel extends LevelImpl {
     private transient Boss boss;
     private transient int rateOfFireCounter;
 
-    public Boss getBoss() {
-        return this.boss;
-    }
-
     /**
      * Method that return the node to Render the Boss.
      *
@@ -35,6 +31,15 @@ public class BossLevel extends LevelImpl {
      */
     public Node renderBoss(final Point2D playerPosition) {
         return boss.render(playerPosition);
+    }
+
+    /**
+     * This method returns the Boss of the level.
+     *
+     * @return the boss of the level
+     */
+    public Boss getBoss() {
+        return this.boss;
     }
 
     /**
@@ -106,5 +111,13 @@ public class BossLevel extends LevelImpl {
         if (this.boss.getHitbox().collide(getPlayer().getHitbox())) {
             this.getPlayer().manageCollision(this.boss);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isLevelEnded() {
+        return this.boss.getHealth().isDead();
     }
 }
