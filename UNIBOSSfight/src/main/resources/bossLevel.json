@@ -28,6 +28,10 @@
         "opacity": 1.0
       },
       "className": "app.impl.component.AnimationSpriteRenderer"
+    },
+    "health": {
+      "maxHp": 100,
+      "hp": 100
     }
   }
 }

@@ -23,6 +23,10 @@ public class BossLevel extends LevelImpl {
     private transient Boss boss;
     private transient int rateOfFireCounter;
 
+    public Boss getBoss() {
+        return this.boss;
+    }
+
     /**
      * Method that return the node to Render the Boss.
      *

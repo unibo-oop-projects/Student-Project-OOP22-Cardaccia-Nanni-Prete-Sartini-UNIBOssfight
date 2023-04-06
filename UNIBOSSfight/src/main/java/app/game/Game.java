@@ -2,6 +2,7 @@ package app.game;
 
 import app.core.entity.Entity;
 import app.core.level.Level;
+import app.impl.level.BossLevel;
 import app.ui.ConfirmBox;
 import app.ui.CustomizedButton;
 import app.ui.MainMenu;
@@ -24,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
@@ -52,13 +54,15 @@ public class Game extends Application {
     private static final int PROGRESS_BAR_LAYOUTY = 20;
     private static final int LABEL_LAYOUTY = 5;
     private static final int OFFSET = 10;
+    private static final int BOSS_OFFSET = 20;
     private static final int FONT_SIZE = 50;
-    private final Level currentLevel;
+    private Level currentLevel;
     private Group root;
     private Scene currentScene;
     private InputManager inputManager;
     private Image image;
-    private final ProgressBar progressBar = new ProgressBar(0);
+    private final ProgressBar playerHealthBar = new ProgressBar(0);
+    private final ProgressBar bossHealthBar = new ProgressBar(0);
     private final Label timeLabel = new Label();
     private final Label coinsLabel = new Label();
     private final AnchorPane anchorPane = new AnchorPane();
@@ -165,7 +169,16 @@ public class Game extends Application {
             e -> {
                 if (!this.currentLevel.isOver()) {
                     if (this.currentLevel.isLevelEnded()) {
-                        System.out.println("HAI VINTOOOOOOOOO"); // NOPMD
+                        try {
+                            this.currentLevel = new DataManager()
+                                    .loadBossLevel("bossLevel.json");
+                            this.currentLevel.init();
+                            initHUD();
+                        } catch (IOException ex) {
+                            AppLogger.getLogger()
+                                    .severe("Errore nel caricamento del boss level "
+                                            + ex.getMessage());
+                        }
                     }
                     run();
                 } else {
@@ -181,10 +194,13 @@ public class Game extends Application {
     }
 
     private void initHUD() {
-        this.progressBar.setPrefSize(PROGRESS_BAR_WIDTH, PROGRESS_BAR_HEIGHT);
-        this.progressBar.setStyle("#00bbf0");
+        this.playerHealthBar.setPrefSize(PROGRESS_BAR_WIDTH, PROGRESS_BAR_HEIGHT);
+        this.playerHealthBar.setLayoutY(PROGRESS_BAR_LAYOUTY);
 
-        this.progressBar.setLayoutY(PROGRESS_BAR_LAYOUTY);
+        this.bossHealthBar.setPrefSize(PROGRESS_BAR_WIDTH, PROGRESS_BAR_HEIGHT);
+        this.bossHealthBar.setStyle("-fx-accent: red;");
+        this.bossHealthBar.setLayoutY(PROGRESS_BAR_LAYOUTY);
+
         this.timeLabel.setLayoutY(LABEL_LAYOUTY);
         this.coinsLabel.setLayoutY(LABEL_LAYOUTY);
 
@@ -233,8 +249,14 @@ public class Game extends Application {
 
         rect.setFill(imagePattern);
 
-        this.root.getChildren().addAll(rect, this.progressBar,
-                this.timeLabel, this.coinsLabel);
+        this.root.getChildren().addAll(rect, this.playerHealthBar,
+                this.timeLabel);
+
+        if (this.currentLevel instanceof BossLevel) {
+            this.root.getChildren().add(this.bossHealthBar);
+        } else {
+            this.root.getChildren().add(this.coinsLabel);
+        }
     }
 
     private void renderHUD() {
@@ -244,19 +266,37 @@ public class Game extends Application {
                 TimeUnit.MILLISECONDS.toSeconds(elapsed)
                 - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(elapsed)));
 
-        this.progressBar.setProgress(
+        this.timeLabel.setText(timeStamp);
+
+        this.playerHealthBar.setProgress(
                 (double) this.currentLevel.getPlayer().getHealth().getValue()
                         / this.currentLevel.getPlayer().getHealth().getMaxValue()
         );
-        this.progressBar.setLayoutX(PROGRESS_BAR_LAYOUTX);
+        this.playerHealthBar.setLayoutX(PROGRESS_BAR_LAYOUTX);
 
-        this.timeLabel.setText(timeStamp);
-        this.timeLabel.setLayoutX(Window.getWidth() - (this.timeLabel.getWidth() + OFFSET));
+        if (this.currentLevel instanceof BossLevel) {
+            renderBossHUD();
+        } else {
+            this.timeLabel.setLayoutX(Window.getWidth() - (this.timeLabel.getWidth() + OFFSET));
 
-        this.coinsLabel.setText(Integer.toString(this.currentLevel
-                .getPlayer().getCoinsCollected()));
-        this.coinsLabel.setLayoutX(Window.getWidth() / 2
-                - this.coinsLabel.getWidth() / 2);
+            this.coinsLabel.setText(Integer.toString(this.currentLevel
+                    .getPlayer().getCoinsCollected()));
+            this.coinsLabel.setLayoutX(Window.getWidth() / 2
+                    - this.coinsLabel.getWidth() / 2);
+        }
+    }
+
+    private void renderBossHUD() {
+        final BossLevel bl = (BossLevel) this.currentLevel;
+        this.bossHealthBar.setProgress((double) bl.getBoss().getHealth().getValue()
+                / bl.getBoss().getHealth().getMaxValue());
+        this.bossHealthBar.setLayoutX(Window.getWidth()
+                - (this.bossHealthBar.getWidth() + BOSS_OFFSET));
+
+        this.timeLabel.setLayoutX(Window.getWidth() / 2
+                - this.timeLabel.getWidth() / 2);
+
+        this.timeLabel.setTextFill(Color.WHITE);
     }
 
     private void run() {
