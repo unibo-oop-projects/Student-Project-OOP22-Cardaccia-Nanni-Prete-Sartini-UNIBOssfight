@@ -5,8 +5,6 @@ import app.core.component.Renderer;
 import app.core.component.Transform;
 import app.core.entity.AbstractEntity;
 import app.core.entity.Entity;
-import app.impl.component.HealthImpl;
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -33,17 +31,15 @@ public class EntityDeserializer implements JsonDeserializer<Entity> {
 
         final JsonDeserializer<Renderer> rendererDeserializer = new RendererDeserializer();
         final JsonDeserializer<Transform> transformDeserializer = new TransformDeserializer();
+        final JsonDeserializer<Health> healthDeserializer = new HealthDeserializer();
 
         try {
             return (AbstractEntity) new GsonBuilder()
-                        .registerTypeAdapter(Transform.class, transformDeserializer)
-                        .registerTypeAdapter(Renderer.class, rendererDeserializer)
-                    .registerTypeAdapter(Health.class, (JsonDeserializer<Health>) (json1, typeOfT1, context1) -> {
-                        final JsonObject jsonObject1 = json1.getAsJsonObject();
-                        return new Gson().fromJson(jsonObject1, HealthImpl.class);
-                    })
-                        .create()
-                        .fromJson(jsonObject, Class.forName(jsonObject.get("className").getAsString()));
+                    .registerTypeAdapter(Transform.class, transformDeserializer)
+                    .registerTypeAdapter(Renderer.class, rendererDeserializer)
+                    .registerTypeAdapter(Health.class, healthDeserializer)
+                    .create()
+                    .fromJson(jsonObject, Class.forName(jsonObject.get("className").getAsString()));
         } catch (ClassNotFoundException e) {
             AppLogger.getLogger().severe("ERRORE: classe non trovata: " + e.getMessage());
             return null;
