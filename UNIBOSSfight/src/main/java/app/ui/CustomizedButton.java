@@ -31,8 +31,7 @@ public class CustomizedButton extends Button {
     public CustomizedButton(final String text) {
         setText(text);
         setButtonFont();
-        setPrefHeight(HEIGHT);
-        setPrefWidth(WIDTH);
+        setPrefSize(WIDTH, HEIGHT);
         setStyle(BUTTON_FREE_STYLE);
         initButtonListeners();
     }

@@ -20,20 +20,6 @@ public class Platform extends AbstractEntity {
      * @param position the position of the platform
      * @param height the height of the platform
      * @param width the width of the platform
-     * @param filename the name of the file containing the sprite for the renderer
-     */
-    public Platform(final Transform position, final int height,
-                    final int width, final String filename) {
-        super(position, height, width,
-                new SpriteRenderer(height, width, Color.GREEN, filename));
-    }
-
-    /**
-     * Creates a new instance of the class Platform.
-     *
-     * @param position the position of the platform
-     * @param height the height of the platform
-     * @param width the width of the platform
      * @param renderer the renderer
      */
     public Platform(final Transform position, final int height,

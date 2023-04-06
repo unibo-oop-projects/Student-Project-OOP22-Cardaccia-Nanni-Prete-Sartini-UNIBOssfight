@@ -20,6 +20,8 @@ public class CustomizedSubScene extends SubScene {
     private static final int HEIGHT = 350;
     private static final int LAYOUTX = 300;
     private static final int LAYOUTY = 150;
+    private static final int FONT_SIZE = 23;
+    private static final int BUTTON_LAYOUT_X = 23;
     private static final String BACKGROUND_IMAGE = "blue_panel.png";
     private final AnchorPane root = (AnchorPane) this.getRoot();
 
@@ -50,7 +52,7 @@ public class CustomizedSubScene extends SubScene {
      */
     public void addButtons(final CustomizedButton button1,
                            final CustomizedButton button2) {
-        button1.setLayoutX(23);
+        button1.setLayoutX(BUTTON_LAYOUT_X);
         button1.setLayoutY(LAYOUTX / 2.0);
         button2.setLayoutX(WIDTH / 2.0);
         button2.setLayoutY(LAYOUTX / 2.0);
@@ -67,7 +69,7 @@ public class CustomizedSubScene extends SubScene {
         final Label label = new Label(text);
         label.setLayoutX(LAYOUTX / 3.0);
         label.setLayoutY(LAYOUTY / 2.0);
-        ViewManager.setFont("src/main/resources/font.ttf", 23, label);
+        ViewManager.setFont("src/main/resources/font.ttf", FONT_SIZE, label);
         this.root.getChildren().add(label);
     }
 

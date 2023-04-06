@@ -151,7 +151,7 @@ public class Game extends Application {
                 (observable, oldValue, newValue) -> {
                     final CustomizedButton restartButton = new CustomizedButton(
                             "RESTART");
-                    new GameOverStage(stage, restartButton,
+                    new SecondaryStage(stage, restartButton,
                             "level1.json", "gameover.png").show();
                 }
         );
@@ -161,7 +161,7 @@ public class Game extends Application {
                 (observable, oldValue, newValue) -> {
                     final CustomizedButton nextLevelButton = new CustomizedButton(
                             "LEVEL 2");
-                    new GameOverStage(stage, nextLevelButton,
+                    new SecondaryStage(stage, nextLevelButton,
                             "level1.json", "gameover.png").show();
                 }
         );
@@ -369,7 +369,7 @@ public class Game extends Application {
 
     }
 
-    private static class GameOverStage extends Stage {
+    private static class SecondaryStage extends Stage {
         private static final int SCENE_WIDTH = 500;
         private static final int SCENE_HEIGHT = 300;
         private static final int LOGO_LAYOUTX = 150;
@@ -378,8 +378,8 @@ public class Game extends Application {
         private static final int HOME_BUTTON_LAYOUTY = 140;
         private static final int RESTART_BUTTON_LAYOUTY = 210;
 
-        GameOverStage(final Stage gameStage, final CustomizedButton button,
-                      final String jsonFile, final String logo) {
+        SecondaryStage(final Stage gameStage, final CustomizedButton button,
+                       final String jsonFile, final String logo) {
             super();
             this.initModality(Modality.APPLICATION_MODAL);
             this.setOnCloseRequest(event -> gameStage.close());
