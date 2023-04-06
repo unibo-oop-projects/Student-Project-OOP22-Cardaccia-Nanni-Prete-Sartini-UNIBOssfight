@@ -4,6 +4,7 @@ plugins {
     id("org.danilopianini.gradle-java-qa") version "1.0.0"
     //id("com.github.spotbugs") version "5.0.13"
     //id("de.aaschmid.cpd") version "3.3"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 
 }
 
@@ -27,7 +28,7 @@ repositories {
 
 //To run: ./gradlew -PmainClass=Main run
 application {
-    mainClass.set(project.properties["mainClass"].toString())
+    mainClass.set("app.Main")
 }
 
 dependencies {
