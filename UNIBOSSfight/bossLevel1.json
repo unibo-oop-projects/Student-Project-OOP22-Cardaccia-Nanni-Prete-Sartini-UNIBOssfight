@@ -1,0 +1,38 @@
+{
+  "endPosition": 8000,
+  "levelNumber": 1,
+  "entities": [
+  ],
+  "player": {
+    "maxXSpeed": 20.0,
+    "maxYSpeed": 20.0,
+    "className": "app.impl.entity.Player",
+    "height": 250,
+    "width": 250,
+    "damage": 0,
+    "position": {
+      "position": {
+        "x": 400.0,
+        "y": 39.0,
+        "hash": 0
+      },
+      "rotation": 0.0
+    },
+    "renderer": {
+      "filename": "guido",
+      "height": 250,
+      "width": 250,
+      "color": {
+        "red": 1.0,
+        "green": 0.0,
+        "blue": 0.0,
+        "opacity": 1.0
+      },
+      "className": "app.impl.component.AnimationSpriteRenderer"
+    },
+    "health": {
+      "maxHp": 100,
+      "hp": 100
+    }
+  }
+}
