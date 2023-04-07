@@ -32,7 +32,7 @@ public class LevelImpl implements Level {
     private static final int BACKGROUND_CONSTANT = 9;
     private static final int END_POSITION = 10_000;
     private static final int MAX_X_SPEED = 20;
-    private  static final int MAX_Y_SPEED = 10;
+    private  static final int MAX_Y_SPEED = 20;
     private int levelNumber;
     private final List<Entity> entities;
     private final Player player;

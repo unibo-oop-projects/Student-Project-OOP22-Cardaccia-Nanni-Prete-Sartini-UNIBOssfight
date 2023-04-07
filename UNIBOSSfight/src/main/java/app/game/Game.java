@@ -183,17 +183,17 @@ public class Game extends Application {
         final Timeline tl = new Timeline(new KeyFrame(Duration.millis(FRAME_DURATION),
             e -> {
                 if (!this.currentLevel.isOver()) {
-                    if (this.currentLevel.isLevelEnded()) {
+                    if (this.currentLevel.isLevelEnded()
+                            && ! (this.currentLevel instanceof BossLevel)) {
                         try {
-                            this.currentLevel = new DataManager()
-                                    .loadBossLevel("bossLevel.json");
-                            this.currentLevel.init();
-                            initHUD();
+                            loadBossLevel();
                         } catch (IOException ex) {
                             AppLogger.getLogger()
-                                    .severe("Errore nel caricamento del boss level "
-                                            + ex.getMessage());
+                                .severe("Errore nel caricamento del boss level "
+                                + ex.getMessage());
                         }
+                    } else if (this.currentLevel.isLevelEnded()) {
+                        this.victory.set(true);
                     }
                     run();
                 } else {
@@ -206,6 +206,13 @@ public class Game extends Application {
         tl.play();
         this.currentLevel.init();
         this.startTime = System.currentTimeMillis();
+    }
+
+    private void loadBossLevel() throws IOException {
+        this.currentLevel = new DataManager()
+                .loadBossLevel("bossLevel" + this.currentLevel.getLevelNumber() + ".json");
+        this.currentLevel.init();
+        initHUD();
     }
 
     private void initHUD() {
