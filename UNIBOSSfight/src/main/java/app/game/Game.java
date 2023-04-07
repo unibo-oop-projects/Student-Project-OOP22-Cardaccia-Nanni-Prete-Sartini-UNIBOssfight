@@ -44,6 +44,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class Game extends Application {
 
+    private static final int LEVELS_COUNT = 2;
     private static final double FRAME_RATE = 60;
     private static final double FRAME_DURATION = 1000 / FRAME_RATE;
     private static final int MIN_WINDOW_HEIGHT = 600;
@@ -70,6 +71,8 @@ public class Game extends Application {
     private final BooleanProperty victory = new SimpleBooleanProperty(false);
     private Timeline tl;
     private long startTime;
+    private int coinsCollected;
+    private int defeatedEnemies;
 
     /**
      * Creates a new instance of the class Game
@@ -90,7 +93,7 @@ public class Game extends Application {
      * constructor if problems while reading the file are detected.
      */
     public Game() throws IOException {
-        this.currentLevel = new DataManager().loadLevel("level0.json");
+        this.currentLevel = new DataManager().loadLevel("level1.json");
     }
 
     /**
@@ -187,6 +190,8 @@ public class Game extends Application {
                     if (this.currentLevel.isLevelEnded()
                             && !(this.currentLevel instanceof BossLevel)) {
                         try {
+                            this.coinsCollected = this.currentLevel.getPlayer().getCoinsCollected();
+                            this.defeatedEnemies = this.currentLevel.getDefeatedEnemiesCount();
                             loadBossLevel();
                         } catch (IOException ex) {
                             AppLogger.getLogger()
@@ -195,6 +200,7 @@ public class Game extends Application {
                         }
                     } else if (this.currentLevel.isLevelEnded()) {
                         this.victory.set(true);
+                        saveScore();
                         this.tl.stop();
                     }
                     run();
@@ -216,6 +222,19 @@ public class Game extends Application {
                 .loadBossLevel("bossLevel" + this.currentLevel.getLevelNumber() + ".json");
         this.currentLevel.init();
         initHUD();
+    }
+
+    private void saveScore() {
+        // TODO decommentare quando c'è il metodo in DataManager
+        /*try {
+            final Score scores = new Score(); // new DataManager().loadScore();
+            scores.setLevelStats(this.currentLevel.getLevelNumber(),
+                    this.defeatedEnemies,
+                    this.coinsCollected);
+            // new DataManager().serializeScore(scores);
+        } catch (final IOException e) {
+            AppLogger.getLogger().warning("An error occurred while saving the score");
+        }*/
     }
 
     private void initHUD() {
