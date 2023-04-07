@@ -90,7 +90,7 @@ public class Game extends Application {
      * constructor if problems while reading the file are detected.
      */
     public Game() throws IOException {
-        this.currentLevel = new DataManager().loadLevel("level1.json");
+        this.currentLevel = new DataManager().loadLevel("level0.json");
     }
 
     /**
@@ -153,7 +153,7 @@ public class Game extends Application {
                     final CustomizedButton restartButton = new CustomizedButton(
                             "RESTART");
                     new SecondaryStage(stage, restartButton,
-                            "level1.json", "gameover.png").show();
+                            "level0.json", "gameover.png").show();
                 }
         );
 
@@ -200,6 +200,7 @@ public class Game extends Application {
                     run();
                 } else {
                     this.gameOver.set(true);
+                    this.tl.stop();
                 }
             })
         );
