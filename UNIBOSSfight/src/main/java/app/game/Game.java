@@ -53,6 +53,10 @@ public class Game extends Application {
     private static final int PROGRESS_BAR_WIDTH = 300;
     private static final int PROGRESS_BAR_LAYOUTX = 30;
     private static final int PROGRESS_BAR_LAYOUTY = 20;
+    private static final int SCENE_WIDTH = 500;
+    private static final int SCENE_HEIGHT = 300;
+    private static final int VICTORY_SCENE_HEIGHT = 300;
+    private static final int VICTORY_SCENE_WIDTH = 600;
     private static final int LABEL_LAYOUTY = 5;
     private static final int OFFSET = 10;
     private static final int BOSS_OFFSET = 20;
@@ -155,18 +159,33 @@ public class Game extends Application {
                 (observable, oldValue, newValue) -> {
                     final CustomizedButton restartButton = new CustomizedButton(
                             "RESTART");
-                    new SecondaryStage(stage, restartButton,
-                            "level0.json", "gameover.png").show();
+                    if (this.currentLevel.getLevelNumber() == 1) {
+                        new SecondaryStage(stage, restartButton,
+                                "level1.json", "gameover.png",
+                                SCENE_WIDTH, SCENE_HEIGHT).show();
+                    } else {
+                        new SecondaryStage(stage, restartButton,
+                                "level2.json", "gameover.png",
+                                SCENE_WIDTH, SCENE_HEIGHT).show();
+                    }
                 }
         );
 
-        //TODO cambiare in level2.json e settare a true dopo la bossfight
         this.victory.addListener(
                 (observable, oldValue, newValue) -> {
-                    final CustomizedButton nextLevelButton = new CustomizedButton(
-                            "LEVEL 2");
-                    new SecondaryStage(stage, nextLevelButton,
-                            "level1.json", "gameover.png").show();
+                    if (this.currentLevel.getLevelNumber() == 1) {
+                        final CustomizedButton nextLevelButton = new CustomizedButton(
+                                "LEVEL 2");
+                        new SecondaryStage(stage, nextLevelButton,
+                                "level2.json", "gameover.png",
+                                SCENE_WIDTH, SCENE_HEIGHT).show();
+                    } else {
+                        final CustomizedButton restartButton = new CustomizedButton(
+                                "RESTART");
+                        new SecondaryStage(stage, restartButton,
+                                "level1.json", "gameover.png",
+                                VICTORY_SCENE_WIDTH, VICTORY_SCENE_HEIGHT).show();
+                    }
                 }
         );
 
@@ -190,8 +209,11 @@ public class Game extends Application {
                     if (this.currentLevel.isLevelEnded()
                             && !(this.currentLevel instanceof BossLevel)) {
                         try {
-                            this.coinsCollected = this.currentLevel.getPlayer().getCoinsCollected();
-                            this.defeatedEnemies = this.currentLevel.getDefeatedEnemiesCount();
+                            this.coinsCollected = this.currentLevel
+                                    .getPlayer()
+                                    .getCoinsCollected();
+                            this.defeatedEnemies = this.currentLevel
+                                    .getDefeatedEnemiesCount();
                             loadBossLevel();
                         } catch (IOException ex) {
                             AppLogger.getLogger()
@@ -399,8 +421,6 @@ public class Game extends Application {
     }
 
     private static class SecondaryStage extends Stage {
-        private static final int SCENE_WIDTH = 500;
-        private static final int SCENE_HEIGHT = 300;
         private static final int LOGO_LAYOUTX = 150;
         private static final int LOGO_LAYOUTY = 15;
         private static final int BUTTON_LAYOUTX = 155;
@@ -408,19 +428,19 @@ public class Game extends Application {
         private static final int RESTART_BUTTON_LAYOUTY = 210;
 
         SecondaryStage(final Stage gameStage, final CustomizedButton button,
-                       final String jsonFile, final String logo) {
+                       final String jsonFile, final String logo,
+                       final double width, final double height) {
             super();
             this.initModality(Modality.APPLICATION_MODAL);
             this.setOnCloseRequest(event -> gameStage.close());
 
             final AnchorPane pane = new AnchorPane();
             //noinspection SuspiciousNameCombination
-            pane.prefWidth(SCENE_WIDTH);
+            pane.prefWidth(width);
             //noinspection SuspiciousNameCombination
-            pane.prefHeight(SCENE_HEIGHT);
+            pane.prefHeight(height);
 
             final CustomizedButton homeButton = new CustomizedButton("HOME");
-            //final CustomizedButton restartButton = new CustomizedButton("RESTART");
 
             homeButton.setOnAction(event -> {
                 this.close();
@@ -440,7 +460,7 @@ public class Game extends Application {
             }));
 
             ViewManager.createLogo(LOGO_LAYOUTX, LOGO_LAYOUTY, logo, pane);
-            ViewManager.setBackground("blue.png", SCENE_WIDTH, SCENE_HEIGHT, pane);
+            ViewManager.setBackground("blue.png", width, height, pane);
 
             homeButton.setLayoutX(BUTTON_LAYOUTX);
             homeButton.setLayoutY(HOME_BUTTON_LAYOUTY);
@@ -448,7 +468,7 @@ public class Game extends Application {
             button.setLayoutY(RESTART_BUTTON_LAYOUTY);
 
             pane.getChildren().addAll(homeButton, button);
-            setScene(new Scene(pane, SCENE_WIDTH, SCENE_HEIGHT));
+            setScene(new Scene(pane, width, height));
         }
     }
 }

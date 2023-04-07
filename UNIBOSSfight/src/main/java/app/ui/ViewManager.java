@@ -35,7 +35,14 @@ public class ViewManager {
     private static final int BACKGROUND_HEIGHT = 256;
     private static final int MENU_BUTTONS_START_X = 50;
     private static final int MENU_BUTTONS_START_Y = 80;
+    private static final int BUTTONS_FONT_SIZE = 23;
+    private static final int FONT_SIZE = 18;
+    private static final int LEVEL_CHOICE_LAYOUT_X = 100;
+    private static final int LEVEL_CHOICE_LAYOUT_Y = 75;
+    private static final int HELP_LAYOUT_X = 25;
+    private static final int HELP_LAYOUT_Y = 40;
     private final Stage mainStage;
+
     private final AnchorPane mainPane;
     private final List<CustomizedButton> menuButtons;
     private CustomizedSubScene scoreSubScene;
@@ -54,16 +61,22 @@ public class ViewManager {
                     + "passed as input in the start method of the MainMenu"
     )
     public ViewManager(final Stage stage) {
-        this.mainStage = stage;
         stage.setResizable(false);
+
+        this.mainStage = stage;
         this.menuButtons = new ArrayList<>();
         this.mainPane = new AnchorPane();
         final Scene mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         stage.setScene(mainScene);
+
         createSubScenes();
-        createLevelChoiceSubScene();
+        setLevelChoiceSubScene();
+        setScoreSubScene();
+        setHelpSubScene();
         createButtons();
-        setBackground("blue.png", BACKGROUND_WIDTH, BACKGROUND_HEIGHT, mainPane);
+
+        setBackground("blue.png", BACKGROUND_WIDTH,
+                BACKGROUND_HEIGHT, mainPane);
     }
 
     /**
@@ -123,7 +136,8 @@ public class ViewManager {
      * @param fontSize the font size
      * @param labels the labels on which the font is set
      */
-    public static void setFont(final String url, final double fontSize, final List<Label> labels) {
+    public static void setFont(final String url, final double fontSize,
+                               final List<Label> labels) {
         labels.forEach(label -> {
             try {
                 label.setFont(Font.loadFont(new FileInputStream(url), fontSize));
@@ -149,19 +163,26 @@ public class ViewManager {
     }
     private void createSubScenes() {
         this.scoreSubScene = new CustomizedSubScene();
+        this.levelChoiceSubScene = new CustomizedSubScene();
         this.helpSubScene = new CustomizedSubScene();
     }
 
-    private void createLevelChoiceSubScene() {
-        this.levelChoiceSubScene = new CustomizedSubScene();
-        this.levelChoiceSubScene.addLabel("Choose a level: ");
+    private void setLevelChoiceSubScene() {
         final CustomizedButton level1 = new CustomizedButton("LEVEL 1");
         final CustomizedButton level2 = new CustomizedButton("LEVEL 2");
+
+        level1.setStyle("-fx-background-color: transparent;"
+                + " -fx-background-image: url('blue_button13.png');");
+        level2.setStyle("-fx-background-color: transparent;"
+                + " -fx-background-image: url('blue_button13.png');");
+
+        this.levelChoiceSubScene.addLabel("Choose a level: ",
+                LEVEL_CHOICE_LAYOUT_X, LEVEL_CHOICE_LAYOUT_Y, BUTTONS_FONT_SIZE);
         this.levelChoiceSubScene.addButtons(level1, level2);
 
         level1.setOnAction(event -> Platform.runLater(() -> {
             try {
-                new Game("level0.json").start(new Stage());
+                new Game("level1.json").start(new Stage());
                 this.mainStage.close();
             } catch (final IOException e) {
                 AppLogger.getLogger().severe(e.getMessage());
@@ -170,12 +191,36 @@ public class ViewManager {
 
         level2.setOnAction(event -> Platform.runLater(() -> {
             try {
-                new Game().start(new Stage());
+                new Game("level2.json").start(new Stage());
                 this.mainStage.close();
             } catch (final IOException e) {
                 AppLogger.getLogger().severe(e.getMessage());
             }
         }));
+    }
+
+    private void setScoreSubScene() {
+
+    }
+
+    private void setHelpSubScene() {
+        final String howToPlay = """
+                Hi, welcome to UNIBOssfight!
+
+                 Press 'D' to run forward,
+                 press 'A' to run backward,
+                 press 'space' to jump.
+
+                 Use the mouse to point and
+                 shoot the enemies, defeat
+                 all of them and collect
+                 all the coins to get
+                 your degree.
+
+                 Good Luck!\s""";
+
+        this.helpSubScene.addLabel(howToPlay,
+                HELP_LAYOUT_X, HELP_LAYOUT_Y, FONT_SIZE);
     }
 
     private void showSubScene(final CustomizedSubScene subScene) {

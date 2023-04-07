@@ -20,7 +20,6 @@ public class CustomizedSubScene extends SubScene {
     private static final int HEIGHT = 350;
     private static final int LAYOUTX = 300;
     private static final int LAYOUTY = 150;
-    private static final int FONT_SIZE = 23;
     private static final int BUTTON_LAYOUT_X = 23;
     private static final String BACKGROUND_IMAGE = "blue_panel.png";
     private final AnchorPane root = (AnchorPane) this.getRoot();
@@ -64,12 +63,16 @@ public class CustomizedSubScene extends SubScene {
      * Adds the label to the sub scene.
      *
      * @param text the text to be added
+     * @param layoutX the x layout of the label
+     * @param layoutY the y layout of the label
+     * @param fontSize the text's font size
      */
-    public void addLabel(final String text) {
+    public void addLabel(final String text, final double layoutX,
+                         final double layoutY, final double fontSize) {
         final Label label = new Label(text);
-        label.setLayoutX(LAYOUTX / 3.0);
-        label.setLayoutY(LAYOUTY / 2.0);
-        ViewManager.setFont("src/main/resources/font.ttf", FONT_SIZE, label);
+        label.setLayoutX(layoutX);
+        label.setLayoutY(layoutY);
+        ViewManager.setFont("src/main/resources/font.ttf", fontSize, label);
         this.root.getChildren().add(label);
     }
 
