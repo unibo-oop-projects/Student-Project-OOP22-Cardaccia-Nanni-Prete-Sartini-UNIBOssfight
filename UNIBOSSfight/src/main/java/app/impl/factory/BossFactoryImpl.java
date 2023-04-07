@@ -24,7 +24,7 @@ public class BossFactoryImpl implements BossFactory {
      * {@inheritDoc}
      */
     @Override
-    public Boss firstBoss(final Transform startingPos) {
+    public Boss meteorBoss(final Transform startingPos) {
 
         final BossImpl boss = new BossImpl(startingPos, FIRST_BOSS_HEIGHT, FIRST_BOSS_WIDTH, "ghini");
         boss.setWeapon(weaponFactory.getMeteorGun(startingPos, false));

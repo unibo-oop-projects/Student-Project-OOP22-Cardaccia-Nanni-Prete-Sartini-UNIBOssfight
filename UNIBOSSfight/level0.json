@@ -254,7 +254,7 @@
       }
     },
     {
-      "maxXSpeed": 4.0,
+      "maxXSpeed": 5.0,
       "maxYSpeed": 15.0,
       "className": "app.impl.entity.EnemyImpl",
       "height": 75,
@@ -286,7 +286,7 @@
       }
     },
     {
-      "maxXSpeed": 4.0,
+      "maxXSpeed": 3.0,
       "maxYSpeed": 15.0,
       "className": "app.impl.entity.EnemyImpl",
       "height": 75,
@@ -732,7 +732,7 @@
       }
     },
     {
-      "maxXSpeed": 4.0,
+      "maxXSpeed": 3.0,
       "maxYSpeed": 15.0,
       "className": "app.impl.entity.EnemyImpl",
       "height": 75,
@@ -956,7 +956,7 @@
       }
     },
     {
-      "maxXSpeed": 4.0,
+      "maxXSpeed": 5.0,
       "maxYSpeed": 15.0,
       "className": "app.impl.entity.EnemyImpl",
       "height": 75,
@@ -1242,7 +1242,7 @@
       }
     },
     {
-      "maxXSpeed": 4.0,
+      "maxXSpeed": 3.0,
       "maxYSpeed": 15.0,
       "className": "app.impl.entity.EnemyImpl",
       "height": 75,

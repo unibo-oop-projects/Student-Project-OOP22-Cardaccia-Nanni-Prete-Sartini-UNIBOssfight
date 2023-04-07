@@ -13,7 +13,7 @@ public interface BossFactory {
      * @param startingPos starting position of the boss
      * @return an instance of the boss
      */
-    Boss firstBoss(Transform startingPos);
+    Boss meteorBoss(Transform startingPos);
 
     /**
      * This method returns an instance of a flying Boss.

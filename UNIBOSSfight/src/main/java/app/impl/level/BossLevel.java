@@ -99,7 +99,7 @@ public class BossLevel extends LevelImpl {
 
         switch (this.getLevelNumber()) {
             case 0 -> {
-                this.boss = bossFactory.firstBoss(new TransformImpl(
+                this.boss = bossFactory.meteorBoss(new TransformImpl(
                         new Point2D(BOSS_X_POSITION, BOSS_Y_POSITION), 0));
             }
             case 1 -> {
