@@ -68,6 +68,7 @@ public class Game extends Application {
     private final AnchorPane anchorPane = new AnchorPane();
     private final BooleanProperty gameOver = new SimpleBooleanProperty(false);
     private final BooleanProperty victory = new SimpleBooleanProperty(false);
+    private Timeline tl;
     private long startTime;
 
     /**
@@ -180,7 +181,7 @@ public class Game extends Application {
         //Displaying the contents of the stage
         stage.show();
 
-        final Timeline tl = new Timeline(new KeyFrame(Duration.millis(FRAME_DURATION),
+        this.tl = new Timeline(new KeyFrame(Duration.millis(FRAME_DURATION),
             e -> {
                 if (!this.currentLevel.isOver()) {
                     if (this.currentLevel.isLevelEnded()
@@ -194,6 +195,7 @@ public class Game extends Application {
                         }
                     } else if (this.currentLevel.isLevelEnded()) {
                         this.victory.set(true);
+                        this.tl.stop();
                     }
                     run();
                 } else {
@@ -210,7 +212,7 @@ public class Game extends Application {
 
     private void loadBossLevel() throws IOException {
         this.currentLevel = new DataManager()
-                .loadBossLevel("bossLevel" + this.currentLevel.getLevelNumber() + ".json");
+                .loadBossLevel("bossLevel.json");
         this.currentLevel.init();
         initHUD();
     }
