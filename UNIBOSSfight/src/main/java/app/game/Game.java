@@ -213,7 +213,7 @@ public class Game extends Application {
 
     private void loadBossLevel() throws IOException {
         this.currentLevel = new DataManager()
-                .loadBossLevel("bossLevel.json");
+                .loadBossLevel("bossLevel" + this.currentLevel.getLevelNumber() + ".json");
         this.currentLevel.init();
         initHUD();
     }
