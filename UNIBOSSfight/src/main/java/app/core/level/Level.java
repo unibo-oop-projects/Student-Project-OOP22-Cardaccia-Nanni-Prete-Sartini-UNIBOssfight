@@ -119,15 +119,18 @@ public interface Level {
     void init();
 
     /**
+     * Checks if the game is over.
+     *
      * @return true if the player is dead and so the game is over,
      * false otherwise
      */
     boolean isOver();
 
     /**
-     * Function that establishes if the player reach the end of the level.
+     * Checks if the player reaches the end of the level.
      *
-     * @return true if the player reaches the end of the level
+     * @return true if the player reaches the end of the level,
+     * false otherwise
      */
     boolean isLevelEnded();
 

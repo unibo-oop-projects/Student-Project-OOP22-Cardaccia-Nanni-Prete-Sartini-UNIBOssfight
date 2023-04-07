@@ -49,10 +49,6 @@ public class Score {
         this.levelPoints[levelNumber] = points;
     }
 
-    private boolean isOutOfRange(final int index) {
-        return index < 0 || index >= this.levelPoints.length;
-    }
-
     /**
      * Returns the total points of the game.
      *
@@ -60,5 +56,9 @@ public class Score {
      */
     public int getCumulativePoints() {
         return Arrays.stream(this.levelPoints).reduce(Integer::sum).orElse(0);
+    }
+
+    private boolean isOutOfRange(final int index) {
+        return index < 0 || index >= this.levelPoints.length;
     }
 }

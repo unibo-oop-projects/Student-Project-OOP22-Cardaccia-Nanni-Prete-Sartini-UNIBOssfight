@@ -133,7 +133,7 @@ public class Game extends Application {
         this.anchorPane.getChildren().add(root);
 
         //Creating a scene object
-        currentScene = new Scene(anchorPane);
+        this.currentScene = new Scene(anchorPane);
 
         this.inputManager = new InputManager(currentScene);
 
@@ -228,6 +228,7 @@ public class Game extends Application {
 
         this.timeLabel.setLayoutY(LABEL_LAYOUTY);
         this.coinsLabel.setLayoutY(LABEL_LAYOUTY);
+        this.coinsLabel.setTextFill(Color.GOLD);
 
         ViewManager.setFont("src/main/resources/HUDfont.ttf", FONT_SIZE,
                 List.of(this.coinsLabel, this.timeLabel));
@@ -275,12 +276,10 @@ public class Game extends Application {
         rect.setFill(imagePattern);
 
         this.root.getChildren().addAll(rect, this.playerHealthBar,
-                this.timeLabel);
+                this.timeLabel, this.coinsLabel);
 
         if (this.currentLevel instanceof BossLevel) {
             this.root.getChildren().add(this.bossHealthBar);
-        } else {
-            this.root.getChildren().add(this.coinsLabel);
         }
     }
 
@@ -292,36 +291,37 @@ public class Game extends Application {
                 - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(elapsed)));
 
         this.timeLabel.setText(timeStamp);
+        this.coinsLabel.setText(Integer.toString(this.currentLevel
+                    .getPlayer().getCoinsCollected()));
 
         this.playerHealthBar.setProgress(
                 (double) this.currentLevel.getPlayer().getHealth().getValue()
                         / this.currentLevel.getPlayer().getHealth().getMaxValue()
         );
+
         this.playerHealthBar.setLayoutX(PROGRESS_BAR_LAYOUTX);
-
-        if (this.currentLevel instanceof BossLevel) {
-            renderBossHUD();
-        } else {
-            this.timeLabel.setLayoutX(Window.getWidth() - (this.timeLabel.getWidth() + OFFSET));
-
-            this.coinsLabel.setText(Integer.toString(this.currentLevel
-                    .getPlayer().getCoinsCollected()));
-            this.coinsLabel.setLayoutX(Window.getWidth() / 2
+        this.timeLabel.setLayoutX(Window.getWidth()
+                - (this.timeLabel.getWidth() + OFFSET));
+        this.coinsLabel.setLayoutX(Window.getWidth() / 2
                     - this.coinsLabel.getWidth() / 2);
-        }
+
+        renderBossHUD();
     }
 
     private void renderBossHUD() {
-        final BossLevel bl = (BossLevel) this.currentLevel;
-        this.bossHealthBar.setProgress((double) bl.getBoss().getHealth().getValue()
-                / bl.getBoss().getHealth().getMaxValue());
-        this.bossHealthBar.setLayoutX(Window.getWidth()
-                - (this.bossHealthBar.getWidth() + BOSS_OFFSET));
+        if (this.currentLevel instanceof final BossLevel bl) {
+            this.bossHealthBar.setProgress((double) bl.getBoss()
+                    .getHealth().getValue()
+                    / bl.getBoss().getHealth().getMaxValue());
+            this.bossHealthBar.setLayoutX(Window.getWidth()
+                    - (this.bossHealthBar.getWidth() + BOSS_OFFSET));
 
-        this.timeLabel.setLayoutX(Window.getWidth() / 2
-                - this.timeLabel.getWidth() / 2);
+            this.timeLabel.setLayoutX(Window.getWidth() / 2
+                    - this.timeLabel.getWidth() / 2);
 
-        this.timeLabel.setTextFill(Color.WHITE);
+            this.timeLabel.setTextFill(Color.WHITE);
+            this.coinsLabel.setTextFill(Color.TRANSPARENT);
+        }
     }
 
     private void run() {
