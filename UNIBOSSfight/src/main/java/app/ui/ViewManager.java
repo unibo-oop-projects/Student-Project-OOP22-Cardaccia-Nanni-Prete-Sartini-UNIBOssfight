@@ -161,7 +161,7 @@ public class ViewManager {
 
         level1.setOnAction(event -> Platform.runLater(() -> {
             try {
-                new Game("level1.json").start(new Stage());
+                new Game("level0.json").start(new Stage());
                 this.mainStage.close();
             } catch (final IOException e) {
                 AppLogger.getLogger().severe(e.getMessage());
