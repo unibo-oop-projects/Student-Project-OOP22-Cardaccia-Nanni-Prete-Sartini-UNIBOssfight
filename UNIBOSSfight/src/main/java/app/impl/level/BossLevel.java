@@ -5,6 +5,8 @@ import app.core.entity.Boss;
 import app.core.entity.Entity;
 import app.impl.component.TransformImpl;
 import app.impl.factory.BossFactoryImpl;
+import app.util.AppLogger;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -38,6 +40,10 @@ public class BossLevel extends LevelImpl {
      *
      * @return the boss of the level
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "The Boss class cannot be cloned."
+    )
     public Boss getBoss() {
         return this.boss;
     }
@@ -101,8 +107,7 @@ public class BossLevel extends LevelImpl {
                         new Point2D(BOSS_X_POSITION, BOSS_Y_POSITION), 0));
             }
             default -> {
-                this.boss = bossFactory.firstBoss(new TransformImpl(
-                        new Point2D(BOSS_X_POSITION, BOSS_Y_POSITION), 0));
+                AppLogger.getLogger().severe("Il livello non esiste.");
             }
         }
         this.boss.init();
