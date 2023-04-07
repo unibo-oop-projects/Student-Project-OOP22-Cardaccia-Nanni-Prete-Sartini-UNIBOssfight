@@ -3,7 +3,6 @@ package app.impl.entity;
 import app.core.component.Renderer;
 import app.core.component.Transform;
 import app.core.entity.AbstractEntity;
-import javafx.geometry.Point2D;
 
 /**
  * This class models a coin, which contributes to computing the final

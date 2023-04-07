@@ -184,7 +184,7 @@ public class Game extends Application {
             e -> {
                 if (!this.currentLevel.isOver()) {
                     if (this.currentLevel.isLevelEnded()
-                            && ! (this.currentLevel instanceof BossLevel)) {
+                            && !(this.currentLevel instanceof BossLevel)) {
                         try {
                             loadBossLevel();
                         } catch (IOException ex) {

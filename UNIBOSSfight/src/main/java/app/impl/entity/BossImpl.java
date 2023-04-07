@@ -15,6 +15,8 @@ import javafx.geometry.Point2D;
 public class BossImpl extends Boss {
 
     private static final int DEFAULT_RATE_OF_FIRE = 30;
+    private static final int DEFAULT_MAX_X_SPEED = 5;
+    private static final int DEFAULT_MAX_Y_SPEED = 20;
     private transient WeaponImpl weapon;
     private int rateOfFire;
 
@@ -28,8 +30,8 @@ public class BossImpl extends Boss {
      */
     public BossImpl(final Transform startingPos, final int height, final int width, final String filename) {
         super(startingPos, height, width, filename);
-        this.setMaxXSpeed(1);
-        this.setMaxYSpeed(1);
+        this.setMaxXSpeed(DEFAULT_MAX_X_SPEED);
+        this.setMaxYSpeed(DEFAULT_MAX_Y_SPEED);
 
         this.rateOfFire = DEFAULT_RATE_OF_FIRE;
     }

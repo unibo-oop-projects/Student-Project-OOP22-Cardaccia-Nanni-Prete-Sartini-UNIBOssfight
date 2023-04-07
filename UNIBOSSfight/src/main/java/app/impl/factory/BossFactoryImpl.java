@@ -26,7 +26,7 @@ public class BossFactoryImpl implements BossFactory {
     @Override
     public Boss firstBoss(final Transform startingPos) {
 
-        final BossImpl boss = new BossImpl(startingPos, FIRST_BOSS_HEIGHT, FIRST_BOSS_WIDTH, "ghini/ghini1.png");
+        final BossImpl boss = new BossImpl(startingPos, FIRST_BOSS_HEIGHT, FIRST_BOSS_WIDTH, "ghini");
         boss.setWeapon(weaponFactory.getMeteorGun(startingPos, false));
 
         return boss;

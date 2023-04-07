@@ -5,8 +5,6 @@ import app.core.component.Transform;
 import app.core.entity.ActiveEntity;
 import app.core.entity.Entity;
 import app.core.entity.AbstractEntity;
-import app.impl.component.SpriteRenderer;
-import javafx.scene.paint.Color;
 
 /**
  * This class models a platform, which is an obstacle
