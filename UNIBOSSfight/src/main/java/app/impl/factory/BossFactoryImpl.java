@@ -58,6 +58,11 @@ public class BossFactoryImpl implements BossFactory {
             protected boolean isJumping() {
                 return false;
             }
+
+            @Override
+            protected void jump() {
+
+            }
         };
         boss.setWeapon(weaponFactory.getBigBulletGun(startingPos, false));
         return boss;

@@ -130,7 +130,7 @@ public abstract class AbstractEntity implements Entity {
      *
      * @return the direction of the entity
      */
-    protected int getDirection() {
+    public int getDirection() {
         return this.direction;
     }
 
@@ -139,7 +139,7 @@ public abstract class AbstractEntity implements Entity {
      *
      * @param direction the direction of the entity
      */
-    protected void setDirection(final int direction) {
+    public void setDirection(final int direction) {
         this.direction = direction;
     }
 

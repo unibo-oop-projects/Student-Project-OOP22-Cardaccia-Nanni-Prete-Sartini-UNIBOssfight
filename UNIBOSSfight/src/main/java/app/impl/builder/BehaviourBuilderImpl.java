@@ -79,21 +79,28 @@ public class BehaviourBuilderImpl implements BehaviourBuilder {
     public BehaviourBuilder addFlying() {
         this.behaviour.setFlyingBehaviour((activeEntity, player) -> {
 
+            Entity.Inputs input = Entity.Inputs.SPACE;
+
             if (activeEntity.getPosition().getX() < player.getPosition().getX()
                     + (Window.getWidth() / 4) && activeEntity.getPosition().getX()
                     > player.getPosition().getX() || activeEntity.getPosition().getX()
-                    < player.getPosition().getX() - Window.getWidth() / 4) {
-                return Entity.Inputs.RIGHT;
+                    < player.getPosition().getX() - Window.getWidth() / 4 - player.getMaxXSpeed()) {
+                input = Entity.Inputs.RIGHT;
             } else if (activeEntity.getPosition().getX() > player.getPosition().getX()
                     - Window.getWidth() / 4 && activeEntity.getPosition().getX()
                     < player.getPosition().getX() || activeEntity.getPosition().getX()
-                    > player.getPosition().getX() + Window.getWidth() / 4) {
-                return Entity.Inputs.LEFT;
-            } else if (activeEntity.getPosition().getY() < Window.getHeight() / 2 + Window.getHeight() / 4) {
-                return Entity.Inputs.UP;
-            } else {
-                return Entity.Inputs.DOWN;
+                    > player.getPosition().getX() + Window.getWidth() / 4 + player.getMaxXSpeed()) {
+                input = Entity.Inputs.LEFT;
             }
+
+            if(activeEntity.getPosition().getX() > player.getPosition().getX()){
+                activeEntity.setDirection(-1);
+            }
+            else {
+                activeEntity.setDirection(1);
+            }
+
+            return input;
         });
         return this;
     }

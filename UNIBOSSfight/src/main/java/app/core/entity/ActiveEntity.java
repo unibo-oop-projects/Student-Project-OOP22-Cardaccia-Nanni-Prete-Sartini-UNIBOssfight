@@ -136,12 +136,6 @@ public abstract class ActiveEntity extends AbstractEntity {
      */
     public void update(final Inputs input) {
         switch (input) {
-            case UP -> {
-                this.ySpeed = Acceleration.accelerate(this.ySpeed, maxYSpeed, 1);
-            }
-            case DOWN -> {
-                this.ySpeed = Acceleration.accelerate(this.ySpeed, -maxYSpeed, 1);
-            }
             case LEFT -> {
                 this.xSpeed =  Acceleration.accelerate(this.xSpeed, -maxXSpeed, 1);
                 setDirection(-1);
