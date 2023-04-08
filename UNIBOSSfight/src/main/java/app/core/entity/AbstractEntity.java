@@ -1,6 +1,5 @@
 package app.core.entity;
 
-import app.core.component.Collider;
 import app.core.component.Health;
 import app.core.component.Hitbox;
 import app.core.component.Renderer;
@@ -10,7 +9,7 @@ import app.impl.component.HealthImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import app.util.Window;
-import java.util.Optional;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -26,7 +25,6 @@ public abstract class AbstractEntity implements Entity {
     private transient Hitbox hitbox;
     private final Renderer renderer;
     private Health health;
-    private transient Collider collider;
 
     /**
      * Creates a new instance of the abstract class AbstractEntity.
@@ -102,6 +100,14 @@ public abstract class AbstractEntity implements Entity {
      * {@inheritDoc}
      */
     @Override
+    public void setHealth(final Health health) {
+        this.health = health;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int getHeight() {
         return this.height;
     }
@@ -157,22 +163,7 @@ public abstract class AbstractEntity implements Entity {
         this.damage = damage;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Optional<Collider> getCollider() {
-        return Optional.ofNullable(this.collider);
-    }
 
-    /**
-     * Assigns to the entity its collider.
-     *
-     * @param collider the collider of the entity
-     */
-    protected void setCollider(final Collider collider) {
-        this.collider = collider;
-    }
 
     /**
      * {@inheritDoc}
@@ -203,13 +194,7 @@ public abstract class AbstractEntity implements Entity {
                 && this.getPosition().getY() >= 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void manageCollision(final Entity e) {
-        this.getCollider().ifPresent(x -> x.manageCollision(e));
-    }
+
 
     /**
      * {@inheritDoc}
@@ -219,7 +204,6 @@ public abstract class AbstractEntity implements Entity {
         this.direction = 1;
         this.health = new HealthImpl();
         this.hitbox = new HitboxImpl(width / 2.0, height, this.position.getPosition());
-        this.collider = null;
         this.renderer.init();
     }
 

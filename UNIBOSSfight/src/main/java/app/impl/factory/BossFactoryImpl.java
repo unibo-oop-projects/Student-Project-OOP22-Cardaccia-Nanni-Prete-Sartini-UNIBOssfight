@@ -5,6 +5,7 @@ import app.core.component.Transform;
 import app.core.component.WeaponFactory;
 import app.core.entity.Boss;
 import app.impl.builder.BehaviourBuilderImpl;
+import app.impl.component.HealthImpl;
 import app.impl.entity.BossImpl;
 
 /**
@@ -13,12 +14,13 @@ import app.impl.entity.BossImpl;
 public class BossFactoryImpl implements BossFactory {
 
     private final WeaponFactory weaponFactory = new WeaponFactoryImpl();
-    private static final int FIRST_BOSS_HEIGHT = 500;
-    private static final int FIRST_BOSS_WIDTH = 400;
+    private static final int METEOR_BOSS_HEIGHT = 500;
+    private static final int METEOR_BOSS_WIDTH = 400;
     private static final int FLYING_BOSS_HEIGHT = 300;
     private static final int FLYING_BOSS_WIDTH = 150;
     private static final int FLYING_BOSS_RATEOFIRE = 49;
     private static final int FLYING_BOSS_MAX_SPEED = 5;
+    private static final int FLYING_BOSS_MAX_HEALTH = 250;
 
     /**
      * {@inheritDoc}
@@ -26,9 +28,8 @@ public class BossFactoryImpl implements BossFactory {
     @Override
     public Boss meteorBoss(final Transform startingPos) {
 
-        final BossImpl boss = new BossImpl(startingPos, FIRST_BOSS_HEIGHT, FIRST_BOSS_WIDTH, "ghini");
+        final BossImpl boss = new BossImpl(startingPos, METEOR_BOSS_HEIGHT, METEOR_BOSS_WIDTH, "ghini");
         boss.setWeapon(weaponFactory.getMeteorGun(startingPos, false));
-
         return boss;
     }
 
@@ -52,6 +53,8 @@ public class BossFactoryImpl implements BossFactory {
 
                 this.setRateOfFire(FLYING_BOSS_RATEOFIRE);
                 this.setMaxXSpeed(FLYING_BOSS_MAX_SPEED);
+
+                this.setHealth(new HealthImpl(FLYING_BOSS_MAX_HEALTH));
             }
 
             @Override

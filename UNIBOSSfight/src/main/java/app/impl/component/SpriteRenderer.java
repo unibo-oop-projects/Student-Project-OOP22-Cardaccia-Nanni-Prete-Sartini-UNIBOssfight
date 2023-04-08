@@ -48,10 +48,6 @@ public class SpriteRenderer extends RendererImpl {
      * the rectangle of the super class will be rendered otherwise
      */
     @Override
-    @SuppressFBWarnings(
-            value = "EI_EXPOSE_REP",
-            justification = "It is necessary for the motion of the game"
-    )
     public Node render(final Point2D position, final int xDirection, final int yDirection, final double rotation) {
 
         if (this.prerendered != null) {

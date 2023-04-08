@@ -31,8 +31,8 @@ public class LevelImpl implements Level {
     private static final int BACKGROUND_CONSTANT = 9;
     private static final int END_POSITION = 10_000;
     private static final int MAX_X_SPEED = 20;
-    private  static final int MAX_Y_SPEED = 20;
-    private int levelNumber;
+    private static final int MAX_Y_SPEED = 20;
+    private final int levelNumber;
     private final List<Entity> entities;
     private final Player player;
     private transient int defeatedEnemiesCount;
@@ -45,6 +45,7 @@ public class LevelImpl implements Level {
     public LevelImpl() {
         this.endPosition = END_POSITION;
         this.entities = new ArrayList<>();
+        this.levelNumber = 1;
         this.player = new Player(
                 new TransformImpl(new Point2D(0, 0), 0),
                 PLAYER_HEIGHT, PLAYER_WIDTH, "guido"
@@ -124,8 +125,8 @@ public class LevelImpl implements Level {
     public List<Node> renderEntities() {
         return Optional.of(this.entities.stream()
             .filter(e -> e.isDisplayed(this.player.getPosition()))
-            .map(e -> e.render(this.player.getPosition()))).orElseGet(Stream::empty).toList();
-
+            .map(e -> e.render(this.player.getPosition())))
+                .orElseGet(Stream::empty).toList();
     }
 
     /**
@@ -174,8 +175,9 @@ public class LevelImpl implements Level {
                 .forEach(this.player::manageCollision);
 
         // Entity collisions
-        final List<Entity> collidingEntities = this.entities.stream()
+        final List<ActiveEntity> collidingEntities = this.entities.stream()
                 .filter(e -> e instanceof ActiveEntity)
+                .map(e -> (ActiveEntity) e)
                 .toList();
 
         collidingEntities.forEach(ce -> this.entities.stream()

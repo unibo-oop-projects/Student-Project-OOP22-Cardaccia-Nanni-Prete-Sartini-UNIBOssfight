@@ -10,8 +10,8 @@ import app.impl.entity.Platform;
 import app.util.Acceleration;
 import javafx.geometry.Point2D;
 import app.util.Window;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.Optional;
 
 /**
  * This class models an Entity that can move and performs actions.
@@ -19,6 +19,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 public abstract class ActiveEntity extends AbstractEntity {
 
     private transient Behaviour behaviour;
+    private transient Collider collider;
     private transient double xSpeed;
     private transient double ySpeed;
     private double maxXSpeed;
@@ -98,6 +99,33 @@ public abstract class ActiveEntity extends AbstractEntity {
      */
     public void setYSpeed(final double ySpeed) {
         this.ySpeed = ySpeed;
+    }
+
+    /**
+     * This method returns the Collider of the entity.
+     *
+     * @return the Collider of the entity
+     */
+    public Optional<Collider> getCollider() {
+        return Optional.ofNullable(this.collider);
+    }
+
+    /**
+     * Manages the collision of the entity.
+     *
+     * @param e the entity collided
+     */
+    public void manageCollision(final Entity e) {
+        this.getCollider().ifPresent(x -> x.manageCollision(e));
+    }
+
+    /**
+     * Assigns to the entity its collider.
+     *
+     * @param collider the collider of the entity
+     */
+    protected void setCollider(final Collider collider) {
+        this.collider = collider;
     }
 
     /**

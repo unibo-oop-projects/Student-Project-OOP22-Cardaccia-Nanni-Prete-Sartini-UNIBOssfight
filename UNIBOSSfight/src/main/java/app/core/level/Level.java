@@ -12,6 +12,16 @@ import java.util.List;
 public interface Level {
 
     /**
+     * The number of coins in this level.
+     */
+    int COINS_COUNT = 16;
+
+    /**
+     * The number of enemies in this level.
+     */
+    int ENEMY_COUNT = 10;
+
+    /**
      * Returns the number of the level.
      *
      * @return the number of the level

@@ -1,8 +1,9 @@
 package app.ui;
 
 import app.game.Game;
+import app.game.Score;
 import app.util.AppLogger;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import app.util.DataManager;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -15,12 +16,14 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * This class is used to manage the appearance of the user interface
@@ -36,16 +39,21 @@ public class ViewManager {
     private static final int MENU_BUTTONS_START_Y = 80;
     private static final int BUTTONS_FONT_SIZE = 23;
     private static final int FONT_SIZE = 18;
-    private static final int LEVEL_CHOICE_LAYOUT_X = 100;
+    private static final int LEVEL_CHOICE_LAYOUT_X = 110;
     private static final int LEVEL_CHOICE_LAYOUT_Y = 75;
-    private static final int HELP_LAYOUT_X = 25;
+    private static final int COINS_LAYOUT_Y = 115;
+    private static final int LAYOUT_X = 35;
+    private static final  int LAYOUT_Y = 160;
     private static final int HELP_LAYOUT_Y = 40;
+    private static final int COINS_LABEL_LAYOUTY = 225;
+    private static final int ENEMIES_LABEL_LAYOUTY = 195;
+    private static final int FINAL_GRADE_LAYOUTY = 270;
+    private static final int FINAL_GRADE_LAYOUTX = 235;
     private final Stage mainStage;
-
     private final AnchorPane mainPane;
     private final List<CustomizedButton> menuButtons;
-    private CustomizedSubScene scoreSubScene;
     private CustomizedSubScene levelChoiceSubScene;
+    private CustomizedSubScene scoreSubScene;
     private CustomizedSubScene helpSubScene;
     private CustomizedSubScene currentScene;
 
@@ -93,21 +101,21 @@ public class ViewManager {
     }
 
     /**
-     * Creates a logo with an image.
+     * Adds an image to the pane.
      *
-     * @param layoutX the x layout of the logo
-     * @param layoutY the y layout of the logo
-     * @param url the url of the image of the logo
-     * @param pane the pane in which the logo is added
+     * @param layoutX the x layout of the image
+     * @param layoutY the y layout of the image
+     * @param url the url of the image of the image
+     * @param pane the pane in which the image is added
      */
-    public static void createLogo(final double layoutX, final double layoutY,
-                                  final String url, final AnchorPane pane) {
-        final ImageView logo = new ImageView(url);
-        logo.setLayoutX(layoutX);
-        logo.setLayoutY(layoutY);
-        logo.setOnMouseEntered(event -> logo.setEffect(new DropShadow()));
-        logo.setOnMouseExited(event -> logo.setEffect(null));
-        pane.getChildren().add(logo);
+    public static void addImage(final double layoutX, final double layoutY,
+                                final String url, final AnchorPane pane) {
+        final ImageView img = new ImageView(url);
+        img.setLayoutX(layoutX);
+        img.setLayoutY(layoutY);
+        img.setOnMouseEntered(event -> img.setEffect(new DropShadow()));
+        img.setOnMouseExited(event -> img.setEffect(null));
+        pane.getChildren().add(img);
     }
 
     /**
@@ -162,18 +170,75 @@ public class ViewManager {
      * @param fontSize the font size
      * @param label the label on which the font is set
      */
-    public static void setFont(final String url, final double fontSize, final Label label) {
+    public static void setFont(final String url, final double fontSize,
+                               final Label label) {
 
-        try (InputStream is = ViewManager.class.getClassLoader().getResourceAsStream(url)) {
-            label.setFont(Font.loadFont(is, fontSize));
+        try (InputStream inputStream = ViewManager
+                .class
+                .getClassLoader()
+                .getResourceAsStream(url)) {
+            label.setFont(Font.loadFont(inputStream, fontSize));
         } catch (final IOException e) {
             label.setFont(Font.font("Verdana", fontSize));
         }
     }
 
+    private void createButtons() {
+        createStartButton();
+        createLevelButton();
+        createScoresButton();
+        createHelpButton();
+        createExitButton();
+    }
+
+    private void addMenuButton(final CustomizedButton button) {
+        button.setLayoutX(MENU_BUTTONS_START_X);
+        button.setLayoutY(MENU_BUTTONS_START_Y + menuButtons.size() * 100);
+        this.menuButtons.add(button);
+        this.mainPane.getChildren().add(button);
+    }
+
+    private void createStartButton() {
+        final CustomizedButton startButton = new CustomizedButton("PLAY");
+        addMenuButton(startButton);
+
+        startButton.setOnAction(event -> Platform.runLater(() -> {
+            try {
+                new Game().start(new Stage());
+                this.mainStage.close();
+            } catch (final IOException e) {
+                AppLogger.getLogger().severe(e.getMessage());
+            }
+        }));
+    }
+
+    private void createLevelButton() {
+        final CustomizedButton levelButton = new CustomizedButton("LEVEL");
+        addMenuButton(levelButton);
+        levelButton.setOnAction(event -> showSubScene(levelChoiceSubScene));
+    }
+
+    private void createScoresButton() {
+        final CustomizedButton scoreButton = new CustomizedButton("SCORES");
+        addMenuButton(scoreButton);
+        scoreButton.setOnAction(event -> showSubScene(scoreSubScene));
+    }
+
+    private void createHelpButton() {
+        final CustomizedButton helpButton = new CustomizedButton("HELP");
+        addMenuButton(helpButton);
+        helpButton.setOnAction(event -> showSubScene(helpSubScene));
+    }
+
+    private void createExitButton() {
+        final CustomizedButton exitButton = new CustomizedButton("QUIT");
+        addMenuButton(exitButton);
+        exitButton.setOnAction(event -> mainStage.close());
+    }
+
     private void createSubScenes() {
-        this.scoreSubScene = new CustomizedSubScene();
         this.levelChoiceSubScene = new CustomizedSubScene();
+        this.scoreSubScene = new CustomizedSubScene();
         this.helpSubScene = new CustomizedSubScene();
     }
 
@@ -210,27 +275,65 @@ public class ViewManager {
     }
 
     private void setScoreSubScene() {
+        try {
+            final var scoreValues = new DataManager().loadScore();
+            final var playerScore = new Score();
+            final Label grade = new Label(Integer.toString(110 * playerScore
+                    .getEarnedPoints() / playerScore.getTotalPoints()
+                                                           * Game.LEVEL_COUNT));
 
+            this.scoreSubScene.addLabel("\tLEVEL 1: ",
+                    LAYOUT_X, HELP_LAYOUT_Y + 10, FONT_SIZE);
+            var enemiesDefeated = "Enemies defeated:\t"
+                    + scoreValues.getLevelStat(1).getKey();
+            var coinsCollected = "Coins collected:\t\t"
+                    + scoreValues.getLevelStat(1).getValue();
+            this.scoreSubScene.addLabel(enemiesDefeated, LEVEL_CHOICE_LAYOUT_X,
+                    LEVEL_CHOICE_LAYOUT_Y + 10, FONT_SIZE);
+            this.scoreSubScene.addLabel(coinsCollected, LEVEL_CHOICE_LAYOUT_X,
+                    COINS_LAYOUT_Y, FONT_SIZE);
+
+
+            this.scoreSubScene.addLabel("\tLEVEL 2: ",
+                    LAYOUT_X, LAYOUT_Y, FONT_SIZE);
+            enemiesDefeated = "Enemies defeated:\t"
+                    + scoreValues.getLevelStat(2).getKey();
+            coinsCollected = "Coins collected:\t\t"
+                    + scoreValues.getLevelStat(2).getValue();
+            this.scoreSubScene.addLabel(enemiesDefeated, LEVEL_CHOICE_LAYOUT_X,
+                    ENEMIES_LABEL_LAYOUTY, FONT_SIZE);
+            this.scoreSubScene.addLabel(coinsCollected, LEVEL_CHOICE_LAYOUT_X,
+                    COINS_LABEL_LAYOUTY, FONT_SIZE);
+
+            this.scoreSubScene.addLabel("\tFINAL GRADE: ",
+                    LAYOUT_X, FINAL_GRADE_LAYOUTY, FONT_SIZE);
+            this.scoreSubScene.addLabel(grade.getText(),
+                    FINAL_GRADE_LAYOUTX, FINAL_GRADE_LAYOUTY, FONT_SIZE);
+
+        } catch (final IOException e) {
+            AppLogger.getLogger().severe(e.getMessage());
+            throw (IllegalStateException) new IllegalStateException().initCause(e);
+        }
     }
 
     private void setHelpSubScene() {
-        final String howToPlay = """
+        final Text text = new Text("""
                 Hi, welcome to UNIBOssfight!
 
-                 Press 'D' to run forward,
-                 press 'A' to run backward,
-                 press 'space' to jump.
+                Press 'D' to run forward,
+                press 'A' to run backward,
+                press 'space' to jump.
 
-                 Use the mouse to point and
-                 shoot the enemies, defeat
-                 all of them and collect
-                 all the coins to get
-                 your degree.
+                Use the mouse to point and
+                shoot the enemies, defeat
+                all of them and collect
+                all the coins to get
+                your degree.
 
-                 Good Luck!\s""";
+                Good Luck!\s""");
 
-        this.helpSubScene.addLabel(howToPlay,
-                HELP_LAYOUT_X, HELP_LAYOUT_Y, FONT_SIZE);
+        this.helpSubScene.addLabel(text.getText(),
+                LAYOUT_X, HELP_LAYOUT_Y, FONT_SIZE);
     }
 
     private void showSubScene(final CustomizedSubScene subScene) {
@@ -238,58 +341,5 @@ public class ViewManager {
         subScene.fadeInSubScene();
         this.mainPane.getChildren().add(subScene);
         this.currentScene = subScene;
-    }
-
-    private void addMenuButton(final CustomizedButton button) {
-        button.setLayoutX(MENU_BUTTONS_START_X);
-        button.setLayoutY(MENU_BUTTONS_START_Y + menuButtons.size() * 100);
-        this.menuButtons.add(button);
-        this.mainPane.getChildren().add(button);
-    }
-
-    private void createButtons() {
-        createStartButton();
-        createScoresButton();
-        createLevelButton();
-        createHelpButton();
-        createExitButton();
-    }
-
-    private void createStartButton() {
-        final CustomizedButton startButton = new CustomizedButton("PLAY");
-        addMenuButton(startButton);
-
-        startButton.setOnAction(event -> Platform.runLater(() -> {
-            try {
-                new Game().start(new Stage());
-                this.mainStage.close();
-            } catch (final IOException e) {
-                AppLogger.getLogger().severe(e.getMessage());
-            }
-        }));
-    }
-
-    private void createScoresButton() {
-        final CustomizedButton scoreButton = new CustomizedButton("SCORES");
-        addMenuButton(scoreButton);
-        scoreButton.setOnAction(event -> showSubScene(scoreSubScene));
-    }
-
-    private void createLevelButton() {
-        final CustomizedButton levelButton = new CustomizedButton("LEVEL");
-        addMenuButton(levelButton);
-        levelButton.setOnAction(event -> showSubScene(levelChoiceSubScene));
-    }
-
-    private void createHelpButton() {
-        final CustomizedButton helpButton = new CustomizedButton("HELP");
-        addMenuButton(helpButton);
-        helpButton.setOnAction(event -> showSubScene(helpSubScene));
-    }
-
-    private void createExitButton() {
-        final CustomizedButton exitButton = new CustomizedButton("QUIT");
-        addMenuButton(exitButton);
-        exitButton.setOnAction(event -> mainStage.close());
     }
 }
