@@ -1,6 +1,23 @@
 plugins {
-    id("java")
+    java
+    application
+    id("org.danilopianini.gradle-java-qa") version "1.0.0"
+    //id("com.github.spotbugs") version "5.0.13"
+    //id("de.aaschmid.cpd") version "3.3"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+
 }
+
+val javaFXModules = listOf(
+        "base",
+        "controls",
+        "fxml",
+        "swing",
+        "graphics"
+)
+
+val supportedPlatforms = listOf("linux", "mac", "win")
+
 
 group = "org.example"
 version = "1.0-SNAPSHOT"
@@ -9,45 +26,26 @@ repositories {
     mavenCentral()
 }
 
+//To run: ./gradlew -PmainClass=Main run
+application {
+    mainClass.set("app.Main")
+}
+
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+
+    implementation ("com.google.code.gson:gson:2.10.1")
+    compileOnly("com.github.spotbugs:spotbugs-annotations:4.7.3")
+
+    val javaFxVersion = 19
+    for (platform in supportedPlatforms) {
+        for (module in javaFXModules) {
+            implementation("org.openjfx:javafx-$module:$javaFxVersion:$platform")
+        }
+    }
 }
 
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
-}
-
-val lwjglVersion = "3.1.3"
-
-val lwjglNatives = Pair(
-        System.getProperty("os.name")!!,
-        System.getProperty("os.arch")!!
-).let { (name, arch) ->
-    when {
-        arrayOf("Linux", "FreeBSD", "SunOS", "Unit").any { name.startsWith(it) } ->
-            "natives-linux"
-        arrayOf("Mac OS X", "Darwin").any { name.startsWith(it) }                ->
-            "natives-macos"
-        arrayOf("Windows").any { name.startsWith(it) }                           ->
-            "natives-windows"
-        else -> throw Error("Unrecognized or unsupported platform. Please set \"lwjglNatives\" manually")
-    }
-}
-
-dependencies {
-    implementation("org.lwjgl", "lwjgl", lwjglVersion)
-    implementation("org.lwjgl", "lwjgl-assimp", lwjglVersion)
-    implementation("org.lwjgl", "lwjgl-glfw", lwjglVersion)
-    implementation("org.lwjgl", "lwjgl-nfd", lwjglVersion)
-    implementation("org.lwjgl", "lwjgl-openal", lwjglVersion)
-    implementation("org.lwjgl", "lwjgl-opengl", lwjglVersion)
-    implementation("org.lwjgl", "lwjgl-stb", lwjglVersion)
-    runtimeOnly("org.lwjgl", "lwjgl", lwjglVersion, classifier = lwjglNatives)
-    runtimeOnly("org.lwjgl", "lwjgl-assimp", lwjglVersion, classifier = lwjglNatives)
-    runtimeOnly("org.lwjgl", "lwjgl-glfw", lwjglVersion, classifier = lwjglNatives)
-    runtimeOnly("org.lwjgl", "lwjgl-nfd", lwjglVersion, classifier = lwjglNatives)
-    runtimeOnly("org.lwjgl", "lwjgl-openal", lwjglVersion, classifier = lwjglNatives)
-    runtimeOnly("org.lwjgl", "lwjgl-opengl", lwjglVersion, classifier = lwjglNatives)
-    runtimeOnly("org.lwjgl", "lwjgl-stb", lwjglVersion, classifier = lwjglNatives)
 }
