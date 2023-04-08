@@ -276,7 +276,7 @@ public class ViewManager {
 
     private void setScoreSubScene() {
         try {
-            final var scoreValues = new DataManager().loadScore();
+            final var scoreValues = new DataManager().deserializeScore("score.json");
             final var playerScore = new Score();
             final Label grade = new Label(Integer.toString(110 * playerScore
                     .getEarnedPoints() / playerScore.getTotalPoints()
