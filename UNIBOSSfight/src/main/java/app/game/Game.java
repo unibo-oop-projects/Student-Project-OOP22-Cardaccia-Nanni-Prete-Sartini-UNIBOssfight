@@ -245,16 +245,15 @@ public class Game extends Application {
     }
 
     private void saveScore() {
-        // TODO decommentare quando c'è il metodo in DataManager
-        /*try {
-            final Score scores = new Score(); // new DataManager().loadScore();
+        try {
+            final Score scores = new DataManager().deserializeScore("score.json");
             scores.setLevelStats(this.currentLevel.getLevelNumber(),
                     this.defeatedEnemies,
                     this.coinsCollected);
-            // new DataManager().serializeScore(scores);
+            new DataManager().serializeScore(scores);
         } catch (final IOException e) {
             AppLogger.getLogger().warning("An error occurred while saving the score");
-        }*/
+        }
     }
 
     private void initHUD() {
