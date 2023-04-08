@@ -28,7 +28,7 @@ final class TestEntity {
 
     void init(final String filename) {
         try {
-            this.level = new DataManager().loadLevel("src/test/resources/" + filename);
+            this.level = new DataManager().loadLevel(filename);
         } catch (IOException e) {
             AppLogger.getLogger().severe("Errore nel caricamento del livello di test "
                     + e.getMessage());
