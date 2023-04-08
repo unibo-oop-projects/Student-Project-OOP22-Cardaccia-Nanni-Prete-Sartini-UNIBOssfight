@@ -15,8 +15,8 @@ import java.io.InputStream;
  */
 public class PatternRender extends SpriteRenderer {
 
-    private final int xRatio;
-    private final int yRatio;
+    private final double xRatio;
+    private final double yRatio;
 
     /**
      * Creates a new instance of the class PatternRenderer.
@@ -70,14 +70,14 @@ public class PatternRender extends SpriteRenderer {
         final InputStream is = getClass().getClassLoader()
                 .getResourceAsStream("assets/" + getFilename());
         if (is != null) {
-            img = new Image(is, getWidth(), getHeight(), false, true);
+            img = new Image(is, getWidth() / xRatio, getHeight() / yRatio, false, false);
             final ImagePattern imagePattern = new ImagePattern(
                     img,
                     position.getX() - this.getWidth() / 2.0,
-                    position.getY(),
-                    img.getWidth() / (getWidth() * this.xRatio),
-                    img.getHeight() / (getHeight() * this.yRatio),
-                    true
+                    Window.getHeight() - getHeight() - position.getY(),
+                    getWidth() / xRatio,
+                    getHeight() / yRatio,
+                    false
             );
 
             rect.setFill(imagePattern);
