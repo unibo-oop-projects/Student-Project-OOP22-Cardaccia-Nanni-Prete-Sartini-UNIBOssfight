@@ -2,7 +2,6 @@ package app.game;
 
 import app.core.level.Level;
 import javafx.util.Pair;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +11,7 @@ import java.util.Map;
 public class Score {
 
     private static final int KILLS_SCORE = 2;
+    private static final int MAXIMUM_GRADE = 110;
 
     private final Map<Integer, Pair<Integer, Integer>> levelStats;
 
@@ -78,7 +78,7 @@ public class Score {
      * @return an int representing the final grade obtained
      */
     public int computeFinalGrade() {
-        return 110 * this.getEarnedPoints()
+        return MAXIMUM_GRADE * this.getEarnedPoints()
                / (this.getTotalPoints() * Game.LEVEL_COUNT);
     }
 }

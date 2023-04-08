@@ -48,6 +48,7 @@ public class Game extends Application {
      */
     public static final int LEVEL_COUNT = 2;
     private static final String GAME_OVER_SPRITE = "gameover.png";
+    private static final String YOU_WIN_SPRITE = "youWin.png";
     private static final double FRAME_RATE = 60;
     private static final double FRAME_DURATION = 1000 / FRAME_RATE;
     private static final int MIN_WINDOW_HEIGHT = 600;
@@ -173,12 +174,12 @@ public class Game extends Application {
                         final CustomizedButton nextLevelButton = new CustomizedButton(
                                 "LEVEL 2");
                         new SecondaryStage(stage, nextLevelButton,
-                                "level2.json", GAME_OVER_SPRITE).show();
+                                "level2.json", YOU_WIN_SPRITE).show();
                     } else {
                         final CustomizedButton restartButton = new CustomizedButton(
                                 "RESTART");
                         new SecondaryStage(stage, restartButton,
-                                "level1.json", GAME_OVER_SPRITE).show();
+                                "level1.json", YOU_WIN_SPRITE).show();
                     }
                 }
         );

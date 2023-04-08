@@ -1,6 +1,7 @@
 package app.ui;
 
-import app.game.Game;import app.util.AppLogger;
+import app.game.Game;
+import app.util.AppLogger;
 import app.util.DataManager;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -152,9 +153,11 @@ public class ViewManager {
     public static void setFont(final String url, final double fontSize,
                                final List<Label> labels) {
         labels.forEach(label -> {
-            try (InputStream is = ViewManager.class.getClassLoader()
+            try (InputStream inputStream = ViewManager
+                    .class
+                    .getClassLoader()
                     .getResourceAsStream(url)) {
-                label.setFont(Font.loadFont(is, fontSize));
+                label.setFont(Font.loadFont(inputStream, fontSize));
             } catch (final IOException e) {
                 label.setFont(Font.font("Verdana", fontSize));
             }
@@ -170,7 +173,6 @@ public class ViewManager {
      */
     public static void setFont(final String url, final double fontSize,
                                final Label label) {
-
         try (InputStream inputStream = ViewManager
                 .class
                 .getClassLoader()
@@ -275,7 +277,8 @@ public class ViewManager {
     private void setScoreSubScene() {
         try {
             final var score = new DataManager().deserializeScore("score.json");
-            final Label grade = new Label(Integer.toString(score.computeFinalGrade()));
+            final Label grade = new Label(Integer.toString(110 * score.getEarnedPoints()
+                                                           / (score.getTotalPoints() * Game.LEVEL_COUNT)));
 
             this.scoreSubScene.addLabel("\tLEVEL 1: ",
                     LAYOUT_X, HELP_LAYOUT_Y + 10, FONT_SIZE);
