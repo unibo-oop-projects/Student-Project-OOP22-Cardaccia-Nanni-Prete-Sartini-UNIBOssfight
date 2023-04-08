@@ -10,9 +10,7 @@ import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 /**
  * This class is used to generate the sprites representing the entities of the game.
@@ -121,15 +119,15 @@ public class SpriteRenderer extends RendererImpl {
      */
     @Override
     public void init() {
-        try {
-            final Image img = new Image(new FileInputStream("assets/" + filename),
-                    getWidth(), getHeight(),
-                    false,
-                    true);
 
-            this.prerendered = createImageView(img);
-        } catch (FileNotFoundException e) {
-            AppLogger.getLogger().warning(e.getMessage());
+        final InputStream is = getClass().getClassLoader()
+                .getResourceAsStream("assets/" + filename);
+        if (is != null) {
+            this.prerendered = createImageView(new Image(is, getWidth(), getHeight(),
+                    false, true));
+        } else {
+            AppLogger.getLogger().severe("Error occurred while loading " + filename);
+            this.prerendered = null;
         }
     }
 

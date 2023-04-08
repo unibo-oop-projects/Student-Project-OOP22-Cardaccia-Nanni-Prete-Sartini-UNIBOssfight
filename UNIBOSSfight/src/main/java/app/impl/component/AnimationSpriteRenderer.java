@@ -1,18 +1,11 @@
 package app.impl.component;
 
-import app.util.AppLogger;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.IntStream;
 
 /**
@@ -73,26 +66,13 @@ public class AnimationSpriteRenderer extends LoopSpriteRenderer {
         final List<String> animations = List.of(ANIMATION_IDLE, ANIMATION_WALK, ANIMATION_ATTACK);
         animations.forEach(e -> {
 
-            final String pathname = "assets/" + this.getFilename() +  "/" + e;
-            final File directory = new File(pathname);
-            final int animationLength = Objects.requireNonNull(directory.list()).length;
+            final String pathname = "assets/" + this.getFilename() +  "/" + e + "/" + this.getFilename();
+            final int animationLength = getResourcesCount(pathname);
 
             List<ImageView> preRenderedSprites;
             preRenderedSprites = IntStream.iterate(1, n -> n + 1)
                     .limit(animationLength)
-                    .mapToObj(n -> {
-                        try {
-                            return new Image(
-                                    new FileInputStream(pathname
-                                            + "/" + this.getFilename() + n + ".png"),
-                                    getWidth(), getHeight(),
-                                    false,
-                                    true);
-                        } catch (FileNotFoundException ex) {
-                            AppLogger.getLogger().severe(ex.getMessage());
-                            return null;
-                        }
-                    })
+                    .mapToObj(n -> getImage(pathname + n + ".png"))
                     .map(this::createImageView)
                     .toList();
             this.animations.put(e, preRenderedSprites);

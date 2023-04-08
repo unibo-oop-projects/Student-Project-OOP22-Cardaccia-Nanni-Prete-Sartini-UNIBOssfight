@@ -1,5 +1,6 @@
 package app.ui;
 
+import app.util.AppLogger;
 import javafx.animation.FadeTransition;
 import javafx.scene.SubScene;
 import javafx.scene.control.Label;
@@ -10,6 +11,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.util.Duration;
+import java.io.InputStream;
 
 /**
  * This class models a custom SubScene with its own background and measures.
@@ -34,14 +36,19 @@ public class CustomizedSubScene extends SubScene {
         prefHeight(HEIGHT);
         prefWidth(WIDTH);
 
-        final BackgroundImage image = new BackgroundImage(new Image(BACKGROUND_IMAGE,
-                WIDTH, HEIGHT, false, true), BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
-        this.root.setBackground(new Background(image));
+        final InputStream is = getClass().getClassLoader()
+                .getResourceAsStream(BACKGROUND_IMAGE);
+        if (is != null) {
+            final BackgroundImage image = new BackgroundImage(new Image(is,
+                    WIDTH, HEIGHT, false, true), BackgroundRepeat.NO_REPEAT,
+                    BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
+            this.root.setBackground(new Background(image));
+        } else {
+            AppLogger.getLogger().warning("Error occurred while loading background");
+        }
 
         setLayoutX(LAYOUTX);
         setLayoutY(LAYOUTY);
-
     }
 
     /**
@@ -72,7 +79,7 @@ public class CustomizedSubScene extends SubScene {
         final Label label = new Label(text);
         label.setLayoutX(layoutX);
         label.setLayoutY(layoutY);
-        ViewManager.setFont("src/main/resources/font.ttf", fontSize, label);
+        ViewManager.setFont("font.ttf", fontSize, label);
         this.root.getChildren().add(label);
     }
 

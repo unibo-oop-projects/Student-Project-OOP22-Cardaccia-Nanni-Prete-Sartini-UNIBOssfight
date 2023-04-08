@@ -9,9 +9,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import app.game.Score;
 
 /**
  * This class is used to serialize and deserializer levels.
@@ -25,7 +27,13 @@ public class DataManager {
      * @throws IOException if an error with the file occurs
      */
     private String readFile(final String path) throws IOException {
-        final byte[] encoded = Files.readAllBytes(Paths.get(path));
+        byte[] encoded = new byte[0];
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream(path)) {
+            if (is != null) {
+                encoded = is.readAllBytes();
+            }
+        }
+
         return new String(encoded, StandardCharsets.UTF_8);
     }
 

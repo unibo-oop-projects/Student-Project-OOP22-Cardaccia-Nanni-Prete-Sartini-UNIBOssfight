@@ -7,10 +7,8 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-
 import javafx.scene.image.Image;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 /**
  * This class implements a Pattern Renderer.
@@ -60,21 +58,19 @@ public class PatternRender extends SpriteRenderer {
             final int yDirection,
             final double rotation
     ) {
-        try {
-            final Rectangle rect = new Rectangle(
-                    position.getX() - this.getWidth() / 2.0,
-                    Window.getHeight() - position.getY() - getHeight(),
-                    this.getWidth(),
-                    this.getHeight()
-            );
+        final Rectangle rect = new Rectangle(
+                position.getX() - this.getWidth() / 2.0,
+                Window.getHeight() - position.getY() - getHeight(),
+                this.getWidth(),
+                this.getHeight()
+        );
 
-            final Image img;
-            img = new Image(new FileInputStream("assets/" + getFilename()),
-                    getWidth(), getHeight(),
-                    false,
-                    true);
+        final Image img;
 
-
+        final InputStream is = getClass().getClassLoader()
+                .getResourceAsStream("assets/" + getFilename());
+        if (is != null) {
+            img = new Image(is, getWidth(), getHeight(), false, true);
             final ImagePattern imagePattern = new ImagePattern(
                     img,
                     position.getX() - this.getWidth() / 2.0,
@@ -86,11 +82,11 @@ public class PatternRender extends SpriteRenderer {
 
             rect.setFill(imagePattern);
 
-            return rect;
-
-        } catch (FileNotFoundException e) {
-            AppLogger.getLogger().severe(e.getMessage());
-            return null;
+        } else {
+            AppLogger.getLogger().severe("Error occurred while loading " + getFilename());
+            rect.setFill(Color.RED);
         }
+
+        return rect;
     }
 }

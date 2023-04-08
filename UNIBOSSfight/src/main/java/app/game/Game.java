@@ -32,9 +32,8 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -44,7 +43,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class Game extends Application {
 
-    private static final int LEVELS_COUNT = 2;
+    private static final String GAME_OVER_SPRITE = "gameover.png";
     private static final double FRAME_RATE = 60;
     private static final double FRAME_DURATION = 1000 / FRAME_RATE;
     private static final int MIN_WINDOW_HEIGHT = 600;
@@ -116,14 +115,13 @@ public class Game extends Application {
 
         initHUD();
 
-        FileInputStream input;
-        try {
-            input = new FileInputStream("assets/ground/ground.png");
-        } catch (final FileNotFoundException e) {
-            throw new IllegalStateException(e);
+        final InputStream input = getClass().getClassLoader()
+                .getResourceAsStream("assets/ground/ground.png");
+        if (input != null) {
+            this.image = new Image(input);
+        } else {
+            AppLogger.getLogger().warning("Error occurred while loading the ground");
         }
-
-        this.image = new Image(input);
 
         final Screen screen = Screen.getPrimary();
         final Rectangle2D bounds = screen.getVisualBounds();
@@ -161,11 +159,11 @@ public class Game extends Application {
                             "RESTART");
                     if (this.currentLevel.getLevelNumber() == 1) {
                         new SecondaryStage(stage, restartButton,
-                                "level1.json", "gameover.png",
+                                "level1.json", GAME_OVER_SPRITE,
                                 SCENE_WIDTH, SCENE_HEIGHT).show();
                     } else {
                         new SecondaryStage(stage, restartButton,
-                                "level2.json", "gameover.png",
+                                "level2.json", GAME_OVER_SPRITE,
                                 SCENE_WIDTH, SCENE_HEIGHT).show();
                     }
                 }
@@ -177,13 +175,13 @@ public class Game extends Application {
                         final CustomizedButton nextLevelButton = new CustomizedButton(
                                 "LEVEL 2");
                         new SecondaryStage(stage, nextLevelButton,
-                                "level2.json", "gameover.png",
+                                "level2.json", GAME_OVER_SPRITE,
                                 SCENE_WIDTH, SCENE_HEIGHT).show();
                     } else {
                         final CustomizedButton restartButton = new CustomizedButton(
                                 "RESTART");
                         new SecondaryStage(stage, restartButton,
-                                "level1.json", "gameover.png",
+                                "level1.json", GAME_OVER_SPRITE,
                                 VICTORY_SCENE_WIDTH, VICTORY_SCENE_HEIGHT).show();
                     }
                 }
@@ -215,7 +213,7 @@ public class Game extends Application {
                             this.defeatedEnemies = this.currentLevel
                                     .getDefeatedEnemiesCount();
                             loadBossLevel();
-                        } catch (IOException ex) {
+                        } catch (final IOException ex) {
                             AppLogger.getLogger()
                                 .severe("Errore nel caricamento del boss level "
                                 + ex.getMessage());
@@ -271,7 +269,7 @@ public class Game extends Application {
         this.coinsLabel.setLayoutY(LABEL_LAYOUTY);
         this.coinsLabel.setTextFill(Color.GOLD);
 
-        ViewManager.setFont("src/main/resources/HUDfont.ttf", FONT_SIZE,
+        ViewManager.setFont("HUDfont.ttf", FONT_SIZE,
                 List.of(this.coinsLabel, this.timeLabel));
     }
 

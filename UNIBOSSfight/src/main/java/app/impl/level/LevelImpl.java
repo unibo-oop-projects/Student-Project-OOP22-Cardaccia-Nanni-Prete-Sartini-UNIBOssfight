@@ -15,8 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -234,10 +233,14 @@ public class LevelImpl implements Level {
      */
     @Override
     public void init() {
-        try {
-            this.bg = new Image(new FileInputStream("assets/background.png"));
-        } catch (FileNotFoundException e) {
-            AppLogger.getLogger().severe(e.getMessage());
+        final InputStream is = getClass().getClassLoader()
+                .getResourceAsStream("assets/background.png");
+        if (is != null) {
+            this.bg = new Image(is);
+        } else {
+            AppLogger.getLogger()
+                    .severe("Error occurred while loading /assets/background.png");
+            this.bg = null;
         }
         this.player.init();
         this.entities.forEach(Entity::init);

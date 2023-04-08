@@ -38,7 +38,7 @@ public final class ConfirmBox {
 
         final Label label = new Label();
         label.setText(message);
-        ViewManager.setFont("src/main/resources/font.ttf", FONT_SIZE, label);
+        ViewManager.setFont("font.ttf", FONT_SIZE, label);
 
         final CustomizedButton yesButton = new CustomizedButton("Yes");
         final CustomizedButton noButton = new CustomizedButton("No");

@@ -8,12 +8,8 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.IntStream;
 
 /**
@@ -71,26 +67,14 @@ public class LoopSpriteRenderer extends SpriteRenderer {
      */
     @Override
     public void init() {
-        final File directory = new File("assets/" + this.getFilename());
         final String pathname = "assets/" + this.getFilename() +  "/" + this.getFilename();
 
-        this.animationLength = Objects.requireNonNull(directory.list()).length;
+        this.animationLength = getResourcesCount(pathname);
         this.maxDelay = LoopSpriteRenderer.ANIMATION_DURATION / this.animationLength;
 
         this.preRenderedSprites = IntStream.iterate(1, e -> e + 1)
                 .limit(this.animationLength)
-                .mapToObj(n -> {
-                    try {
-                        return new Image(
-                                new FileInputStream(pathname + n + ".png"),
-                                getWidth(), getHeight(),
-                                false,
-                                true);
-                    } catch (FileNotFoundException ex) {
-                        AppLogger.getLogger().severe(ex.getMessage());
-                        return null;
-                    }
-                })
+                .mapToObj(n -> getImage(pathname + n + ".png"))
                 .map(this::createImageView)
                 .toList();
 
@@ -147,5 +131,38 @@ public class LoopSpriteRenderer extends SpriteRenderer {
     protected void resetAnimation() {
         this.cont = 0;
         this.contDelay = 0;
+    }
+
+    /**
+     * Returns the number of resources that match the pattern /pathname*.png.
+     *
+     * @param pathname path to the resource
+     * @return the resource count
+     */
+    protected int getResourcesCount(final String pathname) {
+
+        int counter = 1;
+        while (getClass().getClassLoader()
+                .getResource(pathname + counter + ".png") != null) {
+            counter++;
+        }
+
+        return counter - 1;
+    }
+
+    /**
+     * Returns the image given the resource name.
+     * @param resource the resource name
+     * @return a new image
+     */
+    protected final Image getImage(final String resource) {
+
+        final InputStream is = getClass().getClassLoader().getResourceAsStream(resource);
+        if (is != null) {
+            return new Image(is, getWidth(), getHeight(), false, true);
+        } else {
+            AppLogger.getLogger().severe("Error occurred while loading " + resource);
+            return null;
+        }
     }
 }

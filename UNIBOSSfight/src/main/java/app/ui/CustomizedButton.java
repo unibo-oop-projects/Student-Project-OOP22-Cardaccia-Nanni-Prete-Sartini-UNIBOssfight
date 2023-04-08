@@ -4,15 +4,15 @@ import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseButton;
 import javafx.scene.text.Font;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * This class models a  custom Button with its own background and measures.
  */
 public class CustomizedButton extends Button {
 
-    private static final String FONT_PATH = "src/main/resources/font.ttf";
+    private static final String FONT_PATH = "font.ttf";
     private static final String BUTTON_PRESSED_STYLE = "-fx-background-color: transparent;"
             + " -fx-background-image: url('grey_button00.png');";
     private static final String BUTTON_FREE_STYLE = "-fx-background-color: transparent;"
@@ -37,9 +37,10 @@ public class CustomizedButton extends Button {
     }
 
     private void setButtonFont() {
-        try {
-            setFont(Font.loadFont(new FileInputStream(FONT_PATH), FONT_SIZE));
-        } catch (final FileNotFoundException e) {
+        try (InputStream is = ViewManager.class.getClassLoader()
+                .getResourceAsStream(FONT_PATH)) {
+            setFont(Font.loadFont(is, FONT_SIZE));
+        } catch (final IOException e) {
             setFont(Font.font("Verdana", FONT_SIZE));
         }
     }

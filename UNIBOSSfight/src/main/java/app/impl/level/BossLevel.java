@@ -10,9 +10,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -89,10 +87,13 @@ public class BossLevel extends LevelImpl {
     @Override
     public void init() {
         super.init();
-        try {
-            this.setBg(new Image(new FileInputStream("assets/stages/aula-magna.png")));
-        } catch (FileNotFoundException e) {
-            throw new IllegalStateException(e);
+
+        final InputStream is = getClass().getClassLoader()
+                .getResourceAsStream("assets/stages/aula-magna.png");
+        if (is != null) {
+            this.setBg(new Image(is));
+        } else {
+            AppLogger.getLogger().warning("Error occurred while loading background");
         }
 
         final BossFactory bossFactory = new BossFactoryImpl();
