@@ -1,52 +1,50 @@
 package app.game;
 
-import java.util.Arrays;
+import app.util.Pair;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class implements the scores of the game.
  */
 public class Score {
 
-    private final int[] levelPoints;
+    private static final int KILLS_SCORE = 2;
+
+    private final Map<Integer, Pair<Integer, Integer>> levelStats;
 
     /**
      * Creates a new instance of the scores.
-     *
-     * @param levelCounts the number of levels of the game
      */
-    public Score(final int levelCounts) {
-        this.levelPoints = new int[levelCounts];
+    public Score() {
+        this.levelStats = new HashMap<>();
     }
 
     /**
-     * Returns the points of the specified level.
+     * Returns the stats of the specified level.
      *
      * @param levelNumber the level index
-     * @return the points of the level
+     * @return a Pair with defeated enemies count as first value and
+     * collected coins count as second value
      */
-    public int getLevelPoints(final int levelNumber) {
-        if (isOutOfRange(levelNumber)) {
+    public Pair<Integer, Integer> getLevelStat(final int levelNumber) {
+        if (!this.levelStats.containsKey(levelNumber)) {
             throw new IllegalArgumentException("The level " + levelNumber
                     + " does not exist.");
         }
 
-        return this.levelPoints[levelNumber];
+        return this.levelStats.get(levelNumber);
     }
 
     /**
      * Sets the given points to the specified level.
      *
      * @param levelNumber the level index
-     * @param points the points of the level
-     * @throws IllegalArgumentException when the level does not exist
+     * @param defeatedEnemies defeated enemies count
+     * @param coinsCollected coins count
      */
-    public void setLevelPoints(final int levelNumber, final int points) {
-        if (isOutOfRange(levelNumber)) {
-            throw new IllegalArgumentException("The level " + levelNumber
-                    + " does not exist.");
-        }
-
-        this.levelPoints[levelNumber] = points;
+    public void setLevelStats(final int levelNumber, final int defeatedEnemies, final int coinsCollected) {
+        this.levelStats.put(levelNumber, new Pair<>(defeatedEnemies, coinsCollected));
     }
 
     /**
@@ -55,10 +53,9 @@ public class Score {
      * @return the sum of the points of all levels
      */
     public int getCumulativePoints() {
-        return Arrays.stream(this.levelPoints).reduce(Integer::sum).orElse(0);
-    }
-
-    private boolean isOutOfRange(final int index) {
-        return index < 0 || index >= this.levelPoints.length;
+        return this.levelStats.values().stream()
+                .map(x -> x.getFirstValue() * KILLS_SCORE + x.getSecondValue())
+                .reduce(Integer::sum)
+                .orElse(0);
     }
 }
