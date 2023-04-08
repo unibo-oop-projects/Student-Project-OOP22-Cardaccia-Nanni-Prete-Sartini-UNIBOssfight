@@ -1,8 +1,6 @@
 package app.ui;
 
-import app.game.Game;
-import app.game.Score;
-import app.util.AppLogger;
+import app.game.Game;import app.util.AppLogger;
 import app.util.DataManager;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -276,18 +274,15 @@ public class ViewManager {
 
     private void setScoreSubScene() {
         try {
-            final var scoreValues = new DataManager().deserializeScore("score.json");
-            final var playerScore = new Score();
-            final Label grade = new Label(Integer.toString(110 * playerScore
-                    .getEarnedPoints() / playerScore.getTotalPoints()
-                                                           * Game.LEVEL_COUNT));
+            final var score = new DataManager().deserializeScore("score.json");
+            final Label grade = new Label(Integer.toString(score.computeFinalGrade()));
 
             this.scoreSubScene.addLabel("\tLEVEL 1: ",
                     LAYOUT_X, HELP_LAYOUT_Y + 10, FONT_SIZE);
             var enemiesDefeated = "Enemies defeated:\t"
-                    + scoreValues.getLevelStat(1).getKey();
+                    + score.getLevelStat(1).getKey();
             var coinsCollected = "Coins collected:\t\t"
-                    + scoreValues.getLevelStat(1).getValue();
+                    + score.getLevelStat(1).getValue();
             this.scoreSubScene.addLabel(enemiesDefeated, LEVEL_CHOICE_LAYOUT_X,
                     LEVEL_CHOICE_LAYOUT_Y + 10, FONT_SIZE);
             this.scoreSubScene.addLabel(coinsCollected, LEVEL_CHOICE_LAYOUT_X,
@@ -297,9 +292,9 @@ public class ViewManager {
             this.scoreSubScene.addLabel("\tLEVEL 2: ",
                     LAYOUT_X, LAYOUT_Y, FONT_SIZE);
             enemiesDefeated = "Enemies defeated:\t"
-                    + scoreValues.getLevelStat(2).getKey();
+                    + score.getLevelStat(2).getKey();
             coinsCollected = "Coins collected:\t\t"
-                    + scoreValues.getLevelStat(2).getValue();
+                    + score.getLevelStat(2).getValue();
             this.scoreSubScene.addLabel(enemiesDefeated, LEVEL_CHOICE_LAYOUT_X,
                     ENEMIES_LABEL_LAYOUTY, FONT_SIZE);
             this.scoreSubScene.addLabel(coinsCollected, LEVEL_CHOICE_LAYOUT_X,
