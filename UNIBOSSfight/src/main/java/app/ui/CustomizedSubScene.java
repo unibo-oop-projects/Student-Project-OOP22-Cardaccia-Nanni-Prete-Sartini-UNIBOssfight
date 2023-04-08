@@ -22,7 +22,9 @@ public class CustomizedSubScene extends SubScene {
     private static final int HEIGHT = 350;
     private static final int LAYOUTX = 300;
     private static final int LAYOUTY = 150;
-    private static final int BUTTON_LAYOUT_X = 23;
+    private static final int BUTTONS_LAYOUT_X = 135;
+    private static final int BUTTON1_LAYOUT_Y = 125;
+    private static final int BUTTON2_LAYOUT_Y = 195;
     private static final String BACKGROUND_IMAGE = "blue_panel.png";
     private final AnchorPane root = (AnchorPane) this.getRoot();
 
@@ -32,14 +34,12 @@ public class CustomizedSubScene extends SubScene {
      */
     public CustomizedSubScene() {
         super(new AnchorPane(), WIDTH, HEIGHT);
+        prefHeight(WIDTH);
 
-        prefHeight(HEIGHT);
-        prefWidth(WIDTH);
-
-        final InputStream is = getClass().getClassLoader()
+        final InputStream inputStream = getClass().getClassLoader()
                 .getResourceAsStream(BACKGROUND_IMAGE);
-        if (is != null) {
-            final BackgroundImage image = new BackgroundImage(new Image(is,
+        if (inputStream != null) {
+            final BackgroundImage image = new BackgroundImage(new Image(inputStream,
                     WIDTH, HEIGHT, false, true), BackgroundRepeat.NO_REPEAT,
                     BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
             this.root.setBackground(new Background(image));
@@ -58,11 +58,10 @@ public class CustomizedSubScene extends SubScene {
      */
     public void addButtons(final CustomizedButton button1,
                            final CustomizedButton button2) {
-        button1.setLayoutX(BUTTON_LAYOUT_X);
-        button1.setLayoutY(LAYOUTX / 2.0);
-        button2.setLayoutX(WIDTH / 2.0);
-        button2.setLayoutY(LAYOUTX / 2.0);
-
+        button1.setLayoutX(BUTTONS_LAYOUT_X);
+        button1.setLayoutY(BUTTON1_LAYOUT_Y);
+        button2.setLayoutX(BUTTONS_LAYOUT_X);
+        button2.setLayoutY(BUTTON2_LAYOUT_Y);
         this.root.getChildren().addAll(button1, button2);
     }
 

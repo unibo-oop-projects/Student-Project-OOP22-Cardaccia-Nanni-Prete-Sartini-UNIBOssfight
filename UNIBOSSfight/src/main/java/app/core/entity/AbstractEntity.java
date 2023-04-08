@@ -1,6 +1,5 @@
 package app.core.entity;
 
-import app.core.component.Collider;
 import app.core.component.Health;
 import app.core.component.Hitbox;
 import app.core.component.Renderer;
@@ -10,7 +9,7 @@ import app.impl.component.HealthImpl;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import app.util.Window;
-import java.util.Optional;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -18,7 +17,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 public abstract class AbstractEntity implements Entity {
 
-    private final String className; // NOPMD è un campo utilizzato per la deserializzazione
+    private final String className; // NOPMD is a field used for deserialization
     private final int height;
     private final int width;
     private int damage;

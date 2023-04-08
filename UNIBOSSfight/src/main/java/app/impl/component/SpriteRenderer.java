@@ -2,6 +2,7 @@ package app.impl.component;
 
 import app.util.AppLogger;
 import app.util.Window;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.effect.Blend;
@@ -46,6 +47,10 @@ public class SpriteRenderer extends RendererImpl {
      * @return an ImageView if the asset given as input does exist,
      * the rectangle of the super class will be rendered otherwise
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "justification" //TODO cambiare justification
+    )
     @Override
     public Node render(final Point2D position, final int xDirection, final int yDirection, final double rotation) {
 
@@ -89,6 +94,10 @@ public class SpriteRenderer extends RendererImpl {
      *
      * @param prerendered
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "justification" //TODO cambiare justification
+    )
     public void setPrerendered(final ImageView prerendered) {
         this.prerendered = prerendered;
     }

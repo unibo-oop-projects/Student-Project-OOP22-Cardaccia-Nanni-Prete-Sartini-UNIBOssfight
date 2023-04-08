@@ -43,6 +43,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class Game extends Application {
 
+    /**
+     * The number of levels in this game.
+     */
+    public static final int LEVEL_COUNT = 2;
     private static final String GAME_OVER_SPRITE = "gameover.png";
     private static final double FRAME_RATE = 60;
     private static final double FRAME_DURATION = 1000 / FRAME_RATE;
@@ -52,10 +56,6 @@ public class Game extends Application {
     private static final int PROGRESS_BAR_WIDTH = 300;
     private static final int PROGRESS_BAR_LAYOUTX = 30;
     private static final int PROGRESS_BAR_LAYOUTY = 20;
-    private static final int SCENE_WIDTH = 500;
-    private static final int SCENE_HEIGHT = 300;
-    private static final int VICTORY_SCENE_HEIGHT = 300;
-    private static final int VICTORY_SCENE_WIDTH = 600;
     private static final int LABEL_LAYOUTY = 5;
     private static final int OFFSET = 10;
     private static final int BOSS_OFFSET = 20;
@@ -75,7 +75,7 @@ public class Game extends Application {
     private Timeline tl;
     private long startTime;
     private int coinsCollected;
-    private int defeatedEnemies;
+    private int enemiesDefeated;
 
     /**
      * Creates a new instance of the class Game
@@ -159,12 +159,10 @@ public class Game extends Application {
                             "RESTART");
                     if (this.currentLevel.getLevelNumber() == 1) {
                         new SecondaryStage(stage, restartButton,
-                                "level1.json", GAME_OVER_SPRITE,
-                                SCENE_WIDTH, SCENE_HEIGHT).show();
+                                "level1.json", GAME_OVER_SPRITE).show();
                     } else {
                         new SecondaryStage(stage, restartButton,
-                                "level2.json", GAME_OVER_SPRITE,
-                                SCENE_WIDTH, SCENE_HEIGHT).show();
+                                "level2.json", GAME_OVER_SPRITE).show();
                     }
                 }
         );
@@ -175,14 +173,12 @@ public class Game extends Application {
                         final CustomizedButton nextLevelButton = new CustomizedButton(
                                 "LEVEL 2");
                         new SecondaryStage(stage, nextLevelButton,
-                                "level2.json", GAME_OVER_SPRITE,
-                                SCENE_WIDTH, SCENE_HEIGHT).show();
+                                "level2.json", GAME_OVER_SPRITE).show();
                     } else {
                         final CustomizedButton restartButton = new CustomizedButton(
                                 "RESTART");
                         new SecondaryStage(stage, restartButton,
-                                "level1.json", GAME_OVER_SPRITE,
-                                VICTORY_SCENE_WIDTH, VICTORY_SCENE_HEIGHT).show();
+                                "level1.json", GAME_OVER_SPRITE).show();
                     }
                 }
         );
@@ -210,7 +206,7 @@ public class Game extends Application {
                             this.coinsCollected = this.currentLevel
                                     .getPlayer()
                                     .getCoinsCollected();
-                            this.defeatedEnemies = this.currentLevel
+                            this.enemiesDefeated = this.currentLevel
                                     .getDefeatedEnemiesCount();
                             loadBossLevel();
                         } catch (final IOException ex) {
@@ -248,7 +244,7 @@ public class Game extends Application {
         try {
             final Score scores = new DataManager().deserializeScore("score.json");
             scores.setLevelStats(this.currentLevel.getLevelNumber(),
-                    this.defeatedEnemies,
+                    this.enemiesDefeated,
                     this.coinsCollected);
             new DataManager().serializeScore(scores);
         } catch (final IOException e) {
@@ -418,31 +414,32 @@ public class Game extends Application {
     }
 
     private static class SecondaryStage extends Stage {
-        private static final int LOGO_LAYOUTX = 150;
-        private static final int LOGO_LAYOUTY = 15;
+        private static final int IMG_LAYOUTX = 150;
+        private static final int IMG_LAYOUTY = 15;
         private static final int BUTTON_LAYOUTX = 155;
         private static final int HOME_BUTTON_LAYOUTY = 140;
         private static final int RESTART_BUTTON_LAYOUTY = 210;
+        private static final int SCENE_WIDTH = 500;
+        private static final int SCENE_HEIGHT = 300;
+
 
         SecondaryStage(final Stage gameStage, final CustomizedButton button,
-                       final String jsonFile, final String logo,
-                       final double width, final double height) {
+                       final String jsonFile, final String imgUrl) {
             super();
             this.initModality(Modality.APPLICATION_MODAL);
             this.setOnCloseRequest(event -> gameStage.close());
 
             final AnchorPane pane = new AnchorPane();
-            //noinspection SuspiciousNameCombination
-            pane.prefWidth(width);
-            //noinspection SuspiciousNameCombination
-            pane.prefHeight(height);
+            pane.prefWidth(SCENE_HEIGHT);
 
             final CustomizedButton homeButton = new CustomizedButton("HOME");
 
             homeButton.setOnAction(event -> {
                 this.close();
                 gameStage.close();
-                Platform.runLater(() -> new MainMenu().start(new Stage()));
+                Platform.runLater(() -> {
+                    new MainMenu().start(new Stage());
+                });
             });
 
             button.setOnAction(event -> Platform.runLater(() -> {
@@ -456,8 +453,8 @@ public class Game extends Application {
                 }
             }));
 
-            ViewManager.createLogo(LOGO_LAYOUTX, LOGO_LAYOUTY, logo, pane);
-            ViewManager.setBackground("blue.png", width, height, pane);
+            ViewManager.addImage(IMG_LAYOUTX, IMG_LAYOUTY, imgUrl, pane);
+            ViewManager.setBackground("blue.png", SCENE_WIDTH, SCENE_HEIGHT, pane);
 
             homeButton.setLayoutX(BUTTON_LAYOUTX);
             homeButton.setLayoutY(HOME_BUTTON_LAYOUTY);
@@ -465,7 +462,7 @@ public class Game extends Application {
             button.setLayoutY(RESTART_BUTTON_LAYOUTY);
 
             pane.getChildren().addAll(homeButton, button);
-            setScene(new Scene(pane, width, height));
+            setScene(new Scene(pane, SCENE_WIDTH, SCENE_HEIGHT));
         }
     }
 }

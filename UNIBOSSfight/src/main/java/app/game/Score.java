@@ -1,6 +1,7 @@
 package app.game;
 
-import app.util.Pair;
+import app.core.level.Level;
+import javafx.util.Pair;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,19 +44,30 @@ public class Score {
      * @param defeatedEnemies defeated enemies count
      * @param coinsCollected coins count
      */
-    public void setLevelStats(final int levelNumber, final int defeatedEnemies, final int coinsCollected) {
-        this.levelStats.put(levelNumber, new Pair<>(defeatedEnemies, coinsCollected));
+    public void setLevelStats(final int levelNumber, final int defeatedEnemies,
+                              final int coinsCollected) {
+        this.levelStats.put(levelNumber,
+                new Pair<>(defeatedEnemies, coinsCollected));
     }
 
     /**
-     * Returns the total points of the game.
+     * Returns the points accumulated during the game.
      *
      * @return the sum of the points of all levels
      */
-    public int getCumulativePoints() {
+    public int getEarnedPoints() {
         return this.levelStats.values().stream()
-                .map(x -> x.getFirstValue() * KILLS_SCORE + x.getSecondValue())
+                .map(x -> x.getKey() * KILLS_SCORE + x.getValue())
                 .reduce(Integer::sum)
                 .orElse(0);
+    }
+
+    /**
+     * Returns the total points that could be earned during the level.
+     *
+     * @return an int representing the total points
+     */
+    public int getTotalPoints() {
+        return Level.ENEMY_COUNT * KILLS_SCORE + Level.COINS_COUNT;
     }
 }
