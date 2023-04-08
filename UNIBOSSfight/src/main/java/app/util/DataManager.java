@@ -130,7 +130,7 @@ public class DataManager {
                     .getClassLoader().getResource("score.json");
 
             if (file != null) {
-                PrintWriter writer = new PrintWriter(file.getPath());
+                final PrintWriter writer = new PrintWriter(file.getPath());
                 writer.print(jsonString);
                 writer.close();
             }
@@ -147,7 +147,7 @@ public class DataManager {
      * @return the scores of the level
      * @throws IOException input output exception
      */
-    public Score deserializeScore(String jsonFile) throws IOException{
+    public Score deserializeScore(final String jsonFile) throws IOException {
         String json;
         try {
             json = readFile(jsonFile);
