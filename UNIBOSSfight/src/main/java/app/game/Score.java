@@ -2,6 +2,7 @@ package app.game;
 
 import app.core.level.Level;
 import javafx.util.Pair;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,5 +70,15 @@ public class Score {
      */
     public int getTotalPoints() {
         return Level.ENEMY_COUNT * KILLS_SCORE + Level.COINS_COUNT;
+    }
+
+    /**
+     * Returns the total score obtained in proportion to the maximum grade.
+     *
+     * @return an int representing the final grade obtained
+     */
+    public int computeFinalGrade() {
+        return 110 * this.getEarnedPoints()
+               / (this.getTotalPoints() * Game.LEVEL_COUNT);
     }
 }
