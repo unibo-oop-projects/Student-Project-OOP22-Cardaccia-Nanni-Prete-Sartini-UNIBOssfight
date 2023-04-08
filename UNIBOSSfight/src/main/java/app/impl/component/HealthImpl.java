@@ -7,6 +7,8 @@ import app.core.component.Health;
  */
 public class HealthImpl implements Health {
 
+    private static final int DEFAULT_HP = 100;
+
     private final int maxHp;
     private int hp;
 
@@ -14,8 +16,17 @@ public class HealthImpl implements Health {
      * Creates a new instance of the class HealthImpl.
      */
     public HealthImpl() {
-        this.maxHp = 100;
-        this.hp = 100;
+        this(DEFAULT_HP);
+    }
+
+    /**
+     * Creates a new instance of the class HealthImpl given an initial
+     * health points value.
+     * @param hp initial health points
+     */
+    public HealthImpl(final int hp) {
+        this.maxHp = hp;
+        this.hp = hp;
     }
 
     /**
