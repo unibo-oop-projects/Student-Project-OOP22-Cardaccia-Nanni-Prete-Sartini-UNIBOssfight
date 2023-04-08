@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,12 +122,20 @@ public class ViewManager {
      */
     public static void setBackground(final String url, final double width,
                                      final double height, final AnchorPane pane) {
-        final BackgroundImage background = new BackgroundImage(new Image(url, width,
-                height, false, true),
-                BackgroundRepeat.REPEAT,
-                BackgroundRepeat.REPEAT,
-                BackgroundPosition.DEFAULT, null);
-        pane.setBackground(new Background(background));
+
+        final InputStream is = ViewManager.class.getClassLoader()
+                .getResourceAsStream(url);
+
+        if (is != null) {
+            final BackgroundImage background = new BackgroundImage(new Image(is,
+                    width, height, false, true),
+                    BackgroundRepeat.REPEAT,
+                    BackgroundRepeat.REPEAT,
+                    BackgroundPosition.DEFAULT, null);
+            pane.setBackground(new Background(background));
+        } else {
+            AppLogger.getLogger().warning("Error occurred while loading background");
+        }
     }
 
     /**
@@ -139,9 +148,10 @@ public class ViewManager {
     public static void setFont(final String url, final double fontSize,
                                final List<Label> labels) {
         labels.forEach(label -> {
-            try {
-                label.setFont(Font.loadFont(new FileInputStream(url), fontSize));
-            } catch (final FileNotFoundException e) {
+            try (InputStream is = ViewManager.class.getClassLoader()
+                    .getResourceAsStream(url)) {
+                label.setFont(Font.loadFont(is, fontSize));
+            } catch (final IOException e) {
                 label.setFont(Font.font("Verdana", fontSize));
             }
         });
@@ -155,12 +165,14 @@ public class ViewManager {
      * @param label the label on which the font is set
      */
     public static void setFont(final String url, final double fontSize, final Label label) {
-        try {
-            label.setFont(Font.loadFont(new FileInputStream(url), fontSize));
-        } catch (final FileNotFoundException e) {
+
+        try (InputStream is = ViewManager.class.getClassLoader().getResourceAsStream(url)) {
+            label.setFont(Font.loadFont(is, fontSize));
+        } catch (final IOException e) {
             label.setFont(Font.font("Verdana", fontSize));
         }
     }
+
     private void createSubScenes() {
         this.scoreSubScene = new CustomizedSubScene();
         this.levelChoiceSubScene = new CustomizedSubScene();
