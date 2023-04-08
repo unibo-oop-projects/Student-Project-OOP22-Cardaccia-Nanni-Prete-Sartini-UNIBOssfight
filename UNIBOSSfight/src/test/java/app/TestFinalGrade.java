@@ -3,6 +3,8 @@ package app;
 import app.game.Score;
 import app.util.AppLogger;
 import app.util.DataManager;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -19,6 +21,11 @@ final class TestFinalGrade {
     private static final int MINIMUM_GRADE = 0;
     private static final int OUT_OF_RANGE_GRADE = 115;
     private Score testScore;
+
+    @BeforeEach
+    void init() {
+        this.testScore = new Score();
+    }
 
     void loadScore(final String filename) {
         try {
