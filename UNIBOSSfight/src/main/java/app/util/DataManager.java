@@ -112,4 +112,50 @@ public class DataManager {
             throw new IOException(e);
         }
     }
+
+    /**
+     * Serializes an instance of the Score class.
+     *
+     * @param score to deserialize
+     * @throws IOException
+     */
+    public void serializeScore(final Score score) throws IOException {
+        final String jsonString = new GsonBuilder()
+                .setPrettyPrinting()
+                .create()
+                .toJson(score);
+
+        try {
+            final URL file = getClass()
+                    .getClassLoader().getResource("score.json");
+
+            if (file != null) {
+                PrintWriter writer = new PrintWriter(file.getPath());
+                writer.print(jsonString);
+                writer.close();
+            }
+        } catch (IOException e) {
+            AppLogger.getLogger().severe(e.getMessage());
+            throw new IOException(e);
+        }
+    }
+
+    /**
+     * Loads a Score from the given json file.
+     *
+     * @param jsonFile the name of the file that contains the level
+     * @return the scores of the level
+     * @throws IOException input output exception
+     */
+    public Score deserializeScore(String jsonFile) throws IOException{
+        String json;
+        try {
+            json = readFile(jsonFile);
+        } catch (IOException e) {
+            AppLogger.getLogger().severe(e.getMessage());
+            throw new IOException(e);
+        }
+
+        return new GsonBuilder().create().fromJson(json, Score.class);
+    }
 }
