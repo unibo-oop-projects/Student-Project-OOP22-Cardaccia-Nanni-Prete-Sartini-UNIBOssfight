@@ -156,7 +156,7 @@ public class DataManager {
         try {
             final byte[] bytes = Files.readAllBytes(
                     Paths.get(userHome + separator + jsonFile));
-            json = new String (bytes);
+            json = new String(bytes);
         } catch (final IOException e) {
             AppLogger.getLogger().severe(e.getMessage());
             json = readFile(jsonFile);
