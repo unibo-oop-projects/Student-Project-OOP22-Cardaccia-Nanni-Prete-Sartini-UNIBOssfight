@@ -5,6 +5,7 @@ import app.core.component.Weapon;
 import app.core.entity.Boss;
 import app.impl.builder.BehaviourBuilderImpl;
 import app.impl.component.AnimationSpriteRenderer;
+import app.impl.component.HealthImpl;
 import app.impl.component.WeaponImpl;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.geometry.Point2D;
@@ -17,6 +18,7 @@ public class BossImpl extends Boss {
     private static final int DEFAULT_RATE_OF_FIRE = 30;
     private static final int DEFAULT_MAX_X_SPEED = 5;
     private static final int DEFAULT_MAX_Y_SPEED = 20;
+    private static final int DEFAULT_HEALTH = 400;
     private transient WeaponImpl weapon;
     private int rateOfFire;
 
@@ -79,6 +81,8 @@ public class BossImpl extends Boss {
                 .addStopFromSide()
                 .addFollow()
                 .build());
+
+        this.setHealth(new HealthImpl(DEFAULT_HEALTH));
     }
 
     /**

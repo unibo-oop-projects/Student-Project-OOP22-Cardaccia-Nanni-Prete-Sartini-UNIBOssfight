@@ -104,6 +104,14 @@ public abstract class AbstractEntity implements Entity {
      * {@inheritDoc}
      */
     @Override
+    public void setHealth(final Health health) {
+        this.health = health;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int getHeight() {
         return this.height;
     }

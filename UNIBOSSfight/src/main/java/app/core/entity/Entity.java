@@ -85,6 +85,13 @@ public interface Entity {
     Health getHealth();
 
     /**
+     * This method sets the Health of the entity.
+     *
+     * @param health the new Health value of the entity
+     */
+    void setHealth(Health health);
+
+    /**
      * This method returns the Transform of the entity.
      *
      * @return the Transform of the entity
