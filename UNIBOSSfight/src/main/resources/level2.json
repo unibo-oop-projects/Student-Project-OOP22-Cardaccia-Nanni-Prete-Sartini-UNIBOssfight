@@ -1779,7 +1779,7 @@
     "maxYSpeed": 20.0,
     "className": "app.impl.entity.Player",
     "height": 250,
-    "width": 250,
+    "width": 170,
     "damage": 0,
     "position": {
       "position": {
@@ -1792,7 +1792,7 @@
     "renderer": {
       "filename": "guido",
       "height": 250,
-      "width": 250,
+      "width": 170,
       "color": {
         "red": 1.0,
         "green": 0.0,
