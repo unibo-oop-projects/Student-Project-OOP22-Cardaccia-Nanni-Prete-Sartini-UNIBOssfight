@@ -93,10 +93,9 @@ public class BehaviourBuilderImpl implements BehaviourBuilder {
                 input = Entity.Inputs.LEFT;
             }
 
-            if(activeEntity.getPosition().getX() > player.getPosition().getX()){
+            if (activeEntity.getPosition().getX() > player.getPosition().getX()) {
                 activeEntity.setDirection(-1);
-            }
-            else {
+            } else {
                 activeEntity.setDirection(1);
             }
 
