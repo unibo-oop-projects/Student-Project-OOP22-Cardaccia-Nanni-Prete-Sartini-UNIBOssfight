@@ -36,7 +36,7 @@ public abstract class AbstractEntity implements Entity {
      */
     @SuppressFBWarnings(
             value = "EI_EXPOSE_REP2",
-            justification = ""
+            justification = "The renderer can't be copied"
     )
     public AbstractEntity(
             final Transform position,

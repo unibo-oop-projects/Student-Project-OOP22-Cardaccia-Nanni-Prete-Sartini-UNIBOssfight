@@ -4,12 +4,12 @@ import app.core.entity.ActiveEntity;
 import app.core.entity.Entity;
 import app.core.level.Level;
 import app.impl.entity.Player;
+import app.impl.level.LevelImpl;
 import app.util.AppLogger;
 import app.util.DataManager;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -26,16 +26,20 @@ final class TestEntity {
 
     private Level level;
 
+    @BeforeEach
+    void init() {
+        this.level = new LevelImpl();
+    }
+
     void init(final String filename) {
         try {
             this.level = new DataManager().loadLevel(filename);
-        } catch (IOException e) {
+            this.level.getPlayer().init();
+            this.level.getEntities().forEach(Entity::init);
+        } catch (final IOException e) {
             AppLogger.getLogger().severe("Errore nel caricamento del livello di test "
                     + e.getMessage());
         }
-
-        this.level.getPlayer().init();
-        this.level.getEntities().forEach(Entity::init);
     }
 
     /**
