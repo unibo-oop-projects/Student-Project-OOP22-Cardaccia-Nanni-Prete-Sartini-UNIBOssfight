@@ -22,8 +22,8 @@ import java.nio.file.Paths;
  * This class is used to serialize and deserializer levels.
  */
 public class DataManager {
-    private final String USER_HOME = System.getProperty("user.home");
-    private final String SEPARATOR = File.separator;
+    private final String userHome = System.getProperty("user.home");
+    private final String separator = File.separator;
 
     /**
      * This method get the content of the json file to load.
@@ -132,7 +132,7 @@ public class DataManager {
                 .toJson(score);
 
         try {
-            final String file = USER_HOME + SEPARATOR + "score.json";
+            final String file = userHome + separator + "score.json";
 
             final PrintWriter writer = new PrintWriter(file, StandardCharsets.UTF_8);
             writer.print(jsonString);
@@ -155,7 +155,7 @@ public class DataManager {
         String json;
         try {
             final byte[] bytes = Files.readAllBytes(
-                    Paths.get(USER_HOME + SEPARATOR + jsonFile));
+                    Paths.get(userHome + separator + jsonFile));
             json = new String (bytes);
         } catch (final IOException e) {
             AppLogger.getLogger().severe(e.getMessage());
