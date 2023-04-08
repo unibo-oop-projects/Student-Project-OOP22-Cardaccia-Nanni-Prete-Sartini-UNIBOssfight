@@ -27,7 +27,6 @@ public abstract class AbstractEntity implements Entity {
     private transient Hitbox hitbox;
     private final Renderer renderer;
     private Health health;
-    private transient Collider collider;
 
     /**
      * Creates a new instance of the abstract class AbstractEntity.
@@ -167,22 +166,7 @@ public abstract class AbstractEntity implements Entity {
         this.damage = damage;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Optional<Collider> getCollider() {
-        return Optional.ofNullable(this.collider);
-    }
 
-    /**
-     * Assigns to the entity its collider.
-     *
-     * @param collider the collider of the entity
-     */
-    protected void setCollider(final Collider collider) {
-        this.collider = collider;
-    }
 
     /**
      * {@inheritDoc}
@@ -213,13 +197,7 @@ public abstract class AbstractEntity implements Entity {
                 && this.getPosition().getY() >= 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void manageCollision(final Entity e) {
-        this.getCollider().ifPresent(x -> x.manageCollision(e));
-    }
+
 
     /**
      * {@inheritDoc}
@@ -229,7 +207,6 @@ public abstract class AbstractEntity implements Entity {
         this.direction = 1;
         this.health = new HealthImpl();
         this.hitbox = new HitboxImpl(width / 2.0, height, this.position.getPosition());
-        this.collider = null;
         this.renderer.init();
     }
 

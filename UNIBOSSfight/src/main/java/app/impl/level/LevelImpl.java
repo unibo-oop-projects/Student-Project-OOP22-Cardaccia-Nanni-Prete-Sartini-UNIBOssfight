@@ -174,8 +174,9 @@ public class LevelImpl implements Level {
                 .forEach(this.player::manageCollision);
 
         // Entity collisions
-        final List<Entity> collidingEntities = this.entities.stream()
+        final List<ActiveEntity> collidingEntities = this.entities.stream()
                 .filter(e -> e instanceof ActiveEntity)
+                .map(e -> (ActiveEntity)e)
                 .toList();
 
         collidingEntities.forEach(ce -> this.entities.stream()
