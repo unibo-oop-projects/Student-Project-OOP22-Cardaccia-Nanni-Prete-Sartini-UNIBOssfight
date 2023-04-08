@@ -17,7 +17,6 @@ public class RendererImpl implements Renderer {
     private final int height;
     private final int width;
     private final Color color;
-    private final String className; //NOPMD this field is necessary for serialization
     private transient int remainingDamagedFrames;
 
     /**
@@ -31,7 +30,7 @@ public class RendererImpl implements Renderer {
         this.height = height;
         this.width = width;
         this.color = color;
-        this.className = this.getClass().getName();
+        //this.className = this.getClass().getName();
     }
 
     /**

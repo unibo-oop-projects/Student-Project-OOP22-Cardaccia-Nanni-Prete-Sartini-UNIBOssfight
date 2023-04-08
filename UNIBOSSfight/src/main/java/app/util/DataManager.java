@@ -2,18 +2,18 @@ package app.util;
 
 import app.core.entity.Entity;
 import app.core.level.Level;
+import app.game.Score;
 import app.impl.entity.Player;
 import app.impl.level.BossLevel;
 import app.impl.level.LevelImpl;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import app.game.Score;
 
 /**
  * This class is used to serialize and deserializer levels.
@@ -95,18 +95,18 @@ public class DataManager {
      * Serializes the level and saves it in a json file.
      *
      * @param level the level to serialize
+     * @param filename for the output
      */
-    public void serializeLevel(final Level level) throws IOException {
+    public void serializeLevel(final Level level, final String filename) throws IOException {
         final String jsonString = new GsonBuilder()
                 .setPrettyPrinting()
+                .registerTypeAdapter(Entity.class, new EntitySerializer())
+                .registerTypeAdapter(Player.class, new EntitySerializer())
                 .create()
                 .toJson(level);
 
-        final FileWriter file;
-        try {
-            file = new FileWriter("output.json");
+        try (FileWriter file = new FileWriter(filename, StandardCharsets.UTF_8)) {
             file.write(jsonString);
-            file.close();
         } catch (IOException e) {
             AppLogger.getLogger().severe(e.getMessage());
             throw new IOException(e);
@@ -126,11 +126,11 @@ public class DataManager {
                 .toJson(score);
 
         try {
-            final URL file = getClass()
-                    .getClassLoader().getResource("score.json");
+            final String file = getClass()
+                    .getClassLoader().getResource("score.json").getPath();
 
             if (file != null) {
-                final PrintWriter writer = new PrintWriter(file.getPath());
+                final PrintWriter writer = new PrintWriter(file, StandardCharsets.UTF_8);
                 writer.print(jsonString);
                 writer.close();
             }

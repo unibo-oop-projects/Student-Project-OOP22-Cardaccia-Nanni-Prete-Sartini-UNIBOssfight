@@ -18,7 +18,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 public abstract class AbstractEntity implements Entity {
 
-    private final String className; // NOPMD è un campo utilizzato per la deserializzazione
     private final int height;
     private final int width;
     private int damage;
@@ -47,7 +46,6 @@ public abstract class AbstractEntity implements Entity {
             final int width,
             final Renderer renderer
     ) {
-        this.className = this.getClass().getName();
         this.position = position.copyOf();
         this.renderer = renderer;
         this.height = height;
@@ -61,7 +59,7 @@ public abstract class AbstractEntity implements Entity {
      */
     @Override
     public String getType() {
-        return this.className;
+        return this.getClass().getName();
     }
 
     /**

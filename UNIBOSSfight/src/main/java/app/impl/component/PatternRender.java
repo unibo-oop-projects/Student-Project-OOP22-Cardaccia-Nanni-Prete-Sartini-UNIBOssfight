@@ -1,6 +1,5 @@
 package app.impl.component;
 
-import app.util.AppLogger;
 import app.util.Window;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -17,6 +16,7 @@ public class PatternRender extends SpriteRenderer {
 
     private final double xRatio;
     private final double yRatio;
+    private transient Image img;
 
     /**
      * Creates a new instance of the class PatternRenderer.
@@ -64,29 +64,30 @@ public class PatternRender extends SpriteRenderer {
                 this.getWidth(),
                 this.getHeight()
         );
+        final ImagePattern imagePattern = new ImagePattern(
+                this.img,
+                position.getX() - this.getWidth() / 2.0,
+                Window.getHeight() - getHeight() - position.getY(),
+                getWidth() / xRatio,
+                getHeight() / yRatio,
+                false
+        );
 
-        final Image img;
-
-        final InputStream is = getClass().getClassLoader()
-                .getResourceAsStream("assets/" + getFilename());
-        if (is != null) {
-            img = new Image(is, getWidth() / xRatio, getHeight() / yRatio, false, false);
-            final ImagePattern imagePattern = new ImagePattern(
-                    img,
-                    position.getX() - this.getWidth() / 2.0,
-                    Window.getHeight() - getHeight() - position.getY(),
-                    getWidth() / xRatio,
-                    getHeight() / yRatio,
-                    false
-            );
-
-            rect.setFill(imagePattern);
-
-        } else {
-            AppLogger.getLogger().severe("Error occurred while loading " + getFilename());
-            rect.setFill(Color.RED);
-        }
+        rect.setFill(imagePattern);
 
         return rect;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void init() {
+        super.init();
+        final InputStream is = getClass().getClassLoader()
+                .getResourceAsStream("assets/" + getFilename());
+
+        assert is != null;
+        this.img = new Image(is, getWidth() / xRatio, getHeight() / yRatio, false, false);
     }
 }
