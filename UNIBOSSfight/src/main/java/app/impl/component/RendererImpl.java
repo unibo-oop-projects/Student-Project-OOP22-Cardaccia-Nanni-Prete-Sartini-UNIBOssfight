@@ -12,7 +12,7 @@ import javafx.scene.shape.Rectangle;
  */
 public class RendererImpl implements Renderer {
 
-    private static final int IS_DAMAGED_DURATION = 12;
+    private static final int MAX_DAMAGED_DURATION = 12;
 
     private final int height;
     private final int width;
@@ -79,7 +79,7 @@ public class RendererImpl implements Renderer {
      */
     @Override
     public void setRemainingDamagedFrames() {
-        this.remainingDamagedFrames = RendererImpl.IS_DAMAGED_DURATION;
+        this.remainingDamagedFrames = RendererImpl.MAX_DAMAGED_DURATION;
     }
 
     /**

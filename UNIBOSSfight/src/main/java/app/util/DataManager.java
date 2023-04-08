@@ -9,16 +9,22 @@ import app.impl.level.LevelImpl;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * This class is used to serialize and deserializer levels.
  */
 public class DataManager {
+    private final String USER_HOME = System.getProperty("user.home");
+    private final String SEPARATOR = File.separator;
+
     /**
      * This method get the content of the json file to load.
      *
@@ -117,7 +123,7 @@ public class DataManager {
      * Serializes an instance of the Score class.
      *
      * @param score to deserialize
-     * @throws IOException
+     * @throws IOException input output exception
      */
     public void serializeScore(final Score score) throws IOException {
         final String jsonString = new GsonBuilder()
@@ -126,14 +132,12 @@ public class DataManager {
                 .toJson(score);
 
         try {
-            final String file = getClass()
-                    .getClassLoader().getResource("score.json").getPath();
+            final String file = USER_HOME + SEPARATOR + "score.json";
 
-            if (file != null) {
-                final PrintWriter writer = new PrintWriter(file, StandardCharsets.UTF_8);
-                writer.print(jsonString);
-                writer.close();
-            }
+            final PrintWriter writer = new PrintWriter(file, StandardCharsets.UTF_8);
+            writer.print(jsonString);
+            writer.close();
+
         } catch (IOException e) {
             AppLogger.getLogger().severe(e.getMessage());
             throw new IOException(e);
@@ -150,10 +154,12 @@ public class DataManager {
     public Score deserializeScore(final String jsonFile) throws IOException {
         String json;
         try {
-            json = readFile(jsonFile);
-        } catch (IOException e) {
+            final byte[] bytes = Files.readAllBytes(
+                    Paths.get(USER_HOME + SEPARATOR + jsonFile));
+            json = new String (bytes);
+        } catch (final IOException e) {
             AppLogger.getLogger().severe(e.getMessage());
-            throw new IOException(e);
+            json = readFile(jsonFile);
         }
 
         return new GsonBuilder().create().fromJson(json, Score.class);
