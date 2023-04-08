@@ -3,7 +3,6 @@ package app.core.component;
 import app.core.entity.ActiveEntity;
 import app.core.entity.Entity;
 import app.impl.entity.Player;
-
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -83,7 +82,8 @@ public interface Behaviour {
      * Returns the behaviour to fly.
      *
      * @return a function that takes as input two entities,
-     * the player and the one following it, and returns an Input for the update method
+     * the player and the one following it, and returns
+     * an Input for the update method
      */
     Optional<BiFunction<ActiveEntity, Player, Entity.Inputs>> getFlyingBehaviour();
 
