@@ -61,6 +61,24 @@ bla bla bla
 \end{figure}
 \subsubsection{Giovanni Prete}
 \subsubsection{Matteo Sartini}
+Il mio task principale all’interno del progetto consisteva nell’implementare un sistema che permettesse alle entità di sparare all’interno del livello in cui agiscono.
+Per fare ciò in fase di progettazione, in linea con il modello ECS, abbiamo deciso di implementare un component Weapon, che permettesse alle entità che ne erano in possesso di creare nuove entità Bullet e dare loro una traiettoria verso cui muoversi.
+\includegraphics[width=1\textwidth]{UMLWeapon.png}
+    \caption{UML rappresentante Weapon e Bullet}
+    \label{fig:schgen}
+Richiamando il metodo fire viene restituita una nuova istanza dell’entità Bullet, creata attraverso l’utilizzo di una apposita Factory. A questa Entità Bullet vengono passate delle coordinate che rappresentano il punto mirato dalla entità (nel caso del player queste sono le coordinate del puntatore del mouse) che utilizza per estrapolare la traiettoria da mantenere per colpire il punto desiderato. Per fare questo ho ritenuto necessaria la scrittura di una classe utility Angle che mi permettesse di trovare l’angolo formato dal vettore teso tra due punti noti e il piano di riferimento del sistema. Il bullet una volta generato sarà gestito insieme alle altre entity del livello.
+La classe Angle citata in precedenza è inoltre utilizzata per gestire la rotazione dell’arma del Player che è sempre orientata verso il puntatore del mouse.
+Weapon oltre alla sua funzione principale permette anche di essere renderizzato in sovrapposizione al suo user tramite un component Renderer. La posizione di renderizzazione dell’arma e la posizione da cui vengono sparati i Bullet vengono aggiornate tramite un proprio component Transform durante l’update dell’entity a cui appartengono in base alla posizione di quest’ultima.
+\includegraphics[width=1\textwidth]{UMLBoss.png}
+    \caption{UML rappresentante le classi relative al Boss}
+    \label{fig:schgen}
+In fase di progettazione abbiamo deciso di implementare le boss fight in apposite stanze e quindi in particolari livelli BossLevel. All’interno di questi livelli sono gestiti tutti i component del Boss come Weapon e Transform.
+Il Boss vero e proprio è generato da una factory che mi ha permesso di personalizzare i diversi Boss a livello di funzionamento specifico, implementandone, ad esempio, uno capace di volare.
+La classe Boss, estendendo Enemy, possiede tutti i suoi component e è capace di seguire dei Behaviour se inizializzati. Ciò che lo differenzia da un generico Enemy, oltre alla difficoltà incontrata nel combatterlo, è la presenza del component Weapon, che gli permettere di sparare.
+\includegraphics[width=1\textwidth]{UMLAcceleration.png}
+    \caption{La classe Acceleration}
+    \label{fig:schgen}
+Infine ho implementato la classe di util Acceleration utilizzata nel movimento delle Entity per creare un effetto di movimento più fluido possibile.
 \section{Sviluppo}
 \subsection{Testing automatizzato}
 Sono state realizzate due classi di test, per valutare l'effettiva efficienza del gioco, implementate attraverso la libreria JUnit:
@@ -116,14 +134,19 @@ src/main/java/app/game/Score.java
 \subsubsection{Matteo Sartini}
 \textbf{Utilizzo di lambda expressions}
 \newline
-Utilizzate nel metodo addFlying() della classe \texttt{BehaviourBuilderImpl} https://github.com/dennnanni/
+Utilizzate nel metodo addFlying() della classe BehaviourBuilderImpl per l'implementazione di un Behaviour per permettere al Boss di volare.
+https://github.com/dennnanni/
 UNIBOssfight/blob/master/UNIBOSSfight/
 src/main/java/app/impl/builder/BehaviourBuilderImpl.java
 \textbf{Utilizzo di Stream}
 \newline
-Utilizzati in questa classe https://github.com/dennnanni/
+Utilizzati nella classe BossLevel per la gestione delle collisioni del Boss.
+https://github.com/dennnanni/
 UNIBOssfight/blob/master/UNIBOSSfight/
 src/main/java/app/impl/level/BossLevel.java
+
+Inoltre per implementare le classe di utilità con più contenuto matematico ho utilizzato una serie di tutorial matematici della serie “Math for game developers” del canale YouTube “Jorge Rodriguez” che è possibile consultare al seguente link:
+https://www.youtube.com/playlist?list=PLW3Zl3wyJwWOpdhYedlD-yCB7WQoHf-My
 \large
 \section{Commenti finali}
 \subsection{Autovalutazione e lavori futuri}
@@ -132,6 +155,8 @@ Dall'inizio del mio percorso universitario, questo è stato senza dubbio il lavo
 \subsubsection{Denise Nanni}
 \subsubsection{Giovanni Prete}
 \subsubsection{Matteo Sartini}
+Nonostante le numerose difficoltà incontrate durante lo sviluppo, trovo che l’applicativo che ne è nato sia, con le sue numerose imperfezioni dovute alla poca esperienza del gruppo e alla complessità del progetto visualizzato in fase di progettazione, un prodotto abbastanza completo e per il quale mi ritengo molto soddisfatto.
+Trovo però che la parte più stimolante del progetto sia stato il teamwork necessario al suo completamento. Ritengo infatti che la collaborazione tra i vari componenti di un team sia una skill assolutamente indispensabile nel nostro campo lavorativo, e troppo spesso ignorata in contesti scolastici.
 \subsection{Difficoltà incontrate e commenti per i docenti}
 \section{Guida utente}
 All'avvio del gioco si apre una schermata con il menu principale, in cui troviamo: un pulsante "play" per iniziare una nuova partita, un pulsante "level" per scegliere uno fra i due livelli proposti, un pulsante "help" per una breve spiegazione della modalità di gioco e un pulsante "score". 
