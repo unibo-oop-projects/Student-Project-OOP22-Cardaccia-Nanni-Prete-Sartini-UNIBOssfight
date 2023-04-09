@@ -6,7 +6,6 @@ import javafx.scene.paint.Color;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 /**
  * This class implements an animation renderer.
@@ -62,23 +61,23 @@ public class AnimationSpriteRenderer extends LoopSpriteRenderer {
                 this.previousAnimation = animation;
             }
         });
+
+
         this.animations = new HashMap<>();
         final List<String> animations = List.of(ANIMATION_IDLE, ANIMATION_WALK, ANIMATION_ATTACK);
+
         animations.forEach(e -> {
 
             final String pathname = "assets/" + this.getFilename() +  "/" + e + "/" + this.getFilename();
             final int animationLength = getResourcesCount(pathname);
 
             List<ImageView> preRenderedSprites;
-            preRenderedSprites = IntStream.iterate(1, n -> n + 1)
-                    .limit(animationLength)
-                    .mapToObj(n -> getImage(pathname + n + ".png"))
-                    .map(this::createImageView)
-                    .toList();
+            preRenderedSprites = initAnimation(animationLength, pathname);
             this.animations.put(e, preRenderedSprites);
         });
+
+
         setPreRenderedSprites(this.animations.get(ANIMATION_IDLE));
         setAnimationLength(this.animations.get(ANIMATION_IDLE).size());
-
     }
 }

@@ -63,6 +63,24 @@ public class LoopSpriteRenderer extends SpriteRenderer {
     }
 
     /**
+     * Creates a List which contains a prerendered animation.
+     *
+     * @param animationLength the length in frames of the animation
+     * @param pathname the pathname of the images
+     * @return a list of ImageView
+     */
+    protected List<ImageView> initAnimation(
+            final int animationLength,
+            final String pathname
+    ) {
+        return IntStream.iterate(1, e -> e + 1)
+                .limit(animationLength)
+                .mapToObj(n -> getImage(pathname + n + ".png"))
+                .map(this::createImageView)
+                .toList();
+    }
+
+    /**
      *  Initialize the sprites of the loop and sets the animation length.
      */
     @Override
@@ -72,11 +90,7 @@ public class LoopSpriteRenderer extends SpriteRenderer {
         this.animationLength = getResourcesCount(pathname);
         this.maxDelay = LoopSpriteRenderer.ANIMATION_DURATION / this.animationLength;
 
-        this.preRenderedSprites = IntStream.iterate(1, e -> e + 1)
-                .limit(this.animationLength)
-                .mapToObj(n -> getImage(pathname + n + ".png"))
-                .map(this::createImageView)
-                .toList();
+        this.preRenderedSprites = initAnimation(this.animationLength, pathname);
 
         this.isAnimationEnded = new SimpleBooleanProperty(true);
 
