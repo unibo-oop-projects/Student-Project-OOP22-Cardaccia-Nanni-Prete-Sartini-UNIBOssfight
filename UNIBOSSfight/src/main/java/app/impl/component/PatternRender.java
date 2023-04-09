@@ -88,6 +88,12 @@ public class PatternRender extends SpriteRenderer {
                 .getResourceAsStream("assets/" + getFilename());
 
         assert is != null;
-        this.img = new Image(is, getWidth() / xRatio, getHeight() / yRatio, false, false);
+        this.img = new Image(
+                is,
+                getWidth() / xRatio,
+                getHeight() / yRatio,
+                false,
+                false
+        );
     }
 }
