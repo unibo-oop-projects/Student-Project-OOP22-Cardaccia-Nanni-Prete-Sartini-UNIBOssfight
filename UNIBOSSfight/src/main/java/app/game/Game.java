@@ -184,14 +184,6 @@ public class Game extends Application {
                 }
         );
 
-        this.currentScene.setOnMouseClicked(e -> this.currentLevel.playerShoot(
-                new Point2D(e.getX() + this.currentLevel
-                        .getPlayerPosition()
-                        .getX() - Window.getWidth() / 2,
-                        Window.getHeight() - e.getY())
-                )
-        );
-
         //Adding scene to the stage
         stage.setScene(currentScene);
 
@@ -389,6 +381,14 @@ public class Game extends Application {
                     }
                 }
             });
+
+            this.scene.setOnMouseClicked(e -> currentLevel.playerShoot(
+                            new Point2D(e.getX() + currentLevel
+                                    .getPlayerPosition()
+                                    .getX() - Window.getWidth() / 2,
+                                    Window.getHeight() - e.getY())
+                    )
+            );
 
             this.scene.setOnMouseMoved(e -> currentLevel.rotatePlayerWeapon(new Point2D(
                     e.getX() + currentLevel.getPlayerPosition().getX() - Window.getWidth() / 2,

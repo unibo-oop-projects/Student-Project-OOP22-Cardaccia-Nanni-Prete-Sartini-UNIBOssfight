@@ -93,13 +93,6 @@ public class LoopSpriteRenderer extends SpriteRenderer {
         this.preRenderedSprites = initAnimation(this.animationLength, pathname);
 
         this.isAnimationEnded = new SimpleBooleanProperty(true);
-
-        this.isAnimationEnded.addListener((observable, oldValue, newValue) -> {
-            if (this.isAnimationEnded.get()) {
-                this.cont = 0;
-                this.contDelay = 0;
-            }
-        });
     }
 
     /**
