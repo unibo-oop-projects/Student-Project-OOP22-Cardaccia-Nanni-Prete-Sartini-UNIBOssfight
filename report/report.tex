@@ -1,15 +1,17 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
-
-\title{UNIBOssfight}
-\author{Giovanni Prete, Livia Cardaccia, Denise Nanni, Matteo Sartini}
-\date{January 2023}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
 
 \begin{document}
-
+\title{UNIBOssfight}
+\author{Livia Cardaccia, Denise Nanni, Giovanni Prete, Matteo Sartini}
+\date{January 2023}
+\maketitle
+\newpage
 \large
 \tableofcontents
-\maketitle
+\newpage
 
 \section{Analisi}
 
@@ -23,7 +25,8 @@ In ogni livello sono presenti diversi minions che ostacolano la corsa del giocat
     \item Gestione dell'input simultaneo per il movimento e la gestione dell'arma.
     \item Movimento di base dei nemici.
     \item Implementazione di un'arma a fuoco automatico che verrà puntata in base alla posizione del mouse.
-    \item Calcolo del voto finale basato su tempo di completamento del livello, danni subiti e nemici sconfitti.
+    \item Calcolo del voto finale basato nemici sconfitti
+    e monete CFU raccolte.
 \end{itemize}
 \subsubsection{Requisiti non funzionali}
 \begin{itemize}
@@ -32,24 +35,141 @@ In ogni livello sono presenti diversi minions che ostacolano la corsa del giocat
 \end{itemize}
 \subsection{Analisi e modello del dominio}
 Il giocatore dovrà superare una serie di livelli in cui incontrerà due tipologie di ostacoli: nemici in movimento, che possono provocargli danno, e ostacoli di tipo ambientale.
-Il giocatore potrà affrontare i nemici con l'arma in dotazione, stando attento a non esaurire la vita a sua disposizione, o scegliere di evitarli quando possibile.
-Gli ostacoli ambientali invece consisteranno in buchi da saltare, muri da scavalcare e spine da evitare.
+Il giocatore potrà affrontare i nemici con l'arma in dotazione, stando attento a non esaurire la vita a sua disposizione, o scegliere di evitarli quando possibile (pena decurtazione del punteggio).
+Gli ostacoli ambientali invece consisteranno in muri da scavalcare, fiamme e spine da evitare.
 Alla fine del livello il personaggio si troverà ad affrontare un boss finale che disporrà di una quantità superiore di punti vita e arrecherà più danno rispetto ai nemici comuni.
+
 
 \section{Design}
 \subsection{Architettura}
+Questo progetto è stato sviluppato attraverso il pattern architetturale ECS, Entity Component System.
+In ECS, le Entity sono tutte le entità di gioco, ovvero degli oggetti general purpose, che si compongono dei Components; questi ultimi modellano una determinata caratteristica di un'entità e mantengono i dati relativi ad essa. Il System è tutto ciò che modifica le entità, agendo sui loro componenti. Nella nostra applicazione le entity sono tutti gli attori del mondo di gioco, ad esempio il giocatore e i nemici, decorati da componenti che modellano il concetto di movimento e posizione con il \texttt{Transform}, le collisioni con il \texttt{Collider}, il comportamento con il \texttt{Behaviour} e simili, i quali vengono gestiti dal \texttt{Level} che rappresenta il sistema.
+Nonostante non avessimo affrontato a lezione il pattern ECS, lo abbiamo scelto perché ci sembrava adatto ad un progetto come il nostro, dato che viene ampiamente utilizzato nello sviluppo di videogiochi, è versatile e facilmente estendibile.
+L'aspetto caratteristico di ECS è che ogni entità si autogestisce, sia per quanto riguarda aspetti come il movimento, sia per altri aspetti come la renderizzazione; per tale motivo, utilizzando questo pattern potrebbe risultare poco agevole sostituire in blocco la view, tuttavia può essere fatto effettuando delle modifiche minori, in particolare al component \texttt{Renderer}.
+
+
+
 \subsection{Design dettagliato}
 \subsubsection{Livia Cardaccia}
+
 \subsubsection{Denise Nanni}
+bla bla bla
+\begin{figure}[ht]
+    \includegraphics[width=1\textwidth]{umlCollider.jpg}
+    \caption{descrizione}
+    \label{fig:schgen}
+\end{figure}
 \subsubsection{Giovanni Prete}
 \subsubsection{Matteo Sartini}
 \section{Sviluppo}
 \subsection{Testing automatizzato}
+Sono state realizzate due classi di test, per valutare l'effettiva efficienza del gioco, implementate attraverso la libreria JUnit:
+\begin{itemize}
+    \item TestEntity: controllo collisioni e danno
+    \item TestFinalGrade: controllo del corretto calcolo del punteggio finale
+\end{itemize}
 \subsection{Metodologie di lavoro}
+Abbiamo iniziato lo sviluppo vero e proprio del software basandoci sulla fase di progettazione del design architetturale precedentemente effettuata. Inizialmente avevamo pensato ad una gerarchia di entità più articolata, rendendoci poi conto che questa contrastava con i principi del pattern architetturale da noi scelto; di conseguenza abbiamo dovuto effettuare delle modifiche in fase di integrazione, adeguando il design di partenza.
+Per approcciarci alla realizzazione di questo progetto, abbiamo utilizzato il DVCS Git che ci ha permesso di coordinarne agevolmente lo sviluppo, integrando le varie parti con facilità. Abbiamo scelto di adottare una metodologia ispirata a GitFlow: il nostro branch principale è il 'master', nel quale abbiamo committato la versione corretta e funzionante del gioco; il branch di sviluppo di default è il 'develop' abbiamo creato inoltre dei branch dedicati allo sviluppo di particolari feature del gioco. 
+Vista la portata di lavoro del progetto, che nessuno di noi aveva mai affrontato in precedenza, abbiamo favorito il lavoro di gruppo e il confronto per la risoluzione dei problemi che si sono presentati.
 \subsection{Note di sviluppo}
+\subsubsection{Livia Cardaccia}
+\small
+\textbf{Utilizzo della libreria JavaFX}
+\newline
+Utilizzata per l'implementazione del menu di gioco. Un esempio è https://github.com/dennnanni/
+UNIBOssfight/blob/master/UNIBOSSfight/src/main/java/app/ui/ViewManager.java
+\newline
+\textbf{Utilizzo di lambda expressions}
+\newline
+Utilizzate in più punti del codice. Un esempio è la classe https://github.com/dennnanni/
+UNIBOssfight/blob/master/UNIBOSSfight/src/main/java/app/impl/builder/BehaviourBuilderImpl.java
+\newline 
+\textbf{Uso di Optional}
+\newline
+Utilizzati come tipo di ritorno dei metodi della classe \texttt{BehaviourImpl} https://github.com/dennnanni/
+UNIBOssfight/blob/master/UNIBOSSfight/src/main/java/app/impl/component/BehaviourImpl.java
+\newline
+\textbf{Programmazione funzionale}
+\newline
+\texttt{Biconsumer} e \texttt{Bifunction} utilizzati nell'implementazione del component Behaviour. Di seguito l'interfaccia https://github.com/dennnanni/
+UNIBOssfight/blob/master/UNIBOSSfight/
+src/main/java/app/core/component/Behaviour.java
+\newline 
+\newline
+\large
+Per capire il funzionamento della libreria JavaFX mi sono inizialmente affidata alla documentazione online; alcune parti di codice del menu di gioco, in particolare quelle relative alla creazione dei bottoni e l'implementazione dei listeners per ognuno di essi, sono riadattate da codice del seguente progetto https://github.com/smowgli/space-runner-game-javafx/blob/main/src/model/SpaceRunnerButton.java
+\subsubsection{Denise Nanni}
+\small
+\textbf{Utilizzo di lambda expressions}
+\newline
+Utilizzate per valorizzare i comportamenti alla collisione. Un esempio è https://github.com/dennnanni/
+UNIBOssfight/blob/master/UNIBOSSfight/
+src/main/java/app/impl/entity/EnemyImpl.java
+\newline
+\textbf{Utilizzo di Stream}
+\newline
+Utilizzati in questa classe https://github.com/dennnanni/
+UNIBOssfight/blob/master/UNIBOSSfight/
+src/main/java/app/game/Score.java
+\subsubsection{Giovanni Prete}
+\subsubsection{Matteo Sartini}
+\textbf{Utilizzo di lambda expressions}
+\newline
+Utilizzate nel metodo addFlying() della classe \texttt{BehaviourBuilderImpl} https://github.com/dennnanni/
+UNIBOssfight/blob/master/UNIBOSSfight/
+src/main/java/app/impl/builder/BehaviourBuilderImpl.java
+\textbf{Utilizzo di Stream}
+\newline
+Utilizzati in questa classe https://github.com/dennnanni/
+UNIBOssfight/blob/master/UNIBOSSfight/
+src/main/java/app/impl/level/BossLevel.java
+\large
 \section{Commenti finali}
 \subsection{Autovalutazione e lavori futuri}
+\subsubsection{Livia Cardaccia}
+Dall'inizio del mio percorso universitario, questo è stato senza dubbio il lavoro più impegnativo: ha richiesto tempo e concentrazione ma soprattutto conoscenze che non avevo ancora completamente sviluppato durante il corso in aula ma che ho avuto l'occasione di approfondire durante la realizzazione del progetto. Lavorare in gruppo è stato un punto di forza, ci siamo confrontati e consigliati, il supporto che ci siamo dati l'un l'altro è stato secondo me fondamentale per la buona riuscita del progetto. Una delle difficoltà più grandi che ho incontrato è stata scrivere codice pulito e soprattutto efficiente ma anche trovare soluzioni efficaci per i problemi presentatisi in itinere, affrontandoli riflettendo e analizzando le possibili soluzioni. Credo che questo percorso abbia permesso di migliorarmi sotto questi aspetti e che possa essere uno slancio per continuare a perfezionare le mie capacità. 
+\subsubsection{Denise Nanni}
+\subsubsection{Giovanni Prete}
+\subsubsection{Matteo Sartini}
 \subsection{Difficoltà incontrate e commenti per i docenti}
+\section{Guida utente}
+All'avvio del gioco si apre una schermata con il menu principale, in cui troviamo: un pulsante "play" per iniziare una nuova partita, un pulsante "level" per scegliere uno fra i due livelli proposti, un pulsante "help" per una breve spiegazione della modalità di gioco e un pulsante "score". 
+Cliccando quest'ultimo si possono visualizzare le proprie statistiche di gioco e una voce "final grade" che assegna al giocatore un punteggio in base alle sue prestazioni, nell'ottica del conseguimento della laurea.
+Avviata una partita, per giocare è necessario: premere il tasto 'd' per correre in avanti, premere il tasto 'a' per correre indietro, usare la barra spaziatrice per saltare e il puntatore del mouse per mirare ai nemici, a cui si spara cliccando.
+Terminata una partita vi è la possibilità di tornare alla home con un apposito pulsante o proseguire con il gioco.
+\section{Esercitazioni di laboratorio}
+\subsection{livia.cardaccia@studio.unibo.it}
+\begin{itemize}
+    \item Laboratorio 03: https://virtuale.unibo.it/mod/forum/discuss
+    .php?d=112846\#p168413
+    \item Laboratorio 05: https://virtuale.unibo.it/mod/forum/discuss
+    .php?d=114647\#p169868
+    \item Laboratorio 06: https://virtuale.unibo.it/mod/forum/discuss
+    .php?d=115548\#p172236
+    \item Laboratorio 07: https://virtuale.unibo.it/mod/forum/discuss
+    .php?d=117044\#p173315
+    \item Laboratorio 08: https://virtuale.unibo.it/mod/forum/discuss
+    .php?d=117852\#p174528
+    \item Laboratorio 09: https://virtuale.unibo.it/mod/forum/discuss
+    .php?d=118995\#p175251
+    \item Laboratorio 10:
+    https://virtuale.unibo.it/mod/forum/discuss
+    .php?d=119938\#p176896
+    \item Laboratorio 11: https://virtuale.unibo.it/mod/forum/discuss
+    .php?d=121130\#p177745  
+\end{itemize}
+\subsection{denise.nanni@studio.unibo.it}
+\begin{itemize}
+    \item Laboratorio 06: https://virtuale.unibo.it/mod/forum/discuss
+    .php?d=115548\#p171388
+    \item Laboratorio 07: https://virtuale.unibo.it/mod/forum/discuss
+    .php?d=117044\#p173321
+    \item Laboratorio 09: https://virtuale.unibo.it/mod/forum/discuss
+    .php?d=118995\#p175210
+    \item Laboratorio 10: https://virtuale.unibo.it/mod/forum/discuss
+    .php?d=119938\#p176543
+\end{itemize}
 
 
 \end{document}
