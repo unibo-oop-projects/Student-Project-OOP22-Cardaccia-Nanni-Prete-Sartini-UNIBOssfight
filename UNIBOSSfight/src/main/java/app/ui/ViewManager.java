@@ -277,8 +277,7 @@ public class ViewManager {
     private void setScoreSubScene() {
         try {
             final var score = new DataManager().deserializeScore("score.json");
-            final Label grade = new Label(Integer.toString(110 * score.getEarnedPoints()
-                                                           / (score.getTotalPoints() * Game.LEVEL_COUNT)));
+            final Label grade = new Label(Integer.toString(score.computeFinalGrade()));
 
             this.scoreSubScene.addLabel("\tLEVEL 1: ",
                     LAYOUT_X, HELP_LAYOUT_Y + 10, FONT_SIZE);
