@@ -75,7 +75,9 @@ Di seguito lo schema generale delle entità attive.
 \textbf{Behaviour}\\
 \\
 Già in fase di analisi, abbiamo ritenuto necessario che le entità del nostro gioco potessero avere dei comportamenti specifici, come ad esempio la necessità di fermarsi di fronte ad un ostacolo come un muro o quella di saltare su un ostacolo come una piattaforma.
-Nell'ottica ECS, è sembrato lineare racchiudere questi comportamenti in un Component, chiamato appunto Behaviour.\\ Dato che le varie entità in movimento, quali nemici, boss e giocatore, possono assumere comportamenti diversi, rendendo quindi necessaria la possibilità di suddividere le fasi di creazione del component, per implementare il Behaviour mi è sembrato conveniente sfruttare un pattern visto a lezione, il Builder.\\ Entrando nello specifico, ho scritto un'interfaccia BehaviourBuilder per poter aggiungere comportamenti: attualmente vi sono cinque comportamenti, per saltare sulle Platform, per essere fermati di lato e dal basso da un Wall, per seguire e per volare sopra al player. Per l'interfaccia vera e propria del Behaviour ho pensato a metodi per poter settare e ritornare i vari comportamenti nelle entities. Il grande punto di forza di questo pattern è che rimane sempre aperta la possibilità di aggiungere nuovi comportamenti, il che rende il Behaviour un component flessibile ed estendibile.
+Nell'ottica ECS, è sembrato lineare racchiudere questi comportamenti in un Component, chiamato appunto Behaviour.\\ Dato che le varie entità in movimento, quali nemici, boss e giocatore, possono assumere comportamenti diversi, rendendo quindi necessaria la possibilità di suddividere le fasi di creazione del component, per implementare il Behaviour mi è sembrato conveniente sfruttare un pattern visto a lezione, il Builder.\\ Entrando nello specifico, ho scritto un'interfaccia Behaviour con metodi setter e getter, utilizzati poi per l'implementazione del component e per richiamarlo ove necesssario nel codice.
+Nell'interfaccia BehaviourBuilder ci sono invece i metodi per poter aggiungere comportamenti, implementati poi attraverso \texttt{BiConsumer} e \texttt{BiFunction} e che usano al loro interno altri component delle entità, come ad esempio il Transform e la Hitbox: attualmente vi sono cinque comportamenti, per saltare sulle Platform, per essere fermati di lato e dal basso da un Wall, per seguire e per volare sopra al player.\\
+Il grande punto di forza di questo pattern è che rimane sempre aperta la possibilità di aggiungere nuovi comportamenti con facilità, il che rende il Behaviour un component flessibile ed estendibile.
 
 \begin{figure}[ht]
 \includegraphics[width=1\textwidth]{umlBehaviour.png}
@@ -86,8 +88,8 @@ Nell'ottica ECS, è sembrato lineare racchiudere questi comportamenti in un Comp
 \newpage
 \textbf{Ostacoli}\\
 \\
-Gli ostacoli del nostro gioco, di cui mi sono occupata, sono di due tipi, quelli che causano e quelli che non causano danno al giocatore. I secondi, ovvero Platform e Wall, hanno delle funzioni che controllano se è avvenuta una collisione con le entità del gioco in movimento e sfruttano il Behaviour di esse per, in un caso, permettere all'entità di saltare su di esse, nell'altro per fermare la corsa dell'entità.\\
-Ci sono inoltre i Coin, che non arrecano danno al giocatore ma costituiscono un'aggiunta di punti per il giocatore, vanno quindi ad aumentare il voto finale di quest'ultimo.\\
+Gli ostacoli del nostro gioco, di cui mi sono occupata, sono di due tipi, quelli che causano e quelli che non causano danno al giocatore. I secondi, ovvero Platform e Wall, hanno delle funzioni che controllano se è avvenuta una collisione con le entità del gioco in movimento e sfruttano il Behaviour di queste per, in un caso, permettere all'entità di saltare su di essi, nell'altro per fermare la corsa dell'entità.\\
+Ci sono inoltre i Coin, che non arrecano danno ma costituiscono un'aggiunta di punti per il giocatore, vanno quindi ad aumentare il voto finale di quest'ultimo.\\
 
 \begin{figure}[ht]
 \includegraphics[width=1\textwidth]{umlObstacles.png}
@@ -100,7 +102,7 @@ Ci sono inoltre i Coin, che non arrecano danno al giocatore ma costituiscono un'
 \\
 Durante lo sviluppo del software, un mio compito è stato anche quello di progettare ed implementare il menu di gioco con i vari bottoni e le relative sub scenes: per fare ciò, ho largamente utilizzato la libreria JavaFX.\\
 Nel menu, è il ViewManager che si occupa di settare l'appearence generale e mette a disposizione dei metodi per aggiungere immagini e background, che ho richiamato nel Game.
-Inoltre, ho gestito il cambio di stage nel Game, in particolare a fine partita viene data la possibilità all'utente di proseguire con il livello successivo, in caso di vittoria, o di ricominciare la partita in caso di sconfitta; in entrambi i casi è presente un pulsante per tornare alla home.\\
+Inoltre, sempre nel Game, ho gestito il cambio di stage, in particolare a fine partita viene data la possibilità all'utente di proseguire con il livello successivo, in caso di vittoria, o di ricominciare la partita in caso di sconfitta; in entrambi i casi è presente un pulsante per tornare alla home.\\
 Per fare questo ho utilizzato una classe innestata, SecondaryStage, nel quale sfrutto sia metodi della libreria JavaFX sia metodi scritti da me nel ViewManager.
 
 \subsection{Denise Nanni}
