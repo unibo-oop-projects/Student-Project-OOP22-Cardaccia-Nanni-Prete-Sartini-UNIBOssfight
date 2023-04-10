@@ -28,7 +28,7 @@ public class BossFactoryImpl implements BossFactory {
     @Override
     public Boss meteorBoss(final Transform startingPos) {
 
-        final BossImpl boss = new BossImpl(startingPos, METEOR_BOSS_HEIGHT, METEOR_BOSS_WIDTH, "ghini");
+        final BossImpl boss = new BossImpl(startingPos, METEOR_BOSS_HEIGHT, METEOR_BOSS_WIDTH, "sistemiOperativi");
         boss.setWeapon(weaponFactory.getMeteorGun(startingPos, false));
         return boss;
     }
@@ -39,7 +39,7 @@ public class BossFactoryImpl implements BossFactory {
     @Override
     public Boss flyingBoss(final Transform startingPos) {
 
-        final BossImpl boss = new BossImpl(startingPos, FLYING_BOSS_HEIGHT, FLYING_BOSS_WIDTH, "pianini") {
+        final BossImpl boss = new BossImpl(startingPos, FLYING_BOSS_HEIGHT, FLYING_BOSS_WIDTH, "oop") {
             @Override
             public void init() {
                 super.init();
