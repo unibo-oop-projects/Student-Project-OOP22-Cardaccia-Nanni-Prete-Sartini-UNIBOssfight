@@ -36,7 +36,7 @@ public class WeaponImpl implements Weapon {
      */
     @SuppressFBWarnings(
             value = "EI_EXPOSE_REP",
-            justification = "The renderer Class cannot be Cloned"//TODO CAMBIARE JUSTIFICATION
+            justification = "The renderer Class cannot be Cloned"
     )
     public WeaponImpl(final Transform userPos, final Renderer renderer, final int positionOffset) {
         this.userPos = new TransformImpl(userPos.getPosition(), 0);
