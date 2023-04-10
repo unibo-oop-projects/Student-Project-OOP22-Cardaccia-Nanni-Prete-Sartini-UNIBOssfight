@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[a4paper,12pt]{report}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{hyperref}
@@ -15,13 +15,13 @@
 \tableofcontents
 \newpage
 
-\section{Analisi}
+\chapter{Analisi}
 
-\subsection{Requisiti}
+\section{Requisiti}
 Il team si pone come obiettivo quello di realizzare una versione personalizzata del noto gioco arcade Metal Slug, ambientato nella nostra università.
 Lo scopo del gioco è quello di conseguire la laurea superando gli esami, rappresentati da una serie di livelli platform, ossia in cui la meccanica di gioco implica principalmente l'attraversamento di livelli costituiti da piattaforme, spesso disposte su più piani.
 In ogni livello sono presenti diversi minions che ostacolano la corsa del giocatore, e un boss finale, rappresentato dal docente del corso, la cui sconfitta determinerà il superamento dell'esame.
-\subsubsection{Requisiti funzionali}
+\subsection{Requisiti funzionali}
 \begin{itemize}
 \item Menù principale che permette all'utente di scegliere il livello di gioco, consultare i comandi, iniziare una nuova partita e uscire dal gioco.
 \item Gestione dell'input simultaneo per il movimento e la gestione dell'arma.
@@ -30,29 +30,48 @@ In ogni livello sono presenti diversi minions che ostacolano la corsa del giocat
 \item Calcolo del voto finale basato nemici sconfitti
 e monete CFU raccolte.
 \end{itemize}
-\subsubsection{Requisiti non funzionali}
+\subsection{Requisiti non funzionali}
 \begin{itemize}
 \item Il gioco dovrà risultare fluido, con un frame rate minimo di 30 FPS.
 \item Il gioco avrà una bassa latenza di input
 \end{itemize}
 \newpage
-\subsection{Analisi e modello del dominio}
+\section{Analisi e modello del dominio}
 Il giocatore dovrà superare una serie di livelli in cui incontrerà due tipologie di ostacoli: nemici in movimento, che possono provocargli danno, e ostacoli di tipo ambientale.
 Il giocatore potrà affrontare i nemici con l'arma in dotazione, stando attento a non esaurire la vita a sua disposizione, o scegliere di evitarli quando possibile (pena decurtazione del punteggio).
 Gli ostacoli ambientali invece consisteranno in muri da scavalcare, fiamme e spine da evitare.
 Alla fine del livello il personaggio si troverà ad affrontare un boss finale che disporrà di una quantità superiore di punti vita e arrecherà più danno rispetto ai nemici comuni.
+Si denoteranno due categorie principali di entità, quelle passive come gli ostacoli, e quelle attive, come il giocatore e i nemici, che si muoveranno nel mondo e interagiranno in diversi modi con esso. Una delle difficoltà principali sarà quella di identificare questi oggetti e di gestire le interazioni che essi avranno tra loro.
+
+\begin{figure}[ht]
+\includegraphics[width=0.8\textwidth]{umlModello.png}
+\caption{Modello del dominio}
+\label{fig:schgen}
+\end{figure}
 
 
-\section{Design}
-\subsection{Architettura}
+\chapter{Design}
+\section{Architettura}
 Questo progetto è stato sviluppato attraverso il pattern architetturale ECS, Entity Component System.
 In ECS, le Entity sono tutte le entità di gioco, ovvero degli oggetti general purpose, che si compongono dei Components; questi ultimi modellano una determinata caratteristica di un'entità e mantengono i dati relativi ad essa. Il System è tutto ciò che modifica le entità, agendo sui loro componenti. Nella nostra applicazione le entity sono tutti gli attori del mondo di gioco, ad esempio il giocatore e i nemici, decorati da componenti che modellano il concetto di movimento e posizione con il Transform, le collisioni con il Collider, il comportamento con il Behaviour e simili, i quali vengono gestiti dal Level che rappresenta il sistema.
 Nonostante non avessimo affrontato a lezione il pattern ECS, lo abbiamo scelto perché ci sembrava adatto ad un progetto come il nostro, dato che viene ampiamente utilizzato nello sviluppo di videogiochi, è versatile e facilmente estendibile.
 L'aspetto caratteristico di ECS è che ogni entità si autogestisce, sia per quanto riguarda aspetti come il movimento, sia per altri aspetti come la renderizzazione; per tale motivo, utilizzando questo pattern potrebbe risultare poco agevole sostituire in blocco la view, tuttavia può essere fatto effettuando delle modifiche minori, in particolare al component Renderer.
 
+\begin{figure}[ht]
+\includegraphics[width=1\textwidth]{umlEntityComponents.png}
+\caption{Entità attive}
+\label{fig:schgen}
+\end{figure}
+
 \newpage
-\subsection{Design dettagliato}
-\subsubsection{Livia Cardaccia}
+\section{Design dettagliato}
+Di seguito lo schema generale delle entità attive.
+\begin{figure}[ht]
+\includegraphics[width=1\textwidth]{umlAttive.png}
+\caption{UML delle entità attive}
+\label{fig:schgen}
+\end{figure}
+\subsection{Livia Cardaccia}
 \textbf{Behaviour}\\
 \\
 Già in fase di analisi, abbiamo ritenuto necessario che le entità del nostro gioco potessero avere dei comportamenti specifici, come ad esempio la necessità di fermarsi di fronte ad un ostacolo come un muro o quella di saltare su un ostacolo come una piattaforma.
@@ -84,14 +103,14 @@ Nel menu, è il ViewManager che si occupa di settare l'appearence generale e met
 Inoltre, ho gestito il cambio di stage nel Game, in particolare a fine partita viene data la possibilità all'utente di proseguire con il livello successivo, in caso di vittoria, o di ricominciare la partita in caso di sconfitta; in entrambi i casi è presente un pulsante per tornare alla home.\\
 Per fare questo ho utilizzato una classe innestata, SecondaryStage, nel quale sfrutto sia metodi della libreria JavaFX sia metodi scritti da me nel ViewManager.
 
-\subsubsection{Denise Nanni}
+\subsection{Denise Nanni}
 \textbf{Collisioni}\\
 \\
 La mia parte di progetto consisteva principalmente nella gestione delle collisioni tra le varie entità.
 Per un gioco di questo tipo, è di fondamentale importanza distinguere i vari tipi di collisione e le direzioni da cui esse avvengono. Si è reso necessario avere un meccanismo che riconoscesse l'entità con cui è avvenuta la collisione e la gestisse secondo un comportamento ad hoc per tale entità.
 
 \begin{figure}[ht]
-\includegraphics[width=1\textwidth]{umlCollider.jpg}
+\includegraphics[width=1\textwidth]{umlCollider.png}
 \caption{UML del Collider}
 \label{fig:schgen}
 \end{figure}
@@ -106,7 +125,7 @@ A questo scopo, si era pensato di utilizzare la posizione precedente dell'entit�
 \\
 Durante lo sviluppo, si è resa necessaria una funzionalità che permettesse di mantenere uno storico degli errori verificatisi durante l'esecuzione. Ho quindi utilizzato il pattern creazionale Singleton per realizzare un logger \texttt{AppLogger} che estende il logger di default di Java, in modo da avere un'unica istanza per tutto l'applicativo che scrivesse su un singolo file di log.
 \newpage
-\subsubsection{Giovanni Prete}
+\subsection{Giovanni Prete}
 \textbf{Renderer}\\
 \\
 Il mio ruolo principale all'interno del progetto è stata la realizzazione del Renderer component e di tutte le sue declinazioni.
@@ -170,10 +189,10 @@ Fra i miei compiti c'era anche la parte di serializzazione e deserializzazione d
 Il metodo serializeLevel, che prende in input un'istanza di Level e una stringa, genera un file json nominato come la stringa di input che conterrà i dati di tutte le Entity del livello e del Player. Questo metodo non è utilizzato nel software ma è risultato molto utile in fase di creazione dei livelli per poter creare agilmente i relativi json.\\
 Il metodo loadLevel invece prende in input un file json precedentemente generato e ricostruisce il livello, tuttavia, per mantenere il file il più leggero possibile, non sono contenute diverse informazioni delle entità, pertanto le Entity deserializzate non sono complete ed è necessaria la funzione init per inizializzare alcuni componenti.
 
-\subsubsection{Matteo Sartini}
+\subsection{Matteo Sartini}
 \textbf{Bullet e Angle}\\
 \\
-Il mio task principale all’interno del progetto consisteva nell’implementare un sistema che permettesse alle entità di sparare all’interno del livello in cui agiscono.
+Il mio task principale all’interno del progetto consisteva nell’ implementare un sistema che permettesse alle entità di sparare all’interno del livello in cui agiscono.
 Per fare ciò in fase di progettazione, in linea con il modello ECS, abbiamo deciso di implementare un component Weapon, che permettesse alle entità che ne erano in possesso di creare nuove entità Bullet e dare loro una traiettoria verso cui muoversi.
 
 \begin{figure}[ht]
@@ -208,37 +227,37 @@ La classe Boss, estendendo Enemy, possiede tutti i suoi component e è capace di
 Infine ho implementato la classe di util Acceleration utilizzata nel movimento delle Entity per creare un effetto di movimento più fluido possibile.
 
 \newpage
-\section{Sviluppo}
-\subsection{Testing automatizzato}
+\chapter{Sviluppo}
+\section{Testing automatizzato}
 Sono state realizzate due classi di test, per valutare l'effettiva efficienza del gioco, implementate attraverso la libreria JUnit:
 \begin{itemize}
 \item TestEntity: controllo collisioni e danno
 \item TestFinalGrade: controllo del corretto calcolo del punteggio finale
 \end{itemize}
-\subsection{Metodologie di lavoro}
+\section{Metodologie di lavoro}
 Abbiamo iniziato lo sviluppo vero e proprio del software basandoci sulla fase di progettazione del design architetturale precedentemente effettuata. Inizialmente avevamo pensato ad una gerarchia di entità più articolata, rendendoci poi conto che questa contrastava con i principi del pattern architetturale da noi scelto; di conseguenza abbiamo dovuto effettuare delle modifiche in fase di integrazione, adeguando il design di partenza.
 Per approcciarci alla realizzazione di questo progetto, abbiamo utilizzato il DVCS Git che ci ha permesso di coordinarne agevolmente lo sviluppo, integrando le varie parti con facilità. Abbiamo scelto di adottare una metodologia ispirata a GitFlow: il nostro branch principale è il 'master', nel quale abbiamo committato la versione corretta e funzionante del gioco; il branch di sviluppo di default è il 'develop' abbiamo creato inoltre dei branch dedicati allo sviluppo di particolari feature del gioco.
 Vista la portata di lavoro del progetto, che nessuno di noi aveva mai affrontato in precedenza, abbiamo favorito il lavoro di gruppo e il confronto per la risoluzione dei problemi che si sono presentati.
-\subsubsection{Livia Cardaccia}
+\subsection{Livia Cardaccia}
 Mi sono occupata dell'implementazione del component \texttt{Behaviour} e del \texttt{BehaviourBuilder}.
 Ho creato i bottoni e le sub scenes del menu principale implementando le classi \texttt{CustumizedSubScene} e \texttt{CustomizedButton}, una finestra di dialogo personalizzata con la classe \texttt{ConfirmBox} e ho gestito il tutto con le classi \texttt{ViewManager} e \texttt{MainMenu}. Ho collaborato all'implementazione della classe \texttt{Score} con Denise Nanni e ho scritto la classe innestata\\ \texttt{SecondaryStage} in \texttt{Game}. Infine mi sono occupata delle entità rappresentanti gli ostacoli con le classi \texttt{Wall}, \texttt{Platform}, \texttt{HarmfulObstacle} e \texttt{Coin}.
 
-\subsubsection{Denise Nanni}
-Realizzazione della rilevazione e gestione delle collisioni in base alla direzione e calcolo di tale direzione.
-\texttt{Logger} per mantenere uno storico degli errori verificatisi nell'applicativo.
-Caricamento delle risorse attraverso reflection.
-Realizzazione del calcolo del punteggio, insieme a Livia Cardaccia.
+\subsection{Denise Nanni}
+Realizzazione della rilevazione e gestione delle collisioni in base alla direzione e calcolo di tale direzione.\\
+\texttt{Logger} per mantenere uno storico degli errori verificatisi nell' applicativo.\\
+Caricamento delle risorse attraverso reflection.\\
+Realizzazione del calcolo del punteggio, insieme a Livia Cardaccia.\\
 
-\subsubsection{Giovanni Prete}
+\subsection{Giovanni Prete}
 I miei compiti principali all'interno del progetto sono stati\\
 l'implementazione dei \texttt{Renderer} component, del \texttt{Transform} e della gestione dell'input. Mi sono occupato anche di alcuni metodi di \texttt{AbstractEntity}, \texttt{LevelImpl} e \texttt{Game} per la gestione delle classi che ho implementato. Infine mi sono dedicato alle meccaniche di serializzazione e deserializzazione, inoltre ho realizzato la classe utility \texttt{Window}, utilizzata come sistema di riferimento in diversi punti del codice.
 
-\subsubsection{Matteo Sartini}
+\subsection{Matteo Sartini}
 I task principali che mi sono stati assegnati all’interno del gruppo erano l’implementazione dell’arma e del suo funzionamento, compresi i suoi proiettili e l’implementazione, e la gestione all’interno di un apposito livello, del Boss. A questi elementi si sono andate ad aggiungere delle classi di supporto necessarie per la leggibilità del codice e alcuni elementi in classi esterne per l’implementazione dei vari elementi del codice tra loro.
 
 \newpage
-\subsection{Note di sviluppo}
-\subsubsection{Livia Cardaccia}
+\section{Note di sviluppo}
+\subsection{Livia Cardaccia}
 \textbf{Utilizzo della libreria JavaFX}\\
 Utilizzata per l'implementazione del menu di gioco. Un esempio è \href{https://github.com/dennnanni/UNIBOssfight/blob/61e1d141f734d2205d4e8b65fed0ebfc668a8357/UNIBOSSfight/src/main/java/app/ui/ViewManager.java#L31}{ViewManager}\\
 \textbf{Utilizzo di lambda expressions}\\
@@ -251,20 +270,21 @@ Utilizzati come tipo di ritorno dei metodi della classe
 \newline
 Per capire il funzionamento della libreria JavaFX mi sono inizialmente affidata alla documentazione online; alcune parti di codice del menu di gioco, in particolare quelle relative alla creazione dei bottoni e l'implementazione dei listeners per ognuno di essi, sono riadattate da codice del seguente progetto \href{https://github.com/smowgli/space-runner-game-javafx/blob/dcbb51c278680951043d41d520e1a093f55701dc/src/model/SpaceRunnerButton.java#L11}{SpaceRunnerButton}.\\
 Le grafiche del menu e i font li ho scaricati dal sito di \href{https://kenney.nl/}{Kenney}.\\
-\subsubsection{Denise Nanni}
+\subsection{Denise Nanni}
 \textbf{Utilizzo di lambda expressions}
 \newline
-Utilizzate per valorizzare i comportamenti alla collisione. Un esempio è https://github.com/dennnanni/
-UNIBOssfight/blob/master/UNIBOSSfight/
-src/main/java/app/impl/entity/EnemyImpl.java
+Utilizzate per valorizzare i comportamenti alla collisione. Un esempio è quello nella classe
+\href{https://github.com/dennnanni/UNIBOssfight/blob/61e1d141f734d2205d4e8b65fed0ebfc668a8357/UNIBOSSfight/src/main/java/app/core/entity/Enemy.java#L34}{\underline{Enemy}}
 \newline
 \textbf{Utilizzo di Stream}
 \newline
-Utilizzati in questa classe https://github.com/dennnanni/
-UNIBOssfight/blob/master/UNIBOSSfight/
-src/main/java/app/game/Score.java
+Utilizzati nella classe \href{https://github.com/dennnanni/UNIBOssfight/blob/61e1d141f734d2205d4e8b65fed0ebfc668a8357/UNIBOSSfight/src/main/java/app/game/Score.java#L60}{\underline{Score}}
+\newline
+\textbf{Logger}
+\newline
+Per lo sviluppo del logger ho consultato \href{https://www.digitalocean. com/community/tutorials/logger-in-java-logging-example}{\underline{questo link}}, oltre alla documentazione ufficiale.
 
-\subsubsection{Giovanni Prete}
+\subsection{Giovanni Prete}
 \textbf{Utilizzo di Stream}\\
 Utilizzate in \href{https://github.com/dennnanni/UNIBOssfight/blob/0768464f3f7be0d1f35435f89616902091c0b7a8/UNIBOSSfight/src/main/java/app/impl/level/LevelImpl.java#L72}{updateEntities()} e \href{https://github.com/dennnanni/UNIBOssfight/blob/0768464f3f7be0d1f35435f89616902091c0b7a8/UNIBOSSfight/src/main/java/app/impl/level/LevelImpl.java#L125}{renderEntities()} di LevelImpl.\\
 In \href{https://github.com/dennnanni/UNIBOssfight/blob/0b788e3202136a52ea940d4dedaac28589c7eb66/UNIBOSSfight/src/main/java/app/impl/component/LoopSpriteRenderer.java#L76}{initAnimation()} di \texttt{LoopSpriteRenderer}.
@@ -277,7 +297,7 @@ In tutte le classi \texttt{Renderer} come ad esempio \href{https://github.com/de
 
 Gli assets di gioco sono stati presi principalmente da pngegg.com e da craftpix.net
 
-\subsubsection{Matteo Sartini}
+\subsection{Matteo Sartini}
 \textbf{Utilizzo di lambda expressions}\\
 Utilizzate in un metodo della classe \texttt{BehaviourBuilderImpl}
 \href{https://github.com/dennnanni/UNIBOssfight/blob/1f248b375d7cf6e1bf10144a9acbacf9b59ca3b5/UNIBOSSfight/src/main/java/app/impl/builder/BehaviourBuilderImpl.java#L79}{metodo addFlying()}
@@ -285,64 +305,50 @@ Utilizzate in un metodo della classe \texttt{BehaviourBuilderImpl}
 Utilizzati nella classe \href{https://github.com/dennnanni/UNIBOssfight/blob/1f248b375d7cf6e1bf10144a9acbacf9b59ca3b5/UNIBOSSfight/src/main/java/app/impl/level/BossLevel.java#L19}{BossLevel}
 
 
-Inoltre per implementare le classe di utilità con più contenuto matematico ho utilizzato alcuni di tutorial della serie “Math for game developers” del canale YouTube “Jorge Rodriguez” che è possibile consultare al seguente link:
-\url{https://www.youtube.com/playlist?list=PLW3Zl3wyJwWOpdhYedlD-yCB7WQoHf-My}
+Inoltre per implementare le classe di utilità con più contenuto matematico ho utilizzato alcuni di tutorial della serie “Math for game developers” del canale YouTube “Jorge Rodriguez” che è possibile consultare a \href{https://www.youtube.com/playlist?list=PLW3Zl3wyJwWOpdhYedlD-yCB7WQoHf-My}{questo link}.
 
 \large
 \newpage
-\section{Commenti finali}
-\subsection{Autovalutazione e lavori futuri}
-\subsubsection{Livia Cardaccia}
+\chapter{Commenti finali}
+\section{Autovalutazione e lavori futuri}
+\subsection{Livia Cardaccia}
 Dall'inizio del mio percorso universitario, questo è stato senza dubbio il lavoro più impegnativo: ha richiesto tempo e concentrazione ma soprattutto conoscenze che non avevo ancora completamente sviluppato durante il corso in aula ma che ho avuto l'occasione di approfondire durante la realizzazione del progetto. Lavorare in gruppo è stato un punto di forza, ci siamo confrontati e consigliati, il supporto che ci siamo dati l'un l'altro è stato secondo me fondamentale per la buona riuscita del progetto. Personalmente, una delle difficoltà più grandi che ho incontrato è stata scrivere codice pulito e soprattutto efficiente ma anche trovare soluzioni efficaci per i problemi presentatisi in itinere, affrontandoli riflettendo e analizzando le possibili soluzioni.\\
 Come gruppo, una mancanza che secondo me abbiamo avuto è stata quella di non dedicare abbastanza tempo alla fase iniziale di analisi e progettazione: a posteriori posso dire che se ci fossimo soffermati di più su di essa, tutto il lavoro sarebbe risultato più fluido ed agevolato, quindi è sicuramente un aspetto che terrò a mente per eventuali progetti futuri.
 Credo che questo percorso abbia permesso di migliorarmi sotto numerosi aspetti e che possa essere uno slancio per continuare a perfezionare le mie capacità; nel complesso, posso dire di essere soddisfatta del lavoro svolto.
-\subsubsection{Denise Nanni}
+\subsection{Denise Nanni}
 Questo progetto ha rappresentato per me una grande sfida poiché, in molte occasioni, trovo difficile cimentarmi nei lavori di gruppo dato che preferisco rispettare i miei tempi e fare le cose a modo mio. Tuttavia, durante il percorso ci sono stati momenti in cui alcuni problemi riscontrati mi sembravano insormontabili e il sostegno dei miei compagni è stato di fondamentale importanza, perciò sono contenta di aver avuto un gruppo su cui contare.
 Mi rendo conto di non essere stata molto collaborativa fin da subito, ma con l'inizio dello sviluppo vero e proprio credo di aver fatto il mio dovere e penso di essere stata d'aiuto per i miei compagni nel trovare soluzioni e idee, come loro lo sono stati per me.
 Le più grandi difficoltà che ho riscontrato sono state la necessità di mantenere ben distinte le parti di mia competenza da quelle degli altri e il far fronte ai problemi che si sono presentati in itinere.\\
-\subsubsection{Giovanni Prete}
+\subsection{Giovanni Prete}
 Da quando ho iniziato a programmare alle superiori questa è stata la prima volta che posso dire di aver lavorato in un team e, nonostante sia stata l'esperienza più formativa finora, è stato difficile non avere tutto sotto controllo. Sento di essere stato spronato e di aver spronato a mia volta gli altri membri del team, rendendo piacevole il lavoro. Tuttavia, a posteriori, sento di aver fatto degli errori: in particolare una progettazione non troppo approfondita nelle fasi iniziali del progetto, che ha portato a codice difficile da scrivere e talvolta difficile da leggere. Nonostante alcune difficoltà, però, sono soddisfatto della gestione del game loop che rende il gioco abbastanza scorrevole.\\
-\subsubsection{Matteo Sartini}
+\subsection{Matteo Sartini}
 Nonostante le numerose difficoltà incontrate durante lo sviluppo, trovo che l’applicativo che ne è nato sia, con le sue numerose imperfezioni dovute alla poca esperienza del gruppo e alla complessità del progetto visualizzato in fase di progettazione, un prodotto abbastanza completo e per il quale mi ritengo molto soddisfatto.
 Trovo però che la parte più stimolante del progetto sia stato il teamwork necessario al suo completamento. Ritengo infatti che la collaborazione tra i vari componenti di un team sia una skill assolutamente indispensabile nel nostro campo lavorativo, e troppo spesso ignorata in contesti scolastici.\\
 
 \newpage
-\section{Guida utente}
+\chapter{Guida utente}
 All'avvio del gioco si apre una schermata con il menu principale, in cui troviamo: un pulsante "play" per iniziare una nuova partita, un pulsante "level" per scegliere uno fra i due livelli proposti, un pulsante "help" per una breve spiegazione della modalità di gioco e un pulsante "score".
 Cliccando quest'ultimo si possono visualizzare le proprie statistiche di gioco e una voce "final grade" che assegna al giocatore un punteggio in base alle sue prestazioni, nell'ottica del conseguimento della laurea.
 Avviata una partita, per giocare è necessario: premere il tasto 'd' per correre in avanti, premere il tasto 'a' per correre indietro, usare la barra spaziatrice per saltare e il puntatore del mouse per mirare ai nemici, a cui si spara cliccando.
 Terminata una partita vi è la possibilità di tornare alla home con un apposito pulsante o proseguire con il gioco.
-\section{Esercitazioni di laboratorio}
-\subsection{livia.cardaccia@studio.unibo.it}
+\chapter{Esercitazioni di laboratorio}
+\section{livia.cardaccia@studio.unibo.it}
 \begin{itemize}
-\item Laboratorio 03: https://virtuale.unibo.it/mod/forum/discuss
-.php?d=112846\#p168413
-\item Laboratorio 05: https://virtuale.unibo.it/mod/forum/discuss
-.php?d=114647\#p169868
-\item Laboratorio 06: https://virtuale.unibo.it/mod/forum/discuss
-.php?d=115548\#p172236
-\item Laboratorio 07: https://virtuale.unibo.it/mod/forum/discuss
-.php?d=117044\#p173315
-\item Laboratorio 08: https://virtuale.unibo.it/mod/forum/discuss
-.php?d=117852\#p174528
-\item Laboratorio 09: https://virtuale.unibo.it/mod/forum/discuss
-.php?d=118995\#p175251
-\item Laboratorio 10:
-https://virtuale.unibo.it/mod/forum/discuss
-.php?d=119938\#p176896
-\item Laboratorio 11: https://virtuale.unibo.it/mod/forum/discuss
-.php?d=121130\#p177745
+\item Laboratorio 03: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=112846\#p168413}
+\item Laboratorio 05: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=114647\#p169868}
+\item Laboratorio 06: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=115548\#p172236}
+\item Laboratorio 07: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=117044\#p173315}
+\item Laboratorio 08: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=117852\#p174528}
+\item Laboratorio 09: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=118995\#p175251}
+\item Laboratorio 10: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=119938\#p176896}
+\item Laboratorio 11: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=121130\#p177745}
 \end{itemize}
-\subsection{denise.nanni@studio.unibo.it}
+\section{denise.nanni@studio.unibo.it}
 \begin{itemize}
-\item Laboratorio 06: https://virtuale.unibo.it/mod/forum/discuss
-.php?d=115548\#p171388
-\item Laboratorio 07: https://virtuale.unibo.it/mod/forum/discuss
-.php?d=117044\#p173321
-\item Laboratorio 09: https://virtuale.unibo.it/mod/forum/discuss
-.php?d=118995\#p175210
-\item Laboratorio 10: https://virtuale.unibo.it/mod/forum/discuss
-.php?d=119938\#p176543
+\item Laboratorio 06: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=115548\#p171388}
+\item Laboratorio 07: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=117044\#p173321}
+\item Laboratorio 09: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=118995\#p175210}
+\item Laboratorio 10: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=119938\#p176543}
 \end{itemize}
 
 
