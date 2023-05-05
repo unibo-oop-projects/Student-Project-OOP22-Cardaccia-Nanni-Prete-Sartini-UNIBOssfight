@@ -48,10 +48,6 @@ public class SpriteRenderer extends RendererImpl {
      * the rectangle of the super class will be rendered otherwise
      */
     @Override
-    @SuppressFBWarnings(
-            value = "EI_EXPOSE_REP",
-            justification = "Can't create a copy of ImageView"
-    )
     public Node render(final Point2D position, final int xDirection, final int yDirection, final double rotation) {
 
         if (this.prerendered != null) {
@@ -94,10 +90,6 @@ public class SpriteRenderer extends RendererImpl {
      *
      * @param prerendered the prerendered sprite to render
      */
-    @SuppressFBWarnings(
-            value = "EI_EXPOSE_REP2",
-            justification = "Can't create a copy of ImageView"
-    )
     public void setPrerendered(final ImageView prerendered) {
         this.prerendered = prerendered;
     }

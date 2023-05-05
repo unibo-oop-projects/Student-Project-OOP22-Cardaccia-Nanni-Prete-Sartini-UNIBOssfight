@@ -38,10 +38,6 @@ public class BossLevel extends LevelImpl {
      *
      * @return the boss of the level
      */
-    @SuppressFBWarnings(
-            value = "EI_EXPOSE_REP",
-            justification = "The Boss class cannot be cloned."
-    )
     public Boss getBoss() {
         return this.boss;
     }

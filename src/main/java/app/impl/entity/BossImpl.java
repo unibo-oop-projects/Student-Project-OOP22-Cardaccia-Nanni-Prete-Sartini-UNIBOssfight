@@ -41,10 +41,6 @@ public class BossImpl extends Boss {
     /**
      * {@inheritDoc}
      */
-    @SuppressFBWarnings(
-            value = "EI_EXPOSE_REP",
-            justification = "This Class cannot be Cloned due to it being initialized through a Factory"
-    )
     @Override
     public Weapon getWeapon() {
         return this.weapon;
@@ -102,10 +98,6 @@ public class BossImpl extends Boss {
     /**
      * {@inheritDoc}
      */
-    @SuppressFBWarnings(
-            value = "EI_EXPOSE_REP",
-            justification = "This Class cannot be Cloned due to it being initialized through a Factory"
-    )
     @Override
     public void setWeapon(final WeaponImpl weapon) {
         this.weapon = weapon;

@@ -24,7 +24,7 @@ public class LoopSpriteRenderer extends SpriteRenderer {
     private transient int cont;
     private transient int contDelay;
     private transient int maxDelay;
-    private transient BooleanProperty isAnimationEnded; // NOPMD it's used like a boolean
+    private transient BooleanProperty isAnimationEnded;
 
     /**
      * Creates a new instance of the class SpriteRenderer.

@@ -6,7 +6,6 @@ import app.core.component.Transform;
 import app.core.entity.ActiveEntity;
 import app.impl.component.ColliderImpl;
 import app.util.Angle;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.geometry.Point2D;
 
 /**
@@ -32,10 +31,6 @@ public class Bullet extends ActiveEntity {
      * @param speed the speed of the bullet
      * @param isPlayerBullet identifier of the Bullets from the player Weapon
      */
-    @SuppressFBWarnings(
-            value = "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR",
-            justification = "The methods called are necessary to call the bullet trajectory"
-    )
     public Bullet(final Transform startingPos, final int height, final int width,
                   final Renderer renderer, final int damage, final Point2D target,
                   final int speed, final boolean isPlayerBullet) {

@@ -1,7 +1,5 @@
 package app.util;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 /**
  * This utility class models the game window.
  */
@@ -14,10 +12,6 @@ public final class Window {
     private Window() {
     }
 
-    @SuppressFBWarnings(
-            value = "ISC_INSTANTIATE_STATIC_CLASS",
-            justification = "It is necessary for the motion of the game"
-    )
     private static Window getInstanceOfWindow() {
         synchronized (Window.class) {
             if (instanceOfWindow == null) {

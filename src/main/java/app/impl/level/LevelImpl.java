@@ -221,11 +221,6 @@ public class LevelImpl implements Level {
      * {@inheritDoc}
      */
     @Override
-    @SuppressFBWarnings(
-            value = "EI_EXPOSE_REP",
-            justification = "It is needed because the player is used"
-                    + "in the subclasses and its state has to be modified"
-    )
     public Player getPlayer() {
         return this.player;
     }

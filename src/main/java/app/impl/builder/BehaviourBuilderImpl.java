@@ -107,10 +107,6 @@ public class BehaviourBuilderImpl implements BehaviourBuilder {
     /**
      * {@inheritDoc}
      */
-    @SuppressFBWarnings(
-            value = "EI_EXPOSE_REP",
-            justification = "The Builder pattern require this type of return statement"
-    )
     @Override
     public Behaviour build() {
         if (built) {

@@ -133,11 +133,6 @@ public abstract class ActiveEntity extends AbstractEntity {
      *
      * @return the component Behaviour
      */
-    @SuppressFBWarnings(
-            value = "EI_EXPOSE_REP",
-            justification = "It is needed because it is necessary"
-                    + " to modify the state of the object from the outside"
-    )
     public Behaviour getBehaviour() {
         return this.behaviour;
     }
@@ -147,11 +142,6 @@ public abstract class ActiveEntity extends AbstractEntity {
      *
      * @param behaviour the new behaviour
      */
-    @SuppressFBWarnings(
-            value = "EI_EXPOSE_REP",
-            justification = "It is needed because it is necessary"
-                    + " to modify the state of the object from the outside"
-    )
     public void setBehaviour(final Behaviour behaviour) {
         this.behaviour = behaviour;
     }

@@ -61,11 +61,6 @@ public class ViewManager {
      *
      * @param stage the stage of the menu
      */
-    @SuppressFBWarnings(
-            value = "EI_EXPOSE_REP",
-            justification = "It is needed to change the appearance of the stage"
-                    + "passed as input in the start method of the MainMenu"
-    )
     public ViewManager(final Stage stage) {
         stage.setResizable(false);
 
@@ -90,11 +85,6 @@ public class ViewManager {
      *
      * @return the main stage
      */
-    @SuppressFBWarnings(
-            value = "EI_EXPOSE_REP",
-            justification = "It is needed to let the MainMenu show"
-                    + "the new appearance of the stage, set in here"
-    )
     public Stage getMainStage() {
         return this.mainStage;
     }
